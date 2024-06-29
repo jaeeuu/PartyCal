@@ -1,0 +1,14 @@
+{
+  "search.exclude": {
+    "**/node_modules/**": true,
+    "**/target/**": true,
+    "**/dist/**": true,
+    "pnpm-lock.yaml": true,
+    "package.json": true,
+    "**/Cargo.lock": true,
+    "*.config.js": true,
+    "*.txt": true,
+    ".test/**": true,
+  },
+  "css.lint.unknownAtRules": "ignore",
+}
