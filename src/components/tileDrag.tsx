@@ -102,7 +102,7 @@ export function createTileDrag(initialTable?: boolean[][]) {
       node.removeEventListener('touchmove', handlePointerMove);
       node.removeEventListener('mouseover', handlePointerMove);
       node.removeEventListener('touchend', handlePointerEnd);
-      node.addEventListener('mouseup', handlePointerEnd);
+      node.removeEventListener('mouseup', handlePointerEnd);
     });
   });
 
