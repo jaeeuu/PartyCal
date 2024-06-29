@@ -3,7 +3,9 @@ import solidSvg from 'vite-plugin-solid-svg';
 import styleX from "vite-plugin-stylex";
 
 export default defineConfig({
-  plugins: () => [solidSvg(), styleX()],
+  vite: {
+    plugins: [solidSvg(), styleX()]
+  },
   server: {
     prerender: {
       routes: ["/", "/home"]
