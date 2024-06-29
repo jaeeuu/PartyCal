@@ -6,7 +6,7 @@ import globals from "globals";
 
 export default [
   {
-    files: ["src/**/*.tsx", "src/**/*.ts"],
+    files: ["src/**/*.tsx", "src/**/*.ts", "src/**/*.jsx"],
     ignores: [".git/**", "dist/**", "node_modules/**"],
   },
   js.configs.recommended,

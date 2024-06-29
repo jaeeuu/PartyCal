@@ -1,40 +1,44 @@
+:root {
+  --spring-easing: linear(
+    0, 0.002, 0.008, 0.017, 0.031 1.9%, 0.07, 0.126 4.1%, 0.252 6.2%, 0.541 10.5%,
+    0.665, 0.779, 0.873, 0.951 18.3%, 0.983, 1.011, 1.036, 1.056, 1.073,
+    1.085 24.5%, 1.096, 1.102 27.2%, 1.103, 1.1 30.4%, 1.094 31.8%, 1.085 33.4%,
+    1.037 40.4%, 1.016 44.1%, 1.007, 1, 0.995, 0.991 52.5%, 0.989 55.4%,
+    0.99 58.8%, 0.998 71.8%, 1.001 79.1%, 1
+  );
+  --spring-mobile: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@font-face {
+  font-family: 'Gowun Dodum';
+  font-style: normal;
+  font-display: block;
+  font-weight: 400;
+  src: url(./fonts/gowun-dodum-korean-400-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Gowun Dodum';
+  font-style: normal;
+  font-display: block;
+  font-weight: 400;
+  src: url(./fonts/gowun-dodum-latin-400-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Gowun Dodum';
+  font-style: normal;
+  font-display: block;
+  font-weight: 700;
+  src: url(./fonts/gowun-dodum-bold.woff2) format('woff2');
+}
+html, body{
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+}
+* {
+  box-sizing: border-box;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+
 @stylex stylesheet;
-body {
-  font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
-
-a {
-  margin-right: 1rem;
-}
-
-main {
-  text-align: center;
-  padding: 1em;
-  margin: 0 auto;
-}
-
-h1 {
-  color: #335d92;
-  text-transform: uppercase;
-  font-size: 4rem;
-  font-weight: 100;
-  line-height: 1.1;
-  margin: 4rem auto;
-  max-width: 14rem;
-}
-
-p {
-  max-width: 14rem;
-  margin: 2rem auto;
-  line-height: 1.35;
-}
-
-@media (min-width: 480px) {
-  h1 {
-    max-width: none;
-  }
-
-  p {
-    max-width: none;
-  }
-}

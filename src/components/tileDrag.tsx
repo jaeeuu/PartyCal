@@ -1,7 +1,7 @@
 import { createSignal, onCleanup, onMount } from 'solid-js';
 import { convertIndexToString, convertStringToIndex, getTableCellIndex, isMouseEvent, isTouchEvent } from '../common/dragUtils';
 
-export function useTableDragSelect(initialTable?: boolean[][]) {
+export function createTileDrag(initialTable?: boolean[][]) {
   let startIndex: string = '';
   let currentIndex: string = '';
   let startTable: boolean[][] = [];
