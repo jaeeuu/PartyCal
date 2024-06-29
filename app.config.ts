@@ -7,8 +7,10 @@ export default defineConfig({
     plugins: [solidSvg(), styleX()]
   },
   server: {
+    preset: "vercel",
     prerender: {
-      routes: ["/", "/home"]
+      // routes: ["/", "/home"]
+      crawlLinks: true
     }
   }
 });
