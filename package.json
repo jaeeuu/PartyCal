@@ -24,7 +24,7 @@
     "@typescript-eslint/parser": "^7.14.1",
     "eslint": "^9.6.0",
     "eslint-plugin-solid": "^0.14.1",
-    "globals": "^15.6.0",
+    "globals": "^15.7.0",
     "typescript-eslint": "^7.14.1",
     "vite-plugin-solid-svg": "^0.8.1",
     "vite-plugin-stylex": "^0.10.0"

@@ -20,14 +20,6 @@ export function createTileDrag(initialTable?: boolean[][]) {
     if (isTouchEvent(e) && e.cancelable) e.preventDefault();
     const { rowIndex, colIndex } = index;
 
-    // startTable = [...tableValue()];
-    // startIndex = convertIndexToString(rowIndex, colIndex);
-
-    // const newTableValues = [...tableValue()];
-    // mode = !newTableValues[rowIndex][colIndex];
-    // newTableValues[rowIndex][colIndex] = mode;
-
-    // setTableValue(newTableValues);
     setTableValue((prev) => {
       startTable = [...prev];
       startIndex = convertIndexToString(rowIndex, colIndex);
@@ -54,17 +46,6 @@ export function createTileDrag(initialTable?: boolean[][]) {
     const [minRow, maxRow] = [startRowIndex, rowIndex].sort((a, b) => a - b);
     const [minCol, maxCol] = [startColIndex, colIndex].sort((a, b) => a - b);
 
-    // const newTableValues = tableValue().map(row => row.slice());
-    // newTableValues.forEach((r, i) => {
-    //   r.forEach((_, j) => {
-    //     if (i < minRow || i > maxRow || j < minCol || j > maxCol) {
-    //       newTableValues[i][j] = startTable[i][j];
-    //     } else {
-    //       newTableValues[i][j] = mode;
-    //     }
-    //   });
-    // });
-    // setTableValue(newTableValues);
     setTableValue((prev) => {
       const newTableValues = prev.map(row => [...row]);
       newTableValues.forEach((r, i) => {

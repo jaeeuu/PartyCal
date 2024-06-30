@@ -19,7 +19,7 @@ export function convertStringToIndex(indexString: string) {
 }
 
 export function getTableCellElement(e: Event): HTMLTableCellElement | null {
-  let target;
+  let target = null;
 
   if (isTouchEvent(e) && e.touches) {
     const { clientX, clientY } = e.touches[0];
