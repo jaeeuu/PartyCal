@@ -5,23 +5,38 @@ import { baseStyles, flexStyles } from '~/common/Group.stylex';
 
 const addStyles = stylex.create({
   box: {
-    width: "400px",
-    height: "400px",
     // borderCollapse: "collapse",
     tableLayout: "fixed",
-    borderSpacing: "10px",
+    borderSpacing: "6px",
+    width: "100%",
+    maxWidth: "100%",
+    marginBottom: "1.6em",
+    borderRadius: "0.4em",
+    overflow: "hidden",
+    userSelect: "none",
+    cursor: "pointer"
+  },
+  box2: {
+    background: "#f3f3f3",
+    borderRadius: "10px",
+    minWidth: "none",
+    height: "50px",
+    padding: "20px",
+    color: "#242424"
   },
   boxIn: {
     textAlign: "center",
-    background: "lightgreen",
+    background: "#646cff",
     borderRadius: "12px",
     borderColor: "transparent",
     borderWidth: "1px",
   },
   boxActive: {
-    background: "lightblue",
+    background: "#646cff",
   },
-  tr: {
+  text: {
+    width: "100%",
+    wordWrap: "break-word",
 
   }
 });
@@ -36,36 +51,22 @@ export default function New() {
     [false, false, false, false, false, false, false],
   ]);
   return(
-    <main>
-      <div {...stylex.attrs(baseStyles.plain, flexStyles.center)}>
-        <table ref={tileRef} {...stylex.attrs(addStyles.box)}>
-          {/* <thead>
-            <tr>
-              <th>&nbsp;</th>
-              <th>Mon</th>
-              <th>Tue</th>
-              <th>Wed</th>
-              <th>Thu</th>
-              <th>Fri</th>
-              <th>Sat</th>
-              <th>Sun</th>
-            </tr>
-          </thead> */}
-          <tbody>
+    <div {...stylex.attrs(baseStyles.plain, flexStyles.sero, flexStyles.center)}>
+      <table ref={tileRef} {...stylex.attrs(addStyles.box)}>
+        <tbody {...stylex.attrs()}>
           <Index each={tileValue()}>
             {(row) => (
-              <tr {...stylex.attrs(addStyles.tr)}>
+              <tr {...stylex.attrs()}>
                 <Index each={row()}>
                   {(col) => (
-                    <td {...stylex.attrs(addStyles.boxIn, col() && addStyles.boxActive)}>&nbsp;</td>
+                    <td {...stylex.attrs(addStyles.box2, col() && addStyles.boxActive)}>{col().toString()}</td>
                   )}
                 </Index>
               </tr>
             )}
           </Index>
-          </tbody>
-        </table>
-      </div>
-    </main>
+        </tbody>
+      </table>
+    </div>
   );
 }

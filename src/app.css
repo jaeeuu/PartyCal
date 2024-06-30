@@ -33,11 +33,12 @@ html, body{
   margin: 0;
   padding: 0;
   -webkit-touch-callout: none;
+  font-family: "'Gowun Dodum'";
 }
 * {
   box-sizing: border-box;
-  touch-action: manipulation;
-  user-select: none;
+  /* touch-action: manipulation;
+  user-select: none; */
 }
 
 

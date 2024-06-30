@@ -2,10 +2,12 @@
   "name": "example-basic",
   "type": "module",
   "scripts": {
-    "dev": "eslint && vinxi dev",
+    "dev": "eslint **/*.tsx && vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start",
-    "version": "vinxi version"
+    "version": "vinxi version",
+    "lint": "eslint **/*.tsx",
+    "fix": "eslint --fix **/*.tsx"
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
@@ -23,6 +25,7 @@
     "eslint": "^9.6.0",
     "eslint-plugin-solid": "^0.14.1",
     "globals": "^15.6.0",
+    "typescript-eslint": "^7.14.1",
     "vite-plugin-solid-svg": "^0.8.1",
     "vite-plugin-stylex": "^0.10.0"
   },
