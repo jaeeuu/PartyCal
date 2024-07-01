@@ -10,7 +10,9 @@ const addStyles = stylex.create({
   title: {
     fontSize: "30px",
     width: "100%",
-    padding: "20px 0px 0px 20px",
+    padding: "0px 0px 0px 20px",
+    fontFamily: "'Gowun Dodum'",
+    fontWeight: 400,
   },
   box: {
     width: "min(700px, 100%)",
@@ -33,6 +35,7 @@ const addStyles = stylex.create({
     color: "#575757",
     padding: "5px 0px 0px 10px",
     cursor: "pointer",
+    touchAction: "manipulation",
   },
   boxActive: {
     background: "#9AC5F4",
@@ -69,6 +72,7 @@ export default function New() {
   const [cal, setCal] = createSignal(calender);
   const [monIndex, setMonIndex] = createSignal<[number, number]>(monthIndex);
   const [mon, setMon] = createSignal(0);
+  const thisMonth = getMonth(new Date()) + 1;
 
   const tileVars = {
     startTile: [-1, -1, false] as [number, number, boolean],
@@ -85,7 +89,7 @@ export default function New() {
   return (
     <div {...stylex.attrs(baseStyles.plain, flexStyles.sero, flexStyles.center)}>
       <div {...stylex.attrs(addStyles.box)}>
-        <div {...stylex.attrs(addStyles.title)}>{`${getMonth(new Date())+mon()} 월`}</div>
+        <div {...stylex.attrs(addStyles.title)}>{`${thisMonth + mon()} 월`}</div>
         <Index each={tile()}>
           {(row, rowIndex) => (
             <div {...stylex.attrs(addStyles.boxLine)}>

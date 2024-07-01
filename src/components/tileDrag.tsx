@@ -7,6 +7,7 @@ function isTouchEvent(event: Event): event is TouchEvent {
 }
 
 function getTileIndex(e: Event) {
+  if (isTouchEvent(e) && e.cancelable) e.preventDefault();
   let target = null;
   if (isTouchEvent(e) && e.touches) {
     const { clientX, clientY } = e.touches[0];
@@ -25,7 +26,6 @@ function getTileIndex(e: Event) {
 export function handlePointerStart(e: Event, vars, setTile) {
   const [x, y] = getTileIndex(e);
   if (x === -1) return;
-  if (isTouchEvent(e) && e.cancelable) e.preventDefault();
   if (isMouseEvent(e) && e.buttons !== 1) return;
   setTile((prev) => {
     vars.startTile = [x, y, !prev[x][y]];

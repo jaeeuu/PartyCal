@@ -11,7 +11,7 @@ const addStyles = stylex.create({
   button: {
     width: "100%",
     aspectRatio: "4/1",
-    fontFamily: "Segoe UI",
+    // fontFamily: "'Gowun Dodum'",
     // padding: "10px 20px 10px 20px",
     fontSize: "16px",
   },
