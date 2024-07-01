@@ -4,7 +4,7 @@ import stylex from '@stylexjs/stylex';
 import { baseStyles, flexStyles, interactStyles } from '~/common/Group.stylex';
 import { handlePointerEnd, handlePointerMove, handlePointerStart } from '~/components/tileDrag';
 import getCalender from '~/common/getCalender';
-import { getMonth } from 'date-fns';
+import { getMonth, getYear } from 'date-fns';
 
 const addStyles = stylex.create({
   title: {
@@ -37,11 +37,17 @@ const addStyles = stylex.create({
     padding: "5px 0px 0px 10px",
     cursor: "pointer",
     touchAction: "manipulation",
-    transition: "transform 0.5s ease"
+    transition: {
+      default: "transform 1s var(--spring-easing)",
+      "@media (hover: none)": "transform 0.8s var(--spring-mobile)",
+    },
   },
   boxActive: {
     background: "#9AC5F4",
-    transform: "scale(0.95)",
+    transform: {
+      default: "scale(0.95)",
+      "@media (hover: none)": "scale(0.9)",
+    },
   },
   boxOut: {
     opacity: 0.5,
@@ -58,6 +64,7 @@ const addStyles = stylex.create({
   buttons: {
     width: "100px",
     height: "50px",
+    fontSize: "16px",
   }
 });
 
@@ -71,11 +78,11 @@ export default function New() {
     [false, false, false, false, false, false, false],
   ];
   const [tile, setTile] = createSignal(initialTile);
-  const [calender, monthIndex] = getCalender(0);
+  const [calender, monthIndex, thDate] = getCalender(0);
   const [cal, setCal] = createSignal(calender);
   const [monIndex, setMonIndex] = createSignal<[number, number]>(monthIndex);
+  const [thisDate, setThisDate] = createSignal(thDate);
   const [mon, setMon] = createSignal(0);
-  const thisMonth = getMonth(new Date()) + 1;
 
   const tileVars = {
     startTile: [-1, -1, false] as [number, number, boolean],
@@ -84,16 +91,17 @@ export default function New() {
   };
 
   createEffect(() => {
-    const [calender, monthIndex] = getCalender(mon());
+    const [calender, monthIndex, thDate] = getCalender(mon());
     setCal(calender);
     setMonIndex(monthIndex);
+    setThisDate(thDate);
     setTile(initialTile);
   });
   
   return (
     <div {...stylex.attrs(baseStyles.plain, flexStyles.sero, flexStyles.center)}>
       <div {...stylex.attrs(flexStyles.sero, addStyles.seroBox)}>
-        <div {...stylex.attrs(addStyles.title)}>{`${thisMonth + mon()} 월`}</div>
+        <div {...stylex.attrs(addStyles.title)}>{`${getYear(thisDate())}년 ${getMonth(thisDate())+1}월`}</div>
         <div {...stylex.attrs(addStyles.box)}>
           <Index each={tile()}>
             {(row, rowIndex) => (
