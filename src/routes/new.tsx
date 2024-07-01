@@ -6,34 +6,28 @@ import { handlePointerEnd, handlePointerMove, handlePointerStart } from '~/compo
 
 const addStyles = stylex.create({
   box: {
-    // borderCollapse: "collapse",
-    tableLayout: "fixed",
-    borderSpacing: "6px",
-    width: "100%",
-    maxWidth: "100%",
-    marginBottom: "1.6em",
-    borderRadius: "0.4em",
-    overflow: "hidden",
+    width: "min(800px, 100%)",
+    height: "500px",
     userSelect: "none",
     cursor: "pointer",
+    display: "grid",
+    gridTemplateRows: "repeat(6, 1fr)",
+    gap: "2px",
+    placeContent: "stretch",
   },
-  box2: {
-    background: "#f3f3f3",
-    borderRadius: "10px",
-    minWidth: "none",
-    height: "50px",
-    padding: "20px",
-    color: "#242424"
+  boxLine: {
+    display: "grid",
+    gridTemplateColumns: "repeat(7, 1fr)",
+    gap: "2px",
+    placeItems: "stretch",
   },
-  boxIn: {
-    textAlign: "center",
-    background: "#646cff",
+  boxTile: {
+    background: "rgba(255, 255, 255, 0.5)",
     borderRadius: "12px",
-    borderColor: "transparent",
-    borderWidth: "1px",
+    color: "#242424",
   },
   boxActive: {
-    background: "#646cff",
+    background: "#9AC5F4",
   },
   text: {
     width: "100%",
@@ -61,31 +55,27 @@ export default function New() {
   
   return (
     <div {...stylex.attrs(baseStyles.plain, flexStyles.sero, flexStyles.center)}>
-      <table {...stylex.attrs(addStyles.box)}>
-        <tbody {...stylex.attrs()}>
-          <Index each={tile()}>
-            {(row, rowIndex) => (
-              <tr {...stylex.attrs()}>
-                <Index each={row()}>
-                  {(col, colIndex) => (
-                    <td
-                      {...stylex.attrs(addStyles.box2, col() && addStyles.boxActive)}
-                      data-row={rowIndex}
-                      data-col={colIndex}
-                      onPointerDown={(e) => handlePointerStart(e, tileVars, setTile)}
-                      onMouseOver={(e) => handlePointerMove(e, tileVars, setTile)}
-                      onTouchMove={(e) => handlePointerMove(e, tileVars, setTile)}
-                      onPointerUp={(e) => handlePointerEnd(e, tileVars)}
-                    >
-                      {col().toString()}
-                    </td>
-                  )}
-                </Index>
-              </tr>
-            )}
-          </Index>
-        </tbody>
-      </table>
+      <div {...stylex.attrs(addStyles.box)}>
+        <Index each={tile()}>
+          {(row, rowIndex) => (
+            <div {...stylex.attrs(addStyles.boxLine)}>
+              <Index each={row()}>
+                {(col, colIndex) => (
+                  <span
+                    {...stylex.attrs(addStyles.boxTile, col() && addStyles.boxActive)}
+                    data-row={rowIndex}
+                    data-col={colIndex}
+                    onPointerDown={(e) => handlePointerStart(e, tileVars, setTile)}
+                    onMouseOver={(e) => handlePointerMove(e, tileVars, setTile)}
+                    onTouchMove={(e) => handlePointerMove(e, tileVars, setTile)}
+                    onPointerUp={(e) => handlePointerEnd(e, tileVars)}
+                  />
+                )}
+              </Index>
+            </div>
+          )}
+        </Index>
+      </div>
     </div>
   );
 }
