@@ -30,7 +30,7 @@ const addStyles = stylex.create({
     placeItems: "stretch",
   },
   boxTile: {
-    background: "rgba(255, 255, 255, 0.5)",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
     aspectRatio: "1 / 1.2",
     borderRadius: "12px",
     color: "#575757",
@@ -38,12 +38,13 @@ const addStyles = stylex.create({
     cursor: "pointer",
     touchAction: "manipulation",
     transition: {
-      default: "transform 1s var(--spring-easing)",
-      "@media (hover: none)": "transform 0.8s var(--spring-mobile)",
+      default: "transform 1s var(--spring-easing), backgroundColor 0.3s linear, color 0.3s linear",
+      "@media (hover: none)": "transform 0.8s var(--spring-mobile), backgroundColor 0.15s linear, color 0.15s linear",
     },
   },
   boxActive: {
-    background: "#9AC5F4",
+    backgroundColor: "#9AC5F4",
+    color: "#ffffff",
     transform: {
       default: "scale(0.95)",
       "@media (hover: none)": "scale(0.9)",
@@ -53,7 +54,8 @@ const addStyles = stylex.create({
     opacity: 0.5,
     pointerEvents: "none",
     cursor: "default",
-    background: "#f0f0f0",
+    backgroundColor: "#f0f0f0",
+    color: "#575757",
     transform: "scale(1)",
   },
   buttonBox: {
