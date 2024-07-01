@@ -1,4 +1,4 @@
-import { MetaProvider, Title } from "@solidjs/meta";
+import { MetaProvider, Title, Meta } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
@@ -10,6 +10,9 @@ export default function App() {
       root={props => (
         <MetaProvider>
           <Title>PartyCal</Title>
+          <Meta charset="utf-8" />
+          <Meta lang="ko" />
+          <Meta name="viewport" content="width=device-width, initial-scale=1" />
           <Suspense>{props.children}</Suspense>
         </MetaProvider>
       )}

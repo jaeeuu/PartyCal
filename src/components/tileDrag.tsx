@@ -1,112 +1,73 @@
-import { createSignal, onCleanup, onMount } from 'solid-js';
-import { convertIndexToString, convertStringToIndex, getTableCellIndex, isMouseEvent, isTouchEvent } from '../common/dragUtils';
+function isMouseEvent(event: Event): event is MouseEvent {
+  return event instanceof MouseEvent;
+}
 
-export function createTileDrag(initialTable?: boolean[][]) {
-  let startIndex: string = '';
-  let currentIndex: string = '';
-  let startTable: boolean[][] = [];
-  let mode: boolean = false;
+function isTouchEvent(event: Event): event is TouchEvent {
+  return 'ontouchstart' in window && event.type.startsWith('touch');
+}
 
-  const [tableRef, setTableRef] = createSignal<HTMLTableElement | null>(null);
-  const [tableValue, setTableValue] = createSignal<boolean[][]>(initialTable ?? []);
-  // const [tile, setTile] = createStore({
-  //   ref: null as HTMLTableElement | null,
-  //   value: [] as boolean[][],
-  // });
-
-  function handlePointerStart(e: Event) {
-    const index = getTableCellIndex(e);
-    if (index === null) return;
-    if (isTouchEvent(e) && e.cancelable) e.preventDefault();
-    const { rowIndex, colIndex } = index;
-
-    setTableValue((prev) => {
-      startTable = [...prev];
-      startIndex = convertIndexToString(rowIndex, colIndex);
-      const newTableValues = prev.map(row => [...row]);
-      mode = !newTableValues[rowIndex][colIndex];
-      newTableValues[rowIndex][colIndex] = mode;
-      return newTableValues;
-    });
+function getTileIndex(e: Event) {
+  let target = null;
+  if (isTouchEvent(e) && e.touches) {
+    const { clientX, clientY } = e.touches[0];
+    target = document.elementFromPoint(clientX, clientY);
+  } else if (isMouseEvent(e)) {
+    target = e.target;
   }
+  const x = parseInt(target.dataset.row, 10);
+  const y = parseInt(target.dataset.col, 10);
+  if (isNaN(x) || isNaN(y)) return [-1, -1];
+  return [x, y];
+}
 
-  function handlePointerMove(e: Event) {
-    if (startIndex === '') return;
-    if (isMouseEvent(e) && e.buttons !== 1) return;
-    const index = getTableCellIndex(e);
-    if (index === null) return;
-    const { rowIndex, colIndex } = index;
-    const indexString = convertIndexToString(rowIndex, colIndex);
-    const isSameAsPrevIndex = indexString === currentIndex;
+export function handlePointerStart(e: Event, vars, setTile) {
+  const [x, y] = getTileIndex(e);
+  if (x === -1) return;
+  if (isTouchEvent(e) && e.cancelable) e.preventDefault();
+  if (isMouseEvent(e) && e.buttons !== 1) return;
+  setTile((prev) => {
+    vars.startTile = [x, y, !prev[x][y]];
+    const newTableValues = prev.map(row => [...row]);
+    newTableValues[x][y] = vars.startTile[2];
+    vars.memTile = [...newTableValues];
+    return newTableValues;
+  });
+}
 
-    if (isSameAsPrevIndex) return;
-
-    currentIndex = indexString;
-    const [startRowIndex, startColIndex] = convertStringToIndex(startIndex);
-    const [minRow, maxRow] = [startRowIndex, rowIndex].sort((a, b) => a - b);
-    const [minCol, maxCol] = [startColIndex, colIndex].sort((a, b) => a - b);
-
-    setTableValue((prev) => {
-      const newTableValues = prev.map(row => [...row]);
-      newTableValues.forEach((r, i) => {
-          r.forEach((_, j) => {
-            if (i < minRow || i > maxRow || j < minCol || j > maxCol) {
-              newTableValues[i][j] = startTable[i][j];
-            } else {
-              newTableValues[i][j] = mode;
-            }
-          });
-        });
-      return newTableValues;
-    });
+export function handlePointerMove(e: Event, vars, setTile) {
+  const [x, y] = getTileIndex(e);
+  if (vars.startTile[0] === -1 || x === -1) return;
+  if (x === vars.currentTile[0] && y === vars.currentTile[1]) {
+    return;
+  } else {
+    vars.currentTile = [x, y];
   }
-
-  function handlePointerEnd(e: Event) {
-    startIndex = '';
-    if (e.cancelable) {
-      e.preventDefault();
-    };
+  if (isMouseEvent(e) && e.buttons !== 1) return;
+  if (vars.startTile[0] === x && vars.startTile[1] === y) {
+    setTile([...vars.memTile]);
+    return;
   }
+  const minX = Math.min(vars.startTile[0], x);
+  const maxX = Math.max(vars.startTile[0], x);
+  const minY = Math.min(vars.startTile[1], y);
+  const maxY = Math.max(vars.startTile[1], y);
 
-  onMount(() => {
-    const node = tableRef().querySelector('tbody') ?? tableRef();
-    if (!initialTable && node) {
-      const trs = node.querySelectorAll('tr');
-      const newTableValues: boolean[][] = [];
-      trs.forEach(tr => {
-        const tds = tr.querySelectorAll('td');
-        const row: boolean[] = [];
-        tds.forEach(() => {
-          row.push(false);
-        });
-        if (tds.length > 0) {
-          newTableValues.push(row);
-        }
+  setTile((prev) => {
+    const newTableValues = prev.map(row => [...row]);
+    newTableValues.forEach((r: boolean[], i: number) => {
+      r.forEach((_: boolean, j: number) => {
+      if (i < minX || i > maxX || j < minY || j > maxY) {
+        newTableValues[i][j] = vars.memTile[i][j];
+      } else {
+        newTableValues[i][j] = vars.startTile[2];
+      }
       });
-      setTableValue(newTableValues);
-    }
-  });
-
-  onMount(() => {
-    const node = tableRef().querySelector('tbody') ?? tableRef();
-    if (!node) {
-      return;
-    }
-    node.addEventListener('touchstart', handlePointerStart);
-    node.addEventListener('mousedown', handlePointerStart);
-    node.addEventListener('touchmove', handlePointerMove);
-    node.addEventListener('mouseover', handlePointerMove);
-    node.addEventListener('touchend', handlePointerEnd);
-    node.addEventListener('mouseup', handlePointerEnd);
-    onCleanup(() => {
-      node.removeEventListener('touchstart', handlePointerStart);
-      node.removeEventListener('mousedown', handlePointerStart);
-      node.removeEventListener('touchmove', handlePointerMove);
-      node.removeEventListener('mouseover', handlePointerMove);
-      node.removeEventListener('touchend', handlePointerEnd);
-      node.removeEventListener('mouseup', handlePointerEnd);
     });
+    return newTableValues;
   });
+}
 
-  return [setTableRef, tableValue];
+export function handlePointerEnd(e: Event, vars) {
+  if (e.cancelable) e.preventDefault();
+  vars.startTile = [-1, -1, false];
 }
