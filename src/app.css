@@ -34,7 +34,7 @@ html, body{
   padding: 0;
   -webkit-touch-callout: none;
   font-family: "'Gowun Dodum'";
-  touch-action: manipulation;
+  touch-action: none;
   overflow: hidden;
   overscroll-behavior: none;
 }

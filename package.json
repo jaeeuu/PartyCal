@@ -13,7 +13,7 @@
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.13.6",
     "@solidjs/start": "^1.0.2",
-    "@stylexjs/stylex": "^0.7.4",
+    "@stylexjs/stylex": "^0.7.5",
     "date-fns": "^3.6.0",
     "nanoid": "^5.0.7",
     "solid-js": "^1.8.18",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
-    "@stylexjs/eslint-plugin": "^0.7.4",
+    "@stylexjs/eslint-plugin": "^0.7.5",
     "@typescript-eslint/parser": "^7.14.1",
     "eslint": "^9.6.0",
     "eslint-plugin-solid": "^0.14.1",

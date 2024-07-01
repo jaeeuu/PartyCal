@@ -13,6 +13,8 @@ function getTileIndex(e: Event) {
     target = document.elementFromPoint(clientX, clientY);
   } else if (isMouseEvent(e)) {
     target = e.target;
+  } else {
+    return [-1, -1];
   }
   const x = parseInt(target.dataset.row, 10);
   const y = parseInt(target.dataset.col, 10);
@@ -47,6 +49,7 @@ export function handlePointerMove(e: Event, vars, setTile) {
     setTile([...vars.memTile]);
     return;
   }
+
   const minX = Math.min(vars.startTile[0], x);
   const maxX = Math.max(vars.startTile[0], x);
   const minY = Math.min(vars.startTile[1], y);
