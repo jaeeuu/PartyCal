@@ -16,7 +16,6 @@ const addStyles = stylex.create({
     overflow: "hidden",
     userSelect: "none",
     cursor: "pointer",
-    // touchAction: "none",
   },
   box2: {
     background: "#f3f3f3",
