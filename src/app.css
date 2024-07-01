@@ -13,25 +13,26 @@
   font-style: normal;
   font-display: block;
   font-weight: 400;
-  src: url(./fonts/gowun-dodum-korean-400-normal.woff2) format('woff2');
+  src: url(../fonts/gowun-dodum-korean-400-normal.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Gowun Dodum';
   font-style: normal;
   font-display: block;
   font-weight: 400;
-  src: url(./fonts/gowun-dodum-latin-400-normal.woff2) format('woff2');
+  src: url(../fonts/gowun-dodum-latin-400-normal.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Gowun Dodum';
   font-style: normal;
   font-display: block;
   font-weight: 700;
-  src: url(./fonts/gowun-dodum-bold.woff2) format('woff2');
+  src: url(../fonts/gowun-dodum-bold.woff2) format('woff2');
 }
 html, body{
   margin: 0;
   padding: 0;
+  font-family: 'Gowun Dodum';
   -webkit-touch-callout: none;
   touch-action: manipulation;
   overflow: hidden;

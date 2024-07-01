@@ -8,14 +8,15 @@ import { getMonth } from 'date-fns';
 
 const addStyles = stylex.create({
   title: {
-    fontSize: "30px",
-    width: "100%",
-    padding: "0px 0px 0px 20px",
-    fontFamily: "'Gowun Dodum'",
-    fontWeight: 400,
+    fontSize: "25px",
+    margin: "0px 0px 20px 20px",
+    alignSelf: "flex-start",
+  },
+  seroBox: {
+    width: "min(700px, 100%)",
   },
   box: {
-    width: "min(700px, 100%)",
+    width: "100%",
     userSelect: "none",
     display: "grid",
     gridTemplateRows: "repeat(6, 1fr)",
@@ -30,44 +31,46 @@ const addStyles = stylex.create({
   },
   boxTile: {
     background: "rgba(255, 255, 255, 0.5)",
-    aspectRatio: "1 / 1",
+    aspectRatio: "1 / 1.2",
     borderRadius: "12px",
     color: "#575757",
     padding: "5px 0px 0px 10px",
     cursor: "pointer",
     touchAction: "manipulation",
+    transition: "transform 0.5s ease"
   },
   boxActive: {
     background: "#9AC5F4",
+    transform: "scale(0.95)",
   },
   boxOut: {
     opacity: 0.5,
     pointerEvents: "none",
     cursor: "default",
-    background: "#f0f0f0"
-  },
-  text: {
-    width: "100%",
-    wordWrap: "break-word",
+    background: "#f0f0f0",
+    transform: "scale(1)",
   },
   buttonBox: {
+    width: "80%",
     marginTop: "30px",
-    gap: "20px",
+    gap: "30px",
   },
   buttons: {
-    padding: "10px 20px 10px 20px",
+    width: "100px",
+    height: "50px",
   }
 });
 
 export default function New() {
-  const [tile, setTile] = createSignal([
+  const initialTile = [
     [false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false],
-  ]);
+  ];
+  const [tile, setTile] = createSignal(initialTile);
   const [calender, monthIndex] = getCalender(0);
   const [cal, setCal] = createSignal(calender);
   const [monIndex, setMonIndex] = createSignal<[number, number]>(monthIndex);
@@ -84,40 +87,43 @@ export default function New() {
     const [calender, monthIndex] = getCalender(mon());
     setCal(calender);
     setMonIndex(monthIndex);
+    setTile(initialTile);
   });
   
   return (
     <div {...stylex.attrs(baseStyles.plain, flexStyles.sero, flexStyles.center)}>
-      <div {...stylex.attrs(addStyles.box)}>
+      <div {...stylex.attrs(flexStyles.sero, addStyles.seroBox)}>
         <div {...stylex.attrs(addStyles.title)}>{`${thisMonth + mon()} 월`}</div>
-        <Index each={tile()}>
-          {(row, rowIndex) => (
-            <div {...stylex.attrs(addStyles.boxLine)}>
-              <Index each={row()}>
-                {(col, colIndex) => (
-                  <div
-                    {...stylex.attrs(
-                      addStyles.boxTile,
-                      col() && addStyles.boxActive,
-                      (rowIndex * 7 + colIndex) < monIndex()[0] && addStyles.boxOut,
-                      (rowIndex * 7 + colIndex) > monIndex()[1] && addStyles.boxOut,
-                    )}
-                    data-row={rowIndex}
-                    data-col={colIndex}
-                    onPointerDown={(e) => handlePointerStart(e, tileVars, setTile)}
-                    onMouseOver={(e) => handlePointerMove(e, tileVars, setTile)}
-                    onTouchMove={(e) => handlePointerMove(e, tileVars, setTile)}
-                    onPointerUp={(e) => handlePointerEnd(e, tileVars)}
-                  >{cal()[rowIndex][colIndex]}</div>
-                )}
-              </Index>
-            </div>
-          )}
-        </Index>
-      </div>
-      <div {...stylex.attrs(flexStyles.garo, addStyles.buttonBox)}>
-        <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, addStyles.buttons)} onClick={() => setMon((prev) => prev - 1)}>이전 달</button>
-        <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, addStyles.buttons)} onClick={() => setMon((prev) => prev + 1)}>다음 달</button>
+        <div {...stylex.attrs(addStyles.box)}>
+          <Index each={tile()}>
+            {(row, rowIndex) => (
+              <div {...stylex.attrs(addStyles.boxLine)}>
+                <Index each={row()}>
+                  {(col, colIndex) => (
+                    <div
+                      {...stylex.attrs(
+                        addStyles.boxTile,
+                        col() && addStyles.boxActive,
+                        (rowIndex * 7 + colIndex) < monIndex()[0] && addStyles.boxOut,
+                        (rowIndex * 7 + colIndex) > monIndex()[1] && addStyles.boxOut,
+                      )}
+                      data-row={rowIndex}
+                      data-col={colIndex}
+                      onPointerDown={(e) => handlePointerStart(e, tileVars, setTile)}
+                      onMouseOver={(e) => handlePointerMove(e, tileVars, setTile)}
+                      onTouchMove={(e) => handlePointerMove(e, tileVars, setTile)}
+                      onPointerUp={(e) => handlePointerEnd(e, tileVars)}
+                    >{cal()[rowIndex][colIndex]}</div>
+                  )}
+                </Index>
+              </div>
+            )}
+          </Index>
+        </div>
+        <div {...stylex.attrs(flexStyles.center, addStyles.buttonBox)}>
+          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, addStyles.buttons)} onClick={() => setMon((prev) => prev - 1)}>이전 달</button>
+          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, addStyles.buttons)} onClick={() => setMon((prev) => prev + 1)}>다음 달</button>
+        </div>
       </div>
     </div>
   );
