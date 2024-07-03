@@ -1,8 +1,8 @@
 // import { createTileDrag } from '../components/tileDrag';
 import { Index, createEffect, createSignal } from 'solid-js';
 import stylex from '@stylexjs/stylex';
-import { baseStyles, flexStyles, interactStyles } from '~/common/group.stylex';
-import { handlePointerEnd, handlePointerMove, handlePointerStart } from '~/components/tileDrag';
+import { baseStyles, flexStyles, interactStyles } from '../common/groups.stylex';
+import { handlePointerEnd, handlePointerMove, handlePointerStart } from '../components/tileDrag';
 import getCalender from '~/common/getCalender';
 import { addMonths, getMonth, getYear } from 'date-fns';
 
