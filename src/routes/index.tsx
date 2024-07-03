@@ -3,7 +3,12 @@ import { baseStyles, flexStyles, interactStyles } from '../common/groups.stylex'
 import { Title } from "@solidjs/meta";
 import { useNavigate } from '@solidjs/router';
 
-const addStyles = stylex.create({
+const inStyles = stylex.create({
+  box1: {
+    backgroundColor: "#fff",
+    padding: "30px",
+    borderRadius: "12px",
+  },
   buttonBox: {
     width: "200px",
     gap: "50px",
@@ -21,18 +26,17 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <main>
-      <Title>PartyCal</Title>
-      <div {...stylex.attrs(baseStyles.plain, flexStyles.center)}>
-        <div {...stylex.attrs(flexStyles.sero, addStyles.buttonBox)}>
-          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, addStyles.button)} onClick={()=>navigate("/s/test")}>
+    <div {...stylex.attrs(baseStyles.plain, flexStyles.center)}>
+      <div {...stylex.attrs(flexStyles.center, inStyles.box1)}>
+        <div {...stylex.attrs(flexStyles.sero, inStyles.buttonBox)}>
+          {/* <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, inStyles.button)} onClick={()=>navigate("/s/test")}>
             JOIN WITH CODE
-          </button>
-          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, addStyles.button)} onClick={()=>navigate("/new")}>
-            MAKE NEW
+          </button> */}
+          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, inStyles.button)} onClick={()=>navigate("/new")}>
+            날짜 투표 만들기
           </button>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -6,7 +6,7 @@ import { handlePointerEnd, handlePointerMove, handlePointerStart } from '../comp
 import getCalender from '~/common/getCalender';
 import { addMonths, getMonth, getYear } from 'date-fns';
 
-const addStyles = stylex.create({
+const inStyles = stylex.create({
   title: {
     fontSize: "25px",
     margin: "0px 0px 20px 20px",
@@ -39,6 +39,10 @@ const addStyles = stylex.create({
   
     gridTemplateColumns: "repeat(7, 1fr)",
     placeItems: "stretch",
+    // webkitTouchCallout: "none",
+    touchAction: "manipulation",
+    overscrollBehavior: "none",
+    overflow: "hidden",
   },
   boxTile: {
     backgroundColor: "rgba(255, 255, 255, 0.5)",
@@ -107,17 +111,17 @@ export default function New2() {
   
   return (
     <div {...stylex.attrs(baseStyles.plain, flexStyles.sero, flexStyles.center)}>
-      <div {...stylex.attrs(flexStyles.sero, addStyles.seroBox)}>
-        <div {...stylex.attrs(addStyles.title)}>{`${getYear(thisDate())}년 ${getMonth(thisDate())+1}월`}</div>
-        <div {...stylex.attrs(addStyles.box)}>
+      <div {...stylex.attrs(flexStyles.sero, inStyles.seroBox)}>
+        <div {...stylex.attrs(inStyles.title)}>{`${getYear(thisDate())}년 ${getMonth(thisDate())+1}월`}</div>
+        <div {...stylex.attrs(inStyles.box)}>
           <Index each={tile()}>
             {(item, itemIndex) => (
               <div
                 {...stylex.attrs(
-                  addStyles.boxTile,
-                  item() && addStyles.boxActive,
-                  itemIndex < monIndex()[0] && addStyles.boxOut,
-                  itemIndex > monIndex()[1] && addStyles.boxOut,
+                  inStyles.boxTile,
+                  item() && inStyles.boxActive,
+                  itemIndex < monIndex()[0] && inStyles.boxOut,
+                  itemIndex > monIndex()[1] && inStyles.boxOut,
                 )}
                 data-index={itemIndex}
                 onPointerDown={(e) => handlePointerStart(e, tileState, setTile)}
@@ -128,9 +132,9 @@ export default function New2() {
             )}
           </Index>
         </div>
-        <div {...stylex.attrs(flexStyles.center, addStyles.buttonBox)}>
-          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, addStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, -1))}>이전 달</button>
-          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, addStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, 1))}>다음 달</button>
+        <div {...stylex.attrs(flexStyles.center, inStyles.buttonBox)}>
+          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, inStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, -1))}>이전 달</button>
+          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, inStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, 1))}>다음 달</button>
         </div>
       </div>
     </div>
