@@ -1,3 +1,5 @@
+import stylex from '@stylexjs/stylex';
+
 export default function New() {
   return (
     <div>
