@@ -60,6 +60,9 @@ importers:
       vite-plugin-stylex:
         specifier: ^0.10.0
         version: 0.10.0(@stylexjs/stylex@0.7.5)(vite@5.3.2(@types/node@20.14.9)(terser@5.31.1))
+      vite-plugin-stylex-dev:
+        specifier: 0.8.0
+        version: 0.8.0(rollup@4.18.0)
 
 packages:
 
@@ -993,11 +996,17 @@ packages:
   '@solidjs/start@1.0.2':
     resolution: {integrity: sha512-SRoFvSnL47O1hg4/Er2es2AVoOWRdGBm0C8h2KsHFjbiRe1r2AxsONHR9job+Hmzbl5icSaGmNoXoQ8qpTy4UA==}
 
+  '@stylex-extend/babel-plugin@0.3.3':
+    resolution: {integrity: sha512-QoKK/1VwCvEtuFmmrZp9UKJ1/hFq0aMFRe4L4IsULNUmDWjLMBsQe3UXs/JhHjCo1EZ/rc88eCXjAAU0KWf1ZA==}
+
   '@stylexjs/babel-plugin@0.7.5':
     resolution: {integrity: sha512-KirLQIaOVHpuSZT37qV19Pw8x4te5x6hZ90+2VsrJ4NzwyYFpovlMNsTeT+eE9mcdp84VksIi7QnrNpMvqBJMQ==}
 
   '@stylexjs/eslint-plugin@0.7.5':
     resolution: {integrity: sha512-FLKsjfmPbnXXFHcBuB0HwzwQRftlNejA+yzfBOE5fBjXZnzQZyKTJzMrI29c89FpyPr+jd4F0X1RUJrGNj2Jfg==}
+
+  '@stylexjs/shared@0.5.1':
+    resolution: {integrity: sha512-3kuvLfPr1P5lbLjvtEjXmJxyBOygudhH93DA8OtNnb0H3bQjDZJQqaR/Pde67tlsdbqU5pFuaeueKkZhnuurzA==}
 
   '@stylexjs/shared@0.7.5':
     resolution: {integrity: sha512-B357xldr9Dh3tP646P0JKNnarxy5ei4mkZh1qQmuhgGewbaVcrD8jiEWH3WjEzRrBKfmJtcTxBC3xp507u7O4A==}
@@ -2800,6 +2809,9 @@ packages:
   styleq@0.1.3:
     resolution: {integrity: sha512-3ZUifmCDCQanjeej1f6kyl/BeP/Vae5EYkQ9iJfUm/QwZvlgnZzyflqAsAWYURdtea8Vkvswu2GrC57h3qffcA==}
 
+  stylis@4.3.2:
+    resolution: {integrity: sha512-bhtUjWd/z6ltJiQwg0dUfxEJ+W+jdqQd8TbWLWyeIJHlnsqmGLRFFd8e5mA0AZi/zx90smXRlN66YMTcaSFifg==}
+
   supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
@@ -3053,6 +3065,9 @@ packages:
     peerDependenciesMeta:
       '@testing-library/jest-dom':
         optional: true
+
+  vite-plugin-stylex-dev@0.8.0:
+    resolution: {integrity: sha512-Zcx3Yd85ZQeUHeUEX0GqO+/0mfDiK8VAmZjCFWbqiEa03/HToBZxGElCMSu7kV8Yz9+Vdjhzk55XFBGV8LL2Ew==}
 
   vite-plugin-stylex@0.10.0:
     resolution: {integrity: sha512-XW6yQToKq4nKcDz48lubqte5FtefByZPb0P1wd6mvIxiqp2gkoSjZRjS2ya70A7L4N02VD0+SuzyhhARh2Ysaw==}
@@ -4025,6 +4040,14 @@ snapshots:
       - vinxi
       - vite
 
+  '@stylex-extend/babel-plugin@0.3.3':
+    dependencies:
+      '@babel/core': 7.24.7
+      '@stylexjs/shared': 0.5.1
+      stylis: 4.3.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@stylexjs/babel-plugin@0.7.5':
     dependencies:
       '@babel/core': 7.24.7
@@ -4039,6 +4062,10 @@ snapshots:
   '@stylexjs/eslint-plugin@0.7.5':
     dependencies:
       micromatch: 4.0.7
+
+  '@stylexjs/shared@0.5.1':
+    dependencies:
+      postcss-value-parser: 4.2.0
 
   '@stylexjs/shared@0.7.5':
     dependencies:
@@ -6039,6 +6066,8 @@ snapshots:
 
   styleq@0.1.3: {}
 
+  stylis@4.3.2: {}
+
   supports-color@5.5.0:
     dependencies:
       has-flag: 3.0.0
@@ -6347,6 +6376,16 @@ snapshots:
       vite: 5.3.2(@types/node@20.14.9)(terser@5.31.1)
       vitefu: 0.2.5(vite@5.3.2(@types/node@20.14.9)(terser@5.31.1))
     transitivePeerDependencies:
+      - supports-color
+
+  vite-plugin-stylex-dev@0.8.0(rollup@4.18.0):
+    dependencies:
+      '@babel/core': 7.24.7
+      '@rollup/pluginutils': 5.1.0(rollup@4.18.0)
+      '@stylex-extend/babel-plugin': 0.3.3
+      '@stylexjs/babel-plugin': 0.7.5
+    transitivePeerDependencies:
+      - rollup
       - supports-color
 
   vite-plugin-stylex@0.10.0(@stylexjs/stylex@0.7.5)(vite@5.3.2(@types/node@20.14.9)(terser@5.31.1)):
