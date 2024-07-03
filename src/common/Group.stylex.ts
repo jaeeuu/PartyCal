@@ -6,13 +6,13 @@ export const baseStyles = stylex.create({
     borderStyle: "none",
     outlineStyle: "none",
     borderRadius: "12.5px",
-    fontFamily: "'Gowun Dodum'",
+    fontFamily: "'basicfont'",
   },
   input: {
     userSelect: "auto",
     overflow: "hidden",
     "::placeholder": {
-      fontFamily: "'Gowun Dodum'",
+      fontFamily: "'basicfont'",
       color: "#cfcfd0",
     },
   },

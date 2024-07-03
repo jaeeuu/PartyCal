@@ -1,5 +1,5 @@
 import stylex from '@stylexjs/stylex';
-import { baseStyles, flexStyles, interactStyles } from '../common/Group.stylex';
+import { baseStyles, flexStyles, interactStyles } from '../common/group.stylex';
 import { Title } from "@solidjs/meta";
 import { useNavigate } from '@solidjs/router';
 
@@ -11,7 +11,7 @@ const addStyles = stylex.create({
   button: {
     width: "100%",
     aspectRatio: "4/1",
-    // fontFamily: "'Gowun Dodum'",
+    // fontFamily: "'basicfont'",
     // padding: "10px 20px 10px 20px",
     fontSize: "16px",
   },
