@@ -1,7 +1,6 @@
-import { addMonths, endOfMonth, getDate, getDay, getDaysInMonth, startOfMonth, startOfWeek } from 'date-fns';
+import { endOfMonth, getDate, getDay, getDaysInMonth, startOfMonth, startOfWeek } from 'date-fns';
 
-export default function getCalender(setMonth: number = 0): [number[][], [number, number], Date]{
-  const thisDate = addMonths(new Date(), setMonth);
+export default function getCalender(thisDate: Date = new Date()): [number[], [number, number]]{
   const thisStart = startOfMonth(thisDate);
   const thisEnd = endOfMonth(thisDate);
 
@@ -26,6 +25,6 @@ export default function getCalender(setMonth: number = 0): [number[][], [number,
 
   thisMonthIndex[1] = 42 - nextLength - 1;
 
-  const resultList: number[][] = Array.from({ length: 6 }, (_, i) => result.slice(i * 7, i * 7 + 7));
-  return [resultList, thisMonthIndex, thisDate];
+  // const resultList: number[][] = Array.from({ length: 6 }, (_, i) => result.slice(i * 7, i * 7 + 7));
+  return [result, thisMonthIndex];
 }
