@@ -41,6 +41,7 @@ const inStyles = stylex.create({
     width: "100%",
     padding: "17px",
     margin: "40px 0px 0px 0px",
+    fontWeight: 600,
   },
   box2_1title: {
     color: "#333e4b",
@@ -62,7 +63,7 @@ const inStyles = stylex.create({
     color: "#4e5a68",
     padding: "20px",
     flexGrow: 1,
-    fontWeight: 600,
+    fontWeight: 500,
     lineHeight: "1.5",
     position: "relative",
   },//#6b7784 below text color
@@ -99,6 +100,10 @@ const inStyles = stylex.create({
     width: "16px",
     height: "16px",
     color: "#B0B8C1",
+  },
+  leftover: {
+    width: "100%",
+    height: "500px",
   }
 });
 
@@ -148,6 +153,9 @@ export default function Home() {
               <ArrowRightSvg {...stylex.attrs(inStyles.box2_3image2)}/>
             </div>
           </div>
+        </div>
+        <div {...stylex.attrs(inStyles.leftover)}>
+          &nbsp;
         </div>
       </div>
     </div>

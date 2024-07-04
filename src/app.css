@@ -15,8 +15,8 @@ html, body{
   -webkit-touch-callout: none;
   user-select: none;
   overscroll-behavior: none;
-  touch-action: manipulation;
-  overflow: hidden;
+  /* touch-action: manipulation;
+  overflow: hidden; */
 }
 * {
   box-sizing: border-box;
