@@ -1,5 +1,5 @@
 import stylex from '@stylexjs/stylex';
-import { baseStyles, flexStyles, interactStyles } from '../common/Group.stylex';
+import { baseStyles, flexStyles, interactStyles } from '../common/group-styles';
 import { Title } from "@solidjs/meta";
 import { useNavigate } from '@solidjs/router';
 
