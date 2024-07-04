@@ -1,10 +1,10 @@
 // import { createTileDrag } from '../components/tileDrag';
 import { Index, createEffect, createSignal } from 'solid-js';
 import stylex from '@stylexjs/stylex';
-import { baseStyles, flexStyles, interactStyles } from '../common/groups.stylex';
 import { handlePointerEnd, handlePointerMove, handlePointerStart } from '../components/tileDrag';
 import getCalender from '~/common/getCalender';
 import { addMonths, getMonth, getYear } from 'date-fns';
+import { baseStyles, flexStyles } from '~/common/share-styles';
 
 const inStyles = stylex.create({
   title: {
@@ -13,24 +13,11 @@ const inStyles = stylex.create({
     alignSelf: "flex-start",
   },
   seroBox: {
-    width: {
-      default: "min(700px, 100%)",
-      "@media (hover: hover)": null,
-    },
-    height: {
-      default: null,
-      "@media (hover: hover)": "100%",
-    }
+    width: "min(700px, 100%)",
   },
   box: {
-    width: {
-      default: "100%",
-      "@media (hover: hover)": null,
-    },
-    height: {
-      default: null,
-      "@media (hover: hover)": "100%",
-    },
+    width: "100%",
+    height: "100%",
     userSelect: "none",
     display: "grid",
     gridTemplateRows: "repeat(6, 1fr)",
@@ -40,9 +27,9 @@ const inStyles = stylex.create({
     gridTemplateColumns: "repeat(7, 1fr)",
     placeItems: "stretch",
     // webkitTouchCallout: "none",
-    touchAction: "manipulation",
-    overscrollBehavior: "none",
-    overflow: "hidden",
+    // touchAction: "manipulation",
+    // overscrollBehavior: "none",
+    // overflow: "hidden",
   },
   boxTile: {
     backgroundColor: "rgba(255, 255, 255, 0.5)",
@@ -74,8 +61,6 @@ const inStyles = stylex.create({
     transform: "scale(1)",
   },
   buttonBox: {
-    width: "100%",
-    height: "100%",
     marginTop: "30px",
     marginBottom: "30px",
     gap: "30px",
@@ -110,7 +95,7 @@ export default function New2() {
   });
   
   return (
-    <div {...stylex.attrs(baseStyles.plain, flexStyles.sero, flexStyles.center)}>
+    <div {...stylex.attrs(baseStyles.root, flexStyles.sero, flexStyles.center)}>
       <div {...stylex.attrs(flexStyles.sero, inStyles.seroBox)}>
         <div {...stylex.attrs(inStyles.title)}>{`${getYear(thisDate())}년 ${getMonth(thisDate())+1}월`}</div>
         <div {...stylex.attrs(inStyles.box)}>
@@ -133,8 +118,8 @@ export default function New2() {
           </Index>
         </div>
         <div {...stylex.attrs(flexStyles.center, inStyles.buttonBox)}>
-          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, inStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, -1))}>이전 달</button>
-          <button {...stylex.attrs(baseStyles.common, baseStyles.button, interactStyles.button, inStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, 1))}>다음 달</button>
+          <button {...stylex.attrs(baseStyles.button2, inStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, -1))}>이전 달</button>
+          <button {...stylex.attrs(baseStyles.button1, inStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, 1))}>다음 달</button>
         </div>
       </div>
     </div>
