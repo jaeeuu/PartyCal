@@ -14,7 +14,8 @@ html, body{
   font-family: 'basicfont';
   -webkit-touch-callout: none;
   user-select: none;
-  overscroll-behavior: none;
+  scroll-behavior: smooth;
+  /* overscroll-behavior: none; */
   /* touch-action: manipulation;
   overflow: hidden; */
 }

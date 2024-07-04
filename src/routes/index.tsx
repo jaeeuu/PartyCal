@@ -101,10 +101,6 @@ const inStyles = stylex.create({
     height: "16px",
     color: "#B0B8C1",
   },
-  leftover: {
-    width: "100%",
-    height: "100px",
-  }
 });
 
 export default function Home() {
@@ -153,9 +149,6 @@ export default function Home() {
               <ArrowRightSvg {...stylex.attrs(inStyles.box2_3image2)}/>
             </div>
           </div>
-        </div>
-        <div {...stylex.attrs(inStyles.leftover)}>
-          &nbsp;
         </div>
       </div>
     </div>

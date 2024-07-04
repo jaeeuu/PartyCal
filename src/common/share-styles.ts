@@ -140,7 +140,7 @@ export const baseStyles = stylex.create({
   },
   root: {
     width: "100svw",
-    // height: "100lvh",
+    height: "max(100lvh, 750px)",
     position: 'relative',
     background: "#F2F4F6",
     padding: "20px",
