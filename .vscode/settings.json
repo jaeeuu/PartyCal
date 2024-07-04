@@ -11,4 +11,5 @@
     ".test/**": true,
   },
   "css.lint.unknownAtRules": "ignore",
+  "svg.preview.background": "transparent",
 }

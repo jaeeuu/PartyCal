@@ -2,7 +2,7 @@
 import { Index, createEffect, createSignal } from 'solid-js';
 import stylex from '@stylexjs/stylex';
 import { handlePointerEnd, handlePointerMove, handlePointerStart } from '../components/tileDrag';
-import getCalender from '~/common/getCalender';
+import getCalendar from '~/common/getCalendar';
 import { addMonths, getMonth, getYear } from 'date-fns';
 import { baseStyles, flexStyles } from '~/common/share-styles';
 
@@ -78,7 +78,7 @@ export default function New2() {
   const mountDate = new Date();
   const [thisDate, setThisDate] = createSignal<Date>(mountDate);
 
-  const [calender, monthIndex] = getCalender(mountDate);
+  const [calender, monthIndex] = getCalendar(mountDate);
   const [cal, setCal] = createSignal<number[]>(calender);
   const [monIndex, setMonIndex] = createSignal<[number, number]>(monthIndex);
 
@@ -88,7 +88,7 @@ export default function New2() {
   };
 
   createEffect(() => {
-    const [calender, monthIndex] = getCalender(thisDate());
+    const [calender, monthIndex] = getCalendar(thisDate());
     setCal(calender);
     setMonIndex(monthIndex);
     setTile(initialTile);

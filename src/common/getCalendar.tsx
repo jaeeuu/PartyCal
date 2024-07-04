@@ -1,6 +1,6 @@
 import { endOfMonth, getDate, getDay, getDaysInMonth, startOfMonth, startOfWeek } from 'date-fns';
 
-export default function getCalender(thisDate: Date = new Date()): [number[], [number, number]]{
+export default function getCalendar(thisDate: Date = new Date()): [number[], [number, number]]{
   const thisStart = startOfMonth(thisDate);
   const thisEnd = endOfMonth(thisDate);
 
