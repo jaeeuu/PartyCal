@@ -118,7 +118,9 @@ export default function Home() {
           PartyCal
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, inStyles.boxIn)}>
-          <img {...stylex.attrs(inStyles.box1image)} src="/images/calendar-3d.avif" />
+          <picture {...stylex.attrs(inStyles.box1image)}>
+            <source srcset="/images/calendar-3d.avif" type="image/avif">
+          </picture>
           <button {...stylex.attrs(baseStyles.button1, inStyles.box1button)} onClick={()=>navigate("/new")}>
             날짜 투표 만들기
           </button>
