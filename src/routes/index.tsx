@@ -22,7 +22,7 @@ const inStyles = stylex.create({
     width: "25px",
     height: "25px",
     color: "rgb(177, 184, 192)",
-    margin: "2px 0px 0px 0px",
+    //margin: "0px 0px 0px 0px",
   },
   boxCase: {
     width: "min(500px, 100%)",
@@ -103,7 +103,7 @@ const inStyles = stylex.create({
   },
   leftover: {
     width: "100%",
-    height: "200px",
+    height: "100px",
   }
 });
 
@@ -118,7 +118,7 @@ export default function Home() {
           PartyCal
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, inStyles.boxIn)}>
-          <img {...stylex.attrs(inStyles.box1image)} src="/images/calendar-3d-fix.avif" decoding="async" loading="eager" />
+          <img {...stylex.attrs(inStyles.box1image)} src="/images/calendar-3d-fix.avif" loading="eager" />
           <button {...stylex.attrs(baseStyles.button1, inStyles.box1button)} onClick={()=>navigate("/new")}>
             날짜 투표 만들기
           </button>
