@@ -8,7 +8,7 @@ export default defineConfig({
     plugins: [solidSvg(), styleX()],
     resolve: {
       alias: {
-        "@public": resolve("public"), 
+        "@fonts": resolve("src/fonts"),
       }
     }
   },

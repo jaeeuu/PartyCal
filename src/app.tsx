@@ -2,10 +2,10 @@ import { MetaProvider, Title } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
-import "./styles/basicfontre400.css";
-import "./styles/basicfontre500.css";
-import "./styles/basicfontre600.css";
-import "./styles/basicfontre700.css";
+import "./fonts/css/basicfontre400.css";
+import "./fonts/css/basicfontre500.css";
+import "./fonts/css/basicfontre600.css";
+import "./fonts/css/basicfontre700.css";
 import "./app.css";
 
 
