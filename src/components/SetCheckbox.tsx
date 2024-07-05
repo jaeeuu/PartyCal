@@ -2,7 +2,7 @@ import stylex from '@stylexjs/stylex';
 import { Show } from 'solid-js';
 import { flexStyles, shareStyles } from '../common/share-styles';
 
-const inStyles = stylex.create({
+const ixStyles = stylex.create({
     box: {
       padding: '8px',
       borderRadius: '13px',
@@ -29,7 +29,7 @@ export default function SetCheckbox(props){
 
 return (
   <div
-    {...stylex.attrs(flexStyles.garo, inStyles.box, shareStyles.interact, !!props.disabled && shareStyles.disabled)}
+    {...stylex.attrs(flexStyles.garo, ixStyles.box, shareStyles.interact, !!props.disabled && shareStyles.disabled)}
     onClick={() => props.setValue()}
   >
     <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -43,8 +43,8 @@ return (
       />
       <path
         {...stylex.attrs(
-          inStyles.path2,
-          props.value && inStyles.path2Checked
+          ixStyles.path2,
+          props.value && ixStyles.path2Checked
         )}
         d="M4.02 13.47 8.52 17.956 19.45 6.99"
         fill="none"
@@ -55,7 +55,7 @@ return (
         stroke-dasharray="22"
       />
     </svg>
-    <Show when={!!props.text}><div {...stylex.attrs(inStyles.text)}>{props.text}</div></Show>
+    <Show when={!!props.text}><div {...stylex.attrs(ixStyles.text)}>{props.text}</div></Show>
   </div>
 );
 }

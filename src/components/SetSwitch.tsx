@@ -2,7 +2,7 @@ import stylex from '@stylexjs/stylex';
 import { createSignal } from 'solid-js';
 import { flexStyles, shareStyles } from '../common/share-styles';
 
-const inStyles = stylex.create({
+const ixStyles = stylex.create({
   box: {
     borderRadius: "14px",
     padding: "10px",
@@ -62,7 +62,7 @@ export default function SetSwitch(props){
 
   return(
     <div
-      {...stylex.attrs(flexStyles.garo, inStyles.box, shareStyles.interact, !!props.disabled && shareStyles.disabled)}
+      {...stylex.attrs(flexStyles.garo, ixStyles.box, shareStyles.interact, !!props.disabled && shareStyles.disabled)}
       onClick={() => {setActive(false); props.setValue();}}
       onMouseDown={()=> setActive(true)}
       onMouseLeave={()=> setActive(false)}
@@ -70,13 +70,13 @@ export default function SetSwitch(props){
       onTouchCancel={()=> setActive(false)}
     >
       <div 
-        {...stylex.attrs(inStyles.switch, inStyles.switchOut,
-          (active() && !props.value) && inStyles.switchOutActive,
-          (!active() && props.value) && inStyles.switchOutChecked,
-          (active() && props.value) && inStyles.switchOutCheckedActive,
+        {...stylex.attrs(ixStyles.switch, ixStyles.switchOut,
+          (active() && !props.value) && ixStyles.switchOutActive,
+          (!active() && props.value) && ixStyles.switchOutChecked,
+          (active() && props.value) && ixStyles.switchOutCheckedActive,
         )}
       >
-        <div {...stylex.attrs(inStyles.switch, inStyles.switchIn, props.value && inStyles.switchInChecked)}>
+        <div {...stylex.attrs(ixStyles.switch, ixStyles.switchIn, props.value && ixStyles.switchInChecked)}>
           &nbsp;
         </div>
       </div>

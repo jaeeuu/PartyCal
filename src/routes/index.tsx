@@ -10,7 +10,7 @@ import calenderImage from '../assets/images/calendar-3d-fix.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
 import logoImage from '../assets/logo_image_2.avif';
 
-const inStyles = stylex.create({
+const ixStyles = stylex.create({
   title: {
     alignSelf: "flex-start",
     margin: "0px 0px 0px 20px",
@@ -110,45 +110,45 @@ export default function Home() {
 
   return (
     <div {...stylex.attrs(baseStyles.root, flexStyles.sero)}>
-      <div {...stylex.attrs(inStyles.boxCase)}>
-        <div {...stylex.attrs(inStyles.title, flexStyles.garo)}>
-          <img {...stylex.attrs(inStyles.titleImage)} src={logoImage} />
-          <LogoTextSvg {...stylex.attrs(inStyles.titleText)}/>
+      <div {...stylex.attrs(ixStyles.boxCase)}>
+        <div {...stylex.attrs(ixStyles.title, flexStyles.garo)}>
+          <img {...stylex.attrs(ixStyles.titleImage)} src={logoImage} />
+          <LogoTextSvg {...stylex.attrs(ixStyles.titleText)}/>
         </div>
-        <div {...stylex.attrs(flexStyles.sero, flexStyles.center, inStyles.boxIn)}>
-          <img {...stylex.attrs(inStyles.box1image)} src={calenderImage}/>
-          <button {...stylex.attrs(baseStyles.button1, inStyles.box1button)} onClick={()=>navigate("/new")}>
+        <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn)}>
+          <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage}/>
+          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>navigate("/new")}>
             날짜 투표 만들기
           </button>
         </div>
-        <div {...stylex.attrs(flexStyles.sero, flexStyles.center, inStyles.boxIn)}>
-          <div {...stylex.attrs(flexStyles.sero, inStyles.box2_1title)}>
+        <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn)}>
+          <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_1title)}>
             메뉴 더보기
           </div>
-          <div {...stylex.attrs(flexStyles.garo, inStyles.box2_2Group)}>
-            <div {...stylex.attrs(inStyles.box2_2In, shareStyles.interact)}>
-              <CalendarEditSvg {...stylex.attrs(inStyles.box2_2Image)}/>
+          <div {...stylex.attrs(flexStyles.garo, ixStyles.box2_2Group)}>
+            <div {...stylex.attrs(ixStyles.box2_2In, shareStyles.interact)}>
+              <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)}/>
               날짜<br/>투표하기
             </div>
-            <div {...stylex.attrs(inStyles.box2_2In, shareStyles.interact)}>
-              <StatSvg {...stylex.attrs(inStyles.box2_2Image)}/>
+            <div {...stylex.attrs(ixStyles.box2_2In, shareStyles.interact)}>
+              <StatSvg {...stylex.attrs(ixStyles.box2_2Image)}/>
               투표<br/>결과보기
             </div>
           </div>
-          <div {...stylex.attrs(flexStyles.sero, inStyles.box2_3Group)}>
-            <div {...stylex.attrs(shareStyles.interact, inStyles.box2_3In, flexStyles.garo)}>
-              <div {...stylex.attrs(flexStyles.garo, inStyles.box2_3text)}>
-                <LinkSvg {...stylex.attrs(inStyles.box2_3image)}/>
+          <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_3Group)}>
+            <div {...stylex.attrs(shareStyles.interact, ixStyles.box2_3In, flexStyles.garo)}>
+              <div {...stylex.attrs(flexStyles.garo, ixStyles.box2_3text)}>
+                <LinkSvg {...stylex.attrs(ixStyles.box2_3image)}/>
                 사이트 공유하기
               </div>
-              <ArrowRightSvg {...stylex.attrs(inStyles.box2_3image2)}/>
+              <ArrowRightSvg {...stylex.attrs(ixStyles.box2_3image2)}/>
             </div>
-            <div {...stylex.attrs(shareStyles.interact, inStyles.box2_3In, flexStyles.garo)}>
-              <div {...stylex.attrs(flexStyles.garo, inStyles.box2_3text)}>
-                <RocketSvg {...stylex.attrs(inStyles.box2_3image)}/>
+            <div {...stylex.attrs(shareStyles.interact, ixStyles.box2_3In, flexStyles.garo)}>
+              <div {...stylex.attrs(flexStyles.garo, ixStyles.box2_3text)}>
+                <RocketSvg {...stylex.attrs(ixStyles.box2_3image)}/>
                 제작자 정보
               </div>
-              <ArrowRightSvg {...stylex.attrs(inStyles.box2_3image2)}/>
+              <ArrowRightSvg {...stylex.attrs(ixStyles.box2_3image2)}/>
             </div>
           </div>
         </div>
