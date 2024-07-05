@@ -1,12 +1,13 @@
 import stylex from '@stylexjs/stylex';
 import { useNavigate } from '@solidjs/router';
-import { baseStyles, flexStyles, shareStyles } from '~/common/share-styles';
+import { baseStyles, flexStyles, shareStyles } from '../common/share-styles';
 import CalendarNormalSvg from '../assets/icons/calendar_normal.svg';
 import LinkSvg from '../assets/icons/link.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
+import calenderImage from '../assets/images/calendar-3d-fix.avif';
 
 const inStyles = stylex.create({
   title: {
@@ -31,7 +32,7 @@ const inStyles = stylex.create({
     backgroundColor: "#fff",
     padding: "25px",
     margin: "20px 0px 0px 0px",
-    borderRadius: "15px",
+    borderRadius: "20px",
   },
   box1image: {
     width: "200px",
@@ -41,13 +42,13 @@ const inStyles = stylex.create({
     width: "100%",
     padding: "17px",
     margin: "40px 0px 0px 0px",
-    fontWeight: 600,
+    //fontWeight: 600,
   },
   box2_1title: {
     color: "#333e4b",
     fontSize: "16px",
     alignSelf: "flex-start",
-    fontWeight: 700,
+    fontWeight: 600,
     margin: "0px 0px 12px 7px",
   },
   box2_2Group: {
@@ -83,7 +84,7 @@ const inStyles = stylex.create({
     width: "100%",
     backgroundColor: "#fff",
     padding: "10px 10px 10px 10px",
-    borderRadius: "12px",
+    borderRadius: "15px",
     justifyContent: "space-between",
   },
   box2_3text: {
@@ -114,7 +115,7 @@ export default function Home() {
           PartyCal
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, inStyles.boxIn)}>
-          <img {...stylex.attrs(inStyles.box1image)} src="/images/calendar-3d-fix.avif" loading="eager" />
+          <img {...stylex.attrs(inStyles.box1image)} src={calenderImage} loading="eager" />
           <button {...stylex.attrs(baseStyles.button1, inStyles.box1button)} onClick={()=>navigate("/new")}>
             날짜 투표 만들기
           </button>

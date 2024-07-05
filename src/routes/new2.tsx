@@ -2,9 +2,9 @@
 import { Index, createEffect, createSignal } from 'solid-js';
 import stylex from '@stylexjs/stylex';
 import { handlePointerEnd, handlePointerMove, handlePointerStart } from '../components/tileDrag';
-import getCalendar from '~/common/getCalendar';
+import getCalendar from '../common/getCalendar';
 import { addMonths, getMonth, getYear } from 'date-fns';
-import { baseStyles, flexStyles } from '~/common/share-styles';
+import { baseStyles, flexStyles } from '../common/share-styles';
 
 const inStyles = stylex.create({
   title: {

@@ -15,6 +15,11 @@ html, body{
   -webkit-touch-callout: none;
   user-select: none;
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background-color: #F2F4F6;
+  overscroll-behavior: contain;
   /* overscroll-behavior: none; */
   /* touch-action: manipulation;
   overflow: hidden; */
@@ -23,4 +28,4 @@ html, body{
   box-sizing: border-box;
 }
 
-@stylex stylesheet;
+/* @stylex stylesheet; */
