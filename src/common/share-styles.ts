@@ -6,7 +6,7 @@ const thisStyles = stylex.create({
     borderStyle: "none",
     outlineStyle: "none",
     borderRadius: "15px",
-    fontFamily: "'basicfont'",
+    fontFamily: "'basic font'",
     fontSize: "16px",
   },
   buttons: {
@@ -82,7 +82,7 @@ const thisStyles = stylex.create({
       },
     },
     "::placeholder": {
-      fontFamily: "'basicfont'",
+      fontFamily: "'basic font'",
       color: "#cfcfd0",
     },
     userSelect: "auto",
@@ -141,7 +141,7 @@ export const baseStyles = stylex.create({
   root: {
     width: "100svw",
     // height: "max(100lvh, 750px)",
-    minHeight: "100lvh",
+    minHeight: "100dvh",
     position: 'relative',
     padding: "20px",
     //overflow: "hidden",
