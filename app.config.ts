@@ -1,11 +1,11 @@
 import { defineConfig } from "@solidjs/start/config";
 import solidSvg from 'vite-plugin-solid-svg';
-import {stylex} from "vite-plugin-stylex-dev";
+import styleX from "vite-plugin-stylex";
 import { resolve } from 'path';
 
 export default defineConfig({
   vite: {
-    plugins: [solidSvg(), stylex()],
+    plugins: [solidSvg(), styleX()],
     resolve: {
       alias: {
         "@public": resolve("public"), 
