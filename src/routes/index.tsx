@@ -1,29 +1,30 @@
 import stylex from '@stylexjs/stylex';
 import { useNavigate } from '@solidjs/router';
 import { baseStyles, flexStyles, shareStyles } from '../common/share-styles';
-import CalendarNormalSvg from '../assets/icons/calendar_normal.svg';
 import LinkSvg from '../assets/icons/link.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
 import calenderImage from '../assets/images/calendar-3d-fix.avif';
+import LogoTextSvg from '../assets/logo_text.svg';
+import logoImage from '../assets/logo_image_2.avif';
 
 const inStyles = stylex.create({
   title: {
-    fontFamily: "'Basic Font'",
-    fontSize: "24px",
-    fontWeight: 700,
     alignSelf: "flex-start",
     margin: "0px 0px 0px 20px",
-    color: "rgb(177, 184, 192)",
     gap: "10px",
+  },
+  titleText: {
+    height: "20px",
+    color: "rgb(177, 184, 192)",
   },
   titleImage: {
     width: "25px",
     height: "25px",
-    color: "rgb(177, 184, 192)",
-    //margin: "0px 0px 0px 0px",
+    opacity: 0.5,
+    pointerEvents: 'none',
   },
   boxCase: {
     width: "min(500px, 100%)",
@@ -42,13 +43,13 @@ const inStyles = stylex.create({
     width: "100%",
     padding: "17px",
     margin: "40px 0px 0px 0px",
-    //fontWeight: 600,
+    fontWeight: 500,
   },
   box2_1title: {
     color: "#333e4b",
     fontSize: "16px",
     alignSelf: "flex-start",
-    fontWeight: 600,
+    fontWeight: 700,
     margin: "0px 0px 12px 7px",
   },
   box2_2Group: {
@@ -64,7 +65,7 @@ const inStyles = stylex.create({
     color: "#4e5a68",
     padding: "20px",
     flexGrow: 1,
-    fontWeight: 500,
+    fontWeight: 600,
     lineHeight: "1.5",
     position: "relative",
   },//#6b7784 below text color
@@ -111,11 +112,11 @@ export default function Home() {
     <div {...stylex.attrs(baseStyles.root, flexStyles.sero)}>
       <div {...stylex.attrs(inStyles.boxCase)}>
         <div {...stylex.attrs(inStyles.title, flexStyles.garo)}>
-          <CalendarNormalSvg {...stylex.attrs(inStyles.titleImage)}/>
-          PartyCal
+          <img {...stylex.attrs(inStyles.titleImage)} src={logoImage} />
+          <LogoTextSvg {...stylex.attrs(inStyles.titleText)}/>
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, inStyles.boxIn)}>
-          <img {...stylex.attrs(inStyles.box1image)} src={calenderImage} loading="eager" />
+          <img {...stylex.attrs(inStyles.box1image)} src={calenderImage}/>
           <button {...stylex.attrs(baseStyles.button1, inStyles.box1button)} onClick={()=>navigate("/new")}>
             날짜 투표 만들기
           </button>
