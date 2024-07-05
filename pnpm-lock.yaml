@@ -64,8 +64,8 @@ importers:
         specifier: ^0.8.1
         version: 0.8.1(solid-js@1.8.18)(vite@5.3.3(@types/node@20.14.9)(terser@5.31.1))
       vite-plugin-stylex:
-        specifier: ^0.10.0
-        version: 0.10.0(@stylexjs/stylex@0.7.5)(vite@5.3.3(@types/node@20.14.9)(terser@5.31.1))
+        specifier: ^0.10.1
+        version: 0.10.1(@stylexjs/stylex@0.7.5)(vite@5.3.3(@types/node@20.14.9)(terser@5.31.1))
 
 packages:
 
@@ -3093,8 +3093,8 @@ packages:
   vite-plugin-stylex-dev@0.8.0:
     resolution: {integrity: sha512-Zcx3Yd85ZQeUHeUEX0GqO+/0mfDiK8VAmZjCFWbqiEa03/HToBZxGElCMSu7kV8Yz9+Vdjhzk55XFBGV8LL2Ew==}
 
-  vite-plugin-stylex@0.10.0:
-    resolution: {integrity: sha512-XW6yQToKq4nKcDz48lubqte5FtefByZPb0P1wd6mvIxiqp2gkoSjZRjS2ya70A7L4N02VD0+SuzyhhARh2Ysaw==}
+  vite-plugin-stylex@0.10.1:
+    resolution: {integrity: sha512-kO9RMdXHnUPABSvAl0dlnhmfUM4nlz46UWmOgeYMf/+hwdephEcobwVHsqFmfYTY5WHYejZWsAyRVG3hX0ElEg==}
     peerDependencies:
       '@stylexjs/stylex': ^0.7.0
       react-strict-dom: '*'
@@ -6431,7 +6431,7 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-stylex@0.10.0(@stylexjs/stylex@0.7.5)(vite@5.3.3(@types/node@20.14.9)(terser@5.31.1)):
+  vite-plugin-stylex@0.10.1(@stylexjs/stylex@0.7.5)(vite@5.3.3(@types/node@20.14.9)(terser@5.31.1)):
     dependencies:
       '@babel/core': 7.24.7
       '@babel/plugin-syntax-flow': 7.24.7(@babel/core@7.24.7)
