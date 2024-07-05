@@ -11,7 +11,7 @@ import calenderImage from '../assets/images/calendar-3d-fix.avif';
 
 const inStyles = stylex.create({
   title: {
-    fontFamily: "' basic font'",
+    fontFamily: "'Basic Font'",
     fontSize: "24px",
     fontWeight: 700,
     alignSelf: "flex-start",
