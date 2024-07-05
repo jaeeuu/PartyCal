@@ -7,6 +7,7 @@ import "./styles/basicfontre500.css";
 import "./styles/basicfontre600.css";
 import "./styles/basicfontre700.css";
 import "./app.css";
+import 'virtual:stylex.css';
 
 export default function App() {
   return (
