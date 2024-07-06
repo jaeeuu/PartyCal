@@ -69,7 +69,7 @@ const ixStyles = stylex.create({
     color: "#4e5a68",
     padding: "20px",
     flexGrow: 1,
-    fontWeight: 600,
+    fontWeight: 500,
     lineHeight: "1.5",
     position: "relative",
   },//#6b7784 below text color

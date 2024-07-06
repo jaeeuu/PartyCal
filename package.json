@@ -2,8 +2,8 @@
   "name": "example-basic",
   "type": "module",
   "scripts": {
-    "dev": "eslint **/*.tsx && vinxi dev",
-    "build": "vinxi build",
+    "dev": "eslint **/*.tsx && vinxi dev --mode development",
+    "build": "vinxi build --mode production",
     "start": "vinxi start",
     "version": "vinxi version",
     "lint": "eslint **/*.tsx",
@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
-    "@pandacss/dev": "^0.41.0",
     "@stylexjs/eslint-plugin": "^0.7.5",
     "@typescript-eslint/parser": "^7.15.0",
     "eslint": "^9.6.0",
