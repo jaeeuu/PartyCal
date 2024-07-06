@@ -31,15 +31,15 @@ export default defineConfig({
       // routes: ["/", "/home"]
       crawlLinks: true
     },
-    // future: {
-    //   nativeSWR: true,
-    // },
-    // minify: true,
-    // sourceMap: false,
+    future: {
+      nativeSWR: true,
+    },
+    minify: true,
+    sourceMap: false,
   },
   // extensions: ["tsx"],
   ssr: true,
-  experimental: {
-    islands: true,
-  }
+  // experimental: {
+  //   islands: true,
+  // }
 });
