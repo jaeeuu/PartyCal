@@ -7,7 +7,7 @@ const ixStyle = stylex.create({
 export default function New() {
   return (
     <div>
-
+      TEST
     </div>
   );
 }

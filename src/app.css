@@ -13,7 +13,6 @@ html, body{
   padding: 0;
   font-family: 'Basic Fonts';
   -webkit-touch-callout: none;
-  user-select: none;
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
@@ -29,4 +28,4 @@ html, body{
   box-sizing: border-box;
 }
 
-@stylex stylesheet;
+/* @stylex stylesheet; */

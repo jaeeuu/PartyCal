@@ -1,6 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { createSignal } from 'solid-js';
-import { flexStyles, shareStyles } from '../common/share-styles';
+import { flexStyles, shareStyles } from '../common/share.stylex';
 
 const ixStyles = stylex.create({
   box: {

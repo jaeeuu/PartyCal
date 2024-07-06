@@ -8,6 +8,7 @@ const thisStyles = stylex.create({
     borderRadius: "15px",
     fontFamily: "'Basic Fonts'",
     fontSize: "16px",
+    userSelect: "none",
   },
   buttons: {
     padding: "12px 15px 12px 15px",
@@ -157,6 +158,8 @@ export const shareStyles = stylex.create({
     opacity: 0.5,
   },
   interact: {
+    cursor: "pointer",
+    userSelect: "none",
     willChange: "transform",
     transition: {
       default: "filter 0.3s linear, transform 0.8s var(--spring-easing)",

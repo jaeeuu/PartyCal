@@ -7,6 +7,7 @@ import "./fonts/css/basicFonts400.css";
 import "./fonts/css/basicFonts500.css";
 import "./fonts/css/basicFonts600.css";
 import "./fonts/css/basicFonts700.css";
+import 'virtual:stylex.css';
 
 
 export default function App() {
@@ -14,7 +15,7 @@ export default function App() {
     <Router
       root={props => (
         <MetaProvider>
-          <Title>PartyCal</Title>
+          <Title>PARTYCAL</Title>
           {/* <Meta lang="ko" />
           <Meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" /> */}
           <Suspense>{props.children}</Suspense>

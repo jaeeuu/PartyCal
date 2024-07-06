@@ -1,14 +1,14 @@
 import stylex from '@stylexjs/stylex';
 import { useNavigate } from '@solidjs/router';
-import { baseStyles, flexStyles, shareStyles } from '../common/share-styles';
+import { baseStyles, flexStyles, shareStyles } from '../common/share.stylex';
 import LinkSvg from '../assets/icons/link.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
-import calenderImage from '../assets/images/calendar-3d-fix.avif';
+import calenderImage from '../assets/images/calendar_new.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
-import logoImage from '../assets/logo_image_2.avif';
+import LogoImgSvg from '../assets/logo_img.svg';
 
 const ixStyles = stylex.create({
   title: {
@@ -21,13 +21,11 @@ const ixStyles = stylex.create({
     color: "rgb(177, 184, 192)",
   },
   titleImage: {
-    width: "25px",
-    height: "25px",
-    opacity: 0.5,
-    pointerEvents: 'none',
+    width: "20px",
+    height: "20px",
   },
   boxCase: {
-    width: "min(500px, 100%)",
+    width: "min(450px, 100%)",
   },
   boxIn: {
     backgroundColor: "#fff",
@@ -35,8 +33,14 @@ const ixStyles = stylex.create({
     margin: "20px 0px 0px 0px",
     borderRadius: "20px",
   },
+  box1Group: {
+    // width: "100%",
+    // aspectRatio: "1/1",
+  },
   box1image: {
-    width: "200px",
+    width: "min(45vw, 200px)",
+    // padding: "40px",
+    margin: "15px",
     pointerEvents: 'none',
   },
   box1button: {
@@ -112,11 +116,11 @@ export default function Home() {
     <div {...stylex.attrs(baseStyles.root, flexStyles.sero)}>
       <div {...stylex.attrs(ixStyles.boxCase)}>
         <div {...stylex.attrs(ixStyles.title, flexStyles.garo)}>
-          <img {...stylex.attrs(ixStyles.titleImage)} src={logoImage} />
+          <LogoImgSvg {...stylex.attrs(ixStyles.titleImage)}/>
           <LogoTextSvg {...stylex.attrs(ixStyles.titleText)}/>
         </div>
-        <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn)}>
-          <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage}/>
+        <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn, ixStyles.box1Group)}>
+          <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" />
           <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>navigate("/new")}>
             날짜 투표 만들기
           </button>
