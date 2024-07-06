@@ -1,7 +1,7 @@
 import stylex from '@stylexjs/stylex';
 import { clientOnly } from "@solidjs/start";
 // import { useNavigate } from '@solidjs/router';
-const useNavigate = () => clientOnly(() => import("@solidjs/router").then((m)=>m.useNavigate) as any);
+const useNavigate = () => clientOnly(() => import("@solidjs/router").then((m)=>m.useNavigate()) as any);
 import { baseStyles, flexStyles, shareStyles } from '../common/share.stylex';
 import LinkSvg from '../assets/icons/link.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
@@ -112,7 +112,12 @@ const ixStyles = stylex.create({
 });
 
 export default function Home() {
-  const navigate = useNavigate();
+
+  function handleMakeNew() {
+    "use client";
+    const navigate = useNavigate();
+    navigate("/new");
+  }
 
   return (
     <div {...stylex.attrs(baseStyles.root, flexStyles.sero)}>
@@ -123,7 +128,7 @@ export default function Home() {
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn, ixStyles.box1Group)}>
           <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" />
-          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>navigate("/new")}>
+          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>handleMakeNew()}>
             날짜 투표 만들기
           </button>
         </div>
