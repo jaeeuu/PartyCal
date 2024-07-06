@@ -1,3 +1,4 @@
+"use client";
 import { endOfMonth, getDate, getDay, getDaysInMonth, startOfMonth, startOfWeek } from 'date-fns';
 
 export default function getCalendar(thisDate: Date = new Date()): [number[], [number, number]]{

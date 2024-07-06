@@ -1,4 +1,5 @@
 import stylex from '@stylexjs/stylex';
+//import { clientOnly } from "@solidjs/start";
 import { useNavigate } from '@solidjs/router';
 import { baseStyles, flexStyles, shareStyles } from '../common/share.stylex';
 import LinkSvg from '../assets/icons/link.svg';
@@ -121,7 +122,7 @@ export default function Home() {
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn, ixStyles.box1Group)}>
           <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" />
-          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>navigate("/new")}>
+          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>{"use client"; navigate("/new");}}>
             날짜 투표 만들기
           </button>
         </div>

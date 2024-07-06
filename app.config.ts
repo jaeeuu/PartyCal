@@ -9,7 +9,6 @@ import { stylex } from "vite-plugin-stylex-dev";
 export default defineConfig({
   vite: {
     plugins: [
-      solidSvg(),
       // styleX(),
       stylex({
         unstable_moduleResolution: undefined,
@@ -17,6 +16,7 @@ export default defineConfig({
         genConditionalClasses: true,
         treeshakeCompensation: false,
       } as StylexPluginOptions),
+      solidSvg(),
       tsconfigPaths()
     ],
     resolve: {
@@ -38,8 +38,8 @@ export default defineConfig({
     sourceMap: false,
   },
   // extensions: ["tsx"],
-  ssr: true,
-  // experimental: {
-  //   islands: true,
-  // }
+  // ssr: true,
+  experimental: {
+    islands: true,
+  }
 });

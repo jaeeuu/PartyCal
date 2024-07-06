@@ -1,3 +1,4 @@
+"use client";
 import type { Setter } from "solid-js";
 
 function isMouseEvent(event: Event): event is MouseEvent {
