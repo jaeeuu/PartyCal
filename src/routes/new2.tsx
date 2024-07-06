@@ -1,5 +1,4 @@
 import stylex from '@stylexjs/stylex';
-"use client";
 import { Index, createEffect, createSignal } from 'solid-js';
 import { handlePointerEnd, handlePointerMove, handlePointerStart } from '../components/tileDrag';
 import getCalendar from '../common/getCalendar';

@@ -1,6 +1,7 @@
 import stylex from '@stylexjs/stylex';
-"use client";
-import { useNavigate } from '@solidjs/router';
+import { clientOnly } from "@solidjs/start";
+// import { useNavigate } from '@solidjs/router';
+const useNavigate = clientOnly(() => import("@solidjs/router") as any);
 import { baseStyles, flexStyles, shareStyles } from '../common/share.stylex';
 import LinkSvg from '../assets/icons/link.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
