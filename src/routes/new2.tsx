@@ -1,13 +1,10 @@
-// import { createTileDrag } from '../components/tileDrag';
-import { Index, createEffect, createSignal } from 'solid-js';
 import stylex from '@stylexjs/stylex';
-
+"use client";
+import { Index, createEffect, createSignal } from 'solid-js';
 import { handlePointerEnd, handlePointerMove, handlePointerStart } from '../components/tileDrag';
-// import getCalendar from '../common/getCalendar';
+import getCalendar from '../common/getCalendar';
 import { addMonths, getMonth, getYear } from 'date-fns';
 import { baseStyles, flexStyles } from '../common/share.stylex';
-import { clientOnly } from "@solidjs/start";
-const getCalendar = clientOnly(() => import('../common/getCalendar'));
 
 const ixStyles = stylex.create({
   title: {
@@ -121,8 +118,8 @@ export default function New2() {
           </Index>
         </div>
         <div {...stylex.attrs(flexStyles.center, ixStyles.buttonBox)}>
-          <button {...stylex.attrs(baseStyles.button2, ixStyles.buttons)} onClick={() => {"use client"; setThisDate((prev) => addMonths(prev, -1));}}>이전 달</button>
-          <button {...stylex.attrs(baseStyles.button1, ixStyles.buttons)} onClick={() => {"use client"; setThisDate((prev) => addMonths(prev, 1));}}>다음 달</button>
+          <button {...stylex.attrs(baseStyles.button2, ixStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, -1))}>이전 달</button>
+          <button {...stylex.attrs(baseStyles.button1, ixStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, 1))}>다음 달</button>
         </div>
       </div>
     </div>
