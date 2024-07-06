@@ -27,15 +27,15 @@ export default defineConfig({
   },
   server: {
     preset: "vercel",
-    // prerender: {
-    //   // routes: ["/", "/home"]
-    //   crawlLinks: true
-    // },
-    future: {
-      nativeSWR: true,
+    prerender: {
+      // routes: ["/", "/home"]
+      crawlLinks: true
     },
-    minify: true,
-    sourceMap: false,
+    // future: {
+    //   nativeSWR: true,
+    // },
+    // minify: true,
+    // sourceMap: false,
   },
   // extensions: ["tsx"],
   ssr: true,
