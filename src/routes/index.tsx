@@ -1,5 +1,4 @@
 import stylex from '@stylexjs/stylex';
-import { useNavigate } from '@solidjs/router';
 import { baseStyles, flexStyles, shareStyles } from '../common/share.stylex';
 import LinkSvg from '../assets/icons/link.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
@@ -9,6 +8,8 @@ import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
 import calenderImage from '../assets/images/calendar_new.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
+import { clientOnly } from '@solidjs/start';
+const HomeNewButton = clientOnly(() => import('../components/HomeNewButton'));
 
 
 const ixStyles = stylex.create({
@@ -20,10 +21,6 @@ const ixStyles = stylex.create({
   titleText: {
     height: "20px",
     color: "rgb(177, 184, 192)",
-  },
-  titleImage: {
-    width: "20px",
-    height: "20px",
   },
   boxCase: {
     width: "min(450px, 100%)",
@@ -111,20 +108,18 @@ const ixStyles = stylex.create({
 });
 
 export default function Home() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   return (
     <div {...stylex.attrs(baseStyles.root, flexStyles.sero)}>
       <div {...stylex.attrs(ixStyles.boxCase)}>
         <div {...stylex.attrs(ixStyles.title, flexStyles.garo)}>
-          <LogoImgSvg {...stylex.attrs(ixStyles.titleImage)}/>
-          <LogoTextSvg {...stylex.attrs(ixStyles.titleText)}/>
+          <LogoImgSvg width="20px" height="20px" />
+          <LogoTextSvg height="20px" color="#b1b8c0" />
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn, ixStyles.box1Group)}>
           <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" />
-          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>navigate("/new")}>
-            날짜 투표 만들기
-          </button>
+          <HomeNewButton componentStyle={stylex.attrs(baseStyles.button1, ixStyles.box1button)} />
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn)}>
           <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_1title)}>
