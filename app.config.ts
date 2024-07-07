@@ -31,8 +31,8 @@ export default defineConfig({
       // rollupOptions: {
       //   plugins: [stylexPlugin({ fileName: 'stylex.css', useCSSLayers: true, genConditionalClasses: true})]
       // },
-      // sourcemap: false,
-      // cssMinify: true,
+      sourcemap: false,
+      cssMinify: true,
     },
     // ssr: {
     //   noExternal: true,
@@ -47,11 +47,11 @@ export default defineConfig({
       // routes: ["/", "/home"]
       crawlLinks: true
     },
-    // future: {
-    //   nativeSWR: true,
-    // },
-    // minify: true,
-    // sourceMap: false,
+    future: {
+      nativeSWR: true,
+    },
+    minify: true,
+    sourceMap: false,
     // inlineDynamicImports: true,
     // rollupConfig: {
     //   output: {
@@ -60,7 +60,7 @@ export default defineConfig({
     // }
   },
   // extensions: ["tsx"],
-  experimental: {
-    islands: true,
-  }
+  // experimental: {
+  //   islands: true,
+  // }
 });

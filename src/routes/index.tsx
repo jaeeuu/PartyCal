@@ -5,11 +5,10 @@ import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
-import calenderImage from '../assets/images/calendar_new.avif';
+import calenderImage from '../assets/images/calendar-new.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
-import { clientOnly } from '@solidjs/start';
-const HomeNewButton = clientOnly(() => import('../components/HomeNewButton'));
+import { useNavigate } from '@solidjs/router';
 
 
 const ixStyles = stylex.create({
@@ -74,8 +73,6 @@ const ixStyles = stylex.create({
   box2_2Image: {
     right: "20px",
     top: "15px",
-    width: "24px",
-    height: "24px",
     position: "absolute",
   },
   box2_3Group: {
@@ -96,19 +93,10 @@ const ixStyles = stylex.create({
     color: "#6b7784",
     gap: "15px",
   },
-  box2_3image: {
-    width: "24px",
-    height: "24px",
-  },
-  box2_3image2: {
-    width: "16px",
-    height: "16px",
-    color: "#B0B8C1",
-  },
 });
 
 export default function Home() {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div {...stylex.attrs(baseStyles.root, flexStyles.sero)}>
@@ -118,8 +106,10 @@ export default function Home() {
           <LogoTextSvg height="20px" color="#b1b8c0" />
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn, ixStyles.box1Group)}>
-          <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" />
-          <HomeNewButton componentStyle={stylex.attrs(baseStyles.button1, ixStyles.box1button)} />
+          <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" decoding='sync' />
+          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>navigate("/new")}>
+            날짜 투표 만들기
+          </button>
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn)}>
           <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_1title)}>
@@ -127,28 +117,28 @@ export default function Home() {
           </div>
           <div {...stylex.attrs(flexStyles.garo, ixStyles.box2_2Group)}>
             <div {...stylex.attrs(ixStyles.box2_2In, shareStyles.interact)}>
-              <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)}/>
+              <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
               날짜<br/>투표하기
             </div>
             <div {...stylex.attrs(ixStyles.box2_2In, shareStyles.interact)}>
-              <StatSvg {...stylex.attrs(ixStyles.box2_2Image)}/>
+              <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
               투표<br/>결과보기
             </div>
           </div>
           <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_3Group)}>
             <div {...stylex.attrs(shareStyles.interact, ixStyles.box2_3In, flexStyles.garo)}>
               <div {...stylex.attrs(flexStyles.garo, ixStyles.box2_3text)}>
-                <LinkSvg {...stylex.attrs(ixStyles.box2_3image)}/>
+                <LinkSvg width="24px" height="24px" />
                 사이트 공유하기
               </div>
-              <ArrowRightSvg {...stylex.attrs(ixStyles.box2_3image2)}/>
+              <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
             </div>
             <div {...stylex.attrs(shareStyles.interact, ixStyles.box2_3In, flexStyles.garo)}>
               <div {...stylex.attrs(flexStyles.garo, ixStyles.box2_3text)}>
-                <RocketSvg {...stylex.attrs(ixStyles.box2_3image)}/>
+                <RocketSvg width="24px" height="24px" />
                 제작자 정보
               </div>
-              <ArrowRightSvg {...stylex.attrs(ixStyles.box2_3image2)}/>
+              <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
             </div>
           </div>
         </div>

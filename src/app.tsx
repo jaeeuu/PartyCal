@@ -7,25 +7,17 @@ import "./fonts/css/basicFonts400.css";
 import "./fonts/css/basicFonts500.css";
 import "./fonts/css/basicFonts700.css";
 import 'virtual:stylex.css';
-import { Transition } from "solid-transition-group";
-import { materialEasing } from "./common/store";
-
 
 export default function App() {
-  const pageOnEnter = (el, done) => {
-    const a = el.animate([{ transform: "translateY(500px) scaleY(0)", overflowY: "hidden" }, { transform: 'translateY(0px) scaleY(1)', overflowY: "hidden" }], { duration: 1000, easing: materialEasing});
-    a.finished.then(done);
-  };
-  const pageOnExit = (el, done) => {
-    const a = el.animate([{ transform: 'translateY(0px) scaleY(1)', overflowY: "hidden" }, { transform: "translateY(-500px) scaleY(0)", overflowY: "hidden" }], { duration: 500, easing: "ease" });
-    a.finished.then(done);
-  };
+  // const pageOnEnter = (el, done) => {
+  //   const a = el.animate([{ transform: "translateY(500px) scaleY(0)", overflowY: "hidden" }, { transform: 'translateY(0px) scaleY(1)', overflowY: "hidden" }], { duration: 1000, easing: materialEasing});
+  //   a.finished.then(done);
+  // };
+  // const pageOnExit = (el, done) => {
+  //   const a = el.animate([{ transform: 'translateY(0px) scaleY(1)', overflowY: "hidden" }, { transform: "translateY(-500px) scaleY(0)", overflowY: "hidden" }], { duration: 500, easing: "ease" });
+  //   a.finished.then(done);
+  // };
   return (
-  <Transition
-    appear={false}
-    onEnter={(el, done) => pageOnEnter(el, done)}
-    onExit={(el, done) => pageOnExit(el, done)}
-  >
     <Router
       root={props => (
         <MetaProvider>
@@ -36,6 +28,5 @@ export default function App() {
     >
       <FileRoutes />
     </Router>
-  </Transition>
   );
 }
