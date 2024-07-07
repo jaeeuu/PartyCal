@@ -5,6 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 // import styleX from 'vite-plugin-stylex';
 import type { StylexPluginOptions } from 'vite-plugin-stylex-dev';
 import { stylex } from "vite-plugin-stylex-dev";
+// import stylexPlugin from '@stylexjs/rollup-plugin';
 
 export default defineConfig({
   vite: {
@@ -13,6 +14,8 @@ export default defineConfig({
       solidSvg(),
       // styleX(),
       stylex({
+        // dev: process.env.NODE_ENV === 'development',
+        runtimeInjection: false,
         unstable_moduleResolution: undefined,
         useCSSLayers: true,
         genConditionalClasses: true,
@@ -23,14 +26,25 @@ export default defineConfig({
       alias: {
         "@fonts": resolve("src/fonts"),
       }
-    }
+    },
+    build: {
+      // rollupOptions: {
+      //   plugins: [stylexPlugin({ fileName: 'stylex.css', useCSSLayers: true, genConditionalClasses: true})]
+      // },
+      sourcemap: false,
+      cssMinify: true,
+      // ssr: true,
+    },
+    // css: {
+    //   transformer: 'lightningcss',
+    // },
   },
   server: {
     preset: "vercel",
-    prerender: {
-      // routes: ["/", "/home"]
-      crawlLinks: true
-    },
+    // prerender: {
+    //   // routes: ["/", "/home"]
+    //   crawlLinks: true
+    // },
     future: {
       nativeSWR: true,
     },

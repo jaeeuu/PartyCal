@@ -10,6 +10,7 @@ import calenderImage from '../assets/images/calendar_new.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
 
+
 const ixStyles = stylex.create({
   title: {
     alignSelf: "flex-start",
