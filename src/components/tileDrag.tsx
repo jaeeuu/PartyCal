@@ -1,15 +1,14 @@
-"use client";
 import type { Setter } from "solid-js";
 
-function isMouseEvent(event: Event): event is MouseEvent {
+const isMouseEvent = (event: Event): event is MouseEvent => {
   return event instanceof MouseEvent;
-}
+};
 
-function isTouchEvent(event: Event): event is TouchEvent {
+const isTouchEvent = (event: Event): event is TouchEvent => {
   return 'ontouchstart' in window && event.type.startsWith('touch');
-}
+};
 
-function getTileIndex(e: Event): number {
+const getTileIndex = (e: Event): number => {
   if (isTouchEvent(e) && e.cancelable) e.preventDefault();
   let target = null;
   if (isTouchEvent(e) && e.touches) {
@@ -23,9 +22,9 @@ function getTileIndex(e: Event): number {
   const itemIndex = parseInt(target.dataset.index, 10);
   if (isNaN(itemIndex)) return -1;
   return itemIndex;
-}
+};
 
-export function handlePointerStart(e: Event, tileState: {currentTile: [number, boolean, number], memTile: boolean[]}, setTile: Setter<boolean[]>) {
+export const handlePointerStart = (e: Event, tileState: {currentTile: [number, boolean, number], memTile: boolean[]}, setTile: Setter<boolean[]>) => {
   const itemIndex = getTileIndex(e);
   if (itemIndex === -1) return;
   if (isMouseEvent(e) && e.buttons !== 1) return;
@@ -36,9 +35,9 @@ export function handlePointerStart(e: Event, tileState: {currentTile: [number, b
     tileState.memTile[itemIndex] = tileState.currentTile[1];
     return tileState.memTile;
   });
-}
+};
 
-export function handlePointerMove(e: Event, tileState: {currentTile: [number, boolean, number], memTile: boolean[]}, setTile: Setter<boolean[]>) {
+export const handlePointerMove = (e: Event, tileState: {currentTile: [number, boolean, number], memTile: boolean[]}, setTile: Setter<boolean[]>) => {
   const itemIndex = getTileIndex(e);
   if (tileState.currentTile[0] === -1 || itemIndex === -1) return;
   if (itemIndex === tileState.currentTile[2]) {
@@ -52,11 +51,6 @@ export function handlePointerMove(e: Event, tileState: {currentTile: [number, bo
     return;
   }
 
-  // const minX = Math.min(vars.startTile[0], x);
-  // const maxX = Math.max(vars.startTile[0], x);
-  // const minY = Math.min(vars.startTile[1], y);
-  // const maxY = Math.max(vars.startTile[1], y);
-
   setTile((prev) => {
     const newTableValues = [...prev];
     newTableValues.forEach((_: boolean, ind: number) => {
@@ -68,9 +62,15 @@ export function handlePointerMove(e: Event, tileState: {currentTile: [number, bo
     });
     return newTableValues;
   });
-}
+};
 
-export function handlePointerEnd(e: Event, tileState: {currentTile: [number, boolean, number], memTile: boolean[]}) {
+export const handlePointerEnd = (e: Event, tileState: {currentTile: [number, boolean, number], memTile: boolean[]}) => {
   if (e.cancelable) e.preventDefault();
   tileState.currentTile = [-1, false, -1];
-}
+};
+
+export default {
+  handlePointerStart,
+  handlePointerMove,
+  handlePointerEnd,
+};

@@ -1,6 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { Index, createEffect, createSignal } from 'solid-js';
-import { handlePointerEnd, handlePointerMove, handlePointerStart } from '../components/tileDrag';
+import handleTiles from '../components/tileDrag';
 import getCalendar from '../common/getCalendar';
 import { addMonths, getMonth, getYear } from 'date-fns';
 import { baseStyles, flexStyles } from '../common/share.stylex';
@@ -108,10 +108,10 @@ export default function New2() {
                   itemIndex > monIndex()[1] && ixStyles.boxOut,
                 )}
                 data-index={itemIndex}
-                onPointerDown={(e) => handlePointerStart(e, tileState, setTile)}
-                onMouseOver={(e) => handlePointerMove(e, tileState, setTile)}
-                onTouchMove={(e) => handlePointerMove(e, tileState, setTile)}
-                onPointerUp={(e) => handlePointerEnd(e, tileState)}
+                onPointerDown={(e) => handleTiles.handlePointerStart(e, tileState, setTile)}
+                onMouseOver={(e) => handleTiles.handlePointerMove(e, tileState, setTile)}
+                onTouchMove={(e) => handleTiles.handlePointerMove(e, tileState, setTile)}
+                onPointerUp={(e) => handleTiles.handlePointerEnd(e, tileState)}
               >{cal()[itemIndex]}</div>
             )}
           </Index>

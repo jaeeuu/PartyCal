@@ -9,15 +9,15 @@ import { stylex } from "vite-plugin-stylex-dev";
 export default defineConfig({
   vite: {
     plugins: [
+      tsconfigPaths(),
+      solidSvg(),
       // styleX(),
       stylex({
         unstable_moduleResolution: undefined,
         useCSSLayers: true,
         genConditionalClasses: true,
         treeshakeCompensation: false,
-      } as StylexPluginOptions),
-      solidSvg(),
-      tsconfigPaths()
+      } as StylexPluginOptions)
     ],
     resolve: {
       alias: {
@@ -38,8 +38,8 @@ export default defineConfig({
     sourceMap: false,
   },
   // extensions: ["tsx"],
-  // ssr: true,
-  experimental: {
-    islands: true,
-  }
+  ssr: true,
+  // experimental: {
+  //   islands: true,
+  // }
 });

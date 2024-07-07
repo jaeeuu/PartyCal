@@ -5,7 +5,7 @@ export default defineConfig({
   eject: true,
   include: ["./src/**/*.{js,jsx,ts,tsx}"],
   exclude: [],
-  outdir: "styled-system",
+  outdir: "style-system",
   minify: true,
   hash: true,
   clean: true,
@@ -19,4 +19,7 @@ export default defineConfig({
   //   }
   // },
   jsxFramework: "solid",
+  studio: {
+    logo: '',
+  },
 })

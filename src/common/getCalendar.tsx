@@ -1,7 +1,6 @@
-"use client";
 import { endOfMonth, getDate, getDay, getDaysInMonth, startOfMonth, startOfWeek } from 'date-fns';
 
-export default function getCalendar(thisDate: Date = new Date()): [number[], [number, number]]{
+export const getCalendar = (thisDate: Date = new Date()): [number[], [number, number]] => {
   const thisStart = startOfMonth(thisDate);
   const thisEnd = endOfMonth(thisDate);
 
@@ -28,4 +27,6 @@ export default function getCalendar(thisDate: Date = new Date()): [number[], [nu
 
   // const resultList: number[][] = Array.from({ length: 6 }, (_, i) => result.slice(i * 7, i * 7 + 7));
   return [result, thisMonthIndex];
-}
+};
+
+export default getCalendar;
