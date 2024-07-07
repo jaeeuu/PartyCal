@@ -15,7 +15,7 @@ export default defineConfig({
       // styleX(),
       stylex({
         // dev: process.env.NODE_ENV === 'development',
-        runtimeInjection: false,
+        // runtimeInjection: false,
         unstable_moduleResolution: undefined,
         useCSSLayers: true,
         genConditionalClasses: true,
@@ -33,26 +33,33 @@ export default defineConfig({
       // },
       sourcemap: false,
       cssMinify: true,
-      // ssr: true,
     },
+    // ssr: {
+    //   noExternal: true,
+    // }
     // css: {
     //   transformer: 'lightningcss',
     // },
   },
   server: {
     preset: "vercel",
-    // prerender: {
-    //   // routes: ["/", "/home"]
-    //   crawlLinks: true
-    // },
+    prerender: {
+      // routes: ["/", "/home"]
+      crawlLinks: true
+    },
     future: {
       nativeSWR: true,
     },
     minify: true,
     sourceMap: false,
+    // inlineDynamicImports: true,
+    // rollupConfig: {
+    //   output: {
+    //     manualChunks: {}
+    //   }
+    // }
   },
   // extensions: ["tsx"],
-  ssr: true,
   // experimental: {
   //   islands: true,
   // }
