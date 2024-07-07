@@ -110,11 +110,7 @@ const ixStyles = stylex.create({
 });
 
 export default function Home() {
-
-  const handleMakeNew = () => {
-    const navigate = useNavigate();
-    navigate("/new");
-  };
+  const navigate = useNavigate();
 
   return (
     <div {...stylex.attrs(baseStyles.root, flexStyles.sero)}>
@@ -125,7 +121,7 @@ export default function Home() {
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn, ixStyles.box1Group)}>
           <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" />
-          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>handleMakeNew()}>
+          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>navigate("/new")}>
             날짜 투표 만들기
           </button>
         </div>
