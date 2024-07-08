@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { baseStyles, flexStyles, shareStyles } from '../common/share.stylex';
+import { baseStyles, flexStyles, shareStyles } from '../common/share-styles';
 import LinkSvg from '../assets/icons/link.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
@@ -8,7 +8,7 @@ import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
 import calenderImage from '../assets/images/calendar-new.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
-import { useNavigate } from '@solidjs/router';
+import { A } from '@solidjs/router';
 
 const ixStyles = stylex.create({
   title: {
@@ -40,6 +40,7 @@ const ixStyles = stylex.create({
     padding: "17px",
     margin: "40px 0px 0px 0px",
     fontWeight: 500,
+    textAlign: "center",
   },
   box2_1title: {
     color: "#333e4b",
@@ -91,7 +92,7 @@ const ixStyles = stylex.create({
 });
 
 export default function Home() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <div {...stylex.attrs(baseStyles.root, flexStyles.sero)}>
       <div {...stylex.attrs(ixStyles.boxCase)}>
@@ -101,9 +102,9 @@ export default function Home() {
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn)}>
           <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" decoding='sync' />
-          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>(navigate('/new'))}>
+          <A {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} href='/new2' >
             날짜 투표 만들기
-          </button>
+          </A>
         </div>
         <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn)}>
           <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_1title)}>

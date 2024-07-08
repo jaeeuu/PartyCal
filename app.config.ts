@@ -16,7 +16,7 @@ export default defineConfig({
       stylex({
         // dev: process.env.NODE_ENV === 'development',
         // runtimeInjection: false,
-        unstable_moduleResolution: undefined,
+        // unstable_moduleResolution: undefined,
         useCSSLayers: true,
         genConditionalClasses: true,
         treeshakeCompensation: false,

@@ -1,6 +1,6 @@
 // import * as stylex from '@stylexjs/stylex';
-import { clientOnly } from '@solidjs/start';
-const New2 = clientOnly(() => (import('../components/New2')));
+// import { clientOnly } from '@solidjs/start';
+// const New2 = clientOnly(() => (import('./new2')));
 
 // const ixStyle = stylex.create({
 
@@ -8,6 +8,6 @@ const New2 = clientOnly(() => (import('../components/New2')));
 
 export default function New() {
   return (
-    <New2 />
+    <div>a</div>
   );
 }

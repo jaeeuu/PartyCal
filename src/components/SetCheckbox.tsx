@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 import { Show } from 'solid-js';
-import { flexStyles, shareStyles } from '../common/share.stylex';
+import { flexStyles, shareStyles } from '../common/share-styles';
 
 const ixStyles = stylex.create({
     box: {

@@ -17,9 +17,6 @@ importers:
       '@solidjs/start':
         specifier: ^1.0.2
         version: 1.0.2(rollup@4.18.0)(solid-js@1.8.18)(vinxi@0.3.12(@types/node@20.14.10)(ioredis@5.4.1)(lightningcss@1.23.0)(terser@5.31.1))(vite@5.3.3(@types/node@20.14.10)(lightningcss@1.23.0)(terser@5.31.1))
-      '@stylexjs/stylex':
-        specifier: ^0.7.5
-        version: 0.7.5
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
@@ -49,6 +46,9 @@ importers:
         specifier: ^0.7.5
         version: 0.7.5
       '@stylexjs/rollup-plugin':
+        specifier: ^0.7.5
+        version: 0.7.5
+      '@stylexjs/stylex':
         specifier: ^0.7.5
         version: 0.7.5
       '@typescript-eslint/parser':
@@ -5758,7 +5758,7 @@ snapshots:
       crossws: 0.2.4
       defu: 6.1.4
       get-port-please: 3.1.2
-      h3: 1.12.0
+      h3: 1.11.1
       http-shutdown: 1.2.2
       jiti: 1.21.6
       mlly: 1.7.1

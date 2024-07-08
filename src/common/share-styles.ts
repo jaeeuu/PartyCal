@@ -9,6 +9,7 @@ const thisStyles = stylex.create({
     fontFamily: "'Basic Fonts'",
     fontSize: "16px",
     userSelect: "none",
+    textDecoration: "none",
   },
   buttons: {
     padding: "12px 15px 12px 15px",
