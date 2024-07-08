@@ -1,4 +1,4 @@
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import { baseStyles, flexStyles, shareStyles } from '../common/share.stylex';
 import LinkSvg from '../assets/icons/link.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
@@ -9,7 +9,6 @@ import calenderImage from '../assets/images/calendar-new.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
 import { useNavigate } from '@solidjs/router';
-
 
 const ixStyles = stylex.create({
   title: {
@@ -29,10 +28,6 @@ const ixStyles = stylex.create({
     padding: "25px",
     margin: "20px 0px 0px 0px",
     borderRadius: "20px",
-  },
-  box1Group: {
-    // width: "100%",
-    // aspectRatio: "1/1",
   },
   box1image: {
     width: "min(45vw, 200px)",
@@ -97,7 +92,6 @@ const ixStyles = stylex.create({
 
 export default function Home() {
   const navigate = useNavigate();
-
   return (
     <div {...stylex.attrs(baseStyles.root, flexStyles.sero)}>
       <div {...stylex.attrs(ixStyles.boxCase)}>
@@ -105,9 +99,9 @@ export default function Home() {
           <LogoImgSvg width="20px" height="20px" />
           <LogoTextSvg height="20px" color="#b1b8c0" />
         </div>
-        <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn, ixStyles.box1Group)}>
+        <div {...stylex.attrs(flexStyles.sero, flexStyles.center, ixStyles.boxIn)}>
           <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" decoding='sync' />
-          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>navigate("/new")}>
+          <button {...stylex.attrs(baseStyles.button1, ixStyles.box1button)} onClick={()=>(navigate('/new'))}>
             날짜 투표 만들기
           </button>
         </div>

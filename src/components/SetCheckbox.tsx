@@ -1,4 +1,4 @@
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import { Show } from 'solid-js';
 import { flexStyles, shareStyles } from '../common/share.stylex';
 
