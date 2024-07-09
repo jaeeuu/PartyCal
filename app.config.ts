@@ -33,6 +33,8 @@ export default defineConfig({
       // },
       sourcemap: false,
       cssMinify: true,
+      minify: true,
+      target: 'modules'
     },
     // ssr: {
     //   noExternal: true,

@@ -21,8 +21,6 @@ const ixStyles = stylex.create({
     color: "rgb(177, 184, 192)",
   },
   boxCase: {
-    ...stylex.include(flexStyles.base),
-    ...stylex.include(flexStyles.sero),
     width: "min(450px, 100%)",
   },
   boxIn: {
@@ -101,46 +99,48 @@ const ixStyles = stylex.create({
 export default function Home() {
   // const navigate = useNavigate();
   return (
-    <SetRootBox sx={[ixStyles.boxCase]}>
-      <div {...stylex.attrs(ixStyles.title, flexStyles.base)}>
-        <LogoImgSvg width="20px" height="20px" />
-        <LogoTextSvg height="20px" color="#b1b8c0" />
-      </div>
-      <div {...stylex.attrs(ixStyles.boxIn)}>
-        <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" decoding='sync' />
-        <SetA sx={[ixStyles.box1button]} href='/new2' >
-          날짜 투표 만들기
-        </SetA>
-      </div>
-      <div {...stylex.attrs(ixStyles.boxIn)}>
-        <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_1title)}>
-          메뉴 더보기
+    <SetRootBox>
+      <div {...stylex.attrs(ixStyles.boxCase)}>
+        <div {...stylex.attrs(ixStyles.title, flexStyles.base)}>
+          <LogoImgSvg width="20px" height="20px" />
+          <LogoTextSvg height="20px" color="#b1b8c0" />
         </div>
-        <div {...stylex.attrs(ixStyles.box2_2Group)}>
-          <SetButtonBox sx={[ixStyles.box2_2In]}>
-            <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
-            날짜<br/>투표하기
-          </SetButtonBox>
-          <SetButtonBox sx={[ixStyles.box2_2In]}>
-            <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
-            투표<br/>결과보기
-          </SetButtonBox>
+        <div {...stylex.attrs(ixStyles.boxIn)}>
+          <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" decoding='sync' />
+          <SetA sx={[ixStyles.box1button]} href='/new2' >
+            날짜 투표 만들기
+          </SetA>
         </div>
-        <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_3Group)}>
-          <SetButtonBox sx={[ixStyles.box2_3In]}>
-            <div {...stylex.attrs(ixStyles.box2_3text)}>
-              <LinkSvg width="24px" height="24px" />
-              사이트 공유하기
-            </div>
-            <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
-          </SetButtonBox>
-          <SetButtonBox sx={[ixStyles.box2_3In]}>
-            <div {...stylex.attrs(ixStyles.box2_3text)}>
-              <RocketSvg width="24px" height="24px" />
-              제작자 정보
-            </div>
-            <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
-          </SetButtonBox>
+        <div {...stylex.attrs(ixStyles.boxIn)}>
+          <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_1title)}>
+            메뉴 더보기
+          </div>
+          <div {...stylex.attrs(ixStyles.box2_2Group)}>
+            <SetButtonBox sx={[ixStyles.box2_2In]}>
+              <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
+              날짜<br/>투표하기
+            </SetButtonBox>
+            <SetButtonBox sx={[ixStyles.box2_2In]}>
+              <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
+              투표<br/>결과보기
+            </SetButtonBox>
+          </div>
+          <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_3Group)}>
+            <SetButtonBox sx={[ixStyles.box2_3In]}>
+              <div {...stylex.attrs(ixStyles.box2_3text)}>
+                <LinkSvg width="24px" height="24px" />
+                사이트 공유하기
+              </div>
+              <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
+            </SetButtonBox>
+            <SetButtonBox sx={[ixStyles.box2_3In]}>
+              <div {...stylex.attrs(ixStyles.box2_3text)}>
+                <RocketSvg width="24px" height="24px" />
+                제작자 정보
+              </div>
+              <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
+            </SetButtonBox>
+          </div>
         </div>
       </div>
     </SetRootBox>

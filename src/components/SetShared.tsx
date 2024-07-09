@@ -12,68 +12,77 @@ const baseStyles = stylex.create({
     borderRadius: '15px',
     fontFamily: "'Basic Fonts'",
     fontSize: '16px',
+    willChange: 'transform',
+    padding: '11px 15px 11px 15px',
   },
   button: {
     textDecoration: 'none',
     userSelect: 'none',
-    padding: '12px 15px 12px 15px',
+    //padding: '12px 15px 12px 15px',
     cursor: 'pointer',
-    willChange: 'transform',
     transition: {
       default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
-      '@media (hover: none) and :not(:disabled):not(:active):not(:hover)':
-        'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
-      ':is(:active)':
-        'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
+      // '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
+      ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
     },
     boxShadow: {
-      // default: '0px 0px 20px 10px rgba(242, 244, 246, 0.6)',
-      default: null,
-      '@media (hover: hover) and :not(:disabled):not(:active):is(:hover)':
-        '0px 0px 20px 0px rgba(242, 244, 246, 0.7)',
+      default: null, //'0px 0px 20px 10px rgba(242, 244, 246, 0.6)',
+      //eslint-disable-next-line
+      ':not(:active):is(:hover)': {
+        default: null,
+        '@media (hover: hover)': '0px 0px 20px 0px rgba(242, 244, 246, 0.7)',
+      },
       ':is(:active)': '0px 0px 15px 0px rgba(242, 244, 246, 0.8)',
     },
     transform: {
       default: 'scale(1)',
-      '@media (hover: hover) and :not(:disabled):not(:active):is(:hover)':
-        'scale(1.02)',
-      '@media (hover: hover) and :not(:disabled):is(:active)': 'scale(0.96)',
-      '@media (hover: none) and :not(:disabled):is(:active)': 'scale(0.95)',
+      //eslint-disable-next-line
+      ':not(:active):is(:hover)': {
+        default: null,
+        '@media (hover: hover)': 'scale(1.02)',
+      },
+      ':is(:active)': 'scale(0.95)',
     },
   },
   input: {
-    padding: '10px 15px 10px 15px',
-    willChange: 'transform',
-    transition: {
-      default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
-      '@media (hover: none) and :not(:disabled):not(:active):not(:hover)':
-        'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
-      ':focus-within':
-        'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
-    },
-    backgroundColor: {
-      default: '#fafafa',
-      '@media (hover: hover) and :not(:disabled):not(:active):is(:hover)':
-        '#fcfcfc',
-      ':focus-within': '#ffffff',
-    },
-    boxShadow: {
-      default: '0px 0px 15px 0px rgba(101, 100, 124, 0.1)',
-      '@media (hover: hover) and :not(:disabled):not(:active):is(:hover)':
-        '0px 0px 15px 0px rgba(101, 100, 124, 0.2)',
-      ':focus-within': '0px 0px 15px 0px rgba(101, 100, 124, 0.25)',
-    },
-    transform: {
-      default: 'scale(1)',
-      '@media (hover: hover) and :not(:disabled):not(:active):is(:hover)':
-        'scale(1.01)',
-      ':focus-within': 'scale(1.025)',
-    },
     '::placeholder': {
       fontFamily: "'Basic Fonts'",
       color: '#cfcfd0',
     },
     userSelect: 'auto',
+    //padding: '10px 15px 10px 15px',
+    transition: {
+      default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
+      // '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
+      ':focus-within': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
+    },
+    backgroundColor: {
+      default: '#fafafa',
+      //eslint-disable-next-line
+      ':not(:focus-within):is(:hover)': {
+        default: null,
+        '@media (hover: hover)': '#fcfcfc',
+      },
+      ':focus-within': '#ffffff',
+    },
+    boxShadow: {
+      default: '0px 0px 15px 0px rgba(101, 100, 124, 0.1)',
+      //eslint-disable-next-line
+      ':not(:focus-within):is(:hover)': {
+        default: null,
+        '@media (hover: hover)': '0px 0px 15px 0px rgba(101, 100, 124, 0.2)',
+      },
+      ':focus-within': '0px 0px 15px 0px rgba(101, 100, 124, 0.25)',
+    },
+    transform: {
+      default: 'scale(1)',
+      //eslint-disable-next-line
+      ':not(:focus-within):is(:hover)': {
+        default: null,
+        '@media (hover: hover)': 'scale(1.015)',
+      },
+      ':focus-within': 'scale(1.03)',
+    },
   },
 });
 
@@ -91,12 +100,12 @@ const buttonStyles = stylex.create({
     ...stylex.include(baseStyles.button),
     backgroundColor: {
       default: '#3190f7',
-      ':not(:disabled):active': '#246ab6',
+      ':is(:active)': '#246ab6',
       ':disabled': 'rgb(210,210,210)',
     },
     color: {
       default: '#ffffff',
-      ':not(:disabled):active': '#BDBDBD',
+      ':is(:active)': '#BDBDBD',
       ':disabled': 'rgb(150, 150, 150)',
     },
   },
@@ -105,27 +114,36 @@ const buttonStyles = stylex.create({
     ...stylex.include(baseStyles.button),
     backgroundColor: {
       default: '#e8f3ff',
-      ':not(:disabled):active': '#b9d9fc',
+      ':is(:active)': '#b9d9fc',
       ':disabled': 'rgb(210,210,210)',
     },
     color: {
       default: '#3190f7',
-      ':not(:disabled):active': '#246ab6',
+      ':is(:active)': '#246ab6',
       ':disabled': 'rgb(150, 150, 150)',
     },
   },
   none: {
     ...stylex.include(baseStyles.reset),
     ...stylex.include(baseStyles.button),
-    backgroundColor: {
-      default: 'transparent',
-      ':not(:disabled):active': '#E5E7EA',
-      ':disabled': null,
-    },
-    color: {
-      default: '#606C7C',
-      // ':not(:disabled):active': '#606C7C',
-      ':disabled': 'rgb(150, 150, 150)',
+    // backgroundColor: {
+    //   default: 'transparent',
+    //   ':active': '#E5E7EA',
+    //   ':disabled': null,
+    // },
+    // color: {
+    //   default: '#606C7C',
+    //   // ':active': '#606C7C',
+    //   ':disabled': 'rgb(150, 150, 150)',
+    // },
+    filter: {
+      default: 'brightness(1)',
+      //eslint-disable-next-line
+      ':is(:hover)': {
+        default: null,
+        '@media (hover: hover)': 'brightness(0.95)',
+      },
+      ':is(:active)': 'brightness(0.85)',
     },
   },
 });
@@ -137,30 +155,30 @@ const thisStyles = stylex.create({
     opacity: 0.5,
     boxShadow: null,
   },
-  interact: {
-    cursor: 'pointer',
-    userSelect: 'none',
-    willChange: 'transform',
-    transition: {
-      default: 'filter 0.3s linear, transform 0.8s var(--spring-easing)',
-      '@media (hover: none) and :not(:disabled):not(:active):not(:hover)':
-        'filter 0.3s linear, transform 0.8s var(--spring-mobile)',
-      ':not(:disabled):is(:active)': 'filter 0.3s linear, transform 0.3s ease',
-    },
-    filter: {
-      default: 'brightness(1)',
-      '@media (hover: hover) and :not(:disabled):not(:active):is(:hover)':
-        'brightness(0.95)',
-      ':not(:disabled):is(:active)': 'brightness(0.85)',
-    },
-    transform: {
-      default: 'scale(1)',
-      '@media (hover: hover) and :not(:disabled):not(:active):is(:hover)':
-        'scale(1.02)',
-      '@media (hover: hover) and :not(:disabled):is(:active)': 'scale(0.96)',
-      '@media (hover: none) and :not(:disabled):is(:active)': 'scale(0.95)',
-    },
-  },
+  // interact: {
+  //   cursor: 'pointer',
+  //   userSelect: 'none',
+  //   willChange: 'transform',
+  //   transition: {
+  //     default: 'filter 0.3s linear, transform 0.8s var(--spring-easing)',
+  //     '@media (hover: none) and :not(:active):not(:hover)':
+  //       'filter 0.3s linear, transform 0.8s var(--spring-mobile)',
+  //     ':is(:active)': 'filter 0.3s linear, transform 0.3s ease',
+  //   },
+  //   filter: {
+  //     default: 'brightness(1)',
+  //     '@media (hover: hover) and :not(:active):is(:hover)':
+  //       'brightness(0.95)',
+  //     ':is(:active)': 'brightness(0.85)',
+  //   },
+  //   transform: {
+  //     default: 'scale(1)',
+  //     '@media (hover: hover) and :not(:active):is(:hover)':
+  //       'scale(1.02)',
+  //     '@media (hover: hover) and :is(:active)': 'scale(0.96)',
+  //     '@media (hover: none) and :is(:active)': 'scale(0.95)',
+  //   },
+  // },
   root: {
     width: '100svw',
     // height: 'max(100lvh, 750px)',
@@ -191,7 +209,7 @@ const thisStyles = stylex.create({
 //         flexStyles.base,
 //         local.mode === 'sero' && flexStyles.sero,
 //         local.center && flexStyles.center,
-//         ...local.sx
+//         ...(local.sx??[])
 //       )}
 //     >
 //       {local.children}
@@ -246,7 +264,7 @@ export function SetInput(props: SetInputProps): JSX.Element {
       {...others}
       {...stylex.attrs(
         inputStyles[local.mode || 'main'],
-        ...local.sx,
+        ...(local.sx??[]),
         others.disabled && thisStyles.disabled
       )}
     />
@@ -266,7 +284,7 @@ export function SetRootBox(props: SetRootProps): JSX.Element {
         // local.mode === 'sero' && flexStyles.sero,
         // local.center && flexStyles.center,
         thisStyles.root,
-        ...local.sx
+        ...(local.sx??[])
       )}
     >
       {local.children}
@@ -284,11 +302,10 @@ export function SetButtonBox(props: SetButtonBoxProps): JSX.Element {
     <div
       {...others}
       {...stylex.attrs(
-        thisStyles.interact,
+        buttonStyles.none,
         // (local.mode === 'sero' || local.mode === 'garo') && flexStyles.base,
         // local.center && flexStyles.center,
-        thisStyles.root,
-        ...local.sx,
+        ...(local.sx??[]),
         local.disabled && thisStyles.disabled
       )}
     >
@@ -304,7 +321,7 @@ export function SetButton(props: SetButtonProps): JSX.Element {
       {...others}
       {...stylex.attrs(
         buttonStyles[local.mode || 'main'],
-        ...local.sx,
+        ...(local.sx??[]),
         others.disabled && thisStyles.disabled
       )}
     >
@@ -327,7 +344,7 @@ export function SetA(props: SetAProps): JSX.Element {
       {...stylex.attrs(
         baseStyles.reset,
         buttonStyles[local.mode || 'main'],
-        ...local.sx,
+        ...(local.sx??[]),
         local.disabled && thisStyles.disabled
       )}
       href={local.href}
@@ -369,7 +386,7 @@ export function SetCheckbox(props: SetCheckboxProps){
   ]);
   return (
     <div
-      {...stylex.attrs(flexStyles.base, checkboxStyles.box, thisStyles.interact, ...local.sx, !!local.disabled && thisStyles.disabled)}
+      {...stylex.attrs(flexStyles.base, checkboxStyles.box, buttonStyles.none, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
       {...others}
     >
       <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -477,7 +494,7 @@ export function SetSwitch(props: SetSwitchProps){
 
   return(
     <div
-      {...stylex.attrs(flexStyles.base, switchStyles.box, thisStyles.interact, ...local.sx, !!local.disabled && thisStyles.disabled)}
+      {...stylex.attrs(flexStyles.base, switchStyles.box, buttonStyles.none, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
       onMouseDown={()=> setActive(true)}
       onMouseLeave={()=> setActive(false)}
       onTouchStart={()=> setActive(true)}
