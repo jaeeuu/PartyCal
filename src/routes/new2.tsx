@@ -3,7 +3,8 @@ import { Index, createEffect, createSignal } from 'solid-js';
 import handleTiles from '../components/tileDrag';
 import getCalendar from '../common/getCalendar';
 import { addMonths, getMonth, getYear } from 'date-fns';
-import { baseStyles, flexStyles } from '../common/share-styles';
+import { SetButton, SetRootBox } from '~/components/SetShared';
+import { flexStyles } from '~/common/share-styles';
 
 const ixStyles = stylex.create({
   title: {
@@ -94,7 +95,7 @@ export default function New2() {
   });
   
   return (
-    <div {...stylex.attrs(baseStyles.root, flexStyles.sero, flexStyles.center)}>
+    <SetRootBox sx={[flexStyles.base, flexStyles.sero, flexStyles.center]}>
       <div {...stylex.attrs(flexStyles.sero, ixStyles.seroBox)}>
         <div {...stylex.attrs(ixStyles.title)}>{`${getYear(thisDate())}년 ${getMonth(thisDate())+1}월`}</div>
         <div {...stylex.attrs(ixStyles.box)}>
@@ -117,10 +118,10 @@ export default function New2() {
           </Index>
         </div>
         <div {...stylex.attrs(flexStyles.center, ixStyles.buttonBox)}>
-          <button {...stylex.attrs(baseStyles.button2, ixStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, -1))}>이전 달</button>
-          <button {...stylex.attrs(baseStyles.button1, ixStyles.buttons)} onClick={() => setThisDate((prev) => addMonths(prev, 1))}>다음 달</button>
+          <SetButton mode='sub' sx={[ixStyles.buttons]} onClick={() => setThisDate((prev) => addMonths(prev, -1))}>이전 달</SetButton>
+          <SetButton mode='main' sx={[ixStyles.buttons]} onClick={() => setThisDate((prev) => addMonths(prev, 1))}>다음 달</SetButton>
         </div>
       </div>
-    </div>
+    </SetRootBox>
   );
 }
