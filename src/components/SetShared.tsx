@@ -22,7 +22,7 @@ const baseStyles = stylex.create({
     cursor: 'pointer',
     transition: {
       default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
-      // '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
+      '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
       // ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
     },
     // boxShadow: {
@@ -53,7 +53,7 @@ const baseStyles = stylex.create({
     //padding: '10px 15px 10px 15px',
     transition: {
       default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
-      // '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
+      '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
       // ':focus-within': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
     },
     backgroundColor: {
@@ -358,8 +358,10 @@ export function SetA(props: SetAProps): JSX.Element {
 
 const checkboxStyles = stylex.create({
   box: {
+    ...stylex.include(flexStyles.base),
+    ...stylex.include(buttonStyles.none),
     padding: '8px',
-    borderRadius: '14px',
+    // borderRadius: '14px',
   },
   path2: {
     transition: {
@@ -388,7 +390,7 @@ export function SetCheckbox(props: SetCheckboxProps){
   ]);
   return (
     <div
-      {...stylex.attrs(flexStyles.base, checkboxStyles.box, buttonStyles.none, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
+      {...stylex.attrs(checkboxStyles.box, buttonStyles.none, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
       {...others}
     >
       <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -421,8 +423,10 @@ export function SetCheckbox(props: SetCheckboxProps){
 
 const switchStyles = stylex.create({
   box: {
-    borderRadius: "14px",
-    padding: "10px",
+    ...stylex.include(flexStyles.base),
+    ...stylex.include(buttonStyles.none),
+    // borderRadius: "14px",
+    // padding: "10px",
     gap: "10px",
     fontSize: "15px",
   },
@@ -496,7 +500,7 @@ export function SetSwitch(props: SetSwitchProps){
 
   return(
     <div
-      {...stylex.attrs(flexStyles.base, switchStyles.box, buttonStyles.none, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
+      {...stylex.attrs(switchStyles.box, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
       onMouseDown={()=> setActive(true)}
       onMouseLeave={()=> setActive(false)}
       onTouchStart={()=> setActive(true)}

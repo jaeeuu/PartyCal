@@ -4,7 +4,7 @@ import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
-import calenderImage from '../assets/images/calendar-new.avif';
+import calenderImage from '../assets/images/cal-3d.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
 import { SetButtonBox, SetRootBox, SetA } from '~/components/SetShared';
@@ -80,7 +80,7 @@ const ixStyles = stylex.create({
     ...stylex.include(flexStyles.base),
     ...stylex.include(flexStyles.sero),
     width: "100%",
-    margin: "7px 0px 0px 0px",
+    margin: "7px 0px 0px 0px",//#917c7c, #dedede, #646ab5, #cccccc
   },
   box2_3In: {
     ...stylex.include(flexStyles.base),
