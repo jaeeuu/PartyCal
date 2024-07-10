@@ -23,7 +23,7 @@ const inStyles = stylex.create({
       default: 1,
       '@starting-style': 0,
     },
-    transition: 'transform 0.5s ease, opacity 0.5s ease',
+    transition: 'transform 1s var(--material-easing), opacity 1s var(--material-easing)',
   }
 });
 
