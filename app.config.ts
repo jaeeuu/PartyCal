@@ -49,9 +49,9 @@ export default defineConfig({
       // routes: ["/", "/home"]
       crawlLinks: true
     },
-    future: {
-      nativeSWR: true,
-    },
+    // future: {
+    //   nativeSWR: true,
+    // },
     minify: true,
     sourceMap: false,
     // inlineDynamicImports: true,

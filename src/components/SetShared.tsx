@@ -23,17 +23,17 @@ const baseStyles = stylex.create({
     transition: {
       default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
       // '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
-      ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
+      // ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
     },
-    boxShadow: {
-      default: null, //'0px 0px 20px 10px rgba(242, 244, 246, 0.6)',
-      //eslint-disable-next-line
-      ':not(:active):is(:hover)': {
-        default: null,
-        '@media (hover: hover)': '0px 0px 20px 0px rgba(242, 244, 246, 0.7)',
-      },
-      ':is(:active)': '0px 0px 15px 0px rgba(242, 244, 246, 0.8)',
-    },
+    // boxShadow: {
+    //   default: null, //'0px 0px 20px 10px rgba(242, 244, 246, 0.6)',
+    //   //eslint-disable-next-line
+    //   ':not(:active):is(:hover)': {
+    //     default: null,
+    //     '@media (hover: hover)': '0px 0px 5px rgba(150, 150, 150, 0.1)',
+    //   },
+    //   ':is(:active)': '0px 0px 5px rgba(150, 150, 150, 0.2)',
+    // },
     transform: {
       default: 'scale(1)',
       //eslint-disable-next-line
@@ -54,7 +54,7 @@ const baseStyles = stylex.create({
     transition: {
       default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
       // '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
-      ':focus-within': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
+      // ':focus-within': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
     },
     backgroundColor: {
       default: '#fafafa',
@@ -185,6 +185,8 @@ const thisStyles = stylex.create({
     minHeight: '100dvh',
     position: 'relative',
     padding: '20px',
+    ...stylex.include(flexStyles.base),
+    ...stylex.include(flexStyles.sero),
   },
 });
 
@@ -257,20 +259,6 @@ type SetCheckboxProps = JSX.HTMLAttributes<HTMLDivElement> & {
 
 type SetSwitchProps = SetCheckboxProps;
 
-export function SetInput(props: SetInputProps): JSX.Element {
-  const [local, others] = splitProps(props, ['mode', 'sx']);
-  return (
-    <input
-      {...others}
-      {...stylex.attrs(
-        inputStyles[local.mode || 'main'],
-        ...(local.sx??[]),
-        others.disabled && thisStyles.disabled
-      )}
-    />
-  );
-}
-
 export function SetRootBox(props: SetRootProps): JSX.Element {
   const [local, others] = splitProps(props, [
     'children',
@@ -289,6 +277,36 @@ export function SetRootBox(props: SetRootProps): JSX.Element {
     >
       {local.children}
     </div>
+  );
+}
+
+export function SetInput(props: SetInputProps): JSX.Element {
+  const [local, others] = splitProps(props, ['mode', 'sx']);
+  return (
+    <input
+      {...others}
+      {...stylex.attrs(
+        inputStyles[local.mode || 'main'],
+        ...(local.sx??[]),
+        others.disabled && thisStyles.disabled
+      )}
+    />
+  );
+}
+
+export function SetButton(props: SetButtonProps): JSX.Element {
+  const [local, others] = splitProps(props, ['children', 'mode', 'sx']);
+  return (
+    <button
+      {...others}
+      {...stylex.attrs(
+        buttonStyles[local.mode || 'main'],
+        ...(local.sx??[]),
+        others.disabled && thisStyles.disabled
+      )}
+    >
+      {local.children}
+    </button>
   );
 }
 
@@ -311,22 +329,6 @@ export function SetButtonBox(props: SetButtonBoxProps): JSX.Element {
     >
       {local.children}
     </div>
-  );
-}
-
-export function SetButton(props: SetButtonProps): JSX.Element {
-  const [local, others] = splitProps(props, ['children', 'mode', 'sx']);
-  return (
-    <button
-      {...others}
-      {...stylex.attrs(
-        buttonStyles[local.mode || 'main'],
-        ...(local.sx??[]),
-        others.disabled && thisStyles.disabled
-      )}
-    >
-      {local.children}
-    </button>
   );
 }
 

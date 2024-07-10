@@ -12,6 +12,7 @@ import { flexStyles } from '~/common/share-styles';
 
 const ixStyles = stylex.create({
   title: {
+    ...stylex.include(flexStyles.base),
     alignSelf: "flex-start",
     margin: "0px 0px 0px 20px",
     gap: "10px",
@@ -76,6 +77,8 @@ const ixStyles = stylex.create({
     position: "absolute",
   },
   box2_3Group: {
+    ...stylex.include(flexStyles.base),
+    ...stylex.include(flexStyles.sero),
     width: "100%",
     margin: "7px 0px 0px 0px",
   },
@@ -101,7 +104,7 @@ export default function Home() {
   return (
     <SetRootBox>
       <div {...stylex.attrs(ixStyles.boxCase)}>
-        <div {...stylex.attrs(ixStyles.title, flexStyles.base)}>
+        <div {...stylex.attrs(ixStyles.title)}>
           <LogoImgSvg width="20px" height="20px" />
           <LogoTextSvg height="20px" color="#b1b8c0" />
         </div>
@@ -112,7 +115,7 @@ export default function Home() {
           </SetA>
         </div>
         <div {...stylex.attrs(ixStyles.boxIn)}>
-          <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_1title)}>
+          <div {...stylex.attrs(ixStyles.box2_1title)}>
             메뉴 더보기
           </div>
           <div {...stylex.attrs(ixStyles.box2_2Group)}>
@@ -125,7 +128,7 @@ export default function Home() {
               투표<br/>결과보기
             </SetButtonBox>
           </div>
-          <div {...stylex.attrs(flexStyles.sero, ixStyles.box2_3Group)}>
+          <div {...stylex.attrs(ixStyles.box2_3Group)}>
             <SetButtonBox sx={[ixStyles.box2_3In]}>
               <div {...stylex.attrs(ixStyles.box2_3text)}>
                 <LinkSvg width="24px" height="24px" />
