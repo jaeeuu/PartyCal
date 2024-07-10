@@ -27,6 +27,7 @@
     "eslint": "^9.6.0",
     "eslint-plugin-solid": "^0.14.1",
     "globals": "^15.8.0",
+    "msw": "^2.3.1",
     "path": "^0.12.7",
     "typescript-eslint": "^7.16.0",
     "vite-plugin-solid-svg": "^0.8.1",

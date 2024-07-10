@@ -8,41 +8,59 @@ import calenderImage from '../assets/images/cal-3d.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
 import { SetButtonBox, SetRootBox, SetA } from '~/components/SetShared';
-import { flexStyles } from '~/common/share-styles';
+
+const inStyles = stylex.create({
+  flex: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  startAn: {
+    transform: {
+      default: 'translateY(0)',
+      '@starting-style': 'translateY(100px)',
+    },
+    opacity: {
+      default: 1,
+      '@starting-style': 0,
+    },
+    transition: 'transform 0.5s ease, opacity 0.5s ease',
+  }
+});
 
 const ixStyles = stylex.create({
   title: {
-    ...stylex.include(flexStyles.base),
+    ...stylex.include(inStyles.flex),
     alignSelf: "flex-start",
-    margin: "0px 0px 0px 20px",
+    marginBottom: "20px",
     gap: "10px",
   },
-  titleText: {
-    height: "20px",
-    color: "rgb(177, 184, 192)",
-  },
-  boxCase: {
-    width: "min(450px, 100%)",
-  },
   boxIn: {
-    ...stylex.include(flexStyles.base),
-    ...stylex.include(flexStyles.sero),
-    ...stylex.include(flexStyles.center),
+    ...stylex.include(inStyles.flex),
+    ...stylex.include(inStyles.startAn),
+    flexDirection: 'column',
     backgroundColor: "#fff",
     padding: "25px",
-    margin: "20px 0px 0px 0px",
+    marginTop: "20px",
     borderRadius: "20px",
+    position: "relative",
+  },
+  box1text: {
+    position: 'absolute',
+    fontWeight: 700,
+    fontSize: "20px",
+    left: '25px',
+    top: '25px',
+    color: "#333e4b",
   },
   box1image: {
-    width: "min(45vw, 200px)",
-    // padding: "40px",
-    margin: "15px",
+    marginTop: "55px",
+    marginBottom: "35px",
+    objectFit: 'contain',
     pointerEvents: 'none',
   },
   box1button: {
     width: "100%",
     padding: "17px",
-    margin: "40px 0px 0px 0px",
     fontWeight: 500,
     textAlign: "center",
   },
@@ -54,12 +72,12 @@ const ixStyles = stylex.create({
     margin: "0px 0px 12px 7px",
   },
   box2_2Group: {
-    ...stylex.include(flexStyles.base),
+    ...stylex.include(inStyles.flex),
     width: "100%",
     gap: "20px",
   },
   box2_2In: {//#425468, #333e4b light, hard
-    borderColor: "#f2f3f5",//linecolor
+    borderColor: "#f2f3f5",
     borderStyle: "solid",
     borderWidth: "1.5px",
     borderRadius: "15px",
@@ -77,21 +95,21 @@ const ixStyles = stylex.create({
     position: "absolute",
   },
   box2_3Group: {
-    ...stylex.include(flexStyles.base),
-    ...stylex.include(flexStyles.sero),
+    ...stylex.include(inStyles.flex),
+    flexDirection: 'column',
     width: "100%",
-    margin: "7px 0px 0px 0px",//#917c7c, #dedede, #646ab5, #cccccc
+    marginTop: "7px",
   },
   box2_3In: {
-    ...stylex.include(flexStyles.base),
+    ...stylex.include(inStyles.flex),
     width: "100%",
     backgroundColor: "#fff",
-    padding: "10px 10px 10px 10px",
+    padding: "10px",
     borderRadius: "15px",
     justifyContent: "space-between",
   },
   box2_3text: {
-    ...stylex.include(flexStyles.base),
+    ...stylex.include(inStyles.flex),
     fontWeight: 400,
     fontSize: "16px",
     color: "#6b7784",
@@ -103,47 +121,46 @@ export default function Home() {
   // const navigate = useNavigate();
   return (
     <SetRootBox>
-      <div {...stylex.attrs(ixStyles.boxCase)}>
-        <div {...stylex.attrs(ixStyles.title)}>
-          <LogoImgSvg width="20px" height="20px" />
-          <LogoTextSvg height="20px" color="#b1b8c0" />
+      <div {...stylex.attrs(ixStyles.title)}>
+        <LogoImgSvg width="20px" height="20px" />
+        <LogoTextSvg height="20px" color="#b1b8c0" />
+      </div>
+      <div {...stylex.attrs(ixStyles.boxIn)}>
+        <div {...stylex.attrs(ixStyles.box1text)}>친구들과 함께<br/>날짜 투표를 시작해보세요</div>
+        <img {...stylex.attrs(ixStyles.box1image)} height="150px" src={calenderImage} loading="eager" decoding='sync' />
+        <SetA sx={[ixStyles.box1button]} href='/new' >
+          날짜 투표 만들기
+        </SetA>
+      </div>
+      <div {...stylex.attrs(ixStyles.boxIn)}>
+        <div {...stylex.attrs(ixStyles.box2_1title)}>
+          메뉴 더보기
         </div>
-        <div {...stylex.attrs(ixStyles.boxIn)}>
-          <img {...stylex.attrs(ixStyles.box1image)} src={calenderImage} loading="eager" decoding='sync' />
-          <SetA sx={[ixStyles.box1button]} href='/new2' >
-            날짜 투표 만들기
-          </SetA>
+        <div {...stylex.attrs(ixStyles.box2_2Group)}>
+          <SetButtonBox sx={[ixStyles.box2_2In]}>
+            <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
+            날짜<br/>투표하기
+          </SetButtonBox>
+          <SetButtonBox sx={[ixStyles.box2_2In]}>
+            <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
+            투표<br/>결과보기
+          </SetButtonBox>
         </div>
-        <div {...stylex.attrs(ixStyles.boxIn)}>
-          <div {...stylex.attrs(ixStyles.box2_1title)}>
-            메뉴 더보기
-          </div>
-          <div {...stylex.attrs(ixStyles.box2_2Group)}>
-            <SetButtonBox sx={[ixStyles.box2_2In]}>
-              <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
-              날짜<br/>투표하기
-            </SetButtonBox>
-            <SetButtonBox sx={[ixStyles.box2_2In]}>
-              <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
-              투표<br/>결과보기
-            </SetButtonBox>
-          </div>
-          <div {...stylex.attrs(ixStyles.box2_3Group)}>
-            <SetButtonBox sx={[ixStyles.box2_3In]}>
-              <div {...stylex.attrs(ixStyles.box2_3text)}>
-                <LinkSvg width="24px" height="24px" />
-                사이트 공유하기
-              </div>
-              <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
-            </SetButtonBox>
-            <SetButtonBox sx={[ixStyles.box2_3In]}>
-              <div {...stylex.attrs(ixStyles.box2_3text)}>
-                <RocketSvg width="24px" height="24px" />
-                제작자 정보
-              </div>
-              <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
-            </SetButtonBox>
-          </div>
+        <div {...stylex.attrs(ixStyles.box2_3Group)}>
+          <SetButtonBox sx={[ixStyles.box2_3In]}>
+            <div {...stylex.attrs(ixStyles.box2_3text)}>
+              <LinkSvg width="24px" height="24px" />
+              사이트 공유하기
+            </div>
+            <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
+          </SetButtonBox>
+          <SetButtonBox sx={[ixStyles.box2_3In]}>
+            <div {...stylex.attrs(ixStyles.box2_3text)}>
+              <RocketSvg width="24px" height="24px" />
+              제작자 정보
+            </div>
+            <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
+          </SetButtonBox>
         </div>
       </div>
     </SetRootBox>

@@ -3,7 +3,7 @@ import type { JSX } from 'solid-js';
 import { createSignal, splitProps } from 'solid-js';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { A } from '@solidjs/router';
-import { flexStyles } from '~/common/share-styles';
+
 
 const baseStyles = stylex.create({
   reset: {
@@ -14,6 +14,10 @@ const baseStyles = stylex.create({
     fontSize: '16px',
     willChange: 'transform',
     padding: '11px 15px 11px 15px',
+  },
+  flex: {
+    display: 'flex',
+    alignItems: 'center',
   },
   button: {
     textDecoration: 'none',
@@ -56,7 +60,10 @@ const baseStyles = stylex.create({
     //padding: '10px 15px 10px 15px',
     transition: {
       default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
-      '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
+      '@media (hover: none)': {
+        default: null,
+        ':not(:focus-within)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
+      },
       ':focus-within': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
     },
     backgroundColor: {
@@ -188,9 +195,12 @@ const thisStyles = stylex.create({
     minHeight: '100dvh',
     position: 'relative',
     padding: '20px',
-    ...stylex.include(flexStyles.base),
-    ...stylex.include(flexStyles.sero),
+    ...stylex.include(baseStyles.flex),
+    flexDirection: 'column',
   },
+  rootIn: {
+    width: "min(450px, 100%)",
+  }
 });
 
 // type SetFlexProps = JSX.HTMLAttributes<HTMLDivElement> & {
@@ -211,7 +221,7 @@ const thisStyles = stylex.create({
 //     <div
 //       {...others}
 //       {...stylex.attrs(
-//         flexStyles.base,
+//         baseStyles.flex,
 //         local.mode === 'sero' && flexStyles.sero,
 //         local.center && flexStyles.center,
 //         ...(local.sx??[])
@@ -271,14 +281,16 @@ export function SetRootBox(props: SetRootProps): JSX.Element {
     <div
       {...others}
       {...stylex.attrs(
-        // (local.mode === 'sero' || local.mode === 'garo') && flexStyles.base,
+        // (local.mode === 'sero' || local.mode === 'garo') && baseStyles.flex,
         // local.mode === 'sero' && flexStyles.sero,
         // local.center && flexStyles.center,
         thisStyles.root,
         ...(local.sx??[])
       )}
     >
-      {local.children}
+      <div {...stylex.attrs(thisStyles.rootIn)}>
+        {local.children}
+      </div>
     </div>
   );
 }
@@ -324,7 +336,7 @@ export function SetButtonBox(props: SetButtonBoxProps): JSX.Element {
       {...others}
       {...stylex.attrs(
         buttonStyles.none,
-        // (local.mode === 'sero' || local.mode === 'garo') && flexStyles.base,
+        // (local.mode === 'sero' || local.mode === 'garo') && baseStyles.flex,
         // local.center && flexStyles.center,
         ...(local.sx??[]),
         local.disabled && thisStyles.disabled
@@ -361,7 +373,7 @@ export function SetA(props: SetAProps): JSX.Element {
 
 const checkboxStyles = stylex.create({
   box: {
-    ...stylex.include(flexStyles.base),
+    ...stylex.include(baseStyles.flex),
     ...stylex.include(buttonStyles.none),
     padding: '8px',
     // borderRadius: '14px',
@@ -426,7 +438,7 @@ export function SetCheckbox(props: SetCheckboxProps){
 
 const switchStyles = stylex.create({
   box: {
-    ...stylex.include(flexStyles.base),
+    ...stylex.include(baseStyles.flex),
     ...stylex.include(buttonStyles.none),
     // borderRadius: "14px",
     // padding: "10px",
