@@ -22,8 +22,11 @@ const baseStyles = stylex.create({
     cursor: 'pointer',
     transition: {
       default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
-      '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
-      // ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
+      '@media (hover: none)': {
+        default: null,
+        ':not(:active)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
+      },
+      ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
     },
     // boxShadow: {
     //   default: null, //'0px 0px 20px 10px rgba(242, 244, 246, 0.6)',
@@ -54,7 +57,7 @@ const baseStyles = stylex.create({
     transition: {
       default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
       '@media (hover: none)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
-      // ':focus-within': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
+      ':focus-within': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
     },
     backgroundColor: {
       default: '#fafafa',
