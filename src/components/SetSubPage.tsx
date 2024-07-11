@@ -17,7 +17,7 @@ const ixStyles = stylex.create({
     ...stylex.include(inStyles.root),
     height: '100dvh',
     top: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     backdropFilter: 'blur(1px)',
   },
   box: {
@@ -53,7 +53,7 @@ type SetSubPageProps<P = {}> = P & {
 
 export default function SetSubPage(props: SetSubPageProps): JSX.Element{
   const backOnEnter = (el, done) => {
-    const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 500, easing: 'ease' });
+    const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease' });
     a.finished.then(done);
   };
   const backOnExit = (el, done) => {
@@ -61,7 +61,7 @@ export default function SetSubPage(props: SetSubPageProps): JSX.Element{
     a.finished.then(done);
   };
   const pageOnEnter = (el, done) => {
-    const a = el.animate([{ transform: "translateY(500px)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 500, easing: materialEasing });
+    const a = el.animate([{ transform: "translateY(500px)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
     a.finished.then(done);
   };
   const pageOnExit = (el, done) => {

@@ -140,7 +140,7 @@ const ixStyles = stylex.create({
 });
 
 export default function Home() {
-  const [showSub, setShowShub] = createSignal<number>(0);
+  const [showSub, setShowSub] = createSignal<number>(0);
   return (
     <SetRootBox>
       <div {...stylex.attrs(ixStyles.title)}>
@@ -169,14 +169,14 @@ export default function Home() {
           </SetButtonBox>
         </div>
         <div {...stylex.attrs(ixStyles.box2_3Group)}>
-          <SetButtonBox sx={[ixStyles.box2_3In]}>
-            <div {...stylex.attrs(ixStyles.box2_3text)} onClick={()=>setShowShub(1)}>
+          <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(1)}>
+            <div {...stylex.attrs(ixStyles.box2_3text)}>
               <LinkSvg width="24px" height="24px" />
               사이트 공유하기
             </div>
             <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
           </SetButtonBox>
-          <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowShub(2)}>
+          <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(2)}>
             <div {...stylex.attrs(ixStyles.box2_3text)}>
               <RocketSvg width="24px" height="24px" />
               라이센스 정보
@@ -185,19 +185,19 @@ export default function Home() {
           </SetButtonBox>
         </div>
       </div>
-      <SetSubPage show={showSub} setShow={setShowShub}>
+      <SetSubPage show={showSub} setShow={setShowSub}>
         <Show when={showSub()===2}>
           <div {...stylex.attrs(ixStyles.subText)}>
             This project is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU
             <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="20px" />SolidStart by Ryan Carniato</div>
             <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="20px" />Stylex by Meta Platforms</div>
           </div>
-          <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowShub(0)}>
+          <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
             확인
           </SetButton>
         </Show>
         <Show when={showSub()===1}>
-          <SetSend link="" />
+          <SetSend link="A" />
         </Show>
       </SetSubPage>
     </SetRootBox>
