@@ -4,9 +4,14 @@ import handleTiles from '../components/tileDrag';
 import getCalendar from '../common/getCalendar';
 import { addMonths, getMonth, getYear } from 'date-fns';
 import { SetButton, SetRootBox } from '~/components/SetShared';
-import { flexStyles } from '~/common/share-styles';
 
 const ixStyles = stylex.create({
+  flex: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
   title: {
     fontSize: "25px",
     margin: "0px 0px 20px 20px",
@@ -14,6 +19,9 @@ const ixStyles = stylex.create({
   },
   seroBox: {
     width: "min(700px, 100%)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   box: {
     width: "100%",
@@ -64,6 +72,9 @@ const ixStyles = stylex.create({
     marginTop: "30px",
     marginBottom: "30px",
     gap: "30px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttons: {
     width: "100px",
@@ -95,8 +106,8 @@ export default function New2() {
   });
   
   return (
-    <SetRootBox sx={[flexStyles.base, flexStyles.sero, flexStyles.center]}>
-      <div {...stylex.attrs(flexStyles.sero, ixStyles.seroBox)}>
+    <SetRootBox sx={[ixStyles.flex]}>
+      <div {...stylex.attrs(ixStyles.seroBox)}>
         <div {...stylex.attrs(ixStyles.title)}>{`${getYear(thisDate())}년 ${getMonth(thisDate())+1}월`}</div>
         <div {...stylex.attrs(ixStyles.box)}>
           <Index each={tile()}>
@@ -117,7 +128,7 @@ export default function New2() {
             )}
           </Index>
         </div>
-        <div {...stylex.attrs(flexStyles.center, ixStyles.buttonBox)}>
+        <div {...stylex.attrs(ixStyles.buttonBox)}>
           <SetButton mode='sub' sx={[ixStyles.buttons]} onClick={() => setThisDate((prev) => addMonths(prev, -1))}>이전 달</SetButton>
           <SetButton mode='main' sx={[ixStyles.buttons]} onClick={() => setThisDate((prev) => addMonths(prev, 1))}>다음 달</SetButton>
         </div>

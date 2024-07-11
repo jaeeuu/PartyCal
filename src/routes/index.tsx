@@ -12,6 +12,7 @@ import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
 import SolidSvg from '~/assets/icons/solidjs.svg';
 import StylexSvg from '~/assets/icons/stylex.svg';
+import SetSend from '~/components/SetSend';
 
 const inStyles = stylex.create({
   flex: {
@@ -169,7 +170,7 @@ export default function Home() {
         </div>
         <div {...stylex.attrs(ixStyles.box2_3Group)}>
           <SetButtonBox sx={[ixStyles.box2_3In]}>
-            <div {...stylex.attrs(ixStyles.box2_3text)}>
+            <div {...stylex.attrs(ixStyles.box2_3text)} onClick={()=>setShowShub(1)}>
               <LinkSvg width="24px" height="24px" />
               사이트 공유하기
             </div>
@@ -194,6 +195,9 @@ export default function Home() {
           <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowShub(0)}>
             확인
           </SetButton>
+        </Show>
+        <Show when={showSub()===1}>
+          <SetSend link="" />
         </Show>
       </SetSubPage>
     </SetRootBox>

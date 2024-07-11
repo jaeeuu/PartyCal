@@ -279,16 +279,14 @@ export function SetRootBox(props: SetRootProps): JSX.Element {
   ]);
   return (
     <div
-      {...others}
       {...stylex.attrs(
         // (local.mode === 'sero' || local.mode === 'garo') && baseStyles.flex,
         // local.mode === 'sero' && flexStyles.sero,
         // local.center && flexStyles.center,
         thisStyles.root,
-        ...(local.sx??[])
       )}
     >
-      <div {...stylex.attrs(thisStyles.rootIn)}>
+      <div {...others} {...stylex.attrs(thisStyles.rootIn, ...(local.sx??[]))}>
         {local.children}
       </div>
     </div>
