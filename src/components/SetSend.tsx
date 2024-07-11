@@ -23,7 +23,7 @@ export default function SetSend(props: SetSendProps): JSX.Element {
       </div>
       <div>
         <div>instagram</div>
-        <a href='kakaolink://send?appkey=47709efeaae6b8a5a3a04ba9966d08c0&appver=1.0&linkver=4.0&extras={"KA":"os/javascript lang/en-US","lcba":"serverCallbackArgs_if_any"}&request_url=https://party-cal.vercel.app'>kakaotalk</a>
+        <a href=''>kakaotalk</a>
         <div>x</div>
         <div>more</div>
       </div>

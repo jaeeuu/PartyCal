@@ -13,6 +13,7 @@ import SetSubPage from '~/components/SetSubPage';
 import SolidSvg from '~/assets/icons/solidjs.svg';
 import StylexSvg from '~/assets/icons/stylex.svg';
 import SetSend from '~/components/SetSend';
+import { MetaProvider, Meta } from "@solidjs/meta";
 
 const inStyles = stylex.create({
   flex: {
@@ -143,15 +144,20 @@ export default function Home() {
   const [showSub, setShowSub] = createSignal<number>(0);
   return (
     <SetRootBox>
+      <MetaProvider>
+        <Meta property="og:title" content="PARTYCAL: 일정 투표 플랫폼" />
+        <Meta property="og:description" content="친구들과 함께 일정 투표를 시작해보세요" />
+        <Meta property="og:image" content="https://jjreset.github.io/act_cdn/shareurl.png" />
+      </MetaProvider>
       <div {...stylex.attrs(ixStyles.title)}>
         <LogoImgSvg width="20px" height="20px" />
         <LogoTextSvg height="20px" color="#b1b8c0" />
       </div>
       <div {...stylex.attrs(ixStyles.boxIn)}>
-        <div {...stylex.attrs(ixStyles.box1text)}>친구들과 함께<br/>날짜 투표를 시작해보세요</div>
+        <div {...stylex.attrs(ixStyles.box1text)}>친구들과 함께<br/>일정 투표를 시작해보세요</div>
         <img {...stylex.attrs(ixStyles.box1image)} height="100px" src={calenderImage} loading="eager" decoding='sync' />
         <SetA sx={[ixStyles.box1button]} href='/new' >
-          날짜 투표 만들기
+          일정 투표 만들기
         </SetA>
       </div>
       <div {...stylex.attrs(ixStyles.boxIn)}>
@@ -159,11 +165,11 @@ export default function Home() {
           메뉴 더보기
         </div>
         <div {...stylex.attrs(ixStyles.box2_2Group)}>
-          <SetButtonBox sx={[ixStyles.box2_2In]}>
+          <SetButtonBox sx={[ixStyles.box2_2In]} onClick={()=>setShowSub(3)}>
             <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
-            날짜<br/>투표하기
+            일정<br/>투표하기
           </SetButtonBox>
-          <SetButtonBox sx={[ixStyles.box2_2In]}>
+          <SetButtonBox sx={[ixStyles.box2_2In]} onClick={()=>setShowSub(3)}>
             <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
             투표<br/>결과보기
           </SetButtonBox>
@@ -198,6 +204,9 @@ export default function Home() {
         </Show>
         <Show when={showSub()===1}>
           <SetSend link="A" />
+        </Show>
+        <Show when={showSub()===3}>
+          <div>Nothing yet...</div>
         </Show>
       </SetSubPage>
     </SetRootBox>
