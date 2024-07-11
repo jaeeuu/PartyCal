@@ -21,15 +21,15 @@ const inStyles = stylex.create({
     alignItems: 'center',
   },
   startAn: {
-    transform: {
-      default: 'translateY(0)',
-      '@starting-style': 'translateY(100px)',
-    },
+    // transform: {
+    //   default: 'translateY(0)',
+    //   '@starting-style': 'translateY(100px)',
+    // },
     opacity: {
       default: 1,
       '@starting-style': 0,
     },
-    transition: 'transform 0.8s var(--material-easing), opacity 0.8s var(--material-easing)',
+    transition: 'opacity 0.5s var(--material-easing)',
   }
 });
 
@@ -206,7 +206,7 @@ export default function Home() {
           <SetSend link="A" />
         </Show>
         <Show when={showSub()===3}>
-          <div>Nothing yet...</div>
+          <div>Nothing here yet...</div>
         </Show>
       </SetSubPage>
     </SetRootBox>
