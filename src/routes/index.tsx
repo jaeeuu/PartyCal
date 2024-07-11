@@ -10,8 +10,8 @@ import LogoImgSvg from '../assets/logo_img.svg';
 import { SetButtonBox, SetRootBox, SetA, SetButton } from '~/components/SetShared';
 import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
-import SolidSvg from '~/assets/icons/solidjs.svg';
-import StylexSvg from '~/assets/icons/stylex.svg';
+import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
+import StylexSvg from '~/assets/icons/logo/stylex_logo.svg';
 import SetSend from '~/components/SetSend';
 import { MetaProvider, Meta } from "@solidjs/meta";
 
@@ -66,7 +66,7 @@ const ixStyles = stylex.create({
   },
   box1button: {
     width: "100%",
-    padding: "17px",
+    padding: "16px",
     fontWeight: 500,
     textAlign: "center",
   },
@@ -120,13 +120,10 @@ const ixStyles = stylex.create({
     color: "#6b7784",
     gap: "15px",
   },
-  subButton: {
-    padding: '17px',
-    fontWeight: 500,
-  },
   subText: {
     padding: '10px',
-    paddingBottom: '20px',
+    paddingBottom: '40px',
+    paddingTop: '20px',
     color: "#4e5a68",
     fontWeight: 700,
   },
@@ -135,9 +132,14 @@ const ixStyles = stylex.create({
     gap: '10px',
     fontWeight: 500,
     fontSize: '14px',
-    marginTop: '10px',
+    marginTop: '20px',
     marginLeft: '5px',
-  }
+  },
+  subButton: {
+    padding: '17px',
+    fontWeight: 500,
+    width: '100%',
+  },
 });
 
 export default function Home() {
@@ -193,17 +195,19 @@ export default function Home() {
       </div>
       <SetSubPage show={showSub} setShow={setShowSub}>
         <Show when={showSub()===2}>
-          <div {...stylex.attrs(ixStyles.subText)}>
-            This project is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU
-            <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="20px" />SolidStart by Ryan Carniato</div>
-            <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="20px" />Stylex by Meta Platforms</div>
+          <div>
+            <div {...stylex.attrs(ixStyles.subText)}>
+              This project is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU
+              <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="20px" />SolidStart by Ryan Carniato</div>
+              <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="20px" />Stylex by Meta Platforms</div>
+            </div>
+            <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
+              확인
+            </SetButton>
           </div>
-          <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
-            확인
-          </SetButton>
         </Show>
         <Show when={showSub()===1}>
-          <SetSend link="A" />
+          <SetSend link="mainpage" />
         </Show>
         <Show when={showSub()===3}>
           <div>Nothing here yet...</div>

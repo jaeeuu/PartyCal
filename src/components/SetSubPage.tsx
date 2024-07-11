@@ -34,6 +34,7 @@ const ixStyles = stylex.create({
     backgroundColor: '#fff',
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
   },
   hint: {
     width: '70px',

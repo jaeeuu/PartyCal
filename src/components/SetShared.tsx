@@ -13,7 +13,6 @@ const baseStyles = stylex.create({
     fontFamily: "'Basic Fonts'",
     fontSize: '16px',
     willChange: 'transform',
-    padding: '11px 15px 11px 15px',
   },
   flex: {
     display: 'flex',
