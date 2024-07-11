@@ -26,6 +26,7 @@ html, body{
   background-color: #F2F4F6;
   overscroll-behavior: contain;
   overflow-x: hidden;
+  line-height: 1.5;
   /* overscroll-behavior: none; */
   /* touch-action: manipulation;
   overflow: hidden; */

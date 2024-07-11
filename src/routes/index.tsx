@@ -7,7 +7,11 @@ import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
 import calenderImage from '../assets/images/cal-3d.avif';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
-import { SetButtonBox, SetRootBox, SetA } from '~/components/SetShared';
+import { SetButtonBox, SetRootBox, SetA, SetButton } from '~/components/SetShared';
+import { createSignal, Show } from 'solid-js';
+import SetSubPage from '~/components/SetSubPage';
+import SolidSvg from '~/assets/icons/solidjs.svg';
+import StylexSvg from '~/assets/icons/stylex.svg';
 
 const inStyles = stylex.create({
   flex: {
@@ -23,7 +27,7 @@ const inStyles = stylex.create({
       default: 1,
       '@starting-style': 0,
     },
-    transition: 'transform 1s var(--material-easing), opacity 1s var(--material-easing)',
+    transition: 'transform 0.8s var(--material-easing), opacity 0.8s var(--material-easing)',
   }
 });
 
@@ -105,7 +109,6 @@ const ixStyles = stylex.create({
     width: "100%",
     backgroundColor: "#fff",
     padding: "10px",
-    borderRadius: "15px",
     justifyContent: "space-between",
   },
   box2_3text: {
@@ -115,10 +118,28 @@ const ixStyles = stylex.create({
     color: "#6b7784",
     gap: "15px",
   },
+  subButton: {
+    padding: '17px',
+    fontWeight: 500,
+  },
+  subText: {
+    padding: '10px',
+    paddingBottom: '20px',
+    color: "#4e5a68",
+    fontWeight: 700,
+  },
+  subBox_1: {
+    ...stylex.include(inStyles.flex),
+    gap: '10px',
+    fontWeight: 500,
+    fontSize: '14px',
+    marginTop: '10px',
+    marginLeft: '5px',
+  }
 });
 
 export default function Home() {
-  // const navigate = useNavigate();
+  const [showSub, setShowShub] = createSignal<number>(0);
   return (
     <SetRootBox>
       <div {...stylex.attrs(ixStyles.title)}>
@@ -127,7 +148,7 @@ export default function Home() {
       </div>
       <div {...stylex.attrs(ixStyles.boxIn)}>
         <div {...stylex.attrs(ixStyles.box1text)}>친구들과 함께<br/>날짜 투표를 시작해보세요</div>
-        <img {...stylex.attrs(ixStyles.box1image)} height="150px" src={calenderImage} loading="eager" decoding='sync' />
+        <img {...stylex.attrs(ixStyles.box1image)} height="100px" src={calenderImage} loading="eager" decoding='sync' />
         <SetA sx={[ixStyles.box1button]} href='/new' >
           날짜 투표 만들기
         </SetA>
@@ -154,15 +175,27 @@ export default function Home() {
             </div>
             <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
           </SetButtonBox>
-          <SetButtonBox sx={[ixStyles.box2_3In]}>
+          <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowShub(2)}>
             <div {...stylex.attrs(ixStyles.box2_3text)}>
               <RocketSvg width="24px" height="24px" />
-              제작자 정보
+              라이센스 정보
             </div>
             <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
           </SetButtonBox>
         </div>
       </div>
+      <SetSubPage show={showSub} setShow={setShowShub}>
+        <Show when={showSub()===2}>
+          <div {...stylex.attrs(ixStyles.subText)}>
+            This project is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU
+            <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="20px" />SolidStart by Ryan Carniato</div>
+            <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="20px" />Stylex by Meta Platforms</div>
+          </div>
+          <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowShub(0)}>
+            확인
+          </SetButton>
+        </Show>
+      </SetSubPage>
     </SetRootBox>
   );
 }

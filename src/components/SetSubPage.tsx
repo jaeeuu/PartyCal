@@ -1,54 +1,96 @@
-import type { JSX, Setter } from "solid-js";
+import type { Accessor, JSX, Setter } from "solid-js";
 import { Portal } from "solid-js/web";
 import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
 import { Show } from 'solid-js';
-import { SetRootBox } from "./SetShared";
 import { materialEasing } from "~/common/store";
 
+// "linear-gradient(120deg, rgba(254,247,243,1) 0%, rgba(249,241,250,1) 15%, rgba(237,245,254,1) 50%, rgba(238,251,243,1) 100%)"
+const inStyles = stylex.create({
+  root: {
+    width: '100dvw',
+    position: 'fixed',
+  },
+});
 const ixStyles = stylex.create({
   backdrop: {
-    width: '100svw',
+    ...stylex.include(inStyles.root),
     height: '100dvh',
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    top: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
     backdropFilter: 'blur(1px)',
   },
   box: {
-
+    ...stylex.include(inStyles.root),
+    bottom: 0,
+    padding: '10px',
+    paddingBottom: '20px',
+  },
+  boxIn: {
+    width: '100%',
+    padding: '20px',
+    paddingTop: '12px',
+    borderRadius: "20px",
+    backgroundColor: '#fff',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  hint: {
+    width: '70px',
+    height: '4px',
+    borderRadius: '2px',
+    backgroundColor: '#E5E8EB',
+    alignSelf: 'center',
+    marginBottom: '7px',
   }
 });
 
 type SetSubPageProps<P = {}> = P & {
   children: JSX.Element;
-  show: boolean,
-  setShow: Setter<boolean>
+  show: Accessor<number>,
+  setShow: Setter<number>
 };
 
 export default function SetSubPage(props: SetSubPageProps): JSX.Element{
+  const backOnEnter = (el, done) => {
+    const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 500, easing: 'ease' });
+    a.finished.then(done);
+  };
+  const backOnExit = (el, done) => {
+    const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, easing: "ease" });
+    a.finished.then(done);
+  };
   const pageOnEnter = (el, done) => {
-    const a = el.animate([{ transform: "translateY(500px) scaleY(0)", overflowY: "hidden" }, { transform: 'translateY(0px) scaleY(1)', overflowY: "hidden" }], { duration: 1000, easing: materialEasing});
+    const a = el.animate([{ transform: "translateY(500px)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 500, easing: materialEasing });
     a.finished.then(done);
   };
   const pageOnExit = (el, done) => {
-    const a = el.animate([{ transform: 'translateY(0px) scaleY(1)', overflowY: "hidden" }, { transform: "translateY(-500px) scaleY(0)", overflowY: "hidden" }], { duration: 500, easing: "ease" });
+    const a = el.animate([{ transform: 'translateY(0px)', overflowY: "hidden" }, { transform: "translateY(500px)", overflowY: "hidden" }], { duration: 350, easing: "ease" });
     a.finished.then(done);
   };
   return (
     <Portal>
-      <Transition>
-        <Show when={props.show}>
-          <div {...stylex.attrs(ixStyles.backdrop)}>
+      <Transition
+        onEnter={(el, done) => backOnEnter(el, done)}
+        onExit={(el, done) => backOnExit(el, done)}
+      >
+        <Show when={props.show()!==0}>
+          <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => props.setShow(0)}>
             &nbsp;
           </div>
         </Show>
       </Transition>
-      <Transition>
-        <Show when={props.show}>
-          <SetRootBox>
-            <div {...stylex.attrs(ixStyles.box)}>
+      <Transition
+        onEnter={(el, done) => pageOnEnter(el, done)}
+        onExit={(el, done) => pageOnExit(el, done)}
+      >
+        <Show when={props.show()!==0}>
+          <div {...stylex.attrs(ixStyles.box)}>
+            <div {...stylex.attrs(ixStyles.boxIn)}>
+              <div {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>
               {props.children}
             </div>
-          </SetRootBox>
+          </div>
         </Show>
       </Transition>
     </Portal>
