@@ -61,8 +61,14 @@ const ixStyles = stylex.create({
     fontWeight: 500,
     color: "#4e5a68",
   },
+  copyBox: {
+    ...stylex.include(inStyles.flex),
+    padding: 0,
+    width: null,
+  },
   copyIcon: {
     width: '24px',
+    color: "#8f8f8f",
   },
   box2: {
     ...stylex.include(inStyles.flex),
@@ -127,8 +133,29 @@ export default function SetSend(props: SetSendProps): JSX.Element {
     }
   };
 
-  const handleLogoClick = (logo: number) => {
+  const handleMoreClick = async (url: string, setValue: Setter<number>) => {
+    setValue(0);
+    const urlAll = getUrl(url);
+    if(url === 'mainpage'){
+      const shareData: ShareData = {
+        title: 'PARTYCAL: 일정 투표 플랫폼',
+        text: '친구들과 함께 일정 투표를 시작해보세요',
+        url: urlAll,
+      };
+      await shareUrl(shareData);
+    } else {
+      const shareData: ShareData = {
+        title: '우리 언제 만날까?',
+        text: '지금 바로 투표에 참여해보세요!',
+        url: urlAll,
+      };
+      await shareUrl(shareData);
+    }
+  };
 
+  const handleCopyClick = async (url: string) => {
+    const urlAll = getUrl(url);
+    await copyUrl(urlAll);
   };
 
   return (
@@ -137,7 +164,7 @@ export default function SetSend(props: SetSendProps): JSX.Element {
         <div {...stylex.attrs(ixStyles.boxtext)}>URL 링크 복사</div>
         <div {...stylex.attrs(ixStyles.box1)}>
           <div {...stylex.attrs(ixStyles.linkBox)}>{getUrl(props.link)}</div>
-          <CopySvg {...stylex.attrs(ixStyles.copyIcon)} />
+          <SetButtonBox sx={[ixStyles.copyBox]} onClick={()=>handleCopyClick(props.link)}><CopySvg {...stylex.attrs(ixStyles.copyIcon)} /></SetButtonBox>
         </div>
       </div>
       <div {...stylex.attrs(ixStyles.box0)}>
@@ -150,7 +177,7 @@ export default function SetSend(props: SetSendProps): JSX.Element {
         </div>
       </div>
       <div {...stylex.attrs(ixStyles.buttonBox)}>
-        <SetButton mode="sub">더보기</SetButton>
+        <SetButton mode="sub" onClick={()=>handleMoreClick(props.link, props.setShow)}>더보기</SetButton>
         <SetButton mode="main" onClick={()=>props.setShow(0)}>완료</SetButton>
       </div>
     </div>
