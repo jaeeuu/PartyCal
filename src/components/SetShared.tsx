@@ -10,10 +10,12 @@ const baseStyles = stylex.create({
     borderStyle: 'none',
     outlineStyle: 'none',
     borderRadius: '15px',
+    padding: '16.5px',
+  },
+  main: {
     fontFamily: "'Basic Fonts'",
     fontSize: '16px',
     willChange: 'transform',
-    padding: '16.5px',
   },
   flex: {
     display: 'flex',
@@ -100,6 +102,7 @@ const baseStyles = stylex.create({
 const inputStyles = stylex.create({
   input: {
     ...stylex.include(baseStyles.reset),
+    ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.input),
     //overflow: 'hidden',
     //fontSize: '16px',
@@ -108,6 +111,7 @@ const inputStyles = stylex.create({
 const buttonStyles = stylex.create({
   main: {
     ...stylex.include(baseStyles.reset),
+    ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.button),
     fontWeight: 500,
     backgroundColor: {
@@ -123,6 +127,7 @@ const buttonStyles = stylex.create({
   },
   sub: {
     ...stylex.include(baseStyles.reset),
+    ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.button),
     fontWeight: 500,
     backgroundColor: {
@@ -137,7 +142,7 @@ const buttonStyles = stylex.create({
     },
   },
   none: {
-    ...stylex.include(baseStyles.reset),
+    ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.button),
     // backgroundColor: {
     //   default: 'transparent',

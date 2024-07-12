@@ -5,8 +5,8 @@ import WhatsappLogoSvg from '../assets/icons/logo/whatsapp_logo.svg';
 import KakaotalkLogoSvg from '../assets/icons/logo/kakaotalk_logo.svg';
 import FacebookLogoSvg from '../assets/icons/logo/facebook_logo.svg';
 import CopySvg from '../assets/icons/copy.svg';
-import SmsLogoIcon from '../assets/icons/logo/sms_logo.svg';
 import { SetButton, SetButtonBox } from './SetShared';
+import { CallDialog } from './SetDialog';
 
 type SetSendProps<P = {}> = P & {
   link: string;
@@ -54,16 +54,20 @@ const ixStyles = stylex.create({
     paddingLeft: '20px',
     paddingRight: '15px',
   },
+  box1help: {
+    fontSize: '13px',
+    //color: "#4E5968"
+    color: "#8B95A1",
+  },
   linkBox: {
     ...stylex.include(inStyles.flex),
     height: '60px',
     fontSize: '16px',
     fontWeight: 500,
-    color: "#4e5a68",
+    color: "#246ab6",
   },
   copyBox: {
     ...stylex.include(inStyles.flex),
-    padding: 0,
     width: null,
   },
   copyIcon: {
@@ -87,7 +91,7 @@ const ixStyles = stylex.create({
     borderRadius: '15px',
   },
   logos: {
-    // width: '100%',
+    width: '100%',
     borderRadius: '10px',
     //padding: '10px',
   },
@@ -127,6 +131,7 @@ export default function SetSend(props: SetSendProps): JSX.Element {
   const copyUrl = async(text: string): Promise<boolean> => {
     try {
       await navigator.clipboard.writeText(text);
+      CallDialog(1);
       return true;
     } catch {
       return false;
@@ -161,19 +166,20 @@ export default function SetSend(props: SetSendProps): JSX.Element {
   return (
     <div {...stylex.attrs(ixStyles.base)}>
       <div {...stylex.attrs(ixStyles.box0)}>
-        <div {...stylex.attrs(ixStyles.boxtext)}>URL 링크 복사</div>
-        <div {...stylex.attrs(ixStyles.box1)}>
+        <div {...stylex.attrs(ixStyles.boxtext)}>URL 링크</div>
+        <SetButtonBox sx={[ixStyles.box1]} onClick={()=>handleCopyClick(props.link)}>
           <div {...stylex.attrs(ixStyles.linkBox)}>{getUrl(props.link)}</div>
-          <SetButtonBox sx={[ixStyles.copyBox]} onClick={()=>handleCopyClick(props.link)}><CopySvg {...stylex.attrs(ixStyles.copyIcon)} /></SetButtonBox>
-        </div>
+          {/* <SetButtonBox sx={[ixStyles.copyBox]} onClick={()=>handleCopyClick(props.link)}><CopySvg {...stylex.attrs(ixStyles.copyIcon)} /></SetButtonBox> */}
+        </SetButtonBox>
+        <div {...stylex.attrs(ixStyles.box1help)}>누르면 링크가 복사돼요!</div>
       </div>
       <div {...stylex.attrs(ixStyles.box0)}>
-        <div {...stylex.attrs(ixStyles.boxtext)}>SNS 공유하기</div>
+        <div {...stylex.attrs(ixStyles.boxtext)}>SNS로 보내기</div>
         <div {...stylex.attrs(ixStyles.box2)}>
           <SetButtonBox sx={[ixStyles.logoBox]}><KakaotalkLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
           <SetButtonBox sx={[ixStyles.logoBox]}><InstagramLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
           <SetButtonBox sx={[ixStyles.logoBox]}><FacebookLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
-          <SetButtonBox sx={[ixStyles.logoBox]}><SmsLogoIcon {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]}><WhatsappLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
         </div>
       </div>
       <div {...stylex.attrs(ixStyles.buttonBox)}>
