@@ -22,11 +22,14 @@ const ixStyles = stylex.create({
   },
   box: {
     ...stylex.include(inStyles.root),
+    display: 'flex',
+    justifyContent: 'center',
     bottom: 0,
     padding: '10px',
     paddingBottom: '20px',
   },
   boxIn: {
+    maxWidth: '430px',
     width: '100%',
     padding: '20px',
     paddingTop: '12px',

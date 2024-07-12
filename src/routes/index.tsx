@@ -20,17 +20,6 @@ const inStyles = stylex.create({
     display: 'flex',
     alignItems: 'center',
   },
-  startAn: {
-    // transform: {
-    //   default: 'translateY(0)',
-    //   '@starting-style': 'translateY(100px)',
-    // },
-    opacity: {
-      default: 1,
-      '@starting-style': 0,
-    },
-    transition: 'opacity 0.5s var(--material-easing)',
-  }
 });
 
 const ixStyles = stylex.create({
@@ -42,7 +31,6 @@ const ixStyles = stylex.create({
   },
   boxIn: {
     ...stylex.include(inStyles.flex),
-    ...stylex.include(inStyles.startAn),
     flexDirection: 'column',
     backgroundColor: "#fff",
     padding: "25px",
@@ -59,13 +47,13 @@ const ixStyles = stylex.create({
     color: "#333e4b",
   },
   box1image: {
-    marginTop: "55px",
+    marginTop: "90px",
     marginBottom: "35px",
     objectFit: 'contain',
     pointerEvents: 'none',
   },
   box1button: {
-    width: "100%",
+    // width: "100%",
     padding: "16px",
     fontWeight: 500,
     textAlign: "center",
@@ -123,7 +111,10 @@ const ixStyles = stylex.create({
   subText: {
     padding: '10px',
     paddingBottom: '40px',
-    paddingTop: '20px',
+    paddingTop: '15px',
+  },
+  subBox_0: {
+    marginBottom: '30px',
     color: "#4e5a68",
     fontWeight: 700,
   },
@@ -132,13 +123,13 @@ const ixStyles = stylex.create({
     gap: '10px',
     fontWeight: 500,
     fontSize: '14px',
-    marginTop: '20px',
+    marginTop: '15px',
     marginLeft: '5px',
   },
   subButton: {
     padding: '17px',
     fontWeight: 500,
-    width: '100%',
+    // width: '100%',
   },
 });
 
@@ -197,7 +188,7 @@ export default function Home() {
         <Show when={showSub()===2}>
           <div>
             <div {...stylex.attrs(ixStyles.subText)}>
-              This project is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU
+              <div {...stylex.attrs(ixStyles.subBox_0)}>This project is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="20px" />SolidStart by Ryan Carniato</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="20px" />Stylex by Meta Platforms</div>
             </div>
@@ -207,7 +198,7 @@ export default function Home() {
           </div>
         </Show>
         <Show when={showSub()===1}>
-          <SetSend link="mainpage" />
+          <SetSend link="mainpage" setShow={setShowSub} />
         </Show>
         <Show when={showSub()===3}>
           <div>Nothing here yet...</div>

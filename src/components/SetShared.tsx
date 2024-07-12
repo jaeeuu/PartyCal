@@ -13,12 +13,14 @@ const baseStyles = stylex.create({
     fontFamily: "'Basic Fonts'",
     fontSize: '16px',
     willChange: 'transform',
+    padding: '16.5px',
   },
   flex: {
     display: 'flex',
     alignItems: 'center',
   },
   button: {
+    width: '100%',
     textDecoration: 'none',
     userSelect: 'none',
     //padding: '12px 15px 12px 15px',
