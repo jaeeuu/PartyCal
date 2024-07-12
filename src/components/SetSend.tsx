@@ -1,12 +1,12 @@
 import type { JSX, Setter } from 'solid-js';
 import * as stylex from "@stylexjs/stylex";
 import InstagramLogoSvg from '../assets/icons/logo/instagram_logo.svg';
-import XLogoSvg from '../assets/icons/logo/x_logo.svg';
+import WhatsappLogoSvg from '../assets/icons/logo/whatsapp_logo.svg';
 import KakaotalkLogoSvg from '../assets/icons/logo/kakaotalk_logo.svg';
-import MoreDotsSvg from '../assets/icons/more_dots.svg';
+import FacebookLogoSvg from '../assets/icons/logo/facebook_logo.svg';
 import CopySvg from '../assets/icons/copy.svg';
 import SmsLogoIcon from '../assets/icons/logo/sms_logo.svg';
-import { SetButton } from './SetShared';
+import { SetButton, SetButtonBox } from './SetShared';
 
 type SetSendProps<P = {}> = P & {
   link: string;
@@ -17,6 +17,7 @@ const inStyles = stylex.create({
   flex: {
     display: 'flex',
     alignItems: 'center',
+    width: '100%',
   },
 });
 
@@ -24,14 +25,27 @@ const ixStyles = stylex.create({
   base: {
     ...stylex.include(inStyles.flex),
     flexDirection: 'column',
-    width: '100%',
-    padding: '25px',
+    // padding: '15px',
     marginTop: '10px',
-    gap: '25px',
+    // gap: '10px',
+  },
+  box0: {
+    ...stylex.include(inStyles.flex),
+    flexDirection: 'column',
+    gap: '7px',
+    paddingRight: '15px',
+    paddingLeft: '15px',
+    marginBottom: '15px',
+  },
+  boxtext: {
+    paddingLeft: '15px',
+    color: "#6b7784",
+    fontWeight: 700,
+    alignSelf: "flex-start",
+    fontSize: '16px',
   },
   box1: {
     ...stylex.include(inStyles.flex),
-    width: '100%',
     borderColor: "#f2f3f5",
     borderStyle: "solid",
     borderWidth: "1.5px",
@@ -42,24 +56,34 @@ const ixStyles = stylex.create({
   },
   linkBox: {
     ...stylex.include(inStyles.flex),
-    width: '100%',
     height: '60px',
     fontSize: '16px',
     fontWeight: 500,
+    color: "#4e5a68",
   },
   copyIcon: {
     width: '24px',
   },
   box2: {
     ...stylex.include(inStyles.flex),
-    width: '100%',
-    gap: '30px',
+    gap: '25px',
+    borderColor: "#f2f3f5",
+    borderStyle: "solid",
+    borderWidth: "1.5px",
+    borderRadius: "15px",
+    padding: '10px',
+    marginBottom: '15px',
+  },
+  logoBox: {
+    ...stylex.include(inStyles.flex),
+    padding: '14px',
+    backgroundColor: '#f2f4f6',
+    borderRadius: '15px',
   },
   logos: {
-    width: '100%',
-    borderRadius: '15px',
-    backgroundColor: '#f2f4f6',
-    padding: '10px',
+    // width: '100%',
+    borderRadius: '10px',
+    //padding: '10px',
   },
   moreIcon: {
     backgroundColor: '#cdcdcd',
@@ -68,7 +92,6 @@ const ixStyles = stylex.create({
   buttonBox: {
     ...stylex.include(inStyles.flex),
     gap: '20px',
-    width: '100%',
   },
 });
 
@@ -78,6 +101,13 @@ const kakaoShareMainUrl = 'kakaolink://send?appkey=47709efeaae6b8a5a3a04ba9966d0
 
 export default function SetSend(props: SetSendProps): JSX.Element {
 
+  const getUrl = (url: string): string => {
+    if (url === 'mainpage'){
+      return 'https://party-cal.vercel.app';
+    } else {
+      return url;
+    }
+  };
   const shareUrl = async(data: ShareData): Promise<boolean> => {
     //data.url data.text data.title data.files
     try {
@@ -103,15 +133,21 @@ export default function SetSend(props: SetSendProps): JSX.Element {
 
   return (
     <div {...stylex.attrs(ixStyles.base)}>
-      <div {...stylex.attrs(ixStyles.box1)}>
-        <div {...stylex.attrs(ixStyles.linkBox)}>{props.link}</div>
-        <CopySvg {...stylex.attrs(ixStyles.copyIcon)} />
+      <div {...stylex.attrs(ixStyles.box0)}>
+        <div {...stylex.attrs(ixStyles.boxtext)}>URL 링크 복사</div>
+        <div {...stylex.attrs(ixStyles.box1)}>
+          <div {...stylex.attrs(ixStyles.linkBox)}>{getUrl(props.link)}</div>
+          <CopySvg {...stylex.attrs(ixStyles.copyIcon)} />
+        </div>
       </div>
-      <div {...stylex.attrs(ixStyles.box2)}>
-        <KakaotalkLogoSvg {...stylex.attrs(ixStyles.logos)} />
-        <InstagramLogoSvg {...stylex.attrs(ixStyles.logos)} />
-        <XLogoSvg {...stylex.attrs(ixStyles.logos)} />
-        <SmsLogoIcon {...stylex.attrs(ixStyles.logos)} />
+      <div {...stylex.attrs(ixStyles.box0)}>
+        <div {...stylex.attrs(ixStyles.boxtext)}>SNS 공유하기</div>
+        <div {...stylex.attrs(ixStyles.box2)}>
+          <SetButtonBox sx={[ixStyles.logoBox]}><KakaotalkLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]}><InstagramLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]}><FacebookLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]}><SmsLogoIcon {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+        </div>
       </div>
       <div {...stylex.attrs(ixStyles.buttonBox)}>
         <SetButton mode="sub">더보기</SetButton>

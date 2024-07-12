@@ -125,9 +125,9 @@ const ixStyles = stylex.create({
     fontSize: '14px',
     marginTop: '15px',
     marginLeft: '5px',
+    color: "#6b7784",
   },
   subButton: {
-    padding: '17px',
     fontWeight: 500,
     // width: '100%',
   },
@@ -189,8 +189,8 @@ export default function Home() {
           <div>
             <div {...stylex.attrs(ixStyles.subText)}>
               <div {...stylex.attrs(ixStyles.subBox_0)}>This project is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="20px" />SolidStart by Ryan Carniato</div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="20px" />Stylex by Meta Platforms</div>
+              <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="23px" />SolidStart by Ryan Carniato</div>
+              <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="19px" />Stylex by Meta Platforms</div>
             </div>
             <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
               확인

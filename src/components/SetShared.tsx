@@ -26,12 +26,12 @@ const baseStyles = stylex.create({
     //padding: '12px 15px 12px 15px',
     cursor: 'pointer',
     transition: {
-      default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
+      default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease, filter 0.4s linear',
       '@media (hover: none)': {
         default: null,
-        ':not(:active)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
+        ':not(:active)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease, filter 0.4s linear',
       },
-      ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
+      ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s linear',
     },
     // boxShadow: {
     //   default: null, //'0px 0px 20px 10px rgba(242, 244, 246, 0.6)',
@@ -109,6 +109,7 @@ const buttonStyles = stylex.create({
   main: {
     ...stylex.include(baseStyles.reset),
     ...stylex.include(baseStyles.button),
+    fontWeight: 500,
     backgroundColor: {
       default: '#3190f7',
       ':is(:active)': '#246ab6',
@@ -123,6 +124,7 @@ const buttonStyles = stylex.create({
   sub: {
     ...stylex.include(baseStyles.reset),
     ...stylex.include(baseStyles.button),
+    fontWeight: 500,
     backgroundColor: {
       default: '#e8f3ff',
       ':is(:active)': '#b9d9fc',
@@ -150,11 +152,11 @@ const buttonStyles = stylex.create({
     filter: {
       default: 'brightness(1)',
       //eslint-disable-next-line
-      ':is(:hover)': {
+      ':not(:active):is(:hover)': {
         default: null,
         '@media (hover: hover)': 'brightness(0.95)',
       },
-      ':is(:active)': 'brightness(0.85)',
+      ':is(:active)': 'brightness(0.9)',
     },
   },
 });
@@ -335,8 +337,6 @@ export function SetButtonBox(props: SetButtonBoxProps): JSX.Element {
       {...others}
       {...stylex.attrs(
         buttonStyles.none,
-        // (local.mode === 'sero' || local.mode === 'garo') && baseStyles.flex,
-        // local.center && flexStyles.center,
         ...(local.sx??[]),
         local.disabled && thisStyles.disabled
       )}

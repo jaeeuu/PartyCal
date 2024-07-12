@@ -10,7 +10,11 @@ export default defineConfig({
   vite: {
     plugins: [
       // tsconfigPaths(),
-      solidSvg(),
+      solidSvg({
+        svgo: {
+          enabled: false,
+        }
+      }),
       styleX(),
       // stylex({
       //   // dev: process.env.NODE_ENV === 'development',
