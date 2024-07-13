@@ -19,16 +19,17 @@ html, body{
   padding: 0;
   font-family: 'Basic Fonts';
   -webkit-touch-callout: none;
-  scroll-behavior: smooth;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   background-color: #F2F4F6;
   overscroll-behavior: contain;
   overflow-x: hidden;
   line-height: 1.5;
+  user-select: text;
   /* overscroll-behavior: none; */
   /* touch-action: manipulation;
+  scroll-behavior: smooth;
   overflow: hidden; */
 }
 * {

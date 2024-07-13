@@ -3,11 +3,12 @@ import { createSignal, Show } from "solid-js";
 import type { JSX } from "solid-js";
 import { Transition } from "solid-transition-group";
 import CheckCircleSvg from "../assets/icons/circle/check_circle.svg";
+import ErrorCircleSvg from "../assets/icons/circle/error_circle.svg";
 
 const ixStyles = stylex.create({
   base: {
     position: 'fixed',
-    top: '25px',
+    top: '30px',
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
@@ -16,7 +17,7 @@ const ixStyles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     backgroundColor: '#818C99',
-    padding: '11px 22px 11px 17px',
+    padding: '11px 20px 11px 15px',
     borderRadius: '24px',
     gap: '10px',
   },
@@ -31,16 +32,19 @@ const ixStyles = stylex.create({
 });
 
 const [dialog, setDialog] = createSignal<[string, number]>(['',0]);
+let dialogTimer = null;
 
 export const CallDialog = (type: number) => {
-  let timer = null;
+
   if (type === 1) {
     setDialog(['복사되었습니다.', 1]);
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      setDialog(['',0]);
-    }, 1500);
+  } else if (type === 2) {
+    setDialog(['모바일 환경만 지원합니다.', 2]);
   }
+  clearTimeout(dialogTimer);
+  dialogTimer = setTimeout(() => {
+    setDialog(['',0]);
+  }, 1500);
 };
 
 export default function SetDialog(): JSX.Element {
@@ -57,6 +61,8 @@ export default function SetDialog(): JSX.Element {
   const getIcon = (type: number): JSX.Element => {
     if (type === 1) {
       return <CheckCircleSvg {...stylex.attrs(ixStyles.icon)} />;
+    } else {
+      return <ErrorCircleSvg {...stylex.attrs(ixStyles.icon)} />;
     }
   };
 

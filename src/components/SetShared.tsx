@@ -9,13 +9,13 @@ const baseStyles = stylex.create({
   reset: {
     borderStyle: 'none',
     outlineStyle: 'none',
-    borderRadius: '15px',
     padding: '16.5px',
   },
   main: {
     fontFamily: "'Basic Fonts'",
     fontSize: '16px',
     willChange: 'transform',
+    borderRadius: '15px',
   },
   flex: {
     display: 'flex',

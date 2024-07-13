@@ -74,7 +74,7 @@ const ixStyles = stylex.create({
     borderColor: "#f2f3f5",
     borderStyle: "solid",
     borderWidth: "1.5px",
-    borderRadius: "15px",
+    // borderRadius: "15px",
     backgroundColor: "#f8f9fa",
     color: "#4e5a68",
     padding: "20px",
@@ -138,6 +138,7 @@ export default function Home() {
   return (
     <SetRootBox>
       <MetaProvider>
+        <Meta property="og:url" content="https://party-cal.vercel.app/" />
         <Meta property="og:title" content="PARTYCAL: 일정 투표 플랫폼" />
         <Meta property="og:description" content="친구들과 함께 일정 투표를 시작해보세요" />
         <Meta property="og:image" content="https://jjreset.github.io/act_cdn/shareurl.png" />
@@ -178,7 +179,7 @@ export default function Home() {
           <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(2)}>
             <div {...stylex.attrs(ixStyles.box2_3text)}>
               <RocketSvg width="24px" height="24px" />
-              라이센스 정보
+              상세 정보
             </div>
             <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
           </SetButtonBox>

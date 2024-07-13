@@ -4,7 +4,6 @@ import InstagramLogoSvg from '../assets/icons/logo/instagram_logo.svg';
 import WhatsappLogoSvg from '../assets/icons/logo/whatsapp_logo.svg';
 import KakaotalkLogoSvg from '../assets/icons/logo/kakaotalk_logo.svg';
 import FacebookLogoSvg from '../assets/icons/logo/facebook_logo.svg';
-import CopySvg from '../assets/icons/copy.svg';
 import { SetButton, SetButtonBox } from './SetShared';
 import { CallDialog } from './SetDialog';
 
@@ -49,10 +48,11 @@ const ixStyles = stylex.create({
     borderColor: "#f2f3f5",
     borderStyle: "solid",
     borderWidth: "1.5px",
-    borderRadius: "15px",
+    // borderRadius: "15px",
     backgroundColor: "#f8f9fa",
     paddingLeft: '20px',
     paddingRight: '15px',
+    userSelect: 'text',
   },
   box1help: {
     fontSize: '13px',
@@ -104,10 +104,6 @@ const ixStyles = stylex.create({
     gap: '20px',
   },
 });
-
-const kakaoShareMainUrl = 'kakaolink://send?appkey=47709efeaae6b8a5a3a04ba9966d08c0&appver=1.0&linkver=4.0&extras={"KA":"sdk/2.7.2 os/javascript sdk_type/javascript lang/ko-KR device/Win32 origin/file%3A%2F%2F"}&template_json={"P":{"TP":"Feed","ME":"${ME}","SID":"capri_1104132","DID":"https://party-cal.vercel.app","SNM":"Partycal","SIC":"https://k.kakaocdn.net/14/dn/btqvX1CL6kz/sSBw1mbWkyZTkk1Mpt9nw1/o.jpg","L":{"LPC":"https://party-cal.vercel.app","LMO":"https://party-cal.vercel.app"},"SL":{"LPC":"https://party-cal.vercel.app","LMO":"https://party-cal.vercel.app"},"VA":"6.0.0","VI":"5.9.8","VW":"2.5.1","VM":"2.2.0","FW":true,"RF":"out-client"},"C":{"THC":3,"THL":[{"TH":{"THU":"http://k.kakaocdn.net/dn/cqwDMY/btsIvberuiA/UYkKIB3MaYlaKNGWffnAxk/kakaolink40_original.png","W":512,"H":512,"SC":1}}],"TI":{"TD":{"T":"PARTYCAL:  일정 투표 플랫폼","D":"친구들과 함께 일정 투표를 시작해보세요"}},"BUL":[{"BU":{"T":"자세히 보기","SR":"both"}}]}}&template_args={}&template_id=109967';
-// instagram://sharesheet?text={AnyTextOrLinkToShare}
-// https://twitter.com/share?text={TEXT}&url={URL}
 
 export default function SetSend(props: SetSendProps): JSX.Element {
 
@@ -163,6 +159,30 @@ export default function SetSend(props: SetSendProps): JSX.Element {
     await copyUrl(urlAll);
   };
 
+  const handleSnsClick = async (url: string, type: number) => {
+    const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    const urlAll = getUrl(url);
+    let openUrl = '';
+    if (!isMobile && (type < 4)) {
+      CallDialog(2);
+      return;
+    }
+    if (type === 1) {
+      if (url === 'mainpage') {
+        openUrl = 'kakaolink://send?appkey=47709efeaae6b8a5a3a04ba9966d08c0&appver=1.0&linkver=4.0&extras={"KA":"sdk/2.7.2 os/javascript sdk_type/javascript lang/ko-KR device/Win32 origin/file%3A%2F%2F"}&template_json={"P":{"TP":"Feed","ME":"${ME}","SID":"capri_1104132","DID":"https://party-cal.vercel.app","SNM":"Partycal","SIC":"https://k.kakaocdn.net/14/dn/btqvX1CL6kz/sSBw1mbWkyZTkk1Mpt9nw1/o.jpg","L":{"LPC":"https://party-cal.vercel.app","LMO":"https://party-cal.vercel.app"},"SL":{"LPC":"https://party-cal.vercel.app","LMO":"https://party-cal.vercel.app"},"VA":"6.0.0","VI":"5.9.8","VW":"2.5.1","VM":"2.2.0","FW":true,"RF":"out-client"},"C":{"THC":3,"THL":[{"TH":{"THU":"http://k.kakaocdn.net/dn/cqwDMY/btsIvberuiA/UYkKIB3MaYlaKNGWffnAxk/kakaolink40_original.png","W":512,"H":512,"SC":1}}],"TI":{"TD":{"T":"PARTYCAL:  일정 투표 플랫폼","D":"친구들과 함께 일정 투표를 시작해보세요"}},"BUL":[{"BU":{"T":"자세히 보기","SR":"both"}}]}}&template_args={}&template_id=109967';
+      } else {
+        // openUrl = 'kakaolink://send?appkey=47709efeaae6b8a5a3a04ba9966d08c0&appver=1.0&linkver=4.0&extras={"KA":"sdk/2.7.2 os/javascript sdk_type/javascript lang/ko-KR device/Win32 origin/file%3A%2F%2F"}&template_json={"P":{"TP":"Feed","ME":"${ME}","SID":"capri_1104132","DID":"${}","SNM":"Partycal","SIC":"https://k.kakaocdn.net/14/dn/btqvX1CL6kz/sSBw1mbWkyZTkk1Mpt9nw1/o.jpg","L":{"LPC":"https://party-cal.vercel.app/s/something","LMO":"https://party-cal.vercel.app/s/something"},"SL":{"LPC":"https://party-cal.vercel.app","LMO":"https://party-cal.vercel.app"},"VA":"6.0.0","VI":"5.9.8","VW":"2.5.1","VM":"2.2.0","FW":true,"RF":"out-client"},"C":{"THC":3,"THL":[{"TH":{"THU":"http://k.kakaocdn.net/dn/iDQJL/btsIvvjsFXL/h3mAITjXCyvsPv8vmgZW00/kakaolink40_original.png","W":512,"H":512,"SC":1}}],"TI":{"TD":{"T":"우리 언제 만날까?","D":"지금 바로 투표에 참여해보세요!"}},"BUT":0,"BUL":[{"BU":{"T":"투표하기","SR":"both"}}]}}&template_args={"${share}":"s/something"}&template_id=109953';
+      }
+    } else if (type === 2) {
+      openUrl = `instagram://sharesheet?text=${urlAll}`;
+    } else if (type === 3) {
+      openUrl = `fb-messenger://share?link=${urlAll}&app_id=871917468158080`;
+    } else if (type === 4) {
+      openUrl = `https://api.whatsapp.com/send?text=${urlAll}`;
+    }
+    window.open(openUrl, '_blank', 'popup=true, noopener, noreferrer');
+  };
+
   return (
     <div {...stylex.attrs(ixStyles.base)}>
       <div {...stylex.attrs(ixStyles.box0)}>
@@ -176,10 +196,10 @@ export default function SetSend(props: SetSendProps): JSX.Element {
       <div {...stylex.attrs(ixStyles.box0)}>
         <div {...stylex.attrs(ixStyles.boxtext)}>SNS로 보내기</div>
         <div {...stylex.attrs(ixStyles.box2)}>
-          <SetButtonBox sx={[ixStyles.logoBox]}><KakaotalkLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
-          <SetButtonBox sx={[ixStyles.logoBox]}><InstagramLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
-          <SetButtonBox sx={[ixStyles.logoBox]}><FacebookLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
-          <SetButtonBox sx={[ixStyles.logoBox]}><WhatsappLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 1)}><KakaotalkLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 2)}><InstagramLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 3)}><FacebookLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 4)}><WhatsappLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
         </div>
       </div>
       <div {...stylex.attrs(ixStyles.buttonBox)}>
