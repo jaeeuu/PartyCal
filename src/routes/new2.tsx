@@ -3,7 +3,8 @@ import { Index, createMemo, createSignal } from 'solid-js';
 import handleTiles from '../components/tileDrag';
 import getDateList from '../common/getDateList';
 import { SetButton, SetRootBox } from '~/components/SetShared';
-import { toDate, setToDate } from '~/common/store';
+import { oneDate } from '~/common/store';
+import type { Dayjs } from 'dayjs';
 
 const ixStyles = stylex.create({
   flex: {
@@ -86,6 +87,7 @@ const ixStyles = stylex.create({
 export default function New2() {
   const initialTile: boolean[] = Array(42).fill(false);
   const [tile, setTile] = createSignal<boolean[]>(initialTile);
+  const [toDate, setToDate] = createSignal<Dayjs>(oneDate.clone());
   const dateList = createMemo(() => getDateList(toDate()));
   // 또는 oneDate = dayjs() 선언하고, 여기서 toDate를 createSignal로 선언 후 사용.
 

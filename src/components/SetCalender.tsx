@@ -1,37 +1,45 @@
-// import { toDate } from "../common/store";
-import type { Dayjs } from "dayjs";
-// import type { Accessor  } from "solid-js";
+import type { Accessor, JSX } from "solid-js";
+import { Index } from "solid-js";
+import * as stylex from "@stylexjs/stylex";
+import type { getDateListFunc } from "~/common/getDateList";
 
-type getDateListProps = {
-  list: number[];
-  valid: [number, number];
+type SetCalendarProps<P = {}> = P & {
+  selectList: Accessor<boolean[]>;
+  calendarList: Accessor<getDateListFunc>
 };
 
-export const getDateList = (toDate: Dayjs): getDateListProps => {
-  const result: number[] | null = [];
-  const thisMonthCount: number = toDate.date();
-  const thisMonthStart: Dayjs = toDate.date(1);
-  const thisMonthEnd: Dayjs = toDate.date(thisMonthCount);
-  const thisMonthValid: [number, number] = [thisMonthStart.day(), thisMonthEnd.day()];
+const ixStyle = stylex.create({
+  base: {
 
-  const CalendarStart : Dayjs = thisMonthStart.day(0);
-  if (CalendarStart.month() !== thisMonthStart.month()) {
-    // const prevMonthCount: number = CalendarStart.month();
-    const prevMonthList: number[] = Array.from(Array(thisMonthValid[0]), (_, i) => i + CalendarStart.date());
-    result.push(...prevMonthList);
-  }
+  },
+});
 
-  const thisMonthList: number[] = Array.from(Array(thisMonthCount), (_, i) => i + 1 );
-  result.push(...thisMonthList);
+export default function SetCalendarSingle(props: SetCalendarProps): JSX.Element {
+  //날짜가 자주 변함
+  return (
+    <div>
+      <Index each={props.calendarList().all}>
+        {(item, itemIndex) => (
+          <div>
+            A
+          </div>
+        )}
+      </Index>
+    </div>
+  );
+}
 
-  let nextLength = 6 - thisMonthValid[1];
-  if ( result.length + nextLength < 42 ) nextLength += 7;
-
-  const nextList = Array.from(Array(nextLength), (_, i) => i + 1);
-  result.push(...nextList);
-
-  thisMonthValid[1] = 42 - nextLength - 1;
-
-  // // const resultList: number[][] = Array.from({ length: 6 }, (_, i) => result.slice(i * 7, i * 7 + 7));
-  return { list: result, valid: thisMonthValid };
-};
+export function SetCalendarDrag(props: SetCalendarProps): JSX.Element {
+  //bool이 자주 변함
+  return (
+    <div>
+      <Index each={props.selectList()}>
+        {(item, itemIndex) => (
+          <div>
+            A
+          </div>
+        )}
+      </Index>
+    </div>
+  );
+}

@@ -2,12 +2,12 @@
 import type { Dayjs } from "dayjs";
 // import type { Accessor  } from "solid-js";
 
-type getDateListProps = {
+export type getDateListFunc = {
   all: number[];
   valid: [number, number];
 };
 
-export const getDateList = ( toDate: Dayjs ): getDateListProps => {
+export const getDateList = ( toDate: Dayjs ): getDateListFunc => {
   const result: number[] | null = [];
   const thisMonthCount: number = toDate.daysInMonth();
   const thisMonthStart: Dayjs = toDate.date(1);
