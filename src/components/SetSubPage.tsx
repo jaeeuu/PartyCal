@@ -57,19 +57,19 @@ type SetSubPageProps<P = {}> = P & {
 };
 
 export default function SetSubPage(props: SetSubPageProps): JSX.Element{
-  const backOnEnter = (el, done) => {
+  const backOnEnter = (el: Element, done: () => void) => {
     const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease' });
     a.finished.then(done);
   };
-  const backOnExit = (el, done) => {
+  const backOnExit = (el: Element, done: () => void) => {
     const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, easing: "ease" });
     a.finished.then(done);
   };
-  const pageOnEnter = (el, done) => {
+  const pageOnEnter = (el: Element, done: () => void) => {
     const a = el.animate([{ transform: "translateY(500px)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
     a.finished.then(done);
   };
-  const pageOnExit = (el, done) => {
+  const pageOnExit = (el: Element, done: () => void) => {
     const a = el.animate([{ transform: 'translateY(0px)', overflowY: "hidden" }, { transform: "translateY(500px)", overflowY: "hidden" }], { duration: 350, easing: "ease" });
     a.finished.then(done);
   };

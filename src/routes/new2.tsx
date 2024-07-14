@@ -1,9 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
-import { Index, createEffect, createSignal } from 'solid-js';
+import { Index, createMemo, createSignal } from 'solid-js';
 import handleTiles from '../components/tileDrag';
-import getCalendar from '../common/getCalendar';
-import { addMonths, getMonth, getYear } from 'date-fns';
+import getDateList from '../common/getDateList';
 import { SetButton, SetRootBox } from '~/components/SetShared';
+import { toDate, setToDate } from '~/common/store';
 
 const ixStyles = stylex.create({
   flex: {
@@ -86,29 +86,18 @@ const ixStyles = stylex.create({
 export default function New2() {
   const initialTile: boolean[] = Array(42).fill(false);
   const [tile, setTile] = createSignal<boolean[]>(initialTile);
-  const mountDate = new Date();
-  const [thisDate, setThisDate] = createSignal<Date>(mountDate);
-
-  const [calender, monthIndex] = getCalendar(mountDate);
-  const [cal, setCal] = createSignal<number[]>(calender);
-  const [monIndex, setMonIndex] = createSignal<[number, number]>(monthIndex);
+  const dateList = createMemo(() => getDateList(toDate()));
+  // 또는 oneDate = dayjs() 선언하고, 여기서 toDate를 createSignal로 선언 후 사용.
 
   const tileState: {currentTile: [number, boolean, number], memTile: boolean[]} = {
     currentTile: [-1, false, -1],
     memTile: [],
   };
-
-  createEffect(() => {
-    const [calender, monthIndex] = getCalendar(thisDate());
-    setCal(calender);
-    setMonIndex(monthIndex);
-    setTile(initialTile);
-  });
   
   return (
     <SetRootBox sx={[ixStyles.flex]}>
       <div {...stylex.attrs(ixStyles.seroBox)}>
-        <div {...stylex.attrs(ixStyles.title)}>{`${getYear(thisDate())}년 ${getMonth(thisDate())+1}월`}</div>
+        <div {...stylex.attrs(ixStyles.title)}>{`${toDate().year()}년 ${toDate().month()+1}월`}</div>
         <div {...stylex.attrs(ixStyles.box)}>
           <Index each={tile()}>
             {(item, itemIndex) => (
@@ -116,21 +105,21 @@ export default function New2() {
                 {...stylex.attrs(
                   ixStyles.boxTile,
                   item() && ixStyles.boxActive,
-                  itemIndex < monIndex()[0] && ixStyles.boxOut,
-                  itemIndex > monIndex()[1] && ixStyles.boxOut,
+                  itemIndex < dateList().valid[0] && ixStyles.boxOut,
+                  itemIndex > dateList().valid[1] && ixStyles.boxOut,
                 )}
                 data-index={itemIndex}
                 onPointerDown={(e) => handleTiles.handlePointerStart(e, tileState, setTile)}
                 onMouseOver={(e) => handleTiles.handlePointerMove(e, tileState, setTile)}
                 onTouchMove={(e) => handleTiles.handlePointerMove(e, tileState, setTile)}
                 onPointerUp={(e) => handleTiles.handlePointerEnd(e, tileState)}
-              >{cal()[itemIndex]}</div>
+              >{dateList().all[itemIndex]}</div>
             )}
           </Index>
         </div>
         <div {...stylex.attrs(ixStyles.buttonBox)}>
-          <SetButton mode='sub' sx={[ixStyles.buttons]} onClick={() => setThisDate((prev) => addMonths(prev, -1))}>이전 달</SetButton>
-          <SetButton mode='main' sx={[ixStyles.buttons]} onClick={() => setThisDate((prev) => addMonths(prev, 1))}>다음 달</SetButton>
+          <SetButton mode='sub' sx={[ixStyles.buttons]} onClick={() => setToDate((prev) => prev.subtract(1,'month'))}>이전 달</SetButton>
+          <SetButton mode='main' sx={[ixStyles.buttons]} onClick={() => setToDate((prev) => prev.add(1,'month'))}>다음 달</SetButton>
         </div>
       </div>
     </SetRootBox>

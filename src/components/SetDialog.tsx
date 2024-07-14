@@ -4,6 +4,7 @@ import type { JSX } from "solid-js";
 import { Transition } from "solid-transition-group";
 import CheckCircleSvg from "../assets/icons/circle/check_circle.svg";
 import ErrorCircleSvg from "../assets/icons/circle/error_circle.svg";
+import { materialEasing } from "~/common/store";
 
 const ixStyles = stylex.create({
   base: {
@@ -49,12 +50,12 @@ export const CallDialog = (type: number) => {
 
 export default function SetDialog(): JSX.Element {
 
-  const pageOnEnter = (el, done) => {
-    const a = el.animate([{ transform: "translateY(-100px)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 300, easing: "ease" });
+  const pageOnEnter = (el: Element, done: () => void) => {
+    const a = el.animate([{ transform: "translateY(-100px) scale(0)", overflowY: "hidden", transformOrigin: "top center" }, { transform: 'translateY(0px) scale(1)', overflowY: "hidden", transformOrigin: "top center" }], { duration: 300, easing: materialEasing });
     a.finished.then(done);
   };
-  const pageOnExit = (el, done) => {
-    const a = el.animate([{ transform: 'translateY(0px)', overflowY: "hidden" }, { transform: "translateY(-100px)", overflowY: "hidden" }], { duration: 300, easing: "ease" });
+  const pageOnExit = (el: Element, done: () => void) => {
+    const a = el.animate([{ transform: 'translateY(0px)', overflowY: "hidden" }, { transform: "translateY(-100px)", overflowY: "hidden"}], { duration: 300, easing: "ease" });
     a.finished.then(done);
   };
 
