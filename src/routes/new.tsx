@@ -1,10 +1,11 @@
 import * as stylex from '@stylexjs/stylex';
 import { Meta, MetaProvider } from "@solidjs/meta";
 import { SetRootBox } from "~/components/SetShared";
-import { createSignal, Show } from "solid-js";
+import { createMemo, createSignal, Index, Show } from "solid-js";
 import { oneDate } from '~/common/store';
 import type { Dayjs } from "dayjs";
 import SetSubPage from '~/components/SetSubPage';
+import getDateList from '~/common/getDateList';
 
 const ixStyle = stylex.create({
   base: {
@@ -16,6 +17,7 @@ export default function New() {
   const [toDate, setToDate] = createSignal<Dayjs>(oneDate.clone());
   const [dateRange, setDateRange] = createSignal([null, null]);
   const [showSub, setShowSub] = createSignal(0);
+  const dateList = createMemo(() => getDateList(toDate()));
   
   return (
     <SetRootBox>
@@ -31,18 +33,26 @@ export default function New() {
       </div>
       <div>
         <div>
-          <Show when={!isNaN(dateRange()[0])}><div>시작일을 선택하세요</div></Show>
+          <Show when={!isNaN(dateRange()[0])}><div onClick={()=>setShowSub(1)}>시작일을 선택하세요</div></Show>
           <Show when={isNaN(dateRange()[0])}><div>{dateRange()[0].format("YYYY[년] MM[월] DD[일]")}</div></Show>
         </div>
         <div>
-          <Show when={!isNaN(dateRange()[1])}><div>종료일을 선택하세요</div></Show>
+          <Show when={!isNaN(dateRange()[1])}><div onClick={()=>setShowSub(2)}>종료일을 선택하세요</div></Show>
           <Show when={isNaN(dateRange()[1])}>{dateRange()[1].format("YYYY[년] MM[월] DD[일]")}</Show>
         </div>
         <div>익명 투표</div>
       </div>
       <SetSubPage show={showSub} setShow={setShowSub}>
         <div>
-
+          <Show when={showSub() === 1}>
+            <Index each={dateList().all}>
+              {(item, itemIndex) => (
+                <div>
+                  {item()}
+                </div>
+              )}
+            </Index>
+          </Show>
         </div>
       </SetSubPage>
     </SetRootBox>
