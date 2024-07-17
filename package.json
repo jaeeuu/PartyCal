@@ -1,6 +1,8 @@
 {
-  "name": "example-basic",
+  "name": "partycal",
   "type": "module",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "eslint **/*.tsx && vinxi dev",
     "build": "vinxi build",
@@ -11,25 +13,25 @@
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.13.6",
-    "@solidjs/start": "^1.0.4",
+    "@solidjs/router": "^0.14.1",
+    "@solidjs/start": "^1.0.5",
     "dayjs": "^1.11.11",
     "nanoid": "^5.0.7",
     "solid-js": "^1.8.18",
     "solid-transition-group": "^0.2.3",
-    "vinxi": "^0.3.14"
+    "vinxi": "^0.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
     "@stylexjs/eslint-plugin": "^0.7.5",
     "@stylexjs/stylex": "^0.7.5",
-    "@typescript-eslint/parser": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.1",
     "eslint": "^9.7.0",
     "eslint-plugin-solid": "^0.14.1",
     "globals": "^15.8.0",
     "msw": "^2.3.1",
     "path": "^0.12.7",
-    "typescript-eslint": "^7.16.0",
+    "typescript-eslint": "^7.16.1",
     "vite-plugin-solid-svg": "^0.8.1",
     "vite-plugin-stylex": "^0.10.1",
     "vite-plugin-stylex-dev": "0.8.0"
