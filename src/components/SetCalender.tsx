@@ -1,11 +1,15 @@
 import type { Accessor, JSX } from "solid-js";
+import { splitProps } from "solid-js";
 import { Index } from "solid-js";
 import * as stylex from "@stylexjs/stylex";
 import type { getDateListFunc } from "~/common/getDateList";
+import type { Dayjs } from "dayjs";
 
-type SetCalendarProps<P = {}> = P & {
-  selectList: Accessor<boolean[]>;
-  calendarList: Accessor<getDateListFunc>
+
+type SetCalendarProps = JSX.HTMLAttributes<HTMLDivElement> & {
+  boolList: Accessor<boolean[]>;
+  calendarList: Accessor<getDateListFunc>;
+  DateRange: Accessor<[Dayjs | null, Dayjs | null]>;
 };
 
 const ixStyle = stylex.create({
@@ -15,12 +19,17 @@ const ixStyle = stylex.create({
 });
 
 export default function SetCalendarSingle(props: SetCalendarProps): JSX.Element {
+  const [local, others] = splitProps(props, [
+    'boolList',
+    'calendarList',
+    'DateRange',
+  ]);
   //날짜가 자주 변함
   return (
     <div>
-      <Index each={props.calendarList().all}>
+      <Index each={local.calendarList().all}>
         {(item, itemIndex) => (
-          <div>
+          <div {...others}>
             A
           </div>
         )}
@@ -30,10 +39,15 @@ export default function SetCalendarSingle(props: SetCalendarProps): JSX.Element 
 }
 
 export function SetCalendarDrag(props: SetCalendarProps): JSX.Element {
+  const [local, others] = splitProps(props, [
+    'boolList',
+    'calendarList',
+    'DateRange',
+  ]);
   //bool이 자주 변함
   return (
     <div>
-      <Index each={props.selectList()}>
+      <Index each={local.boolList()}>
         {(item, itemIndex) => (
           <div>
             A

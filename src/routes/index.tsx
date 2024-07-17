@@ -14,6 +14,7 @@ import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
 import StylexSvg from '~/assets/icons/logo/stylex_logo.svg';
 import SetSend from '~/components/SetSend';
 import { MetaProvider, Meta } from "@solidjs/meta";
+import AxumLogoSVg from '~/assets/icons/logo/axum_logo.svg';
 
 const inStyles = stylex.create({
   flex: {
@@ -189,9 +190,10 @@ export default function Home() {
         <Show when={showSub()===2}>
           <div>
             <div {...stylex.attrs(ixStyles.subText)}>
-              <div {...stylex.attrs(ixStyles.subBox_0)}>This project is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="23px" />SolidStart by Ryan Carniato</div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="19px" />Stylex by Meta Platforms</div>
+              <div {...stylex.attrs(ixStyles.subBox_0)}>This app is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
+              <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="21px" />SolidStart by Ryan Carniato</div>
+              <div {...stylex.attrs(ixStyles.subBox_1)}><AxumLogoSVg height="21px" />Axum by Tokio Team</div>
+              <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="18px" />Stylex by Meta Platforms</div>
             </div>
             <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
               확인
