@@ -18,7 +18,6 @@ const baseStyles = stylex.create({
     fontSize: '16px',
     willChange: 'transform',
     borderRadius: '15px',
-    padding: '16.5px',
   },
   flex: {
     display: 'flex',
@@ -107,6 +106,7 @@ const buttonStyles = stylex.create({
     ...stylex.include(baseStyles.button),
     width: '100%',
     fontWeight: 500,
+    padding: '16.5px',
     backgroundColor: {
       default: '#3190f7',
       ':is(:active)': '#246ab6',
@@ -124,6 +124,7 @@ const buttonStyles = stylex.create({
     ...stylex.include(baseStyles.button),
     width: '100%',
     fontWeight: 500,
+    padding: '16.5px',
     backgroundColor: {
       default: '#e8f3ff',
       ':is(:active)': '#b9d9fc',
@@ -221,6 +222,7 @@ const thisStyles = stylex.create({
     marginTop: "20px",
     borderRadius: "20px",
     position: "relative",
+    gap: '10px',
   },
 });
 
@@ -457,6 +459,7 @@ const switchStyles = stylex.create({
     padding: "10px",
     gap: "10px",
     fontSize: "15px",
+    color: '#4e5a68',
   },
   switch: {
     borderWidth: "1px",

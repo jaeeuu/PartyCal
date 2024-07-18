@@ -95,10 +95,6 @@ const ixStyles = stylex.create({
     borderRadius: '10px',
     //padding: '10px',
   },
-  moreIcon: {
-    backgroundColor: '#cdcdcd',
-    color: '#fff'
-  },
   buttonBox: {
     ...stylex.include(inStyles.flex),
     gap: '20px',
