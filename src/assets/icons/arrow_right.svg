@@ -1,15 +1,1 @@
-<svg
-  fill="none"
-  viewBox="0 0 24 24"
-  xmlns="http://www.w3.org/2000/svg"
-  color="currentColor"
->
-  <path
-    d="M7.589 3 15.963 11.984 7.589 20.946"
-    stroke="currentColor"
-    stroke-width="2.2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    stroke-dasharray="25"
-  />
-</svg>
+<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="m7.589 3 8.374 8.984-8.374 8.962" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="25"/></svg>

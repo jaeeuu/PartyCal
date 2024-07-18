@@ -1,29 +1,30 @@
 import * as stylex from '@stylexjs/stylex';
-import type { JSX } from 'solid-js';
+import type { Accessor, JSX, Setter } from 'solid-js';
 import { createSignal, splitProps } from 'solid-js';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { A } from '@solidjs/router';
+import LogoTextSvg from '../assets/logo_text.svg';
+import LogoImgSvg from '../assets/logo_img.svg';
 
 
 const baseStyles = stylex.create({
   reset: {
     borderStyle: 'none',
     outlineStyle: 'none',
-    padding: '16.5px',
+    textDecoration: 'none',
   },
   main: {
     fontFamily: "'Basic Fonts'",
     fontSize: '16px',
     willChange: 'transform',
     borderRadius: '15px',
+    padding: '16.5px',
   },
   flex: {
     display: 'flex',
     alignItems: 'center',
   },
   button: {
-    width: '100%',
-    textDecoration: 'none',
     userSelect: 'none',
     //padding: '12px 15px 12px 15px',
     cursor: 'pointer',
@@ -35,15 +36,6 @@ const baseStyles = stylex.create({
       },
       ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s linear',
     },
-    // boxShadow: {
-    //   default: null, //'0px 0px 20px 10px rgba(242, 244, 246, 0.6)',
-    //   //eslint-disable-next-line
-    //   ':not(:active):is(:hover)': {
-    //     default: null,
-    //     '@media (hover: hover)': '0px 0px 5px rgba(150, 150, 150, 0.1)',
-    //   },
-    //   ':is(:active)': '0px 0px 5px rgba(150, 150, 150, 0.2)',
-    // },
     transform: {
       default: 'scale(1)',
       //eslint-disable-next-line
@@ -113,6 +105,7 @@ const buttonStyles = stylex.create({
     ...stylex.include(baseStyles.reset),
     ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.button),
+    width: '100%',
     fontWeight: 500,
     backgroundColor: {
       default: '#3190f7',
@@ -129,6 +122,7 @@ const buttonStyles = stylex.create({
     ...stylex.include(baseStyles.reset),
     ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.button),
+    width: '100%',
     fontWeight: 500,
     backgroundColor: {
       default: '#e8f3ff',
@@ -144,6 +138,9 @@ const buttonStyles = stylex.create({
   none: {
     ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.button),
+    ...stylex.include(baseStyles.flex),
+    backgroundColor: '#F2F4F6',
+    color: '#4E5968',
     // backgroundColor: {
     //   default: 'transparent',
     //   ':active': '#E5E7EA',
@@ -208,37 +205,24 @@ const thisStyles = stylex.create({
   },
   rootIn: {
     width: "min(450px, 100%)",
-  }
+  },
+  title: {
+    ...stylex.include(baseStyles.flex),
+    alignSelf: "flex-start",
+    marginBottom: "20px",
+    marginLeft: "12px",
+    gap: "12px",
+  },
+  boxIn: {
+    ...stylex.include(baseStyles.flex),
+    flexDirection: 'column',
+    backgroundColor: "#fff",
+    padding: "25px",
+    marginTop: "20px",
+    borderRadius: "20px",
+    position: "relative",
+  },
 });
-
-// type SetFlexProps = JSX.HTMLAttributes<HTMLDivElement> & {
-//   children: JSX.Element;
-//   sx?: StyleXStyles[];
-//   // mode?: FlexMode;
-//   center?: boolean;
-// };
-
-// export function SetFlexBox(props: SetFlexProps): JSX.Element {
-//   const [local, others] = splitProps(props, [
-//     'children',
-//     'sx',
-//     'mode',
-//     'center',
-//   ]);
-//   return (
-//     <div
-//       {...others}
-//       {...stylex.attrs(
-//         baseStyles.flex,
-//         local.mode === 'sero' && flexStyles.sero,
-//         local.center && flexStyles.center,
-//         ...(local.sx??[])
-//       )}
-//     >
-//       {local.children}
-//     </div>
-//   );
-// }
 
 type ButtonMode = 'main' | 'sub' | 'none';
 
@@ -275,7 +259,8 @@ type SetCheckboxProps = JSX.HTMLAttributes<HTMLDivElement> & {
   sx?: StyleXStyles[];
   disabled?: boolean;
   text?: string;
-  value?: boolean;
+  value: Accessor<boolean>;
+  setValue: Setter<boolean>;
 };
 
 type SetSwitchProps = SetCheckboxProps;
@@ -295,8 +280,30 @@ export function SetRootBox(props: SetRootProps): JSX.Element {
       )}
     >
       <div {...others} {...stylex.attrs(thisStyles.rootIn, ...(local.sx??[]))}>
+        <a {...stylex.attrs(baseStyles.reset, thisStyles.title)} href='/'>
+          <LogoImgSvg width="20px" height="20px" />
+          <LogoTextSvg height="20px" color="#b1b8c0" />
+        </a>
         {local.children}
       </div>
+    </div>
+  );
+}
+
+export function SetBox(props: SetRootProps): JSX.Element {
+  const [local, others] = splitProps(props, [
+    'children',
+    'sx'
+  ]);
+  return (
+    <div
+      {...stylex.attrs(
+        thisStyles.boxIn,
+        ...(local.sx??[])
+      )}
+      {...others}
+    >
+      {local.children}
     </div>
   );
 }
@@ -424,7 +431,7 @@ export function SetCheckbox(props: SetCheckboxProps){
         <path
           {...stylex.attrs(
             checkboxStyles.path2,
-            local.value && checkboxStyles.path2Checked
+            local.value() && checkboxStyles.path2Checked
           )}
           d="M4.02 13.47 8.52 17.956 19.45 6.99"
           fill="none"
@@ -443,9 +450,11 @@ export function SetCheckbox(props: SetCheckboxProps){
 const switchStyles = stylex.create({
   box: {
     ...stylex.include(baseStyles.flex),
-    ...stylex.include(buttonStyles.none),
-    // borderRadius: "14px",
-    // padding: "10px",
+    //...stylex.include(buttonStyles.none),
+    ...stylex.include(baseStyles.main),
+    ...stylex.include(baseStyles.button),
+    borderRadius: "14px",
+    padding: "10px",
     gap: "10px",
     fontSize: "15px",
   },
@@ -515,25 +524,27 @@ export function SetSwitch(props: SetSwitchProps){
     'disabled',
     'text',
     'value',
+    'setValue',
   ]);
 
   return(
     <div
       {...stylex.attrs(switchStyles.box, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
-      onMouseDown={()=> setActive(true)}
-      onMouseLeave={()=> setActive(false)}
-      onTouchStart={()=> setActive(true)}
-      onTouchCancel={()=> setActive(false)}
+      onClick={()=> local.setValue((prev) => !prev)}
+      onPointerDown={()=> setActive(true)}
+      onPointerUp={()=> setActive(false)}
+      onPointerCancel={()=> setActive(false)}
+      onPointerLeave={()=> setActive(false)}
       {...others}
     >
       <div 
         {...stylex.attrs(switchStyles.switch, switchStyles.switchOut,
-          (active() && !local.value) && switchStyles.switchOutActive,
-          (!active() && local.value) && switchStyles.switchOutChecked,
-          (active() && local.value) && switchStyles.switchOutCheckedActive,
+          (active() && !local.value()) && switchStyles.switchOutActive,
+          (!active() && local.value()) && switchStyles.switchOutChecked,
+          (active() && local.value()) && switchStyles.switchOutCheckedActive,
         )}
       >
-        <div {...stylex.attrs(switchStyles.switch, switchStyles.switchIn, local.value && switchStyles.switchInChecked)}>
+        <div {...stylex.attrs(switchStyles.switch, switchStyles.switchIn, local.value() && switchStyles.switchInChecked)}>
           &nbsp;
         </div>
       </div>

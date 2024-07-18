@@ -5,16 +5,14 @@ import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
 import calenderImage from '../assets/images/cal-3d.avif';
-import LogoTextSvg from '../assets/logo_text.svg';
-import LogoImgSvg from '../assets/logo_img.svg';
-import { SetButtonBox, SetRootBox, SetA, SetButton } from '~/components/SetShared';
+import { SetButtonBox, SetRootBox, SetA, SetButton, SetBox } from '~/components/SetShared';
 import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
 import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
 import StylexSvg from '~/assets/icons/logo/stylex_logo.svg';
 import SetSend from '~/components/SetSend';
-import { MetaProvider, Meta } from "@solidjs/meta";
 import AxumLogoSVg from '~/assets/icons/logo/axum_logo.svg';
+import SetMetaMain from '~/components/SetMeta';
 
 const inStyles = stylex.create({
   flex: {
@@ -24,21 +22,6 @@ const inStyles = stylex.create({
 });
 
 const ixStyles = stylex.create({
-  title: {
-    ...stylex.include(inStyles.flex),
-    alignSelf: "flex-start",
-    marginBottom: "20px",
-    gap: "10px",
-  },
-  boxIn: {
-    ...stylex.include(inStyles.flex),
-    flexDirection: 'column',
-    backgroundColor: "#fff",
-    padding: "25px",
-    marginTop: "20px",
-    borderRadius: "20px",
-    position: "relative",
-  },
   box1text: {
     position: 'absolute',
     fontWeight: 700,
@@ -138,24 +121,15 @@ export default function Home() {
   const [showSub, setShowSub] = createSignal<number>(0);
   return (
     <SetRootBox>
-      <MetaProvider>
-        <Meta property="og:url" content="https://party-cal.vercel.app/" />
-        <Meta property="og:title" content="PARTYCAL: 일정 투표 플랫폼" />
-        <Meta property="og:description" content="친구들과 함께 일정 투표를 시작해보세요" />
-        <Meta property="og:image" content="https://jjreset.github.io/act_cdn/shareurl.png" />
-      </MetaProvider>
-      <div {...stylex.attrs(ixStyles.title)}>
-        <LogoImgSvg width="20px" height="20px" />
-        <LogoTextSvg height="20px" color="#b1b8c0" />
-      </div>
-      <div {...stylex.attrs(ixStyles.boxIn)}>
+      <SetMetaMain />
+      <SetBox>
         <div {...stylex.attrs(ixStyles.box1text)}>친구들과 함께<br/>일정 투표를 시작해보세요</div>
         <img {...stylex.attrs(ixStyles.box1image)} height="100px" src={calenderImage} loading="eager" decoding='sync' />
         <SetA sx={[ixStyles.box1button]} href='/new' >
           일정 투표 만들기
         </SetA>
-      </div>
-      <div {...stylex.attrs(ixStyles.boxIn)}>
+      </SetBox>
+      <SetBox>
         <div {...stylex.attrs(ixStyles.box2_1title)}>
           메뉴 더보기
         </div>
@@ -185,7 +159,7 @@ export default function Home() {
             <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
           </SetButtonBox>
         </div>
-      </div>
+      </SetBox>
       <SetSubPage show={showSub} setShow={setShowSub}>
         <Show when={showSub()===2}>
           <div>
