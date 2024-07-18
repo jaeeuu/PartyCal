@@ -140,8 +140,8 @@ const buttonStyles = stylex.create({
     ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.button),
     ...stylex.include(baseStyles.flex),
-    backgroundColor: '#F2F4F6',
-    color: '#4E5968',
+    // backgroundColor: '#F2F4F6',
+    // color: '#4E5968',
     // backgroundColor: {
     //   default: 'transparent',
     //   ':active': '#E5E7EA',
@@ -388,6 +388,7 @@ const checkboxStyles = stylex.create({
   box: {
     ...stylex.include(baseStyles.flex),
     ...stylex.include(buttonStyles.none),
+    backgroundColor: "#fff",
     padding: '8px',
     // borderRadius: '14px',
   },
@@ -415,10 +416,12 @@ export function SetCheckbox(props: SetCheckboxProps){
     'disabled',
     'text',
     'value',
+    'setValue',
   ]);
   return (
     <div
-      {...stylex.attrs(checkboxStyles.box, buttonStyles.none, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
+      {...stylex.attrs(checkboxStyles.box, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
+      onClick={()=> local.setValue((prev) => !prev)}
       {...others}
     >
       <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -452,9 +455,10 @@ export function SetCheckbox(props: SetCheckboxProps){
 const switchStyles = stylex.create({
   box: {
     ...stylex.include(baseStyles.flex),
-    //...stylex.include(buttonStyles.none),
-    ...stylex.include(baseStyles.main),
-    ...stylex.include(baseStyles.button),
+    ...stylex.include(buttonStyles.none),
+    backgroundColor: "#fff",
+    // ...stylex.include(baseStyles.main),
+    // ...stylex.include(baseStyles.button),
     borderRadius: "14px",
     padding: "10px",
     gap: "10px",
