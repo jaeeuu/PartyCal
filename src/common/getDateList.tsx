@@ -38,7 +38,13 @@ export const getDateList = ( toDate: Dayjs ): getDateListFunc => {
 
 export default getDateList;
 
-export const convertDayjsToIndex = ( thisDate: Dayjs | null ): { year:number, month: number, index: number } => {
+export type IndexDayjsProps = {
+  year: number;
+  month: number;
+  index: number;
+};
+
+export const convertDayjsToIndex = ( thisDate: Dayjs | null ): IndexDayjsProps => {
   if (!thisDate) return { year: -1, month: -1, index: -1 };
   const thisMonthStart: Dayjs = thisDate.date(1);
   const thisMonthStartDay: number = thisMonthStart.day();
