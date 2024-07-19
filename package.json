@@ -16,7 +16,7 @@
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.14.1",
     "@solidjs/start": "^1.0.5",
-    "dayjs": "^1.11.11",
+    "dayjs": "^1.11.12",
     "nanoid": "^5.0.7",
     "solid-js": "^1.8.18",
     "solid-transition-group": "^0.2.3",

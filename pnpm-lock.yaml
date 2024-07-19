@@ -18,8 +18,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5(rollup@4.18.1)(solid-js@1.8.18)(vinxi@0.4.0(@types/node@20.14.11)(ioredis@5.4.1)(lightningcss@1.25.1)(terser@5.31.3))(vite@5.3.4(@types/node@20.14.11)(lightningcss@1.25.1)(terser@5.31.3))
       dayjs:
-        specifier: ^1.11.11
-        version: 1.11.11
+        specifier: ^1.11.12
+        version: 1.11.12
       nanoid:
         specifier: ^5.0.7
         version: 5.0.7
@@ -1346,8 +1346,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  cookie-es@1.1.0:
-    resolution: {integrity: sha512-L2rLOcK0wzWSfSDA33YR+PUHDG10a8px7rUHKWbGLP4YfbsMed2KFUw5fczvDPbT98DDe3LEzviswl810apTEw==}
+  cookie-es@1.2.1:
+    resolution: {integrity: sha512-ilTPDuxhZX44BSzzRB58gvSY2UevZKQM9fjisn7Z+NJ92CtSU6kO1+22ZN/agbEJANFjK85EiJJbi/gQv18OXA==}
 
   cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
@@ -1409,8 +1409,8 @@ packages:
   dax-sh@0.39.2:
     resolution: {integrity: sha512-gpuGEkBQM+5y6p4cWaw9+ePy5TNon+fdwFVtTI8leU3UhwhsBfPewRxMXGuQNC+M2b/MDGMlfgpqynkcd0C3FQ==}
 
-  dayjs@1.11.11:
-    resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
+  dayjs@1.11.12:
+    resolution: {integrity: sha512-Rt2g+nTbLlDWZTwwrIXjy9MeiZmSDI375FvZs72ngxx8PDC6YXOeR3q5LAuPzjZQxhiWdRKac7RKV+YyQYfYIg==}
 
   db0@0.1.4:
     resolution: {integrity: sha512-Ft6eCwONYxlwLjBXSJxw0t0RYtA5gW9mq8JfBXn9TtC0nDPlqePAhpv9v4g9aONBi6JI1OXHTKKkUYGd+BOrCA==}
@@ -2909,8 +2909,8 @@ packages:
     resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
     engines: {node: '>=14.16'}
 
-  type-fest@4.22.0:
-    resolution: {integrity: sha512-hxMO1k4ip1uTVGgPbs1hVpYyhz2P91A6tQyH2H9POx3U6T3MdhIcfY8L2hRu/LRmzPFdfduOS0RIDjFlP2urPw==}
+  type-fest@4.22.1:
+    resolution: {integrity: sha512-9tHNEa0Ov81YOopiVkcCJVz5TM6AEQ+CHHjFIktqPnE3NV0AHIkx+gh9tiCl58m/66wWxkOC9eltpa75J4lQPA==}
     engines: {node: '>=16'}
 
   typescript-eslint@7.16.1:
@@ -4466,7 +4466,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  cookie-es@1.1.0: {}
+  cookie-es@1.2.1: {}
 
   cookie@0.5.0: {}
 
@@ -4522,7 +4522,7 @@ snapshots:
       '@deno/shim-deno': 0.19.2
       undici-types: 5.28.4
 
-  dayjs@1.11.11: {}
+  dayjs@1.11.12: {}
 
   db0@0.1.4: {}
 
@@ -4986,7 +4986,7 @@ snapshots:
 
   h3@1.11.1:
     dependencies:
-      cookie-es: 1.1.0
+      cookie-es: 1.2.1
       crossws: 0.2.4
       defu: 6.1.4
       destr: 2.0.3
@@ -5001,7 +5001,7 @@ snapshots:
 
   h3@1.12.0:
     dependencies:
-      cookie-es: 1.1.0
+      cookie-es: 1.2.1
       crossws: 0.2.4
       defu: 6.1.4
       destr: 2.0.3
@@ -5424,7 +5424,7 @@ snapshots:
       outvariant: 1.4.3
       path-to-regexp: 6.2.2
       strict-event-emitter: 0.5.1
-      type-fest: 4.22.0
+      type-fest: 4.22.1
       yargs: 17.7.2
     optionalDependencies:
       typescript: 5.5.3
@@ -5457,7 +5457,7 @@ snapshots:
       chokidar: 3.6.0
       citty: 0.1.6
       consola: 3.2.3
-      cookie-es: 1.1.0
+      cookie-es: 1.2.1
       croner: 8.1.0
       crossws: 0.2.4
       db0: 0.1.4
@@ -6103,7 +6103,7 @@ snapshots:
 
   type-fest@3.13.1: {}
 
-  type-fest@4.22.0: {}
+  type-fest@4.22.1: {}
 
   typescript-eslint@7.16.1(eslint@9.7.0)(typescript@5.5.3):
     dependencies:

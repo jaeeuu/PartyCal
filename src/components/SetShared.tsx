@@ -6,226 +6,6 @@ import { A } from '@solidjs/router';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
 
-
-const baseStyles = stylex.create({
-  reset: {
-    borderStyle: 'none',
-    outlineStyle: 'none',
-    textDecoration: 'none',
-  },
-  main: {
-    fontFamily: "'Basic Fonts'",
-    fontSize: '16px',
-    willChange: 'transform',
-    borderRadius: '15px',
-  },
-  flex: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  button: {
-    userSelect: 'none',
-    //padding: '12px 15px 12px 15px',
-    cursor: 'pointer',
-    transition: {
-      default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease, filter 0.4s linear',
-      '@media (hover: none)': {
-        default: null,
-        ':not(:active)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease, filter 0.4s linear',
-      },
-      ':is(:active)': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s linear',
-    },
-    transform: {
-      default: 'scale(1)',
-      //eslint-disable-next-line
-      ':not(:active):is(:hover)': {
-        default: null,
-        '@media (hover: hover)': 'scale(1.02)',
-      },
-      ':is(:active)': 'scale(0.95)',
-    },
-  },
-  input: {
-    '::placeholder': {
-      fontFamily: "'Basic Fonts'",
-      color: '#cfcfd0',
-    },
-    userSelect: 'auto',
-    //padding: '10px 15px 10px 15px',
-    transition: {
-      default: 'background-color 0.4s linear, transform 0.8s var(--spring-easing), box-shadow 0.4s ease',
-      '@media (hover: none)': {
-        default: null,
-        ':not(:focus-within)': 'background-color 0.4s linear, transform 0.8s var(--spring-mobile), box-shadow 0.4s ease',
-      },
-      ':focus-within': 'background-color 0.3s linear, transform 0.3s ease, box-shadow 0.3s ease',
-    },
-    backgroundColor: {
-      default: '#fafafa',
-      //eslint-disable-next-line
-      ':not(:focus-within):is(:hover)': {
-        default: null,
-        '@media (hover: hover)': '#fcfcfc',
-      },
-      ':focus-within': '#ffffff',
-    },
-    boxShadow: {
-      default: '0px 0px 15px 0px rgba(101, 100, 124, 0.1)',
-      //eslint-disable-next-line
-      ':not(:focus-within):is(:hover)': {
-        default: null,
-        '@media (hover: hover)': '0px 0px 15px 0px rgba(101, 100, 124, 0.2)',
-      },
-      ':focus-within': '0px 0px 15px 0px rgba(101, 100, 124, 0.25)',
-    },
-    transform: {
-      default: 'scale(1)',
-      //eslint-disable-next-line
-      ':not(:focus-within):is(:hover)': {
-        default: null,
-        '@media (hover: hover)': 'scale(1.015)',
-      },
-      ':focus-within': 'scale(1.03)',
-    },
-  },
-});
-
-const inputStyles = stylex.create({
-  input: {
-    ...stylex.include(baseStyles.reset),
-    ...stylex.include(baseStyles.main),
-    ...stylex.include(baseStyles.input),
-    //overflow: 'hidden',
-    //fontSize: '16px',
-  },
-});
-const buttonStyles = stylex.create({
-  main: {
-    ...stylex.include(baseStyles.reset),
-    ...stylex.include(baseStyles.main),
-    ...stylex.include(baseStyles.button),
-    width: '100%',
-    fontWeight: 500,
-    padding: '16.5px',
-    backgroundColor: {
-      default: '#3190f7',
-      ':is(:active)': '#246ab6',
-      ':disabled': 'rgb(210,210,210)',
-    },
-    color: {
-      default: '#ffffff',
-      ':is(:active)': '#BDBDBD',
-      ':disabled': 'rgb(150, 150, 150)',
-    },
-  },
-  sub: {
-    ...stylex.include(baseStyles.reset),
-    ...stylex.include(baseStyles.main),
-    ...stylex.include(baseStyles.button),
-    width: '100%',
-    fontWeight: 500,
-    padding: '16.5px',
-    backgroundColor: {
-      default: '#e8f3ff',
-      ':is(:active)': '#b9d9fc',
-      ':disabled': 'rgb(210,210,210)',
-    },
-    color: {
-      default: '#3190f7',
-      ':is(:active)': '#246ab6',
-      ':disabled': 'rgb(150, 150, 150)',
-    },
-  },
-  none: {
-    ...stylex.include(baseStyles.main),
-    ...stylex.include(baseStyles.button),
-    ...stylex.include(baseStyles.flex),
-    // backgroundColor: '#F2F4F6',
-    // color: '#4E5968',
-    // backgroundColor: {
-    //   default: 'transparent',
-    //   ':active': '#E5E7EA',
-    //   ':disabled': null,
-    // },
-    // color: {
-    //   default: '#606C7C',
-    //   // ':active': '#606C7C',
-    //   ':disabled': 'rgb(150, 150, 150)',
-    // },
-    filter: {
-      default: 'brightness(1)',
-      //eslint-disable-next-line
-      ':not(:active):is(:hover)': {
-        default: null,
-        '@media (hover: hover)': 'brightness(0.95)',
-      },
-      ':is(:active)': 'brightness(0.9)',
-    },
-  },
-});
-
-const thisStyles = stylex.create({
-  disabled: {
-    cursor: 'default',
-    pointerEvents: 'none',
-    opacity: 0.5,
-    boxShadow: null,
-  },
-  // interact: {
-  //   cursor: 'pointer',
-  //   userSelect: 'none',
-  //   willChange: 'transform',
-  //   transition: {
-  //     default: 'filter 0.3s linear, transform 0.8s var(--spring-easing)',
-  //     '@media (hover: none) and :not(:active):not(:hover)':
-  //       'filter 0.3s linear, transform 0.8s var(--spring-mobile)',
-  //     ':is(:active)': 'filter 0.3s linear, transform 0.3s ease',
-  //   },
-  //   filter: {
-  //     default: 'brightness(1)',
-  //     '@media (hover: hover) and :not(:active):is(:hover)':
-  //       'brightness(0.95)',
-  //     ':is(:active)': 'brightness(0.85)',
-  //   },
-  //   transform: {
-  //     default: 'scale(1)',
-  //     '@media (hover: hover) and :not(:active):is(:hover)':
-  //       'scale(1.02)',
-  //     '@media (hover: hover) and :is(:active)': 'scale(0.96)',
-  //     '@media (hover: none) and :is(:active)': 'scale(0.95)',
-  //   },
-  // },
-  root: {
-    width: '100svw',
-    // height: 'max(100lvh, 750px)',
-    minHeight: '100dvh',
-    position: 'relative',
-    padding: '20px',
-    ...stylex.include(baseStyles.flex),
-    flexDirection: 'column',
-  },
-  rootIn: {
-    width: "min(450px, 100%)",
-  },
-  title: {
-    ...stylex.include(baseStyles.flex),
-    alignSelf: "flex-start",
-    marginBottom: "20px",
-    marginLeft: "12px",
-    gap: "12px",
-  },
-  boxIn: {
-    ...stylex.include(baseStyles.flex),
-    flexDirection: 'column',
-    backgroundColor: "#fff",
-    padding: "25px",
-    marginTop: "20px",
-    borderRadius: "20px",
-    position: "relative",
-    gap: '10px',
-  },
-});
-
 type ButtonMode = 'main' | 'sub' | 'none';
 
 type SetButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -237,6 +17,12 @@ type SetButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
 type SetInputProps = JSX.InputHTMLAttributes<HTMLInputElement> & {
   mode?: 'main';
   sx?: StyleXStyles[];
+};
+
+type SetInputBoxProps = JSX.InputHTMLAttributes<HTMLInputElement> & {
+  mode?: 'text' | 'icon';
+  sx?: StyleXStyles[];
+  children: JSX.Element;
 };
 
 type SetAProps = JSX.AnchorHTMLAttributes<HTMLAnchorElement> & {
@@ -260,12 +46,197 @@ type SetButtonBoxProps = JSX.HTMLAttributes<HTMLDivElement> & {
 type SetCheckboxProps = JSX.HTMLAttributes<HTMLDivElement> & {
   sx?: StyleXStyles[];
   disabled?: boolean;
-  text?: string;
   value: Accessor<boolean>;
   setValue: Setter<boolean>;
+  children: JSX.Element;
 };
 
 type SetSwitchProps = SetCheckboxProps;
+
+const baseStyles = stylex.create({
+  reset: {
+    borderStyle: 'none',
+    outlineStyle: 'none',
+    textDecoration: 'none',
+    fontFamily: "'Basic Fonts'",
+    fontSize: '16px',
+    willChange: 'transform',
+    borderRadius: '15px',
+  },
+  main: {
+    padding: '16.5px',
+    width: '100%',
+    fontWeight: 500,
+  },
+  flex: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  button: {
+    userSelect: 'none',
+    cursor: 'pointer',
+    transition: {
+      default: 'transform 0.8s var(--spring-easing), filter 0.4s linear',
+      '@media (hover: none)': {
+        default: null,
+        ':not(:active)': 'transform 0.8s var(--spring-mobile), filter 0.4s linear',
+      },
+      ':is(:active)': 'transform 0.3s ease, filter 0.3s linear',
+    },
+    transform: {
+      default: 'scale(1)',
+      //eslint-disable-next-line
+      ':not(:active):is(:hover)': {
+        default: null,
+        '@media (hover: hover)': 'scale(1.02)',
+      },
+      ':is(:active)': 'scale(0.95)',
+    },
+    filter: {
+      default: 'brightness(1)',
+      //eslint-disable-next-line
+      ':not(:active):is(:hover)': {
+        default: null,
+        '@media (hover: hover)': 'brightness(0.96)',
+      },
+      ':is(:active)': 'brightness(0.85)',
+    },
+  },
+  input: {
+    userSelect: 'auto',
+    transition: {
+      default: 'filter 0.4s linear, transform 0.8s var(--spring-easing), border-color 0.4s linear',
+      '@media (hover: none)': {
+        default: null,
+        ':not(:focus)': 'filter 0.4s linear, transform 0.8s var(--spring-mobile), border-color 0.4s linear',
+      },
+      ':focus': 'filter 0.3s linear, transform 0.3s ease, border-color 0.3s linear',
+    },
+    filter: {
+      default: 'brightness(1)',
+      //eslint-disable-next-line
+      ':not(:focus):is(:hover)': {
+        default: null,
+        '@media (hover: hover)': 'brightness(0.975)',
+      },
+      ':is(:focus)': 'brightness(0.95)',
+    },
+    transform: {
+      default: 'scale(1)',
+      //eslint-disable-next-line
+      ':not(:focus):is(:hover)': {
+        default: null,
+        '@media (hover: hover)': 'scale(1.015)',
+      },
+      ':focus': 'scale(1.03)',
+    },
+  },
+});
+
+const inputStyles = stylex.create({
+  main: {
+    ...stylex.include(baseStyles.reset),
+    ...stylex.include(baseStyles.main),
+    ...stylex.include(baseStyles.input),
+    '::placeholder': {
+      fontFamily: "'Basic Fonts'",
+      color: '#8B95A1',
+    },
+    backgroundColor: {
+      default: "#F9FAFB",
+    },
+    color: {
+      default: "#4e5a68",
+      ":focus": "#333D4B",
+    },
+    borderStyle: 'solid',
+    borderWidth: '1.5px',
+    borderColor: {
+      default: "#E5E8EB",
+      ':focus': "#b1c9e0",
+    },
+  },
+});
+
+const buttonStyles = stylex.create({
+  main: {
+    ...stylex.include(baseStyles.reset),
+    ...stylex.include(baseStyles.main),
+    ...stylex.include(baseStyles.button),
+    backgroundColor: {
+      default: '#3190f7',
+      // ':is(:active)': '#246ab6',
+      ':disabled': 'rgb(210,210,210)',
+    },
+    color: {
+      default: '#ffffff',
+      // ':is(:active)': '#BDBDBD',
+      ':disabled': 'rgb(150, 150, 150)',
+    },
+  },
+  sub: {
+    ...stylex.include(baseStyles.reset),
+    ...stylex.include(baseStyles.main),
+    ...stylex.include(baseStyles.button),
+    backgroundColor: {
+      default: '#e8f3ff',
+      // ':is(:active)': '#b9d9fc',
+      ':disabled': 'rgb(210,210,210)',
+    },
+    color: {
+      default: '#3190f7',
+      // ':is(:active)': '#246ab6',
+      ':disabled': 'rgb(150, 150, 150)',
+    },
+  },
+  none: {
+    ...stylex.include(baseStyles.reset),
+    ...stylex.include(baseStyles.button),
+    ...stylex.include(baseStyles.flex),
+    // backgroundColor: '#F2F4F6',
+    // color: '#4E5968',
+  },
+});
+
+const thisStyles = stylex.create({
+  disabled: {
+    cursor: 'default',
+    pointerEvents: 'none',
+    opacity: 0.5,
+    // boxShadow: null,
+  },
+  root: {
+    width: '100svw',
+    // height: 'max(100lvh, 750px)',
+    minHeight: '100dvh',
+    position: 'relative',
+    padding: '20px',
+    ...stylex.include(baseStyles.flex),
+    flexDirection: 'column',
+  },
+  rootIn: {
+    width: "min(450px, 100%)",
+  },
+  title: {
+    ...stylex.include(baseStyles.reset),
+    ...stylex.include(baseStyles.flex),
+    alignSelf: "flex-start",
+    marginBottom: "20px",
+    paddingLeft: "12px",
+    gap: "12px",
+  },
+  boxIn: {
+    ...stylex.include(baseStyles.flex),
+    flexDirection: 'column',
+    backgroundColor: "#fff",
+    padding: "25px",
+    marginTop: "20px",
+    borderRadius: "20px",
+    position: "relative",
+    gap: '10px',
+  },
+});
+
 
 export function SetRootBox(props: SetRootProps): JSX.Element {
   const [local, others] = splitProps(props, [
@@ -282,7 +253,7 @@ export function SetRootBox(props: SetRootProps): JSX.Element {
       )}
     >
       <div {...others} {...stylex.attrs(thisStyles.rootIn, ...(local.sx??[]))}>
-        <a {...stylex.attrs(baseStyles.reset, thisStyles.title)} href='/'>
+        <a {...stylex.attrs(thisStyles.title)} href='/'>
           <LogoImgSvg width="20px" height="20px" />
           <LogoTextSvg height="20px" color="#b1b8c0" />
         </a>
@@ -314,13 +285,58 @@ export function SetInput(props: SetInputProps): JSX.Element {
   const [local, others] = splitProps(props, ['mode', 'sx']);
   return (
     <input
-      {...others}
       {...stylex.attrs(
         inputStyles[local.mode || 'main'],
         ...(local.sx??[]),
         others.disabled && thisStyles.disabled
       )}
+      {...others}
     />
+  );
+}
+
+const inputBoxStyles = stylex.create({
+  box: {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+    width: '100%',
+    color: {
+      default: '#6b7784',
+      ":focus-within": "#528abe",
+    },
+    transition: 'color 0.3s linear',
+  },
+  text: {
+    fontSize: '14px',
+    fontWeight: 500,
+    marginBottom: '5px',
+    marginLeft: '5px',
+  },
+  icon: {
+
+  },
+});
+
+export function SetInputBox(props: SetInputBoxProps): JSX.Element {
+  const [local, others] = splitProps(props, ['mode', 'sx', 'children']);
+  return (
+    <div {...stylex.attrs(inputBoxStyles.box)}>
+      <div {...stylex.attrs(
+        local.mode === 'text' && inputBoxStyles.text,
+        local.mode === 'icon' && inputBoxStyles.icon,
+      )}>
+        {local.children}
+      </div>
+      <input
+        {...stylex.attrs(
+          inputStyles.main,
+          ...(local.sx??[]),
+          others.disabled && thisStyles.disabled
+        )}
+        {...others}
+      />
+    </div>
   );
 }
 
@@ -328,12 +344,12 @@ export function SetButton(props: SetButtonProps): JSX.Element {
   const [local, others] = splitProps(props, ['children', 'mode', 'sx']);
   return (
     <button
-      {...others}
       {...stylex.attrs(
         buttonStyles[local.mode || 'main'],
         ...(local.sx??[]),
         others.disabled && thisStyles.disabled
       )}
+      {...others}
     >
       {local.children}
     </button>
@@ -348,12 +364,12 @@ export function SetButtonBox(props: SetButtonBoxProps): JSX.Element {
   ]);
   return (
     <div
-      {...others}
       {...stylex.attrs(
         buttonStyles.none,
         ...(local.sx??[]),
         local.disabled && thisStyles.disabled
       )}
+      {...others}
     >
       {local.children}
     </div>
@@ -370,7 +386,6 @@ export function SetA(props: SetAProps): JSX.Element {
   ]);
   return (
     <A
-      {...others}
       {...stylex.attrs(
         baseStyles.reset,
         buttonStyles[local.mode || 'main'],
@@ -378,6 +393,7 @@ export function SetA(props: SetAProps): JSX.Element {
         local.disabled && thisStyles.disabled
       )}
       href={local.href}
+      {...others}
     >
       {local.children}
     </A>
@@ -389,7 +405,8 @@ const checkboxStyles = stylex.create({
     ...stylex.include(baseStyles.flex),
     ...stylex.include(buttonStyles.none),
     backgroundColor: "#fff",
-    padding: '8px',
+    padding: '10px',
+    gap: '10px',
     // borderRadius: '14px',
   },
   path2: {
@@ -402,11 +419,11 @@ const checkboxStyles = stylex.create({
   path2Checked: {
     strokeDashoffset: 0,
   },
-  text: {
-    color: "#242424",
-    fontSize: "14px",
-    marginLeft: "10px",
-    paddingRight: "5px",
+  child: {
+    color: '#4e5968',
+    fontSize: "15px",
+    // marginLeft: "10px",
+    // paddingRight: "5px",
   },
 });
 
@@ -414,9 +431,9 @@ export function SetCheckbox(props: SetCheckboxProps){
   const [local, others] = splitProps(props, [
     'sx',
     'disabled',
-    'text',
     'value',
     'setValue',
+    'children',
   ]);
   return (
     <div
@@ -447,7 +464,7 @@ export function SetCheckbox(props: SetCheckboxProps){
           stroke-dasharray="22"
         />
       </svg>
-      <div {...stylex.attrs(checkboxStyles.text)}>{local.text}</div>
+      <div {...stylex.attrs(checkboxStyles.child)}>{local.children}</div>
     </div>
   );
 }
@@ -457,13 +474,11 @@ const switchStyles = stylex.create({
     ...stylex.include(baseStyles.flex),
     ...stylex.include(buttonStyles.none),
     backgroundColor: "#fff",
-    // ...stylex.include(baseStyles.main),
-    // ...stylex.include(baseStyles.button),
-    borderRadius: "14px",
+    // borderRadius: "14px",
     padding: "10px",
     gap: "10px",
     fontSize: "15px",
-    color: '#4e5a68',
+    color: '#4e5968',
   },
   switch: {
     borderWidth: "1px",
@@ -522,6 +537,10 @@ const switchStyles = stylex.create({
   switchInChecked: {
     transform: 'scale(1)',
   },
+  child: {
+    color: '#4e5968',
+    fontSize: "15px",
+  },
 });
   
 export function SetSwitch(props: SetSwitchProps){
@@ -529,9 +548,9 @@ export function SetSwitch(props: SetSwitchProps){
   const [local, others] = splitProps(props, [
     'sx',
     'disabled',
-    'text',
     'value',
     'setValue',
+    'children',
   ]);
 
   return(
@@ -555,7 +574,7 @@ export function SetSwitch(props: SetSwitchProps){
           &nbsp;
         </div>
       </div>
-      {local.text}
+      <div {...stylex.attrs(switchStyles.child)}>{local.children}</div>
     </div>
   );
 }

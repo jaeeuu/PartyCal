@@ -1,10 +1,10 @@
 import * as stylex from '@stylexjs/stylex';
-import { SetRootBox, SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox } from "~/components/SetShared";
+import { SetRootBox, SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInput, SetInputBox } from "~/components/SetShared";
 import { createMemo, createSignal, Index, Show } from "solid-js";
 import { oneDate } from '~/common/store';
 import type { Dayjs } from "dayjs";
 import SetSubPage from '~/components/SetSubPage';
-import getDateList from '~/common/getDateList';
+import getDateList, { convertDayjsToIndex, convertIndexToDayjs } from '~/common/getDateList';
 import ArrowRightSvg from '~/assets/icons/arrow_right.svg';
 import ArrowLeftSvg from '~/assets/icons/arrow_left.svg';
 import SetMetaMain from '~/components/SetMeta';
@@ -16,7 +16,7 @@ const inStyles = stylex.create({
   },
 });
 
-const ixStyle = stylex.create({
+const ixStyles = stylex.create({
   titleTextBox: {
     ...stylex.include(inStyles.flex),
     flexDirection: 'column',
@@ -32,22 +32,37 @@ const ixStyle = stylex.create({
   titleText2: {
     color: "#6b7784",
     fontSize: "14px",
-    fontWeight: 400,
   },
   selectBox: {
-    ...stylex.include(inStyles.flex),
+    display: 'flex',
+    alignItems: 'flex-start',
     flexDirection: 'column',
-    gap: '20px',
+    //gap: '20px',
     width: '100%',
+    marginTop: "10px",
+  },
+  selectButtonText: {
+    fontSize: '14px',
+    fontWeight: 500,
+    marginBottom: '5px',
+    marginLeft: '5px',
+    color: '#6b7784',
   },
   selectButton: {
+    width: '100%',
     borderColor: "#f2f3f5",
     borderStyle: "solid",
     borderWidth: "1.5px",
     // borderRadius: "15px",
     backgroundColor: "#f8f9fa",
     color: "#4e5a68",
-    padding: "12px 15px 12px 15px",
+    padding: "16.5px",
+    marginBottom: '20px',
+    fontWeight: 500,
+    
+  },
+  selectButtonIn: {
+    color: '#8B95A1',
   },
   subTitleBox: {
     ...stylex.include(inStyles.flex),
@@ -100,33 +115,43 @@ const ixStyle = stylex.create({
     borderWidth: "1.5px",
     backgroundColor: "#fff",
     color: {
-      default: "#6b7784",
-      ":nth-child(7n+1)": "#ac4343",
+      default: "#4e5a68",
+      ":nth-child(7n+1)": "#803232",
     },
     transition: {
-      default: "transform 1s var(--spring-easing), backgroundColor 0.3s linear, filter 0.3s linear",
-      "@media (hover: none)": "transform 0.8s var(--spring-mobile), backgroundColor 0.15s linear, filter 0.15s linear",
+      default: "transform 1s var(--spring-easing), filter 0.4s linear",
+      "@media (hover: none)": "transform 0.8s var(--spring-mobile), filter 0.4s linear",
     },
     transform: {
       default: "scale(1)",
       ":is(:active)": "scale(0.9)",
+      //eslint-disable-next-line
+      ":not(:active):is(:hover)": {
+        default: "scale(1.05)",
+        "@media (hover: none)": null,
+      },
     },
     filter: {
       default: "brightness(1)",
       ":is(:active)": "brightness(0.9)",
-    }
+      //eslint-disable-next-line
+      ":not(:active):is(:hover)": {
+        default: "brightness(0.95)",
+        "@media (hover: none)": null,
+      },
+    },
   },
   subCalTop: {
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'center',
     fontSize: '15px',
-    fontWeight: 500,
+    fontWeight: 600,
     paddingBottom: '5px',
     color: {
-      default: "#4e5a68",
-      ":nth-child(7n+1)": "#803232",
-    }
+      default: "#6b7784",
+      ":nth-child(7n+1)": "#ac4343",
+    },
   },
   subCalDisabled: {
     cursor: "default",
@@ -134,10 +159,7 @@ const ixStyle = stylex.create({
     opacity: 0.4,
   },
   subCalActive: {
-    backgroundColor: {
-      default: '#3190f7',
-      ':is(:active)': '#246ab6',
-    },
+    backgroundColor: '#3190f7',
     transform: "scale(0.95)",
     color: "#fff",
   },
@@ -146,87 +168,115 @@ const ixStyle = stylex.create({
     width: "100%",
     gap: '20px',
     marginTop: '40px',
-  }
+  },
+  agree: {
+    width: "100%",
+  },
 });
 
 export default function New() {
-  const [toDate, setToDate] = createSignal<Dayjs>(oneDate.clone());
-  const dateList = createMemo(() => getDateList(toDate()));
+  const todayInfo = convertDayjsToIndex(oneDate.clone());
 
-  const [dateRange, setDateRange] = createSignal([null, null]);
-  const [startDate, setStartDate] = createSignal([-1,-1]);
-  const [showSub, setShowSub] = createSignal(0);
-  const [anonVote, setAnonVote] = createSignal(false);
-  const [agree, setAgree] = createSignal(false);
-  //이거 전부다 store로 옮기기
+  const [toDayjs, setToDayjs] = createSignal<Dayjs>(oneDate.clone());
+  const dateList = createMemo(() => getDateList(toDayjs()));
+  const toDate = createMemo(() => convertDayjsToIndex(toDayjs()));
 
-  const weekList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const [startDayjs, setStartDayjs] = createSignal<Dayjs | null>(null);
+  const startDate = createMemo(() => convertDayjsToIndex(startDayjs()));
+
+  const [endDayjs, setEndDayjs] = createSignal<Dayjs | null>(null);
+  const endDate = createMemo(() => convertDayjsToIndex(endDayjs()));
+
+  const [showSub, setShowSub] = createSignal<number>(0);
+  const [anonVote, setAnonVote] = createSignal<boolean>(false);
+  const [agree, setAgree] = createSignal<boolean>(false);
+  //이거 전부다 store로 옮기기?
+
+  const weekList = ['일', '월', '화', '수', '목', '금', '토'];
   
+  const handleStartSelect = (thisdate: Dayjs, index: number) => {
+    setStartDayjs((prev) => {
+      const temp = convertIndexToDayjs(thisdate, index);
+      if (prev === null) return temp;
+      else if (temp.isSame(prev)) return null;
+      else return temp;
+    });
+  };
   return (
     <SetRootBox>
       <SetMetaMain />
       <SetBox>
-        <div {...stylex.attrs(ixStyle.titleTextBox)}>
-          <div {...stylex.attrs(ixStyle.titleText1)}>일정 투표 만들기</div>
-          <div {...stylex.attrs(ixStyle.titleText2)}>최대 31일 간격만 선택할 수 있어요</div>
+        <div {...stylex.attrs(ixStyles.titleTextBox)}>
+          <div {...stylex.attrs(ixStyles.titleText1)}>일정 투표 만들기</div>
+          <div {...stylex.attrs(ixStyles.titleText2)}>최대 31일 간격만 선택할 수 있어요</div>
         </div>
-        <div {...stylex.attrs(ixStyle.selectBox)}>
-          <SetButtonBox sx={[ixStyle.selectButton]} onClick={()=>setShowSub(1)}>
-            <Show when={!isNaN(dateRange()[0])}><div>시작일을 선택하세요</div></Show>
-            <Show when={isNaN(dateRange()[0])}><div>{dateRange()[0].format("YYYY[년] MM[월] DD[일]")}</div></Show>
+        <SetInputBox
+          mode="text"
+          placeholder='투표의 이름을 알려주세요'
+        >
+          투표명
+        </SetInputBox>
+        <div {...stylex.attrs(ixStyles.selectBox)}>
+          <div {...stylex.attrs(ixStyles.selectButtonText)}>첫째 날</div>
+          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>setShowSub(1)}>
+            <Show when={!startDayjs()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>구간의 첫 날짜를 선택하세요</div></Show>
+            <Show when={startDayjs()}><div>{startDayjs().format("YYYY[년] MM[월] DD[일]")}</div></Show>
           </SetButtonBox>
-          <SetButtonBox sx={[ixStyle.selectButton]} onClick={()=>setShowSub(2)} disabled={startDate()[1]===-1}>
-            <Show when={!isNaN(dateRange()[1])}><div>종료일을 선택하세요</div></Show>
-            <Show when={isNaN(dateRange()[1])}>{dateRange()[1].format("YYYY[년] MM[월] DD[일]")}</Show>
+          <div {...stylex.attrs(ixStyles.selectButtonText)}>마지막 날</div>
+          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>setShowSub(2)} disabled={startDate()[1]===-1}>
+            <Show when={!endDayjs()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>마지막 날짜를 선택하세요</div></Show>
+            <Show when={endDayjs()}>{startDayjs().format("YYYY[년] MM[월] DD[일]")}</Show>
           </SetButtonBox>
-          
+          <div {...stylex.attrs(ixStyles.selectButtonText)}>옵션</div>
+          <SetSwitch value={anonVote} setValue={setAnonVote}>익명 투표</SetSwitch>
         </div>
       </SetBox>
       <SetBox>
-        <div>옵션</div>
-        <SetSwitch text="익명 투표" value={anonVote} setValue={setAnonVote} />
-      </SetBox>
-      <SetBox>
-        <SetCheckbox text="동의합니다" value={agree} setValue={setAgree} />
+        <SetCheckbox value={agree} setValue={setAgree} sx={[ixStyles.agree]}>
+          서비스 제공을 위한 개인식별 정보 활용 동의
+        </SetCheckbox>
         <SetButton mode="main">다음</SetButton>
       </SetBox>
       <SetSubPage show={showSub} setShow={setShowSub}>
         <Show when={showSub() === 1}>
-          <div {...stylex.attrs(ixStyle.subTitleBox)}>
-            <SetButtonBox onClick={() => setToDate((prev) => prev.subtract(1,'month'))} sx={[ixStyle.subTitleButtonBox]}>
-              <ArrowLeftSvg width="17px" {...stylex.attrs(ixStyle.subTitleButton)} />
+          <div {...stylex.attrs(ixStyles.subTitleBox)}>
+            <SetButtonBox onClick={() => setToDayjs((prev) => prev.subtract(1,'month'))} sx={[ixStyles.subTitleButtonBox]}>
+              <ArrowLeftSvg width="17px" {...stylex.attrs(ixStyles.subTitleButton)} />
             </SetButtonBox>
-            <div {...stylex.attrs(ixStyle.subTitleTextBox)}>
-              <div {...stylex.attrs(ixStyle.subTitleYear)}>{`${toDate().year()}년`}</div>
-              <div {...stylex.attrs(ixStyle.subTitleMonth)}>{`${toDate().month()+1}월`}</div>
+            <div {...stylex.attrs(ixStyles.subTitleTextBox)}>
+              <div {...stylex.attrs(ixStyles.subTitleYear)}>{`${toDate().year}년`}</div>
+              <div {...stylex.attrs(ixStyles.subTitleMonth)}>{`${toDate().month+1}월`}</div>
             </div>
-            <SetButtonBox onClick={() => setToDate((prev) => prev.add(1,'month'))} sx={[ixStyle.subTitleButtonBox]}>
-              <ArrowRightSvg width="17px" {...stylex.attrs(ixStyle.subTitleButton)} />
+            <SetButtonBox onClick={() => setToDayjs((prev) => prev.add(1,'month'))} sx={[ixStyles.subTitleButtonBox]}>
+              <ArrowRightSvg width="17px" {...stylex.attrs(ixStyles.subTitleButton)} />
             </SetButtonBox>
           </div>
-          <div {...stylex.attrs(ixStyle.subCalBox)}>
+          <div {...stylex.attrs(ixStyles.subCalBox)}>
             <Index each={weekList}>
-              {(item) => (<div {...stylex.attrs(ixStyle.subCalTop)}>{item()}</div>)}
+              {(item) => (<div {...stylex.attrs(ixStyles.subCalTop)}>{item()}</div>)}
             </Index>
             <Index each={dateList().all}>
               {(item, itemIndex) => (
                 <div
-                {...stylex.attrs(
-                  ixStyle.subCalTile,
-                  (itemIndex < dateList().valid[0] || itemIndex > dateList().valid[1]) && ixStyle.subCalDisabled,
-                  (startDate()[0] === toDate().month() && startDate()[1] === itemIndex) && ixStyle.subCalActive,
-                )}
+                  {...stylex.attrs(
+                    ixStyles.subCalTile,
+                    (itemIndex < dateList().valid[0] || itemIndex > dateList().valid[1]) ||
+                    (todayInfo.year > toDate().year) ||
+                    (todayInfo.year === toDate().year && todayInfo.month > toDate().month) ||
+                    (todayInfo.year === toDate().year && todayInfo.month === toDate().month && todayInfo.index > itemIndex) && ixStyles.subCalDisabled,
+                    startDayjs() && (startDate().year === toDate().year && startDate().month === toDate().month, startDate().index === itemIndex) && ixStyles.subCalActive,
+                  )}
                   data-index={itemIndex}
-                  onClick={()=> setStartDate([toDate().month(), itemIndex])}
+                  onClick={()=> handleStartSelect(toDayjs(), itemIndex)}
                 >
                   {item()}
                 </div>
               )}
             </Index>
           </div>
-          <div {...stylex.attrs(ixStyle.calButtonBox)}>
-            <SetButton mode="sub" onClick={()=>setShowSub(0)}>취소</SetButton>
-            <SetButton mode="main">확인</SetButton>
+          <div {...stylex.attrs(ixStyles.calButtonBox)}>
+            <SetButton mode="sub" onClick={()=>{setShowSub(0);setStartDayjs(null);}}>취소</SetButton>
+            <SetButton mode="main" onClick={()=>setShowSub(0)}>확인</SetButton>
           </div>
         </Show>
       </SetSubPage>
