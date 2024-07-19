@@ -124,11 +124,11 @@ const ixStyles = stylex.create({
     },
     transform: {
       default: "scale(1)",
-      ":is(:active)": "scale(0.85)",
+      ":is(:active)": "scale(0.9)",
       //eslint-disable-next-line
       ":not(:active):is(:hover)": {
-        default: "scale(1.05)",
-        "@media (hover: none)": null,
+        default: null,
+        "@media (hover: hover)": "scale(1.05)",
       },
     },
     filter: {
@@ -136,8 +136,8 @@ const ixStyles = stylex.create({
       ":is(:active)": "brightness(0.9)",
       //eslint-disable-next-line
       ":not(:active):is(:hover)": {
-        default: "brightness(0.95)",
-        "@media (hover: none)": null,
+        default: null,
+        "@media (hover: hover)": "brightness(0.95)",
       },
     },
   },
@@ -160,7 +160,7 @@ const ixStyles = stylex.create({
   },
   subCalActive: {
     backgroundColor: '#3190f7',
-    transform: "scale(0.95)",
+    // transform: "scale(0.95)",
     color: "#fff",
   },
   calButtonBox: {
