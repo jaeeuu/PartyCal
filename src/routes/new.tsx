@@ -124,7 +124,7 @@ const ixStyles = stylex.create({
     },
     transform: {
       default: "scale(1)",
-      ":is(:active)": "scale(0.9)",
+      ":is(:active)": "scale(0.85)",
       //eslint-disable-next-line
       ":not(:active):is(:hover)": {
         default: "scale(1.05)",
@@ -208,7 +208,7 @@ export default function New() {
     else if(todayInfo.year > toDate().year) return ixStyles.subCalDisabled;
     else if(todayInfo.year === toDate().year && todayInfo.month > toDate().month) return ixStyles.subCalDisabled;
     else if(todayInfo.year === toDate().year && todayInfo.month === toDate().month && todayInfo.index > itemIndex) return ixStyles.subCalDisabled;
-    else if(startDayjs() && (startDate().year === toDate().year && startDate().month === toDate().month, startDate().index === itemIndex)) return ixStyles.subCalActive;
+    else if(startDate().year === toDate().year && startDate().month === toDate().month && startDate().index === itemIndex) return ixStyles.subCalActive;
     else return null;
   };
   return (
@@ -273,7 +273,7 @@ export default function New() {
                     (todayInfo.year > toDate().year) && ixStyles.subCalDisabled,
                     (todayInfo.year === toDate().year && todayInfo.month > toDate().month) && ixStyles.subCalDisabled,
                     (todayInfo.year === toDate().year && todayInfo.month === toDate().month && todayInfo.index > itemIndex) && ixStyles.subCalDisabled,
-                    startDayjs() && (startDate().year === toDate().year && startDate().month === toDate().month, startDate().index === itemIndex) && ixStyles.subCalActive,
+                    (startDate().year === toDate().year && startDate().month === toDate().month && startDate().index === itemIndex) && ixStyles.subCalActive,
                   )}
                   data-index={itemIndex}
                   onClick={()=> handleStartSelect(toDayjs(), itemIndex)}
