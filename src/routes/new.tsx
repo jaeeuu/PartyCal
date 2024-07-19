@@ -202,6 +202,15 @@ export default function New() {
       else return temp;
     });
   };
+
+  const tileStyle = (itemIndex: number) => {
+    if(itemIndex < dateList().valid[0] || itemIndex > dateList().valid[1]) return ixStyles.subCalDisabled;
+    else if(todayInfo.year > toDate().year) return ixStyles.subCalDisabled;
+    else if(todayInfo.year === toDate().year && todayInfo.month > toDate().month) return ixStyles.subCalDisabled;
+    else if(todayInfo.year === toDate().year && todayInfo.month === toDate().month && todayInfo.index > itemIndex) return ixStyles.subCalDisabled;
+    else if(startDayjs() && (startDate().year === toDate().year && startDate().month === toDate().month, startDate().index === itemIndex)) return ixStyles.subCalActive;
+    else return null;
+  };
   return (
     <SetRootBox>
       <SetMetaMain />
@@ -260,9 +269,9 @@ export default function New() {
                 <div
                   {...stylex.attrs(
                     ixStyles.subCalTile,
-                    (itemIndex < dateList().valid[0] || itemIndex > dateList().valid[1]) ||
-                    (todayInfo.year > toDate().year) ||
-                    (todayInfo.year === toDate().year && todayInfo.month > toDate().month) ||
+                    (itemIndex < dateList().valid[0] || itemIndex > dateList().valid[1]) && ixStyles.subCalDisabled,
+                    (todayInfo.year > toDate().year) && ixStyles.subCalDisabled,
+                    (todayInfo.year === toDate().year && todayInfo.month > toDate().month) && ixStyles.subCalDisabled,
                     (todayInfo.year === toDate().year && todayInfo.month === toDate().month && todayInfo.index > itemIndex) && ixStyles.subCalDisabled,
                     startDayjs() && (startDate().year === toDate().year && startDate().month === toDate().month, startDate().index === itemIndex) && ixStyles.subCalActive,
                   )}
