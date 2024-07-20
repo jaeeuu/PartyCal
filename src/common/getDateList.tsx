@@ -58,6 +58,11 @@ export const isBeforeCell = (it: DateCell, from: DateCell): boolean => {
   else return (convertCellToNum(it) < convertCellToNum(from));
 };
 
+export const isAfterCell = (it: DateCell, to: DateCell): boolean => {
+  if(!it || !to) return false;
+  else return (convertCellToNum(it) > convertCellToNum(to));
+};
+
 export const isSameCell = (a: DateCell, b: DateCell): boolean => {
   if (!a || !b) return false;
   else return a.year === b.year && a.month === b.month && a.day === b.day;

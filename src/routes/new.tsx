@@ -5,7 +5,7 @@ import { createMemo, createSignal, Index, Show } from "solid-js";
 import { oneDj } from '~/common/store';
 import type { Dayjs } from "dayjs";
 import SetSubPage from '~/components/SetSubPage';
-import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell } from '~/common/getDateList';
+import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell, convertCellToDj, isAfterCell } from '~/common/getDateList';
 import type { DateCell} from '~/common/getDateList';
 import ArrowRightSvg from '~/assets/icons/arrow_right.svg';
 import ArrowLeftSvg from '~/assets/icons/arrow_left.svg';
@@ -182,7 +182,6 @@ const ixStyles = stylex.create({
 });
 
 export default function New() {
-
   const todayCell = convertDjToCell(oneDj.clone());
 
   const [mainDj, setMainDj] = createSignal<Dayjs>(oneDj.clone());
@@ -191,6 +190,7 @@ export default function New() {
 
   const [startCell, setStartCell] = createSignal<DateCell>(null);
   const [endCell, setEndCell] = createSignal<DateCell>(null);
+  const [limitCell, setLimitCell] = createSignal<DateCell>(null);
 
   const [subPage, setSubPage] = createSignal<number>(0);
   const [anonVote, setAnonVote] = createSignal<boolean>(true);
@@ -200,8 +200,6 @@ export default function New() {
   const [memCell, setMemCell] = createSignal<DateCell>(null);
 
   const weekList = ['일', '월', '화', '수', '목', '금', '토'];
-
-
 
   const handleStartSelect = (it: DateCell) => {
     setStartCell((prev) => {
@@ -220,24 +218,25 @@ export default function New() {
   };
 
   const handleOk = () => {
-    if (subPage() === 1 && endCell()) setEndCell(null);
-    setSubPage(0);
-    setMemCell(null);
+    setSubPage((prev) => {
+      if (prev === 1){
+        if (endCell()) setEndCell(null);
+        setLimitCell(convertDjToCell(convertCellToDj(startCell()).add(31, 'day')));
+      }
+      setMemCell(null);
+      return 0;
+    });
   };
 
-  const handleCancel = async () => {
-    const page = subPage();
-    setSubPage(0);
-    if (page === 1) {
-      if (memCell()) setStartCell(memCell());
-      else if (startCell()) return;
-      else setStartCell(null);
-    } else {
-      if (memCell()) setEndCell(memCell());
-      else if (endCell()) return;
-      else setEndCell(null);
-    }
-    
+  const handleCancel = () => {
+    setSubPage((prev) => {
+      if (prev === 1) {
+        if (memCell()) setStartCell(memCell());
+      } else {
+        if (memCell()) setEndCell(memCell());
+      }
+      return 0;
+    });
   };
   
   return (
@@ -278,7 +277,7 @@ export default function New() {
           mode="main"
           disabled={!startCell() || !endCell() || !agree() || !name()}
         >
-          다음
+          투표 생성하기
         </SetButton>
       </SetBox>
       <SetSubPage show={subPage} setShow={setSubPage}>
@@ -307,6 +306,7 @@ export default function New() {
                     isSameCell(item(), startCell()) && ixStyles.subCalActive,
                     (item().month !== mainCell().month) && ixStyles.subCalDisabled,
                     isBeforeCell(item(), todayCell) && ixStyles.subCalDisabled,
+                    isAfterCell(item(), limitCell()) && ixStyles.subCalDisabled,
                   )}
                   onClick={()=> handleStartSelect(item())}
                 >
