@@ -72,7 +72,7 @@ export const isBetweenCell = (it: DateCell, from: DateCell, to: DateCell): boole
   if (!it || !from || !to) return false;
   else {
     const itNum = convertCellToNum(it);
-    return (itNum > convertCellToNum(from) && itNum < convertCellToNum(to));
+    return (itNum >= convertCellToNum(from) && itNum <= convertCellToNum(to));
   };
   // else if (it.year < from.year) return false;
   // else if (it.year === from.year && it.month < from.month) return false;

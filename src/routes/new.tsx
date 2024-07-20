@@ -44,14 +44,12 @@ const ixStyles = stylex.create({
     display: 'flex',
     alignItems: 'flex-start',
     flexDirection: 'column',
-    //gap: '20px',
     width: '100%',
     marginTop: "10px",
   },
   selectButtonText: {
     fontSize: '14px',
     fontWeight: 500,
-    marginBottom: '5px',
     marginLeft: '5px',
     color: '#6b7784',
   },
@@ -62,19 +60,23 @@ const ixStyles = stylex.create({
     color: "#4e5a68",
     padding: "16.5px",
     marginBottom: '20px',
+    marginTop: '5px',
     fontWeight: 500,
-    
   },
   selectButtonIn: {
+    color: '#8B95A1',
+  },
+  selectButtonHelp: {
+    marginBottom: '5px',
+    marginLeft: '5px',
+    fontSize: '11px',
     color: '#8B95A1',
   },
   subTitleBox: {
     ...stylex.include(inStyles.flex),
     justifyContent: 'space-between',
     width: '60%',
-    // gap: '10px',
     marginTop: '20px',
-    //marginBottom: '10px',
   },
   subTitleTextBox: {
     ...stylex.include(inStyles.flex),
@@ -112,7 +114,7 @@ const ixStyles = stylex.create({
     justifyContent: 'center',
     aspectRatio: "1 / 1",
     cursor: "pointer",
-    borderRadius: "12px",
+    borderRadius: "15px",
     ...stylex.include(inStyles.border),
     backgroundColor: "#fff",
     color: {
@@ -158,17 +160,21 @@ const ixStyles = stylex.create({
     cursor: "default",
     pointerEvents: "none",
     borderStyle: "none",
-    opacity: 0.4,
+    opacity: 0.5,
   },
   subCalActive: {
-    backgroundColor: '#3190f7',
-    // transform: "scale(0.95)",
+    backgroundColor: '#7fbbfd',
     color: "#fff",
+    borderStyle: "none",
+    transform: "scale(0.925)",
+    // borderRadius: '50%',
   },
   subCalBetween: {
-    backgroundColor: '#264d78',
-    // transform: "scale(1.1)",
+    backgroundColor: '#7fbbfd',
     color: "#fff",
+    borderStyle: "none",
+    transform: "scale(0.9)",
+    // borderRadius: '50%',
   },
   calButtonBox: {
     ...stylex.include(inStyles.flex),
@@ -203,7 +209,6 @@ export default function New() {
 
   const handleStartSelect = (it: DateCell) => {
     setStartCell((prev) => {
-      setMemCell(prev);
       if (isSameCell(prev, it)) return null;
       else return it;
     });
@@ -211,7 +216,6 @@ export default function New() {
 
   const handleEndSelect = (it: DateCell) => {
     setEndCell((prev) => {
-      setMemCell(prev);
       if (isSameCell(prev, it)) return null;
       else return it;
     });
@@ -223,7 +227,6 @@ export default function New() {
         if (endCell()) setEndCell(null);
         setLimitCell(convertDjToCell(convertCellToDj(startCell()).add(31, 'day')));
       }
-      setMemCell(null);
       return 0;
     });
   };
@@ -231,12 +234,36 @@ export default function New() {
   const handleCancel = () => {
     setSubPage((prev) => {
       if (prev === 1) {
-        if (memCell()) setStartCell(memCell());
+        setStartCell(memCell());
       } else {
-        if (memCell()) setEndCell(memCell());
+        setEndCell(memCell());
       }
       return 0;
     });
+  };
+
+  const handleClickStart = () => {
+    if (!startCell()) {
+      setMemCell(null);
+      setMainDj(oneDj.clone());
+    }
+    else {
+      setMemCell(startCell());
+      setMainDj(convertCellToDj(startCell()));
+    }
+    setSubPage(1);
+  };
+
+  const handleClickEnd = () => {
+    if (!endCell()) {
+      setMemCell(null);
+      setMainDj(convertCellToDj(startCell()));
+    }
+    else {
+      setMemCell(endCell());
+      setMainDj(convertCellToDj(endCell()));
+    }
+    setSubPage(2);
   };
   
   return (
@@ -245,7 +272,7 @@ export default function New() {
       <SetBox>
         <div {...stylex.attrs(ixStyles.titleTextBox)}>
           <div {...stylex.attrs(ixStyles.titleText1)}>일정 투표 만들기</div>
-          <div {...stylex.attrs(ixStyles.titleText2)}>최대 31일 간격만 선택할 수 있어요</div>
+          <div {...stylex.attrs(ixStyles.titleText2)}>친구들과 일정을 간단하게 투표해보세요</div>
         </div>
         <SetInputBox
           mode="text"
@@ -256,12 +283,13 @@ export default function New() {
         </SetInputBox>
         <div {...stylex.attrs(ixStyles.selectBox)}>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>첫째 날</div>
-          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>setSubPage(1)}>
+          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>handleClickStart()}>
             <Show when={!startCell()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>구간의 첫 날짜를 선택하세요</div></Show>
             <Show when={startCell()}><div>{`${startCell().year}년 ${startCell().month}월 ${startCell().day}일`}</div></Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>마지막 날</div>
-          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>setSubPage(2)} disabled={!startCell()}>
+          <div {...stylex.attrs(ixStyles.selectButtonHelp)}>최대 31일 간격만 선택할 수 있어요</div>
+          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>handleClickEnd()} disabled={!startCell()}>
             <Show when={!endCell()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>마지막 날짜를 선택하세요</div></Show>
             <Show when={endCell()}>{`${endCell().year}년 ${endCell().month}월 ${endCell().day}일`}</Show>
           </SetButtonBox>
@@ -303,10 +331,9 @@ export default function New() {
                 <div
                   {...stylex.attrs(
                     ixStyles.subCalTile,
-                    isSameCell(item(), startCell()) && ixStyles.subCalActive,
                     (item().month !== mainCell().month) && ixStyles.subCalDisabled,
                     isBeforeCell(item(), todayCell) && ixStyles.subCalDisabled,
-                    isAfterCell(item(), limitCell()) && ixStyles.subCalDisabled,
+                    isSameCell(item(), startCell()) && ixStyles.subCalActive,
                   )}
                   onClick={()=> handleStartSelect(item())}
                 >
@@ -321,11 +348,10 @@ export default function New() {
                 <div
                   {...stylex.attrs(
                     ixStyles.subCalTile,
-                    isSameCell(item(), startCell()) && ixStyles.subCalActive,
-                    isSameCell(item(), endCell()) && ixStyles.subCalActive,
-                    isBetweenCell(item(), startCell(), endCell()) && ixStyles.subCalBetween,
+                    isBetweenCell(item(), startCell(), endCell()) && ixStyles.subCalActive,
                     (item().month !== mainCell().month) && ixStyles.subCalDisabled,
                     isBeforeCell(item(), startCell()) && ixStyles.subCalDisabled,
+                    isAfterCell(item(), limitCell()) && ixStyles.subCalDisabled,
                   )}
                   onClick={()=> handleEndSelect(item())}
                 >
