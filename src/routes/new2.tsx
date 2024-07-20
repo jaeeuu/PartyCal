@@ -1,3 +1,4 @@
+/*
 import * as stylex from '@stylexjs/stylex';
 import { Index, createMemo, createSignal } from 'solid-js';
 import handleTiles from '../components/tileDrag';
@@ -127,3 +128,4 @@ export default function New2() {
     </SetRootBox>
   );
 }
+*/
