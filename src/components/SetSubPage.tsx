@@ -66,11 +66,11 @@ export default function SetSubPage(props: SetSubPageProps): JSX.Element{
     a.finished.then(done);
   };
   const pageOnEnter = (el: Element, done: () => void) => {
-    const a = el.animate([{ transform: "translateY(100vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
+    const a = el.animate([{ transform: "translateY(80vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
     a.finished.then(done);
   };
   const pageOnExit = (el: Element, done: () => void) => {
-    const a = el.animate([{ transform: 'translateY(0px)', overflowY: "hidden" }, { transform: "translateY(100vh)", overflowY: "hidden" }], { duration: 350, easing: "ease" });
+    const a = el.animate([{ transform: 'translateY(0px)', overflowY: "hidden" }, { transform: "translateY(80vh)", overflowY: "hidden" }], { duration: 350, easing: "ease" });
     a.finished.then(done);
   };
   return (

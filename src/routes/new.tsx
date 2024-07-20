@@ -57,7 +57,7 @@ const ixStyles = stylex.create({
     width: '100%',
     ...stylex.include(inStyles.border),
     backgroundColor: "#f8f9fa",
-    color: "#4e5a68",
+    color: "#67aaf5",
     padding: "16.5px",
     marginBottom: '20px',
     marginTop: '5px',
@@ -72,11 +72,16 @@ const ixStyles = stylex.create({
     fontSize: '11px',
     color: '#8B95A1',
   },
+  // subTitle: {
+  //   fontSize: '14px',
+  //   color: '#8B95A1',
+  //   marginTop: '15px',
+  // },
   subTitleBox: {
     ...stylex.include(inStyles.flex),
     justifyContent: 'space-between',
     width: '60%',
-    marginTop: '20px',
+    marginTop: '15px',
   },
   subTitleTextBox: {
     ...stylex.include(inStyles.flex),
@@ -156,6 +161,10 @@ const ixStyles = stylex.create({
       ":nth-child(7n+1)": "#ac4343",
     },
   },
+  subCalOut: {
+    borderStyle: "none",
+    opacity: 0.5,
+  },
   subCalDisabled: {
     cursor: "default",
     pointerEvents: "none",
@@ -180,7 +189,7 @@ const ixStyles = stylex.create({
     ...stylex.include(inStyles.flex),
     width: "100%",
     gap: '20px',
-    marginTop: '40px',
+    marginTop: '30px',
   },
   agree: {
     width: "100%",
@@ -208,6 +217,10 @@ export default function New() {
   const weekList = ['일', '월', '화', '수', '목', '금', '토'];
 
   const handleStartSelect = (it: DateCell) => {
+    if (it.month !== mainCell().month) {
+      setMainDj((prev) => prev.year(it.year).month(it.month-1));
+      return;
+    }
     setStartCell((prev) => {
       if (isSameCell(prev, it)) return memCell();
       else return it;
@@ -215,6 +228,10 @@ export default function New() {
   };
 
   const handleEndSelect = (it: DateCell) => {
+    if (it.month !== mainCell().month) {
+      setMainDj((prev) => prev.year(it.year).month(it.month-1));
+      return;
+    }
     setEndCell((prev) => {
       if (isSameCell(prev, it)) return memCell();
       else return it;
@@ -331,7 +348,7 @@ export default function New() {
                 <div
                   {...stylex.attrs(
                     ixStyles.subCalTile,
-                    (item().month !== mainCell().month) && ixStyles.subCalDisabled,
+                    (item().month !== mainCell().month) && ixStyles.subCalOut,
                     isBeforeCell(item(), todayCell) && ixStyles.subCalDisabled,
                     isSameCell(item(), startCell()) && ixStyles.subCalActive,
                   )}
@@ -349,7 +366,7 @@ export default function New() {
                   {...stylex.attrs(
                     ixStyles.subCalTile,
                     isBetweenCell(item(), startCell(), endCell()) && ixStyles.subCalActive,
-                    (item().month !== mainCell().month) && ixStyles.subCalDisabled,
+                    (item().month !== mainCell().month) && ixStyles.subCalOut,
                     isBeforeCell(item(), startCell()) && ixStyles.subCalDisabled,
                     isAfterCell(item(), limitCell()) && ixStyles.subCalDisabled,
                   )}
