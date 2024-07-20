@@ -2,7 +2,7 @@ import * as stylex from '@stylexjs/stylex';
 import { SetRootBox, SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox } from "~/components/SetShared";
 import type { Accessor } from "solid-js";
 import { createMemo, createSignal, Index, Show } from "solid-js";
-import { oneDate } from '~/common/store';
+import { oneDj } from '~/common/store';
 import type { Dayjs } from "dayjs";
 import SetSubPage from '~/components/SetSubPage';
 import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell } from '~/common/getDateList';
@@ -183,9 +183,9 @@ const ixStyles = stylex.create({
 
 export default function New() {
 
-  const todayCell = convertDjToCell(oneDate.clone());
+  const todayCell = convertDjToCell(oneDj.clone());
 
-  const [mainDj, setMainDj] = createSignal<Dayjs>(oneDate.clone());
+  const [mainDj, setMainDj] = createSignal<Dayjs>(oneDj.clone());
   const mainCell: Accessor<DateCell> = createMemo(() => convertDjToCell(mainDj()));
   const mainCellList: Accessor<DateCell[]> = createMemo(() => getDateList(mainDj()));
 

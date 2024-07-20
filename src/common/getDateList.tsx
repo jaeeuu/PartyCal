@@ -1,7 +1,5 @@
-// import { toDate } from "../common/store";
+import { oneDj } from "../common/store";
 import type { Dayjs } from "dayjs";
-import dayjs from "dayjs";
-// import type { Accessor  } from "solid-js";
 
 export type DateCell = null | {
   year: number;
@@ -45,8 +43,9 @@ export const convertDjToCell = (dj: Dayjs): DateCell => {
 };
 
 export const convertCellToDj = (cell: DateCell): Dayjs => {
-  if (!cell) return dayjs();
-  return dayjs(new Date(cell.year, cell.month, cell.day));
+  const dj = oneDj.clone();
+  if (!cell) return dj;
+  return dj.year(cell.year).month(cell.month-1).date(cell.day);
 };
 
 export const convertCellToNum = (cell: DateCell): number => {
@@ -57,10 +56,6 @@ export const convertCellToNum = (cell: DateCell): number => {
 export const isBeforeCell = (it: DateCell, from: DateCell): boolean => {
   if(!it || !from) return false;
   else return (convertCellToNum(it) < convertCellToNum(from));
-  // else if(from.year > it.year) return true;
-  // else if(from.year === it.year && from.month > it.month) return true;
-  // else if(from.year === it.year && from.month === it.month && from.day > it.day) return true;
-  // else return false;
 };
 
 export const isSameCell = (a: DateCell, b: DateCell): boolean => {
@@ -72,9 +67,7 @@ export const isBetweenCell = (it: DateCell, from: DateCell, to: DateCell): boole
   if (!it || !from || !to) return false;
   else {
     const itNum = convertCellToNum(it);
-    const fromNum = convertCellToNum(from);
-    const toNum = convertCellToNum(to);
-    return (itNum > fromNum && itNum < toNum);
+    return (itNum > convertCellToNum(from) && itNum < convertCellToNum(to));
   };
   // else if (it.year < from.year) return false;
   // else if (it.year === from.year && it.month < from.month) return false;
@@ -84,22 +77,3 @@ export const isBetweenCell = (it: DateCell, from: DateCell, to: DateCell): boole
   // else if (it.year === to.year && it.month === to.month && it.day > to.day) return false;
   // else return (it.day > from.day && it.day < to.day);
 };
-
-// export type IndexDayjsProps = {
-//   year: number;
-//   month: number;
-//   index: number;
-// };
-
-// export const convertDayjsToIndex = ( thisDate: Dayjs | null ): IndexDayjsProps => {
-//   if (!thisDate) return { year: -1, month: -1, index: -1 };
-//   const thisMonthStart: Dayjs = thisDate.date(1);
-//   const thisMonthStartDay: number = thisMonthStart.day();
-//   return { year: thisDate.year() ,month: thisDate.month(), index: thisDate.date() + thisMonthStartDay - 1 };
-// };
-
-// export const convertIndexToDayjs = (thisDate: Dayjs, index: number): Dayjs => {
-//   const thisMonthStart: Dayjs = thisDate.date(1);
-//   const thisMonthStartDay: number = thisMonthStart.day();
-//   return thisMonthStart.add((index - thisMonthStartDay), 'day');
-// };
