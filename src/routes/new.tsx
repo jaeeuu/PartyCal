@@ -114,7 +114,7 @@ const ixStyles = stylex.create({
     justifyContent: 'center',
     aspectRatio: "1 / 1",
     cursor: "pointer",
-    borderRadius: "15px",
+    borderRadius: "16.5px",
     ...stylex.include(inStyles.border),
     backgroundColor: "#fff",
     color: {
@@ -122,8 +122,8 @@ const ixStyles = stylex.create({
       ":nth-child(7n+1)": "#803232",
     },
     transition: {
-      default: "transform 1s var(--spring-easing), filter 0.4s linear",
-      "@media (hover: none)": "transform 0.8s var(--spring-mobile), filter 0.4s linear",
+      default: "transform 1s var(--spring-easing), filter 0.2s linear, background-color 0.2s linear, color 0.2s linear",
+      "@media (hover: none)": "transform 0.8s var(--spring-mobile), filter 0.2s linear, background-color 0.2s linear, color 0.2s linear",
     },
     transform: {
       default: "scale(1)",
@@ -163,18 +163,18 @@ const ixStyles = stylex.create({
     opacity: 0.5,
   },
   subCalActive: {
-    backgroundColor: '#7fbbfd',
+    backgroundColor: '#67aaf5',
     color: "#fff",
     borderStyle: "none",
-    transform: "scale(0.925)",
-    // borderRadius: '50%',
-  },
-  subCalBetween: {
-    backgroundColor: '#7fbbfd',
-    color: "#fff",
-    borderStyle: "none",
-    transform: "scale(0.9)",
-    // borderRadius: '50%',
+    transform: {
+      default: "scale(0.9)",
+      ":is(:active)": "scale(0.85)",
+      //eslint-disable-next-line
+      ":not(:active):is(:hover)": {
+        default: null,
+        "@media (hover: hover)": "scale(1)",
+      },
+    },
   },
   calButtonBox: {
     ...stylex.include(inStyles.flex),
@@ -209,14 +209,14 @@ export default function New() {
 
   const handleStartSelect = (it: DateCell) => {
     setStartCell((prev) => {
-      if (isSameCell(prev, it)) return null;
+      if (isSameCell(prev, it)) return memCell();
       else return it;
     });
   };
 
   const handleEndSelect = (it: DateCell) => {
     setEndCell((prev) => {
-      if (isSameCell(prev, it)) return null;
+      if (isSameCell(prev, it)) return memCell();
       else return it;
     });
   };
