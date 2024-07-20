@@ -1,10 +1,12 @@
 import * as stylex from '@stylexjs/stylex';
 import { SetRootBox, SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox } from "~/components/SetShared";
+import type { Accessor } from "solid-js";
 import { createMemo, createSignal, Index, Show } from "solid-js";
 import { oneDate } from '~/common/store';
 import type { Dayjs } from "dayjs";
 import SetSubPage from '~/components/SetSubPage';
-import getDateList, { convertDayjsToIndex, convertIndexToDayjs, IndexDayjsProps } from '~/common/getDateList';
+import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell } from '~/common/getDateList';
+import type { DateCell} from '~/common/getDateList';
 import ArrowRightSvg from '~/assets/icons/arrow_right.svg';
 import ArrowLeftSvg from '~/assets/icons/arrow_left.svg';
 import SetMetaMain from '~/components/SetMeta';
@@ -13,6 +15,11 @@ const inStyles = stylex.create({
   flex: {
     display: 'flex',
     alignItems: 'center',
+  },
+  border: {
+    borderColor: "#f2f3f5",
+    borderStyle: "solid",
+    borderWidth: "1.5px",
   },
 });
 
@@ -50,10 +57,7 @@ const ixStyles = stylex.create({
   },
   selectButton: {
     width: '100%',
-    borderColor: "#f2f3f5",
-    borderStyle: "solid",
-    borderWidth: "1.5px",
-    // borderRadius: "15px",
+    ...stylex.include(inStyles.border),
     backgroundColor: "#f8f9fa",
     color: "#4e5a68",
     padding: "16.5px",
@@ -109,10 +113,7 @@ const ixStyles = stylex.create({
     aspectRatio: "1 / 1",
     cursor: "pointer",
     borderRadius: "12px",
-    // backgroundColor: "#fff",
-    borderColor: "#f2f3f5",
-    borderStyle: "solid",
-    borderWidth: "1.5px",
+    ...stylex.include(inStyles.border),
     backgroundColor: "#fff",
     color: {
       default: "#4e5a68",
@@ -155,6 +156,7 @@ const ixStyles = stylex.create({
   },
   subCalDisabled: {
     cursor: "default",
+    pointerEvents: "none",
     borderStyle: "none",
     opacity: 0.4,
   },
@@ -165,7 +167,7 @@ const ixStyles = stylex.create({
   },
   subCalBetween: {
     backgroundColor: '#264d78',
-    transform: "scale(0.95)",
+    // transform: "scale(1.1)",
     color: "#fff",
   },
   calButtonBox: {
@@ -180,71 +182,62 @@ const ixStyles = stylex.create({
 });
 
 export default function New() {
-  const todayInfo = convertDayjsToIndex(oneDate.clone());
 
-  const [toDayjs, setToDayjs] = createSignal<Dayjs>(oneDate.clone());
+  const todayCell = convertDjToCell(oneDate.clone());
 
-  const dateList = createMemo(() => getDateList(toDayjs()));
-  const toDate = createMemo(() => convertDayjsToIndex(toDayjs()));
+  const [mainDj, setMainDj] = createSignal<Dayjs>(oneDate.clone());
+  const mainCell: Accessor<DateCell> = createMemo(() => convertDjToCell(mainDj()));
+  const mainCellList: Accessor<DateCell[]> = createMemo(() => getDateList(mainDj()));
 
-  const [startDayjs, setStartDayjs] = createSignal<Dayjs | null>(null);
-  const startDate = createMemo(() => convertDayjsToIndex(startDayjs()));
-  const endDateLimit = createMemo(() => convertDayjsToIndex(startDayjs()?.add(31, 'day')));
+  const [startCell, setStartCell] = createSignal<DateCell>(null);
+  const [endCell, setEndCell] = createSignal<DateCell>(null);
 
-  const [endDayjs, setEndDayjs] = createSignal<Dayjs | null>(null);
-  const endDate = createMemo(() => convertDayjsToIndex(endDayjs()));
-
-  const [showSub, setShowSub] = createSignal<number>(0);
+  const [subPage, setSubPage] = createSignal<number>(0);
   const [anonVote, setAnonVote] = createSignal<boolean>(true);
   const [agree, setAgree] = createSignal<boolean>(false);
   const [name, setName] = createSignal<string>('');
-  //이거 전부다 store로 옮기기?
+
+  const [memCell, setMemCell] = createSignal<DateCell>(null);
 
   const weekList = ['일', '월', '화', '수', '목', '금', '토'];
-  
-  const handleStartSelect = (thisdate: Dayjs, index: number) => {
-    setStartDayjs((prev) => {
-      const temp = convertIndexToDayjs(thisdate, index);
-      if (prev === null) return temp;
-      else if (temp.isSame(prev)) return null;
-      else return temp;
+
+
+
+  const handleStartSelect = (it: DateCell) => {
+    setStartCell((prev) => {
+      setMemCell(prev);
+      if (isSameCell(prev, it)) return null;
+      else return it;
     });
   };
 
-  const handleEndSelect = (start: Dayjs, to: Dayjs, index: number) => {
-    // if (to.diff(start, 'day') > 31) return;
-    setEndDayjs((prev) => {
-      const temp = convertIndexToDayjs(to, index);
-      if (prev === null) return temp;
-      else if (temp.isSame(prev)) return null;
-      else return temp;
+  const handleEndSelect = (it: DateCell) => {
+    setEndCell((prev) => {
+      setMemCell(prev);
+      if (isSameCell(prev, it)) return null;
+      else return it;
     });
   };
 
   const handleOk = () => {
-    if (showSub() === 1 && endDayjs()) setEndDayjs(null);
-    setShowSub(0);
-  }
+    if (subPage() === 1 && endCell()) setEndCell(null);
+    setSubPage(0);
+    setMemCell(null);
+  };
 
-  const styleBetweenValid = (itemIndex: number, list: [number, number]): boolean => {
-    if (itemIndex < list[0] || itemIndex > list[1]) return true;
-    else return false;
-  };
-  const styleBetweenIndex = (itemIndex: number, from: IndexDayjsProps, to: IndexDayjsProps, ori: IndexDayjsProps): boolean => {
-    if (from.year === -1 || to.year === -1 || ori.year === -1) return false;
-    else if (ori.year < from.year) return false;
-    else if (ori.year === from.year && ori.month < from.month) return false;
-    else if (ori.year === from.year && ori.month === from.month && itemIndex < from.index) return false;
-    else if (ori.year > to.year) return false;
-    else if (ori.year === to.year && ori.month > to.month) return false;
-    else if (ori.year === to.year && ori.month === to.month && itemIndex > to.index) return false;
-    else return (itemIndex >= from.index && itemIndex <= to.index);
-  };
-  const styleBeforeIndex = (itemIndex: number, ori: IndexDayjsProps, from: IndexDayjsProps): boolean => {
-    if(from.year> ori.year) return true;
-    else if(from.year === ori.year && from.month > ori.month) return true;
-    else if(from.year === ori.year && from.month === ori.month && from.index > itemIndex) return true;
-    else return false;
+  const handleCancel = async () => {
+    const page = subPage();
+    setSubPage(0);
+    if (page === 1) {
+      if (memCell()) setStartCell(memCell());
+      else if (startCell()) return;
+      else setStartCell(null);
+    } else {
+      if (memCell()) setEndCell(memCell());
+      else if (endCell()) return;
+      else setEndCell(null);
+    }
+    
   };
   
   return (
@@ -264,17 +257,17 @@ export default function New() {
         </SetInputBox>
         <div {...stylex.attrs(ixStyles.selectBox)}>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>첫째 날</div>
-          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>setShowSub(1)}>
-            <Show when={!startDayjs()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>구간의 첫 날짜를 선택하세요</div></Show>
-            <Show when={startDayjs()}><div>{startDayjs().format("YYYY[년] MM[월] DD[일]")}</div></Show>
+          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>setSubPage(1)}>
+            <Show when={!startCell()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>구간의 첫 날짜를 선택하세요</div></Show>
+            <Show when={startCell()}><div>{`${startCell().year}년 ${startCell().month}월 ${startCell().day}일`}</div></Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>마지막 날</div>
-          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>{setToDayjs(startDayjs());setShowSub(2);}} disabled={!startDayjs()}>
-            <Show when={!endDayjs()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>마지막 날짜를 선택하세요</div></Show>
-            <Show when={endDayjs()}>{startDayjs().format("YYYY[년] MM[월] DD[일]")}</Show>
+          <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>setSubPage(2)} disabled={!startCell()}>
+            <Show when={!endCell()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>마지막 날짜를 선택하세요</div></Show>
+            <Show when={endCell()}>{`${endCell().year}년 ${endCell().month}월 ${endCell().day}일`}</Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>옵션</div>
-          <SetSwitch value={anonVote} setValue={setAnonVote} disabled={true}>익명 투표</SetSwitch>
+          <SetSwitch value={anonVote} setValue={setAnonVote}>익명 투표</SetSwitch>
         </div>
       </SetBox>
       <SetBox>
@@ -283,21 +276,21 @@ export default function New() {
         </SetCheckbox>
         <SetButton
           mode="main"
-          disabled={!startDayjs() || !endDayjs() || !agree() || !name()}
+          disabled={!startCell() || !endCell() || !agree() || !name()}
         >
           다음
         </SetButton>
       </SetBox>
-      <SetSubPage show={showSub} setShow={setShowSub}>
+      <SetSubPage show={subPage} setShow={setSubPage}>
         <div {...stylex.attrs(ixStyles.subTitleBox)}>
-          <SetButtonBox onClick={() => setToDayjs((prev) => prev.subtract(1,'month'))} sx={[ixStyles.subTitleButtonBox]}>
+          <SetButtonBox onClick={() => setMainDj((prev) => prev.subtract(1,'month'))} sx={[ixStyles.subTitleButtonBox]}>
             <ArrowLeftSvg width="17px" {...stylex.attrs(ixStyles.subTitleButton)} />
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.subTitleTextBox)}>
-            <div {...stylex.attrs(ixStyles.subTitleYear)}>{`${toDate().year}년`}</div>
-            <div {...stylex.attrs(ixStyles.subTitleMonth)}>{`${toDate().month+1}월`}</div>
+            <div {...stylex.attrs(ixStyles.subTitleYear)}>{`${mainCell().year}년`}</div>
+            <div {...stylex.attrs(ixStyles.subTitleMonth)}>{`${mainCell().month}월`}</div>
           </div>
-          <SetButtonBox onClick={() => setToDayjs((prev) => prev.add(1,'month'))} sx={[ixStyles.subTitleButtonBox]}>
+          <SetButtonBox onClick={() => setMainDj((prev) => prev.add(1,'month'))} sx={[ixStyles.subTitleButtonBox]}>
             <ArrowRightSvg width="17px" {...stylex.attrs(ixStyles.subTitleButton)} />
           </SetButtonBox>
         </div>
@@ -305,48 +298,46 @@ export default function New() {
           <Index each={weekList}>
             {(item) => (<div {...stylex.attrs(ixStyles.subCalTop)}>{item()}</div>)}
           </Index>
-          <Show when={showSub() === 1}>
-            <Index each={dateList().all}>
-              {(item, itemIndex) => (
+          <Show when={subPage() === 1}>
+            <Index each={mainCellList()}>
+              {(item) => (
                 <div
                   {...stylex.attrs(
                     ixStyles.subCalTile,
-                    styleBetweenValid(itemIndex, dateList().valid) && ixStyles.subCalDisabled,
-                    styleBeforeIndex(itemIndex, toDate(), todayInfo) && ixStyles.subCalDisabled,
-                    (startDate().year === toDate().year && startDate().month === toDate().month && startDate().index === itemIndex) && ixStyles.subCalActive,
+                    isSameCell(item(), startCell()) && ixStyles.subCalActive,
+                    (item().month !== mainCell().month) && ixStyles.subCalDisabled,
+                    isBeforeCell(item(), todayCell) && ixStyles.subCalDisabled,
                   )}
-                  data-index={itemIndex}
-                  onClick={()=> handleStartSelect(toDayjs(), itemIndex)}
+                  onClick={()=> handleStartSelect(item())}
                 >
-                  {item()}
+                  {item().day}
                 </div>
               )}
             </Index>
           </Show>
-          <Show when={showSub() === 2}>
-            <Index each={dateList().all}>
-              {(item, itemIndex) => (
+          <Show when={subPage() === 2}>
+            <Index each={mainCellList()}>
+              {(item) => (
                 <div
                   {...stylex.attrs(
                     ixStyles.subCalTile,
-                    styleBetweenValid(itemIndex, dateList().valid) && ixStyles.subCalDisabled,
-                    styleBeforeIndex(itemIndex, toDate(), startDate()) && ixStyles.subCalDisabled,
-                    // !styleBetweenIndex(itemIndex, startDate(), endDateLimit(), toDate()) && ixStyles.subCalDisabled,
-                    endDayjs() && styleBetweenIndex(itemIndex, startDate(), endDate(), toDate()) && ixStyles.subCalActive,
-                    // (endDate().year === toDate().year && endDate().month === toDate().month && endDate().index === itemIndex) && ixStyles.subCalActive,
+                    isSameCell(item(), startCell()) && ixStyles.subCalActive,
+                    isSameCell(item(), endCell()) && ixStyles.subCalActive,
+                    isBetweenCell(item(), startCell(), endCell()) && ixStyles.subCalBetween,
+                    (item().month !== mainCell().month) && ixStyles.subCalDisabled,
+                    isBeforeCell(item(), startCell()) && ixStyles.subCalDisabled,
                   )}
-                  data-index={itemIndex}
-                  onClick={()=> handleEndSelect(startDayjs(), toDayjs(), itemIndex)}
+                  onClick={()=> handleEndSelect(item())}
                 >
-                  {item()}
+                  {item().day}
                 </div>
               )}
             </Index>
           </Show>
         </div>
         <div {...stylex.attrs(ixStyles.calButtonBox)}>
-          <SetButton mode="sub" onClick={()=>{setShowSub(0);setStartDayjs(null);setEndDayjs(null);}}>초기화</SetButton>
-          <SetButton mode="main" onClick={()=>handleOk()}>확인</SetButton>
+          <SetButton mode="sub" onClick={()=>handleCancel()}>취소</SetButton>
+          <SetButton mode="main" onClick={()=>handleOk()} disabled={subPage()===1 ? !startCell() : !endCell()}>확인</SetButton>
         </div>
       </SetSubPage>
     </SetRootBox>
