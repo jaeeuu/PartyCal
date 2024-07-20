@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "eslint **/*.tsx && vinxi dev",
+    "dev": "eslint **/*.tsx && rimraf ./node_modules/.vinxi && vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start",
     "version": "vinxi version",
@@ -34,6 +34,7 @@
     "globals": "^15.8.0",
     "msw": "^2.3.2",
     "path": "^0.12.7",
+    "rimraf": "^6.0.1",
     "typescript-eslint": "^7.16.1",
     "vite-plugin-solid-svg": "^0.8.1",
     "vite-plugin-stylex": "^0.10.1",
