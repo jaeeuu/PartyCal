@@ -2,7 +2,7 @@ import * as stylex from '@stylexjs/stylex';
 import { SetRootBox, SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox } from "~/components/SetShared";
 import type { Accessor } from "solid-js";
 import { createMemo, createSignal, Index, Show } from "solid-js";
-import { materialEasing, oneDj } from '~/common/store';
+import { oneDj } from '~/common/store';
 import type { Dayjs } from "dayjs";
 import SetSubPage from '~/components/SetSubPage';
 import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell, convertCellToDj, isAfterCell, convertCellToNum } from '~/common/getDateList';
@@ -162,14 +162,14 @@ const ixStyles = stylex.create({
     },
   },
   subCalOut: {
-    borderStyle: "none",
+    // borderStyle: "none",
     opacity: 0.5,
   },
   subCalDisabled: {
     cursor: "default",
     pointerEvents: "none",
     borderStyle: "none",
-    opacity: 0.5,
+    // opacity: 0.5,
   },
   subCalActive: {
     backgroundColor: '#67aaf5',
@@ -228,7 +228,7 @@ export default function New() {
         { transform: 'translateX(50px)', opacity: 0 },
         { transform: 'translateX(0px)', opacity: 1 },
       ],
-      { duration: 300, easing: materialEasing, iterations: 1 },
+      { duration: 350, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: 1 },
     );
     calAni = new Animation(keyframes, document.timeline);
     calAni.play();
@@ -244,7 +244,7 @@ export default function New() {
         { transform: 'translateX(-50px)', opacity: 0 },
         { transform: 'translateX(0px)', opacity: 1 },
       ],
-      { duration: 300, easing: materialEasing, iterations: 1 },
+      { duration: 350, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: 1 },
     );
     calAni = new Animation(keyframes, document.timeline);
     calAni.play();
@@ -270,8 +270,8 @@ export default function New() {
 
   const handleEndSelect = (it: DateCell) => {
     if (!it || !mainCell()) return;
-    if (it.month > mainCell().month) {
-      if (convertCellToNum(it) > convertCellToNum(limitCell())) {
+    if (it.month !== mainCell().month) {
+      if (convertCellToNum(it) > convertCellToNum(mainCell())) {
         handleNextMonth();
       } else {
         handlePrevMonth();
@@ -412,6 +412,7 @@ export default function New() {
                   {...stylex.attrs(
                     ixStyles.subCalTile,
                     isBetweenCell(item(), startCell(), endCell()) && ixStyles.subCalActive,
+                    isSameCell(item(), startCell()) && ixStyles.subCalActive,
                     (item().month !== mainCell().month) && ixStyles.subCalOut,
                     isBeforeCell(item(), startCell()) && ixStyles.subCalDisabled,
                     isAfterCell(item(), limitCell()) && ixStyles.subCalDisabled,
