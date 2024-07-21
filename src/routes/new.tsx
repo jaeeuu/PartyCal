@@ -2,10 +2,10 @@ import * as stylex from '@stylexjs/stylex';
 import { SetRootBox, SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox } from "~/components/SetShared";
 import type { Accessor } from "solid-js";
 import { createMemo, createSignal, Index, Show } from "solid-js";
-import { oneDj } from '~/common/store';
+import { materialEasing, oneDj } from '~/common/store';
 import type { Dayjs } from "dayjs";
 import SetSubPage from '~/components/SetSubPage';
-import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell, convertCellToDj, isAfterCell } from '~/common/getDateList';
+import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell, convertCellToDj, isAfterCell, convertCellToNum } from '~/common/getDateList';
 import type { DateCell} from '~/common/getDateList';
 import ArrowRightSvg from '~/assets/icons/arrow_right.svg';
 import ArrowLeftSvg from '~/assets/icons/arrow_left.svg';
@@ -57,7 +57,7 @@ const ixStyles = stylex.create({
     width: '100%',
     ...stylex.include(inStyles.border),
     backgroundColor: "#f8f9fa",
-    color: "#67aaf5",
+    color: "#3190f7",
     padding: "16.5px",
     marginBottom: '20px',
     marginTop: '5px',
@@ -213,29 +213,75 @@ export default function New() {
   const [name, setName] = createSignal<string>('');
 
   const [memCell, setMemCell] = createSignal<DateCell>(null);
+  let calRef: HTMLDivElement | null = null;
+  let calAni: Animation | null = null;
 
   const weekList = ['일', '월', '화', '수', '목', '금', '토'];
 
+  const handleNextMonth = () => {
+    setMainDj((prev) => prev.add(1,'month'));
+    if (!calRef) return;
+    if (calAni) calAni.cancel();
+    const keyframes = new KeyframeEffect(
+      calRef,
+      [
+        { transform: 'translateX(50px)', opacity: 0 },
+        { transform: 'translateX(0px)', opacity: 1 },
+      ],
+      { duration: 300, easing: materialEasing, iterations: 1 },
+    );
+    calAni = new Animation(keyframes, document.timeline);
+    calAni.play();
+  };
+
+  const handlePrevMonth = () => {
+    setMainDj((prev) => prev.subtract(1,'month'));
+    if (!calRef) return;
+    if (calAni) calAni.cancel();
+    const keyframes = new KeyframeEffect(
+      calRef,
+      [
+        { transform: 'translateX(-50px)', opacity: 0 },
+        { transform: 'translateX(0px)', opacity: 1 },
+      ],
+      { duration: 300, easing: materialEasing, iterations: 1 },
+    );
+    calAni = new Animation(keyframes, document.timeline);
+    calAni.play();
+  };
+
   const handleStartSelect = (it: DateCell) => {
+    if (!it || !mainCell()) return;
     if (it.month !== mainCell().month) {
-      setMainDj((prev) => prev.year(it.year).month(it.month-1));
+      if (convertCellToNum(it) > convertCellToNum(mainCell())) {
+        handleNextMonth();
+      } else {
+        handlePrevMonth();
+      }
       return;
+    } else {
+      setStartCell((prev) => {
+        if (isSameCell(prev, it)) return memCell();
+        else return it;
+      });
     }
-    setStartCell((prev) => {
-      if (isSameCell(prev, it)) return memCell();
-      else return it;
-    });
+    
   };
 
   const handleEndSelect = (it: DateCell) => {
-    if (it.month !== mainCell().month) {
-      setMainDj((prev) => prev.year(it.year).month(it.month-1));
-      return;
+    if (!it || !mainCell()) return;
+    if (it.month > mainCell().month) {
+      if (convertCellToNum(it) > convertCellToNum(limitCell())) {
+        handleNextMonth();
+      } else {
+        handlePrevMonth();
+      }
+    } else {
+      setEndCell((prev) => {
+        if (isSameCell(prev, it)) return memCell();
+        else return it;
+      });
     }
-    setEndCell((prev) => {
-      if (isSameCell(prev, it)) return memCell();
-      else return it;
-    });
   };
 
   const handleOk = () => {
@@ -327,18 +373,18 @@ export default function New() {
       </SetBox>
       <SetSubPage show={subPage} setShow={setSubPage}>
         <div {...stylex.attrs(ixStyles.subTitleBox)}>
-          <SetButtonBox onClick={() => setMainDj((prev) => prev.subtract(1,'month'))} sx={[ixStyles.subTitleButtonBox]}>
+          <SetButtonBox onClick={() => handlePrevMonth()} sx={[ixStyles.subTitleButtonBox]}>
             <ArrowLeftSvg width="17px" {...stylex.attrs(ixStyles.subTitleButton)} />
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.subTitleTextBox)}>
             <div {...stylex.attrs(ixStyles.subTitleYear)}>{`${mainCell().year}년`}</div>
             <div {...stylex.attrs(ixStyles.subTitleMonth)}>{`${mainCell().month}월`}</div>
           </div>
-          <SetButtonBox onClick={() => setMainDj((prev) => prev.add(1,'month'))} sx={[ixStyles.subTitleButtonBox]}>
+          <SetButtonBox onClick={() => handleNextMonth()} sx={[ixStyles.subTitleButtonBox]}>
             <ArrowRightSvg width="17px" {...stylex.attrs(ixStyles.subTitleButton)} />
           </SetButtonBox>
         </div>
-        <div {...stylex.attrs(ixStyles.subCalBox)}>
+        <div {...stylex.attrs(ixStyles.subCalBox)} ref={calRef}>
           <Index each={weekList}>
             {(item) => (<div {...stylex.attrs(ixStyles.subCalTop)}>{item()}</div>)}
           </Index>

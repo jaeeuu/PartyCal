@@ -39,6 +39,7 @@ const ixStyles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    overflowX: 'hidden',
   },
   hint: {
     width: '70px',
