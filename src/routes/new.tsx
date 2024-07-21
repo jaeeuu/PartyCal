@@ -1,6 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
 import { SetRootBox, SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox } from "~/components/SetShared";
-import type { Accessor } from "solid-js";
 import { createMemo, createSignal, Index, Show } from "solid-js";
 import { oneDj } from '~/common/store';
 import type { Dayjs } from "dayjs";
@@ -200,8 +199,8 @@ export default function New() {
   const todayCell = convertDjToCell(oneDj.clone());
 
   const [mainDj, setMainDj] = createSignal<Dayjs>(oneDj.clone());
-  const mainCell: Accessor<DateCell> = createMemo(() => convertDjToCell(mainDj()));
-  const mainCellList: Accessor<DateCell[]> = createMemo(() => getDateList(mainDj()));
+  const mainCell = createMemo<DateCell>(() => convertDjToCell(mainDj()));
+  const mainCellList = createMemo<DateCell[]>(() => getDateList(mainDj()));
 
   const [startCell, setStartCell] = createSignal<DateCell>(null);
   const [endCell, setEndCell] = createSignal<DateCell>(null);
@@ -225,7 +224,7 @@ export default function New() {
     const keyframes = new KeyframeEffect(
       calRef,
       [
-        { transform: 'translateX(50px)', opacity: 0 },
+        { transform: 'translateX(75px)', opacity: 0 },
         { transform: 'translateX(0px)', opacity: 1 },
       ],
       { duration: 350, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: 1 },
@@ -241,7 +240,7 @@ export default function New() {
     const keyframes = new KeyframeEffect(
       calRef,
       [
-        { transform: 'translateX(-50px)', opacity: 0 },
+        { transform: 'translateX(-75px)', opacity: 0 },
         { transform: 'translateX(0px)', opacity: 1 },
       ],
       { duration: 350, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: 1 },
