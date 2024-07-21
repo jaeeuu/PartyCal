@@ -32,16 +32,21 @@ export default defineConfig({
     },
     build: {
       sourcemap: false,
-      cssMinify: true,
-      minify: true,
-      target: 'modules'
+      // cssMinify: true,
+      // minify: true,
+      // target: 'modules'
     },
     // ssr: {
     //   noExternal: true,
     // }
-    css: {
-      transformer: 'lightningcss',
-    },
+    // css: {
+    //   transformer: 'lightningcss',
+    // },
+    server: {
+      watch: {
+        ignored: ["**/src-back/**"],
+      }
+    }
   },
   server: {
     preset: "vercel",

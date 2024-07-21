@@ -1,16 +1,18 @@
 {
   "name": "partycal",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "MIT",
   "type": "module",
-  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "eslint **/*.tsx && rimraf ./node_modules/.vinxi && vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start",
-    "version": "vinxi version",
     "upall": "git pull && pnpm up --latest",
     "lint": "eslint **/*.tsx",
-    "fix": "eslint --fix **/*.tsx"
+    "cargo": "cd src-back && cargo"
   },
   "dependencies": {
     "@solid-primitives/clipboard": "^1.5.10",
@@ -39,9 +41,6 @@
     "vite-plugin-solid-svg": "^0.8.1",
     "vite-plugin-stylex": "^0.10.1",
     "vite-plugin-stylex-dev": "0.8.0"
-  },
-  "engines": {
-    "node": ">=18"
   },
   "pnpm": {
     "peerDependencyRules": {
