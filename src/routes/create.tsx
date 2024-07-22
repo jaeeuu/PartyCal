@@ -1,46 +1,57 @@
 import { SetBox } from "~/components/SetShared";
-import { useLocation, useNavigate } from "@solidjs/router";
-import { createEffect, createResource, Suspense, Show, createSignal } from "solid-js";
+import { useLocation } from "@solidjs/router";
+import { createResource, Suspense, Show, createMemo } from "solid-js";
 import Spinner from "~/components/Spinner";
 
+type CreateStateProps = null | {
+  start?: number;
+  end?: number;
+  title?: string;
+  anon?: boolean;
+};
 
 export default function CreatePage() {
-  const { state } = useLocation<{start?: number, end?: number, title?: string, anon?:boolean}>();
-  const [error, setError] = createSignal(false);
-  const navigate = useNavigate();
-  let count = 0;
-
-  const [uid, {refetch}] = createResource(async () => {
+  const location = useLocation();
+  const state = createMemo<CreateStateProps>(() => location.state || {});
+  const fetchLink = async (source: CreateStateProps) => {
     try {
-      if (!state) throw Error();
+      if (!source.start || !source.end || !source.title) throw new Error();
       const res = await fetch("https://api.partycal.site/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(state),
-      }); //.then((res) => res.json());
-      return res.json();
+        body: JSON.stringify(source),
+      });
+      if (res.ok) return res.json();
+      else throw new Error();
     } catch {
-      return Promise.reject();
+      return null;
     }
-  });
+  };
 
-  createEffect(() => {
-    if (uid.error) {
-      if (count < 4){
-        refetch();
-        count++;
-      } else {
-        navigate("/");
-      }
-    }
-  });
+  const [uid] = createResource(()=>state(), fetchLink);
+
+  // const [uid] = createResource(async() => {
+  //   try {
+  //     if (!state()) throw new Error();
+  //     const res = await fetch("https://api.partycal.site/create", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(state()),
+  //     });
+  //     if (res.ok) return Promise.resolve(res.json());
+  //     else throw new Error();
+  //   } catch {
+  //     return Promise.resolve(null);
+  //   }
+  // });
 
   return (
     <SetBox>
       <Suspense fallback={<Spinner />}>
-        <div></div>
         <Show when={uid()}>{JSON.stringify(uid())}</Show>
       </Suspense>
     </SetBox>

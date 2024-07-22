@@ -361,13 +361,13 @@ export default function NewPage() {
           <div {...stylex.attrs(ixStyles.selectButtonText)}>첫째 날</div>
           <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>handleClickStart()}>
             <Show when={!startCell()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>구간의 첫 날짜를 선택하세요</div></Show>
-            <Show when={!!startCell()}><div>{`${startCell().year}년 ${startCell().month}월 ${startCell().day}일`}</div></Show>
+            <Show when={startCell()}><div>{`${startCell().year}년 ${startCell().month}월 ${startCell().day}일`}</div></Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>마지막 날</div>
           <div {...stylex.attrs(ixStyles.selectButtonHelp)}>최대 100일 간격만 선택할 수 있어요</div>
           <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>handleClickEnd()} disabled={!startCell()}>
             <Show when={!endCell()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>마지막 날짜를 선택하세요</div></Show>
-            <Show when={!!endCell()}>{`${endCell().year}년 ${endCell().month}월 ${endCell().day}일`}</Show>
+            <Show when={endCell()}>{`${endCell().year}년 ${endCell().month}월 ${endCell().day}일`}</Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>옵션</div>
           <SetSwitch value={anonVote} setValue={setAnonVote}>익명 투표</SetSwitch>
