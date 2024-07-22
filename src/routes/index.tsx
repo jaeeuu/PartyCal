@@ -5,7 +5,7 @@ import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
 import calenderImage from '../assets/images/cal-3d.avif';
-import { SetButtonBox, SetRootBox, SetA, SetButton, SetBox } from '~/components/SetShared';
+import { SetButtonBox, SetA, SetButton, SetBox } from '~/components/SetShared';
 import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
 import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';

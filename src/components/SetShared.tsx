@@ -3,6 +3,7 @@ import type { Accessor, JSX, Setter } from 'solid-js';
 import { createSignal, splitProps } from 'solid-js';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { A } from '@solidjs/router';
+import type { AnchorProps } from '@solidjs/router';
 import LogoTextSvg from '../assets/logo_text.svg';
 import LogoImgSvg from '../assets/logo_img.svg';
 
@@ -25,7 +26,7 @@ type SetInputBoxProps = JSX.InputHTMLAttributes<HTMLInputElement> & {
   children: JSX.Element;
 };
 
-type SetAProps = JSX.AnchorHTMLAttributes<HTMLAnchorElement> & {
+type SetAProps = AnchorProps & {
   children: JSX.Element;
   sx?: StyleXStyles[];
   mode?: ButtonMode;
@@ -58,7 +59,6 @@ const baseStyles = stylex.create({
   reset: {
     borderStyle: 'none',
     outlineStyle: 'none',
-    textDecoration: 'none',
     fontFamily: "'Basic Fonts'",
     fontSize: '16px',
     willChange: 'transform',
@@ -204,6 +204,8 @@ const thisStyles = stylex.create({
     cursor: 'default',
     pointerEvents: 'none',
     opacity: 0.5,
+    backgroundColor: 'rgb(210,210,210)',
+    color: 'rgb(150, 150, 150)',
     // boxShadow: null,
   },
   root: {
@@ -377,6 +379,12 @@ export function SetButtonBox(props: SetButtonBoxProps): JSX.Element {
   );
 }
 
+const aStyles = stylex.create({
+  base: {
+    textDecoration: 'none',
+    textAlign: 'center',
+  },
+});
 export function SetA(props: SetAProps): JSX.Element {
   const [local, others] = splitProps(props, [
     'children',
@@ -389,6 +397,7 @@ export function SetA(props: SetAProps): JSX.Element {
     <A
       {...stylex.attrs(
         baseStyles.reset,
+        aStyles.base,
         buttonStyles[local.mode || 'main'],
         ...(local.sx??[]),
         local.disabled && thisStyles.disabled

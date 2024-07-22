@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { SetRootBox, SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox } from "~/components/SetShared";
+import { SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox, SetA } from "~/components/SetShared";
 import { createMemo, createSignal, Index, Show } from "solid-js";
 import { oneDj } from '~/common/store';
 import type { Dayjs } from "dayjs";
@@ -212,6 +212,7 @@ export default function NewPage() {
   const [name, setName] = createSignal<string>('');
 
   const [memCell, setMemCell] = createSignal<DateCell>(null);
+
   let calRef: HTMLDivElement | null = null;
   let calAni: Animation | null = null;
 
@@ -328,6 +329,18 @@ export default function NewPage() {
     setSubPage(2);
   };
   
+  // const handleMakeNew = () => {
+  //   const navigate = useNavigate();
+  //   navigate("/created", {
+  //     state: {
+  //       start: startCell(),
+  //       end: endCell(),
+  //       name: name(),
+  //       anon: anonVote(),
+  //     }
+  //   });
+  // };
+
   return (
     <>
       <SetMetaMain />
@@ -340,6 +353,7 @@ export default function NewPage() {
           mode="text"
           placeholder='투표의 이름을 알려주세요'
           onInput={(e) => setName(e.currentTarget.value)}
+          maxLength={20}
         >
           투표명
         </SetInputBox>
@@ -363,12 +377,14 @@ export default function NewPage() {
         <SetCheckbox value={agree} setValue={setAgree} sx={[ixStyles.agree]}>
           서비스 제공을 위한 개인식별 정보 활용 동의
         </SetCheckbox>
-        <SetButton
+        <SetA
           mode="main"
           disabled={!startCell() || !endCell() || !agree() || !name()}
+          href="/create"
+          state={{ start: convertCellToNum(startCell()), end: convertCellToNum(endCell()), name: name(), anon: anonVote() }}
         >
           투표 생성하기
-        </SetButton>
+        </SetA>
       </SetBox>
       <SetSubPage show={subPage} setShow={setSubPage}>
         <div {...stylex.attrs(ixStyles.subTitleBox)}>

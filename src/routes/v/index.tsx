@@ -1,9 +1,10 @@
+import { SetBox } from "~/components/SetShared";
 
 
-export default function VSearchPage() {
+export default function VoteSearchPage() {
   return (
-    <div>
-
-    </div>
+    <SetBox>
+      <div>A</div>
+    </SetBox>
   );
 }

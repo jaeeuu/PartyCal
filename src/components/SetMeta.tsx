@@ -1,5 +1,5 @@
 import type { JSX } from "solid-js";
-import { Meta, MetaProvider } from "@solidjs/meta";
+import { Meta } from "@solidjs/meta";
 
 export default function SetMetaMain(): JSX.Element {
   return (
