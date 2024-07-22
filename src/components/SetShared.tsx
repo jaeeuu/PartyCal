@@ -30,6 +30,7 @@ type SetAProps = JSX.AnchorHTMLAttributes<HTMLAnchorElement> & {
   sx?: StyleXStyles[];
   mode?: ButtonMode;
   disabled?: boolean;
+  href: string;
 };
 
 type SetRootProps = JSX.HTMLAttributes<HTMLDivElement> & {

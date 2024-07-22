@@ -5,7 +5,7 @@ import { oneDj } from '~/common/store';
 import type { Dayjs } from "dayjs";
 import SetSubPage from '~/components/SetSubPage';
 import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell, convertCellToDj, isAfterCell, convertCellToNum } from '~/common/getDateList';
-import type { DateCell} from '~/common/getDateList';
+import type { DateCell } from '~/common/getDateList';
 import ArrowRightSvg from '~/assets/icons/arrow_right.svg';
 import ArrowLeftSvg from '~/assets/icons/arrow_left.svg';
 import SetMetaMain from '~/components/SetMeta';
@@ -16,7 +16,7 @@ const inStyles = stylex.create({
     alignItems: 'center',
   },
   border: {
-    borderColor: "#f2f3f5",
+    borderColor: "#eff0f2",
     borderStyle: "solid",
     borderWidth: "1.5px",
   },
@@ -195,7 +195,7 @@ const ixStyles = stylex.create({
   },
 });
 
-export default function New() {
+export default function NewPage() {
   const todayCell = convertDjToCell(oneDj.clone());
 
   const [mainDj, setMainDj] = createSignal<Dayjs>(oneDj.clone());
@@ -287,7 +287,7 @@ export default function New() {
     setSubPage((prev) => {
       if (prev === 1){
         if (endCell()) setEndCell(null);
-        setLimitCell(convertDjToCell(convertCellToDj(startCell()).add(31, 'day')));
+        setLimitCell(convertDjToCell(convertCellToDj(startCell()).add(100, 'day')));
       }
       return 0;
     });
@@ -329,7 +329,7 @@ export default function New() {
   };
   
   return (
-    <SetRootBox>
+    <>
       <SetMetaMain />
       <SetBox>
         <div {...stylex.attrs(ixStyles.titleTextBox)}>
@@ -347,13 +347,13 @@ export default function New() {
           <div {...stylex.attrs(ixStyles.selectButtonText)}>첫째 날</div>
           <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>handleClickStart()}>
             <Show when={!startCell()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>구간의 첫 날짜를 선택하세요</div></Show>
-            <Show when={startCell()}><div>{`${startCell().year}년 ${startCell().month}월 ${startCell().day}일`}</div></Show>
+            <Show when={!!startCell()}><div>{`${startCell().year}년 ${startCell().month}월 ${startCell().day}일`}</div></Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>마지막 날</div>
-          <div {...stylex.attrs(ixStyles.selectButtonHelp)}>최대 31일 간격만 선택할 수 있어요</div>
+          <div {...stylex.attrs(ixStyles.selectButtonHelp)}>최대 100일 간격만 선택할 수 있어요</div>
           <SetButtonBox sx={[ixStyles.selectButton]} onClick={()=>handleClickEnd()} disabled={!startCell()}>
             <Show when={!endCell()}><div {...stylex.attrs(ixStyles.selectButtonIn)}>마지막 날짜를 선택하세요</div></Show>
-            <Show when={endCell()}>{`${endCell().year}년 ${endCell().month}월 ${endCell().day}일`}</Show>
+            <Show when={!!endCell()}>{`${endCell().year}년 ${endCell().month}월 ${endCell().day}일`}</Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>옵션</div>
           <SetSwitch value={anonVote} setValue={setAnonVote}>익명 투표</SetSwitch>
@@ -429,6 +429,6 @@ export default function New() {
           <SetButton mode="main" onClick={()=>handleOk()} disabled={subPage()===1 ? !startCell() : !endCell()}>확인</SetButton>
         </div>
       </SetSubPage>
-    </SetRootBox>
+    </>
   );
 }

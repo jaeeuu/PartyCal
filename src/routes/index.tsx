@@ -13,6 +13,7 @@ import StylexSvg from '~/assets/icons/logo/stylex_logo.svg';
 import SetSend from '~/components/SetSend';
 import AxumLogoSVg from '~/assets/icons/logo/axum_logo.svg';
 import SetMetaMain from '~/components/SetMeta';
+import GitlabLogoSvg from '~/assets/icons/logo/gitlab_logo.svg';
 
 const inStyles = stylex.create({
   flex: {
@@ -117,10 +118,10 @@ const ixStyles = stylex.create({
   },
 });
 
-export default function Home() {
+export default function HomePage() {
   const [showSub, setShowSub] = createSignal<number>(0);
   return (
-    <SetRootBox>
+    <>
       <SetMetaMain />
       <SetBox>
         <div {...stylex.attrs(ixStyles.box1text)}>친구들과 함께<br/>일정 투표를 시작해보세요</div>
@@ -134,14 +135,14 @@ export default function Home() {
           메뉴 더보기
         </div>
         <div {...stylex.attrs(ixStyles.box2_2Group)}>
-          <SetButtonBox sx={[ixStyles.box2_2In]} onClick={()=>setShowSub(3)}>
+          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/v'>
             <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
             일정<br/>투표하기
-          </SetButtonBox>
-          <SetButtonBox sx={[ixStyles.box2_2In]} onClick={()=>setShowSub(3)}>
+          </SetA>
+          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/r'>
             <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
             투표<br/>결과보기
-          </SetButtonBox>
+          </SetA>
         </div>
         <div {...stylex.attrs(ixStyles.box2_3Group)}>
           <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(1)}>
@@ -154,7 +155,7 @@ export default function Home() {
           <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(2)}>
             <div {...stylex.attrs(ixStyles.box2_3text)}>
               <RocketSvg width="24px" height="24px" />
-              상세 정보
+              정보
             </div>
             <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
           </SetButtonBox>
@@ -167,6 +168,7 @@ export default function Home() {
               <div {...stylex.attrs(ixStyles.subBox_0)}>This app is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="21px" />SolidStart by Ryan Carniato</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><AxumLogoSVg height="21px" />Axum by Tokio Team</div>
+              <div {...stylex.attrs(ixStyles.subBox_1)}><GitlabLogoSvg height="21px" />GitLab by GitLab Inc</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="18px" />Stylex by Meta Platforms</div>
             </div>
             <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
@@ -177,10 +179,7 @@ export default function Home() {
         <Show when={showSub()===1}>
           <SetSend link="mainpage" setShow={setShowSub} />
         </Show>
-        <Show when={showSub()===3}>
-          <div>Nothing here yet...</div>
-        </Show>
       </SetSubPage>
-    </SetRootBox>
+    </>
   );
 }

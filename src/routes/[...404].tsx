@@ -6,7 +6,7 @@ export default function NotFound() {
     <main>
       <Title>Not Found</Title>
       <HttpStatusCode code={404} />
-      <h1>Page Not Found</h1>
+      <h1>여긴 아무것도 없어요...</h1>
     </main>
   );
 }

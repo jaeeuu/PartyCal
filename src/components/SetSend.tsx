@@ -151,7 +151,7 @@ export default function SetSend(props: SetSendProps): JSX.Element {
   };
 
   const handleCopyClick = async (url: string) => {
-    props.setShow(0);
+    // props.setShow(0);
     const urlAll = getUrl(url);
     await copyUrl(urlAll);
   };
