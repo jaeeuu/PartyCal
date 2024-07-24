@@ -23,8 +23,7 @@ export default function CreatePage() {
           body: JSON.stringify(source),
         });
         if (res.ok) return res.json();
-        else throw new Error();
-      } else throw new Error();
+      } throw new Error();
     } catch {
       return null;
     }

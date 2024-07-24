@@ -1166,6 +1166,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "partyback"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "crossbeam-utils",
+ "hyper",
+ "once_cell",
+ "sea-orm",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tower",
+]
+
+[[package]]
 name = "paste"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1949,21 +1964,6 @@ dependencies = [
  "url",
  "urlencoding",
  "uuid",
-]
-
-[[package]]
-name = "src-back"
-version = "0.1.0"
-dependencies = [
- "axum",
- "crossbeam-utils",
- "hyper",
- "once_cell",
- "sea-orm",
- "serde",
- "serde_json",
- "tokio",
- "tower",
 ]
 
 [[package]]

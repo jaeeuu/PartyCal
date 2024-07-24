@@ -49,7 +49,7 @@ export default defineConfig({
     }
   },
   server: {
-    preset: "vercel",
+    // preset: "vercel",
     prerender: {
       // routes: ["/", "/home"]
       crawlLinks: true
@@ -57,7 +57,7 @@ export default defineConfig({
     // future: {
     //   nativeSWR: true,
     // },
-    minify: true,
+    // minify: true,
     sourceMap: false,
     // inlineDynamicImports: true,
     // rollupConfig: {

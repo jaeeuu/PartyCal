@@ -1,7 +1,7 @@
 import type { Accessor, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 import { Index } from "solid-js";
-import * as stylex from "@stylexjs/stylex";
+import  stylex from "@stylexjs/stylex";
 import type { getDateListFunc } from "~/common/getDateList";
 import type { Dayjs } from "dayjs";
 
