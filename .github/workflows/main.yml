@@ -1,0 +1,74 @@
+name: CI/CD Pipeline
+
+concurrency: 
+  group: production
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4.1.7
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: latest
+        run_install: false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4.0.3
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+
+    - name: Setup Rust
+      uses: actions-rs/toolchain@v1.0.6
+      with:
+        toolchain: stable
+        target: 'x86_64-unknown-linux-gnu'
+        profile: minimal
+
+    - name: Build Front-end
+      run: |
+        pnpm install
+        pnpm run build
+
+    - name: Build Back-end
+      run: |
+        cargo build --release
+      working-directory: ./src-back
+
+    - name: Package Release Files
+      run: |
+        mkdir release
+        cp -rf .output/public release/public
+        cp -f src-back/target/release/partyback release/partyback
+
+    - name: Deploy to Server
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+      with:
+        host: ${{ secrets.SSH_IP }}
+        user: ${{ secrets.SSH_USER_NAME }}
+        key: ${{ secrets.SSH_PRIVITE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        connect_timeout: 10s
+        first_ssh: |
+          rm -rf /var/cache/nginx/ramcache/*
+          rm -rf /opt/partyfront/*
+          rm -f /usr/bin/partyback
+        scp: |
+          './release/public/*' => /opt/partyfront/
+          ./release/partyback => /usr/bin/partyback
+        last_ssh: |
+          nginx -s reload
+          systemctl restart partyback
