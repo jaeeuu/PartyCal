@@ -33,7 +33,7 @@ jobs:
     - name: Setup Rust
       uses: moonrepo/setup-rust@v1.2.0
       with:
-        target: 'x86_64-unknown-linux-gnu'
+        targets: 'x86_64-unknown-linux-gnu'
         profile: minimal
 
     - name: Build Front-end
