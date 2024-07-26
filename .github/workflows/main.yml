@@ -31,9 +31,8 @@ jobs:
         cache: 'pnpm'
 
     - name: Setup Rust
-      uses: actions-rs/toolchain@v1.0.6
+      uses: moonrepo/setup-rust@v1.2.0
       with:
-        toolchain: stable
         target: 'x86_64-unknown-linux-gnu'
         profile: minimal
 
@@ -49,25 +48,24 @@ jobs:
 
     - name: Package Release Files
       run: |
-        mkdir release
-        cp -rf .output/public release/public
-        cp -f src-back/target/release/partyback release/partyback
+        mkdir -p release/partycal
+        cp -rf .output/public/* release/partycal
+        cp -f src-back/target/release/partyback release/partycal/partyback
 
     - name: Deploy to Server
-      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+      uses: easingthemes/ssh-deploy@v5.1.0
       with:
-        host: ${{ secrets.SSH_IP }}
-        user: ${{ secrets.SSH_USER_NAME }}
-        key: ${{ secrets.SSH_PRIVITE_KEY }}
-        port: ${{ secrets.SSH_PORT }}
-        connect_timeout: 10s
-        first_ssh: |
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        REMOTE_HOST: ${{ secrets.SSH_IP }}
+        REMOTE_USER: ${{ secrets.SSH_USER_NAME }}
+        REMOTE_PORT: ${{ secrets.SSH_PORT }}
+        SOURCE: "release/partycal/"
+        TARGET: "/opt/partycal/"
+        SCRIPT_BEFORE: |
           rm -rf /var/cache/nginx/ramcache/*
-          rm -rf /opt/partyfront/*
+          rm -rf /opt/partycal/*
           rm -f /usr/bin/partyback
-        scp: |
-          './release/public/*' => /opt/partyfront/
-          ./release/partyback => /usr/bin/partyback
-        last_ssh: |
+        SCRIPT_AFTER: |
+          mv /opt/partycal/partyback /usr/bin/partyback
           nginx -s reload
           # systemctl restart partyback
