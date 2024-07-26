@@ -22,7 +22,6 @@ jobs:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
-        version: latest
         run_install: false
 
     - name: Setup Node.js
@@ -71,4 +70,4 @@ jobs:
           ./release/partyback => /usr/bin/partyback
         last_ssh: |
           nginx -s reload
-          systemctl restart partyback
+          # systemctl restart partyback
