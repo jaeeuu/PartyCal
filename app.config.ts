@@ -32,7 +32,7 @@ export default defineConfig({
     },
     build: {
       sourcemap: false,
-      cssCodeSplit: true,
+      // cssCodeSplit: true,
       cssMinify: true,
       minify: true,
       // target: 'modules'

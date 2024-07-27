@@ -4,10 +4,9 @@ import type { RouteSectionProps } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import "./app.css";
-import "./fonts/css/basicFonts400.css";
-import "./fonts/css/basicFonts500.css";
-import "./fonts/css/basicFonts600.css";
-import "./fonts/css/basicFonts700.css";
+import "./fonts/css/basic_400.css";
+import "./fonts/css/basic_500.css";
+import "./fonts/css/basic_700.css";
 import { SetRootBox } from "./components/SetShared";
 //import 'virtual:stylex.css';
 

@@ -153,7 +153,7 @@ const ixStyles = stylex.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
     fontSize: '15px',
-    fontWeight: 600,
+    fontWeight: 500,
     paddingBottom: '5px',
     color: {
       default: "#6b7784",
