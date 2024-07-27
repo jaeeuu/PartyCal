@@ -1,4 +1,4 @@
-import  stylex from "@stylexjs/stylex";
+import * as stylex from "@stylexjs/stylex";
 import { createSignal, Show } from "solid-js";
 import type { JSX } from "solid-js";
 import { Transition } from "solid-transition-group";

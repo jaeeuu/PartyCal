@@ -1,5 +1,5 @@
 import type { JSX, Setter } from 'solid-js';
-import  stylex from "@stylexjs/stylex";
+import * as stylex from "@stylexjs/stylex";
 import InstagramLogoSvg from '../assets/icons/logo/instagram_logo.svg';
 import WhatsappLogoSvg from '../assets/icons/logo/whatsapp_logo.svg';
 import KakaotalkLogoSvg from '../assets/icons/logo/kakaotalk_logo.svg';

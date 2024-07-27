@@ -1,6 +1,6 @@
 import type { Accessor, JSX, Setter } from "solid-js";
 import { Portal } from "solid-js/web";
-import  stylex from "@stylexjs/stylex";
+import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
 import { Show } from 'solid-js';
 import { materialEasing } from "~/common/store";

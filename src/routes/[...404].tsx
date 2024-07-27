@@ -1,6 +1,6 @@
 import { Title } from "@solidjs/meta";
 import { HttpStatusCode } from "@solidjs/start";
-import  stylex from "@stylexjs/stylex";
+import * as stylex from "@stylexjs/stylex";
 
 const ixStyles = stylex.create({
   text: {

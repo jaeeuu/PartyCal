@@ -33,8 +33,8 @@ export default defineConfig({
     build: {
       sourcemap: false,
       // cssCodeSplit: true,
-      cssMinify: true,
-      minify: true,
+      // cssMinify: true,
+      // minify: true,
       // target: 'modules'
     },
     // ssr: {
@@ -57,7 +57,7 @@ export default defineConfig({
     // future: {
     //   nativeSWR: true,
     // },
-    minify: true,
+    // minify: true,
     sourceMap: false,
     // inlineDynamicImports: true,
     // rollupConfig: {
