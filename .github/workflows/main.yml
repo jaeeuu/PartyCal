@@ -51,7 +51,8 @@ jobs:
         mkdir -p release/partycal
         cp -rf .output/public/* release/partycal
         cp -f src-back/target/release/partyback release/partycal/partyback
-        tar -zcvf release/partycal.tar.gz release/partycal
+        cd release
+        tar -zcvf partycal.tar.gz partycal
 
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v5.1.0
@@ -63,11 +64,11 @@ jobs:
         SOURCE: "release/partycal.tar.gz"
         TARGET: "/opt/partycal.tar.gz"
         SCRIPT_BEFORE: |
-          rm -rf /var/cache/nginx/ramcache/*
+          rm -rf /opt/ramdisk/*
           rm -rf /opt/partycal/*
           rm -f /usr/bin/partyback
         SCRIPT_AFTER: |
-          tar -zxvf /opt/partycal.tar.gz
+          tar -zxvf /opt/partycal.tar.gz -C /opt
           mv /opt/partycal/partyback /usr/bin/partyback
           nginx -s reload
           # systemctl restart partyback
