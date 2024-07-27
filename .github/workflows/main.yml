@@ -70,5 +70,6 @@ jobs:
         SCRIPT_AFTER: |
           tar -zxvf /opt/partycal.tar.gz -C /opt
           mv /opt/partycal/partyback /usr/bin/partyback
+          rm -f /opt/partycal.tar.gz
           nginx -s reload
           # systemctl restart partyback
