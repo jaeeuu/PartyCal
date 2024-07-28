@@ -30,24 +30,24 @@ jobs:
         node-version: '20'
         cache: 'pnpm'
 
-    - name: Build Front-end
-      run: |
-        pnpm install
-        pnpm run build
-        cd src-back
-      
     - name: Setup Rust
       uses: actions-rust-lang/setup-rust-toolchain@v1.9.0
       with:
         target: 'x86_64-unknown-linux-gnu'
+        cache-workspaces: 'src-back -> target'
+
+    - name: Build Front-end
+      run: |
+        pnpm install
+        pnpm run build
 
     - name: Build Back-end
       run: |
         cargo build --release
+      working-directory: ./src-back
 
     - name: Package Release Files
       run: |
-        cd ..
         mkdir -p release/partycal
         cp -rf .output/public/* release/partycal
         cp -f src-back/target/release/partyback release/partycal/partyback
