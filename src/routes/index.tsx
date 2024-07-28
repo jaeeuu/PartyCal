@@ -12,8 +12,7 @@ import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
 import StylexSvg from '~/assets/icons/logo/stylex_logo.svg';
 import SetSend from '~/components/SetSend';
 import AxumLogoSVg from '~/assets/icons/logo/axum_logo.svg';
-import SetMetaMain from '~/components/SetMeta';
-import GitlabLogoSvg from '~/assets/icons/logo/gitlab_logo.svg';
+import { Meta, MetaProvider } from "@solidjs/meta";
 
 const inStyles = stylex.create({
   flex: {
@@ -67,6 +66,7 @@ const ixStyles = stylex.create({
     fontWeight: 500,
     lineHeight: "1.5",
     position: "relative",
+    textAlign: 'start',
   },//#6b7784 below text color
   box2_2Image: {
     right: "20px",
@@ -122,7 +122,12 @@ export default function HomePage() {
   const [showSub, setShowSub] = createSignal<number>(0);
   return (
     <>
-      <SetMetaMain />
+      <MetaProvider>
+        <Meta property="og:url" content="https://partycal.site/" />
+        <Meta property="og:title" content="PARTYCAL: 일정 투표 플랫폼" />
+        <Meta property="og:description" content="친구들과 함께 일정 투표를 시작해보세요" />
+        <Meta property="og:image" content="https://jjreset.github.io/act_cdn/shareurl.png" />
+      </MetaProvider>
       <SetBox>
         <div {...stylex.attrs(ixStyles.box1text)}>친구들과 함께<br/>일정 투표를 시작해보세요</div>
         <img {...stylex.attrs(ixStyles.box1image)} height="100px" src={calenderImage} loading="eager" decoding='sync' />
@@ -168,7 +173,6 @@ export default function HomePage() {
               <div {...stylex.attrs(ixStyles.subBox_0)}>This app is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="21px" />SolidStart by Ryan Carniato</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><AxumLogoSVg height="21px" />Axum by Tokio Team</div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}><GitlabLogoSvg height="21px" />GitLab by GitLab Inc</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="18px" />Stylex by Meta Platforms</div>
             </div>
             <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>

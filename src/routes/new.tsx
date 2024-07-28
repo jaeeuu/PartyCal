@@ -8,7 +8,6 @@ import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell, 
 import type { DateCell } from '~/common/getDateList';
 import ArrowRightSvg from '~/assets/icons/arrow_right.svg';
 import ArrowLeftSvg from '~/assets/icons/arrow_left.svg';
-import SetMetaMain from '~/components/SetMeta';
 
 const inStyles = stylex.create({
   flex: {
@@ -343,7 +342,6 @@ export default function NewPage() {
 
   return (
     <>
-      <SetMetaMain />
       <SetBox>
         <div {...stylex.attrs(ixStyles.titleTextBox)}>
           <div {...stylex.attrs(ixStyles.titleText1)}>일정 투표 만들기</div>
