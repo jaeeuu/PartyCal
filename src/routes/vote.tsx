@@ -1,8 +1,6 @@
-import { useLocation } from "@solidjs/router";
-import { createMemo } from "solid-js";
+import { useSearchParams } from "@solidjs/router";
 
 export default function ResultPage() {
-  const location = useLocation();
-  const qu = createMemo(()=>location.query || {id: "none"});
-  return <div>User {qu().id}</div>;
+  const [searchParams] = useSearchParams();
+  return <div>User {searchParams.id || "none"}</div>;
 }
