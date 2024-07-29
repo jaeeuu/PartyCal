@@ -174,6 +174,7 @@ const buttonStyles = stylex.create({
       // ':is(:active)': '#BDBDBD',
       ':disabled': 'rgb(150, 150, 150)',
     },
+    textAlign: 'center',
   },
   sub: {
     ...stylex.include(baseStyles.reset),
@@ -382,7 +383,6 @@ export function SetButtonBox(props: SetButtonBoxProps): JSX.Element {
 const aStyles = stylex.create({
   base: {
     textDecoration: 'none',
-    textAlign: 'center',
   },
 });
 export function SetA(props: SetAProps): JSX.Element {

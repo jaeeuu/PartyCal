@@ -40,7 +40,6 @@ const ixStyles = stylex.create({
     // width: "100%",
     padding: "16px",
     fontWeight: 500,
-    textAlign: "center",
   },
   box2_1title: {
     color: "#333e4b",
@@ -66,7 +65,6 @@ const ixStyles = stylex.create({
     fontWeight: 500,
     lineHeight: "1.5",
     position: "relative",
-    textAlign: 'start',
   },//#6b7784 below text color
   box2_2Image: {
     right: "20px",
