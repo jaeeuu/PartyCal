@@ -51,7 +51,7 @@ export default defineConfig({
   },
   server: {
     prerender: {
-      routes: ["/", "/new", "/error", "/result", "/vote"]
+      routes: ["/", "/new", "/result", "/vote"]
       // crawlLinks: true
     },
     // future: {

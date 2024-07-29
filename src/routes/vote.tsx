@@ -1,6 +1,7 @@
-import { useParams } from "@solidjs/router";
+import { useLocation } from "@solidjs/router";
 
 export default function ResultPage() {
-  const params = useParams();
-  return <div>User {params.id}</div>;
+  const location = useLocation();
+  const qu = location.query;
+  return <div>User {qu.id}</div>;
 }
