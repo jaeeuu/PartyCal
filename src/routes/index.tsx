@@ -9,9 +9,10 @@ import { SetButtonBox, SetA, SetButton, SetBox } from '~/components/SetShared';
 import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
 import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
-import StylexSvg from '~/assets/icons/logo/stylex_logo.svg';
 import SetSend from '~/components/SetSend';
 import AxumLogoSVg from '~/assets/icons/logo/axum_logo.svg';
+import RustLogoSvg from '~/assets/icons/logo/rust_logo.svg';
+import TypescriptLogoSvg from '~/assets/icons/logo/typescript_logo.svg';
 import { Meta, MetaProvider } from "@solidjs/meta";
 
 const inStyles = stylex.create({
@@ -110,6 +111,24 @@ const ixStyles = stylex.create({
     marginLeft: '5px',
     color: "#6b7784",
   },
+  subBox_2: {
+    fontFamily: "Verdana,Geneva",
+    fontSize: "9px",
+    display: "flex",
+    gap: "5px",
+    padding: "5px 7px 5px 7px",
+    fontWeight: 'bold',
+    alignItems: 'center',
+    borderRadius: '5px',
+  },
+  subBox_21: {
+    color: '#fff',
+    backgroundColor: '#242424'
+  },
+  subBox_22: {
+    color: '#fff',
+    backgroundColor: '#3178C6',
+  },
   subButton: {
     fontWeight: 500,
     // width: '100%',
@@ -128,7 +147,7 @@ export default function HomePage() {
       </MetaProvider>
       <SetBox>
         <div {...stylex.attrs(ixStyles.box1text)}>친구들과 함께<br/>일정 투표를 시작해보세요</div>
-        <img {...stylex.attrs(ixStyles.box1image)} height="100px" src={calenderImage} loading="eager" decoding='sync' />
+        <img {...stylex.attrs(ixStyles.box1image)} height="100px" width="100px" src={calenderImage} loading="eager" decoding='sync' />
         <SetA sx={[ixStyles.box1button]} href='/new' >
           일정 투표 만들기
         </SetA>
@@ -138,11 +157,11 @@ export default function HomePage() {
           메뉴 더보기
         </div>
         <div {...stylex.attrs(ixStyles.box2_2Group)}>
-          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/v'>
+          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/search?m=vote'>
             <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
             일정<br/>투표하기
           </SetA>
-          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/r'>
+          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/search?m=result'>
             <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
             투표<br/>결과보기
           </SetA>
@@ -171,7 +190,10 @@ export default function HomePage() {
               <div {...stylex.attrs(ixStyles.subBox_0)}>This app is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="21px" />SolidStart by Ryan Carniato</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}><AxumLogoSVg height="21px" />Axum by Tokio Team</div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}><StylexSvg height="18px" />Stylex by Meta Platforms</div>
+              <div {...stylex.attrs(ixStyles.subBox_1)}>
+                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_21)}><RustLogoSvg height="12px" />RUST</div>
+                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_22)}><TypescriptLogoSvg height="10px" />TYPESCRIPT</div>
+              </div>
             </div>
             <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
               확인

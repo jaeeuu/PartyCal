@@ -19,6 +19,17 @@ const inStyles = stylex.create({
     borderStyle: "solid",
     borderWidth: "1.5px",
   },
+  showup: {
+    transform: {
+      default: "translateY(0px)",
+      '@starting-style': "translateY(50px)",
+    },
+    opacity: {
+      default: 1,
+      '@starting-style': 0,
+    },
+    transition: 'transform 0.5s cubic-bezier(0.08,0.82,0.17,1), opacity 0.5s cubic-bezier(0.08,0.82,0.17,1)',
+  }
 });
 
 const ixStyles = stylex.create({
@@ -342,7 +353,7 @@ export default function NewPage() {
 
   return (
     <>
-      <SetBox>
+      <SetBox sx={[inStyles.showup]}>
         <div {...stylex.attrs(ixStyles.titleTextBox)}>
           <div {...stylex.attrs(ixStyles.titleText1)}>일정 투표 만들기</div>
           <div {...stylex.attrs(ixStyles.titleText2)}>친구들과 일정을 간단하게 투표해보세요</div>
@@ -371,7 +382,7 @@ export default function NewPage() {
           <SetSwitch value={anonVote} setValue={setAnonVote}>익명 투표</SetSwitch>
         </div>
       </SetBox>
-      <SetBox>
+      <SetBox sx={[inStyles.showup]}>
         <SetCheckbox value={agree} setValue={setAgree} sx={[ixStyles.agree]}>
           서비스 제공을 위한 개인식별 정보 활용 동의
         </SetCheckbox>
