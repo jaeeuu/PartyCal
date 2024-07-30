@@ -13,7 +13,10 @@ import SetSend from '~/components/SetSend';
 import AxumLogoSVg from '~/assets/icons/logo/axum_logo.svg';
 import RustLogoSvg from '~/assets/icons/logo/rust_logo.svg';
 import TypescriptLogoSvg from '~/assets/icons/logo/typescript_logo.svg';
+import ClearLogoSvg from '~/assets/icons/logo/clear_logo.svg';
+import StylexLogoSvg from '~/assets/icons/logo/stylex_logo.svg';
 import { Meta, MetaProvider } from "@solidjs/meta";
+
 
 const inStyles = stylex.create({
   flex: {
@@ -129,6 +132,10 @@ const ixStyles = stylex.create({
     color: '#fff',
     backgroundColor: '#3178C6',
   },
+  subBox_23: {
+    color: "#4e5a68",
+    backgroundColor: "#F2F4F6",
+  },
   subButton: {
     fontWeight: 500,
     // width: '100%',
@@ -188,11 +195,15 @@ export default function HomePage() {
           <div>
             <div {...stylex.attrs(ixStyles.subText)}>
               <div {...stylex.attrs(ixStyles.subBox_0)}>This app is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}><SolidSvg height="21px" />SolidStart by Ryan Carniato</div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}><AxumLogoSVg height="21px" />Axum by Tokio Team</div>
+              <div {...stylex.attrs(ixStyles.subBox_1)}>
+                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_23)}><SolidSvg height="12px" />SOLID START</div>
+                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_23)}><AxumLogoSVg height="12px" />AXUM</div>
+                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_23)}><StylexLogoSvg height="12px" />STYLEX</div>
+              </div>
               <div {...stylex.attrs(ixStyles.subBox_1)}>
                 <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_21)}><RustLogoSvg height="12px" />RUST</div>
                 <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_22)}><TypescriptLogoSvg height="10px" />TYPESCRIPT</div>
+                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_23)}><ClearLogoSvg height="12px" />CLEAR LINUX</div>
               </div>
             </div>
             <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
