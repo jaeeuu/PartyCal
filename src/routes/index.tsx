@@ -11,9 +11,8 @@ import SetSubPage from '~/components/SetSubPage';
 import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
 import SetSend from '~/components/SetSend';
 import AxumLogoSVg from '~/assets/icons/logo/axum_logo.svg';
-import RustLogoSvg from '~/assets/icons/logo/rust_logo.svg';
-import TypescriptLogoSvg from '~/assets/icons/logo/typescript_logo.svg';
 import ClearLogoSvg from '~/assets/icons/logo/clear_logo.svg';
+import TauriLogoSvg from '~/assets/icons/logo/tauri_logo.svg';
 import StylexLogoSvg from '~/assets/icons/logo/stylex_logo.svg';
 import { Meta, MetaProvider } from "@solidjs/meta";
 
@@ -123,16 +122,6 @@ const ixStyles = stylex.create({
     fontWeight: 'bold',
     alignItems: 'center',
     borderRadius: '5px',
-  },
-  subBox_21: {
-    color: '#fff',
-    backgroundColor: '#242424'
-  },
-  subBox_22: {
-    color: '#fff',
-    backgroundColor: '#3178C6',
-  },
-  subBox_23: {
     color: "#4e5a68",
     backgroundColor: "#F2F4F6",
   },
@@ -196,14 +185,14 @@ export default function HomePage() {
             <div {...stylex.attrs(ixStyles.subText)}>
               <div {...stylex.attrs(ixStyles.subBox_0)}>This app is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}>
-                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_23)}><SolidSvg height="12px" />SOLID START</div>
-                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_23)}><AxumLogoSVg height="12px" />AXUM</div>
-                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_23)}><StylexLogoSvg height="12px" />STYLEX</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><SolidSvg height="12px" />SOLID START</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><TauriLogoSvg height="12px" />TAURI</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><AxumLogoSVg height="12px" />AXUM</div>
+
               </div>
               <div {...stylex.attrs(ixStyles.subBox_1)}>
-                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_21)}><RustLogoSvg height="12px" />RUST</div>
-                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_22)}><TypescriptLogoSvg height="10px" />TYPESCRIPT</div>
-                <div {...stylex.attrs(ixStyles.subBox_2, ixStyles.subBox_23)}><ClearLogoSvg height="12px" />CLEAR LINUX</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><ClearLogoSvg height="12px" />CLEAR LINUX</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><StylexLogoSvg height="12px" />STYLEX</div>
               </div>
             </div>
             <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
