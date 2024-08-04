@@ -115,13 +115,13 @@ const ixStyles = stylex.create({
   },
   subBox_2: {
     fontFamily: "Verdana,Geneva",
-    fontSize: "9px",
+    fontSize: "10px",
     display: "flex",
     gap: "5px",
     padding: "5px 7px 5px 7px",
     fontWeight: 'bold',
     alignItems: 'center',
-    borderRadius: '5px',
+    borderRadius: '7px',
     color: "#4e5a68",
     backgroundColor: "#F2F4F6",
   },
@@ -185,14 +185,14 @@ export default function HomePage() {
             <div {...stylex.attrs(ixStyles.subText)}>
               <div {...stylex.attrs(ixStyles.subBox_0)}>This app is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><SolidSvg height="12px" />SOLID START</div>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><TauriLogoSvg height="12px" />TAURI</div>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><AxumLogoSVg height="12px" />AXUM</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><SolidSvg height="13px" />SOLID START</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><TauriLogoSvg height="13px" />TAURI</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><AxumLogoSVg height="13px" />AXUM</div>
 
               </div>
               <div {...stylex.attrs(ixStyles.subBox_1)}>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><ClearLogoSvg height="12px" />CLEAR LINUX</div>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><StylexLogoSvg height="12px" />STYLEX</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><ClearLogoSvg height="13px" />CLEAR LINUX</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><StylexLogoSvg height="13px" />STYLEX</div>
               </div>
             </div>
             <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>

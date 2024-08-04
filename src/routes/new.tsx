@@ -16,8 +16,9 @@ const inStyles = stylex.create({
   },
   border: {
     borderColor: "#eff0f2",
+    //borderColor: "#dddedf",
     borderStyle: "solid",
-    borderWidth: "1.5px",
+    borderWidth: "2px",
   },
   showup: {
     transform: {
@@ -178,7 +179,8 @@ const ixStyles = stylex.create({
     cursor: "default",
     pointerEvents: "none",
     borderStyle: "none",
-    // opacity: 0.5,
+    // color: "#e6adad"
+    // opacity: 0.75,
   },
   subCalActive: {
     backgroundColor: '#67aaf5',
