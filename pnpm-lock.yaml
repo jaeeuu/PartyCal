@@ -5340,7 +5340,7 @@ snapshots:
       crossws: 0.2.4
       defu: 6.1.4
       get-port-please: 3.1.2
-      h3: 1.12.0
+      h3: 1.11.1
       http-shutdown: 1.2.2
       jiti: 1.21.6
       mlly: 1.7.1
