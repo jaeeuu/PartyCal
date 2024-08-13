@@ -38,8 +38,8 @@ export default defineConfig({
       // target: 'modules'
     },
     // ssr: {
-    //   noExternal: true,
-    // }
+    //   external: true,
+    // },
     css: {
       transformer: 'lightningcss',
     },
@@ -51,7 +51,7 @@ export default defineConfig({
   },
   server: {
     prerender: {
-      routes: ["/", "/new", "/result", "/vote"]
+      routes: ["/", "/new"]
       // crawlLinks: true
     },
     // future: {
