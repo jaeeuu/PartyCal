@@ -225,9 +225,9 @@ const thisStyles = stylex.create({
     ...stylex.include(baseStyles.reset),
     ...stylex.include(baseStyles.flex),
     alignSelf: "flex-start",
-    marginBottom: "20px",
-    paddingLeft: "12px",
-    gap: "12px",
+    // marginBottom: "20px",
+    // paddingLeft: "12px",
+    // gap: "12px",
   },
   boxIn: {
     ...stylex.include(baseStyles.flex),
@@ -257,10 +257,10 @@ export function SetRootBox(props: SetRootProps): JSX.Element {
       )}
     >
       <div {...others} {...stylex.attrs(thisStyles.rootIn, ...(local.sx??[]))}>
-        <a {...stylex.attrs(thisStyles.title)} href='/'>
-          <LogoImgSvg width="20px" height="20px" />
-          <LogoTextSvg height="20px" color="#b1b8c0" />
-        </a>
+        <A {...stylex.attrs(thisStyles.title)} href='/'>
+          {/* <LogoImgSvg width="20px" height="20px" /> */}
+          <LogoTextSvg height="26px" />
+        </A>
         {local.children}
       </div>
     </div>
