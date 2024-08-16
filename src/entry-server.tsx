@@ -8,11 +8,9 @@ export default createHandler(() => (
         <head>
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="description" content="Party Calendar" />
           <link rel="icon" href="/favicon.svg" />
-          <link rel="stylesheet" href="/fonts/css/basic_4.css" />
-          <link rel="stylesheet" href="/fonts/css/basic_5.css" />
-          <link rel="stylesheet" href="/fonts/css/basic_6.css" />
-          <link rel="stylesheet" href="/fonts/css/basic_7.css" />
+          <link rel="stylesheet" href="/fonts/css/basic_4567.css" fetchpriority="high" />
           {assets}
         </head>
         <body>
