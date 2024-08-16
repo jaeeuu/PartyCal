@@ -33,7 +33,7 @@ export default defineConfig({
     build: {
       sourcemap: false,
       // cssCodeSplit: true,
-      cssMinify: "lightningcss",
+      // cssMinify: "lightningcss",
       // minify: true,
       // target: 'modules'
     },
@@ -41,7 +41,7 @@ export default defineConfig({
     //   external: true,
     // },
     css: {
-      transformer: 'lightningcss',
+      transformer: "lightningcss",
     },
     server: {
       watch: {

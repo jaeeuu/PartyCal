@@ -165,7 +165,8 @@ const buttonStyles = stylex.create({
     ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.button),
     backgroundColor: {
-      default: '#3190f7',
+      //default: '#3190f7',
+      default: "#8b97ea",
       // ':is(:active)': '#246ab6',
       ':disabled': 'rgb(210,210,210)',
     },
@@ -181,12 +182,12 @@ const buttonStyles = stylex.create({
     ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.button),
     backgroundColor: {
-      default: '#e8f3ff',
+      default: '#e8ebff',
       // ':is(:active)': '#b9d9fc',
       ':disabled': 'rgb(210,210,210)',
     },
     color: {
-      default: '#3190f7',
+      default: '#8b97ea',
       // ':is(:active)': '#246ab6',
       ':disabled': 'rgb(150, 150, 150)',
     },

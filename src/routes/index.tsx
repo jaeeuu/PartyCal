@@ -25,10 +25,6 @@ const inStyles = stylex.create({
 });
 
 const ixStyles = stylex.create({
-  box1span: {
-    // color: "#6b7784",
-    color: "#333e4b",
-  },
   box1box: {
     display: 'flex',
     width: "100%",
@@ -45,10 +41,15 @@ const ixStyles = stylex.create({
     fontSize: "20px",
     //left: '25px',
     //top: '25px',
-    color: "#6b7784",
+    // color: "#6b7784",
     //lineHeight: "1.75",
     paddingBottom: '20px',
     paddingTop: '5px',
+    backgroundClip: 'text',
+    WebkitBackgroundClip: 'text',
+    color: 'transparent',
+    backgroundImage: 'linear-gradient(145deg, #00a4eb 0%, #8996E9 55%)',
+    letterSpacing: '-1px',
   },
   box1image: {
     //marginTop: "90px",
@@ -174,7 +175,7 @@ export default function HomePage() {
       <SetBox>
         <div {...stylex.attrs(ixStyles.box1box)}>
           <div {...stylex.attrs(ixStyles.box1text)}>
-            <span {...stylex.attrs(ixStyles.box1span)}>새로운 투표를 생성하고</span>
+            새로운 투표를 생성하고
             <br/>친구들과 함께
             <br/>일정을 정해보세요
           </div>

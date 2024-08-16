@@ -34,7 +34,6 @@
     "eslint": "^9.9.0",
     "eslint-plugin-solid": "^0.14.1",
     "globals": "^15.9.0",
-    "lightningcss": "^1.26.0",
     "msw": "^2.3.5",
     "path": "^0.12.7",
     "typescript-eslint": "^8.1.0",
