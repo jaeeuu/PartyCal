@@ -258,7 +258,7 @@ export function SetRootBox(props: SetRootProps): JSX.Element {
       )}
     >
       <div {...others} {...stylex.attrs(thisStyles.rootIn, ...(local.sx??[]))}>
-        <A {...stylex.attrs(thisStyles.title)} href='/'>
+        <A {...stylex.attrs(thisStyles.title)} href='/' title="home">
           {/* <LogoImgSvg width="20px" height="20px" /> */}
           <LogoTextSvg height="30px" />
         </A>

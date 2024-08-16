@@ -178,9 +178,9 @@ export default function HomePage() {
             <br/>친구들과 함께
             <br/>일정을 정해보세요
           </div>
-          <img {...stylex.attrs(ixStyles.box1image)} height="100px" width="100px" src={calenderImage} decoding='sync' />
+          <img {...stylex.attrs(ixStyles.box1image)} height="100px" width="100px" src={calenderImage} decoding='sync' alt="" />
         </div>
-        <SetA sx={[ixStyles.box1button]} href='/new' >
+        <SetA sx={[ixStyles.box1button]} href='/new' title="new">
           일정 투표 만들기
         </SetA>
       </SetBox>
@@ -189,11 +189,11 @@ export default function HomePage() {
           메뉴 더보기
         </div>
         <div {...stylex.attrs(ixStyles.box2_2Group)}>
-          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/search?m=vote'>
+          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/search?m=vote' title="vote">
             <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
             일정<br/>투표하기
           </SetA>
-          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/search?m=result'>
+          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/search?m=result' title="result">
             <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
             투표<br/>결과보기
           </SetA>

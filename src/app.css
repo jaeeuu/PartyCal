@@ -27,6 +27,7 @@ html, body{
   overflow-x: hidden;
   line-height: 1.5;
   user-select: text;
+  -webkit-user-select: text;
   touch-action: pan-x pan-y pinch-zoom;
   /* overscroll-behavior: none; */
   /* touch-action: manipulation;
