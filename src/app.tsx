@@ -4,6 +4,7 @@ import type { RouteSectionProps } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import "./app.css";
+import "./fonts/css/basic_4567.css";
 import { SetRootBox } from "./components/SetShared";
 //import 'virtual:stylex.css';
 
