@@ -9,6 +9,10 @@ export default createHandler(() => (
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.svg" />
+          <link rel="stylesheet" href="/fonts/css/basic_4.css" />
+          <link rel="stylesheet" href="/fonts/css/basic_5.css" />
+          <link rel="stylesheet" href="/fonts/css/basic_6.css" />
+          <link rel="stylesheet" href="/fonts/css/basic_7.css" />
           {assets}
         </head>
         <body>
