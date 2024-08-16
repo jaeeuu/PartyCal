@@ -4,7 +4,7 @@ import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
-import calenderImage from '../assets/images/cal_re.avif';
+import calenderImage from '../assets/images/cal_re.avif?url';
 import { SetButtonBox, SetA, SetButton, SetBox } from '~/components/SetShared';
 import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
