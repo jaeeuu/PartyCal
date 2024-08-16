@@ -10,7 +10,6 @@ export default createHandler(() => (
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.svg" />
           {assets}
-          <link rel="stylesheet" href="/fonts/css/basic_4567.css" />
         </head>
         <body>
           <div id="app">{children}</div>

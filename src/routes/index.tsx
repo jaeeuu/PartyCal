@@ -4,7 +4,7 @@ import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
-import calenderImage from '../assets/images/cal_re.avif?url';
+import calenderImage from '../assets/images/cal_re.avif';
 import { SetButtonBox, SetA, SetButton, SetBox } from '~/components/SetShared';
 import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
@@ -178,7 +178,7 @@ export default function HomePage() {
             <br/>친구들과 함께
             <br/>일정을 정해보세요
           </div>
-          <img {...stylex.attrs(ixStyles.box1image)} height="100px" width="100px" src={calenderImage} loading="eager" decoding='sync' />
+          <img {...stylex.attrs(ixStyles.box1image)} height="100px" width="100px" src={calenderImage} decoding='sync' />
         </div>
         <SetA sx={[ixStyles.box1button]} href='/new' >
           일정 투표 만들기
