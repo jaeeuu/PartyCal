@@ -105,7 +105,7 @@ const ixStyles = stylex.create({
   subBox_0: {
     //marginBottom: '30px',
     color: "#4e5a68",
-    fontSize: '16px',
+    fontSize: '15px',
     fontWeight: 700,
   },
   subBox_0_1: {
@@ -194,7 +194,7 @@ export default function HomePage() {
         <Show when={showSub()===2}>
           <div>
             <div {...stylex.attrs(ixStyles.subText)}>
-              <div {...stylex.attrs(ixStyles.subBox_0)}>Copyright (c) 2024 JAEU</div>
+              <div {...stylex.attrs(ixStyles.subBox_0)}>COPYRIGHT 2024 JAEU</div>
               <div {...stylex.attrs(ixStyles.subBox_0_1)}>This app is licensed under the terms of the MIT license.</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><SolidSvg height="13px" />SOLID START</div>
