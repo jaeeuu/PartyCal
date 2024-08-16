@@ -95,23 +95,34 @@ const ixStyles = stylex.create({
     gap: "15px",
   },
   subText: {
-    padding: '10px',
-    paddingBottom: '40px',
-    paddingTop: '15px',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '15px',
+    paddingTop: '20px',
+    paddingBottom: '35px',
+    gap: '5px',
   },
   subBox_0: {
-    marginBottom: '30px',
+    //marginBottom: '30px',
     color: "#4e5a68",
+    fontSize: '16px',
     fontWeight: 700,
+  },
+  subBox_0_1: {
+    //marginBottom: '30px',
+    color: "#B0B8C1",
+    fontSize: '12px',
+    fontWeight: 500,
   },
   subBox_1: {
     ...stylex.include(inStyles.flex),
     gap: '10px',
     fontWeight: 500,
     fontSize: '14px',
-    marginTop: '15px',
-    marginLeft: '5px',
+    marginTop: '20px',
+    //marginLeft: '5px',
     color: "#6b7784",
+    flexWrap: 'wrap',
   },
   subBox_2: {
     fontFamily: "Verdana,Geneva",
@@ -183,14 +194,12 @@ export default function HomePage() {
         <Show when={showSub()===2}>
           <div>
             <div {...stylex.attrs(ixStyles.subText)}>
-              <div {...stylex.attrs(ixStyles.subBox_0)}>This app is licensed under the terms of the MIT license. Copyright (c) 2024 JAEU</div>
+              <div {...stylex.attrs(ixStyles.subBox_0)}>Copyright (c) 2024 JAEU</div>
+              <div {...stylex.attrs(ixStyles.subBox_0_1)}>This app is licensed under the terms of the MIT license.</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><SolidSvg height="13px" />SOLID START</div>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><TauriLogoSvg height="13px" />TAURI</div>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><AxumLogoSVg height="13px" />AXUM</div>
-
-              </div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><ClearLogoSvg height="13px" />CLEAR LINUX</div>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><StylexLogoSvg height="13px" />STYLEX</div>
               </div>

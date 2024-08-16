@@ -5,7 +5,7 @@ import type { StyleXStyles } from '@stylexjs/stylex';
 import { A } from '@solidjs/router';
 import type { AnchorProps } from '@solidjs/router';
 import LogoTextSvg from '../assets/logo_text.svg';
-import LogoImgSvg from '../assets/logo_img.svg';
+// import LogoImgSvg from '../assets/logo_img.svg';
 
 type ButtonMode = 'main' | 'sub' | 'none';
 
@@ -259,7 +259,7 @@ export function SetRootBox(props: SetRootProps): JSX.Element {
       <div {...others} {...stylex.attrs(thisStyles.rootIn, ...(local.sx??[]))}>
         <A {...stylex.attrs(thisStyles.title)} href='/'>
           {/* <LogoImgSvg width="20px" height="20px" /> */}
-          <LogoTextSvg height="26px" />
+          <LogoTextSvg height="30px" />
         </A>
         {local.children}
       </div>
