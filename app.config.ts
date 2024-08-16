@@ -32,7 +32,7 @@ export default defineConfig({
     },
     build: {
       sourcemap: false,
-      cssCodeSplit: true,
+      // cssCodeSplit: true,
       // cssMinify: "lightningcss",
       // minify: true,
       // target: 'modules'

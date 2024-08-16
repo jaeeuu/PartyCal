@@ -12,7 +12,7 @@ const Root = (props: RouteSectionProps) => {
   return(
     <MetaProvider>
       <Title>PARTYCAL</Title>
-      <Link rel="stylesheet" href={font_path} />
+      <Link rel="stylesheet" href={font_path} fetchpriority="low" />
       <Suspense>
         <SetRootBox>
           {props.children}
