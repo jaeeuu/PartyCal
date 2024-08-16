@@ -5,7 +5,7 @@ import type { StyleXStyles } from '@stylexjs/stylex';
 import { A } from '@solidjs/router';
 import type { AnchorProps } from '@solidjs/router';
 import LogoTextSvg from '../assets/logo_text.svg';
-// import LogoImgSvg from '../assets/logo_img.svg';
+//import LogoImgSvg from '../assets/logo_img.svg';
 
 type ButtonMode = 'main' | 'sub' | 'none';
 
@@ -205,7 +205,8 @@ const thisStyles = stylex.create({
     cursor: 'default',
     pointerEvents: 'none',
     opacity: 0.5,
-    backgroundColor: 'rgb(210,210,210)',
+    backgroundColor: 'rgb(220,220,220)',
+    borderColor: 'transparent',
     color: 'rgb(150, 150, 150)',
     // boxShadow: null,
   },

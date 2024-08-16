@@ -4,7 +4,7 @@ import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
-import calenderImage from '../assets/images/cal-3d.avif';
+import calenderImage from '../assets/images/cal_re.avif';
 import { SetButtonBox, SetA, SetButton, SetBox } from '~/components/SetShared';
 import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
@@ -25,17 +25,36 @@ const inStyles = stylex.create({
 });
 
 const ixStyles = stylex.create({
-  box1text: {
-    position: 'absolute',
-    fontWeight: 700,
-    fontSize: "20px",
-    left: '25px',
-    top: '25px',
+  box1span: {
+    // color: "#6b7784",
     color: "#333e4b",
   },
+  box1box: {
+    display: 'flex',
+    width: "100%",
+    justifyContent: "space-between",
+    paddingLeft: '5px',
+    alignItems: 'center',
+    //paddingBottom: '10px',
+    // backgroundColor: 'yellow',
+    //paddingRight: '5px',
+  },
+  box1text: {
+    //position: 'absolute',
+    fontWeight: 700,
+    fontSize: "20px",
+    //left: '25px',
+    //top: '25px',
+    color: "#6b7784",
+    //lineHeight: "1.75",
+    paddingBottom: '20px',
+    paddingTop: '5px',
+  },
   box1image: {
-    marginTop: "90px",
-    marginBottom: "35px",
+    //marginTop: "90px",
+    //marginBottom: "35px",
+    position: 'relative',
+    top: "-5px",
     objectFit: 'contain',
     pointerEvents: 'none',
   },
@@ -111,7 +130,7 @@ const ixStyles = stylex.create({
   subBox_0_1: {
     //marginBottom: '30px',
     color: "#B0B8C1",
-    fontSize: '12px',
+    fontSize: '13px',
     fontWeight: 500,
   },
   subBox_1: {
@@ -153,8 +172,14 @@ export default function HomePage() {
         <Meta property="og:image" content="https://jjreset.github.io/act_cdn/shareurl.png" />
       </MetaProvider>
       <SetBox>
-        <div {...stylex.attrs(ixStyles.box1text)}>친구들과 함께<br/>일정 투표를 시작해보세요</div>
-        <img {...stylex.attrs(ixStyles.box1image)} height="100px" width="100px" src={calenderImage} loading="eager" decoding='sync' />
+        <div {...stylex.attrs(ixStyles.box1box)}>
+          <div {...stylex.attrs(ixStyles.box1text)}>
+            <span {...stylex.attrs(ixStyles.box1span)}>새로운 투표를 생성하고</span>
+            <br/>친구들과 함께
+            <br/>일정을 정해보세요
+          </div>
+          <img {...stylex.attrs(ixStyles.box1image)} height="100px" width="100px" src={calenderImage} loading="eager" decoding='sync' />
+        </div>
         <SetA sx={[ixStyles.box1button]} href='/new' >
           일정 투표 만들기
         </SetA>
