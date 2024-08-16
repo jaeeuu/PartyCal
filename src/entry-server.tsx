@@ -10,6 +10,7 @@ export default createHandler(() => (
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="description" content="Party Calendar" />
           <link rel="icon" href="/favicon.svg" />
+          <link rel="stylesheet" href="/fonts/css/basic_4567.css" fetchpriority="low" />
           {assets}
         </head>
         <body>

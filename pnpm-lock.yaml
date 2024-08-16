@@ -60,6 +60,9 @@ importers:
       globals:
         specifier: ^15.9.0
         version: 15.9.0
+      lightningcss:
+        specifier: ^1.26.0
+        version: 1.26.0
       msw:
         specifier: ^2.3.5
         version: 2.3.5(typescript@5.5.4)
@@ -5367,7 +5370,6 @@ snapshots:
       lightningcss-linux-x64-musl: 1.26.0
       lightningcss-win32-arm64-msvc: 1.26.0
       lightningcss-win32-x64-msvc: 1.26.0
-    optional: true
 
   listhen@1.7.2:
     dependencies:
