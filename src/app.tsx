@@ -1,4 +1,4 @@
-import { MetaProvider, Title, Link, Base, Meta } from "@solidjs/meta";
+import { MetaProvider } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import type { RouteSectionProps } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
@@ -11,10 +11,6 @@ const Root = (props: RouteSectionProps) => {
 
   return(
     <MetaProvider>
-      <Title>PARTYCAL</Title>
-      <Meta name="description" content="Party Calendar" />
-      <Base target="_self" href="https://partycal.site/" />
-      <Link rel="icon" href="/favicon.svg" />
       <Suspense>
         <SetRootBox>
           {props.children}
