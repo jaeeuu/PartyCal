@@ -12,7 +12,7 @@ export default defineConfig({
       // tsconfigPaths(),
       solidSvg({
         svgo: {
-          enabled: false,
+          enabled: true,
         }
       }),
       styleX(),

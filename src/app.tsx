@@ -8,9 +8,17 @@ import { SetRootBox } from "./components/SetShared";
 //import 'virtual:stylex.css';
 
 const Root = (props: RouteSectionProps) => {
+
+  // const handleLoad = (e: Event) => {
+  //   const link = e.target as HTMLLinkElement;
+  //   link.rel = "stylesheet";
+  //   link.onload = null;
+  // };
+
   return(
     <MetaProvider>
       <Title>PARTYCAL</Title>
+      {/* <Link rel="preload" href="/fonts/css/basic_4567.css" as="style" fetchpriority="high" onload={handleLoad} /> */}
       <Suspense>
         <SetRootBox>
           {props.children}
