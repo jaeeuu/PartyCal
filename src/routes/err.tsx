@@ -10,10 +10,12 @@ const ixStyles = stylex.create({
     fontWeight: 700,
   },
   text1: {
+    fontFamily: "Verdana",
     fontSize: "100px",
   },
   text2: {
-    fontSize: "57px",
+    fontFamily: "Verdana",
+    fontSize: "50px",
     marginTop: "-40px",
   },
   box: {
