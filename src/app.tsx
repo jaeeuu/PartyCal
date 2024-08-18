@@ -25,10 +25,10 @@ export default function App() {
     const devices = ["iPhone", "iPad", "Android", "Macintosh", "Mac OS X"];
     const check = devices.some(d => user.includes(d));
     if (check) {
-      const link = document.getElementById('alter-icon');
-      if (link) {
-        link.setAttribute("rel", "icon");
-      }
+      const link = document.createElement('link');
+      link.rel = 'icon';
+      link.href = '/pub/favicon.ico';
+      document.head.appendChild(link);
     }
   });
 
