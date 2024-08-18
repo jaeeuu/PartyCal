@@ -157,11 +157,12 @@ export default function SetSend(props: SetSendProps): JSX.Element {
   };
 
   const handleSnsClick = async (url: string, type: number) => {
-    
-    const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    const user = navigator.userAgent;
+    const devices = ["iPhone", "iPad", "Android"];
+    const check = devices.some(d => user.includes(d));
     const urlAll = getUrl(url);
     let openUrl = '';
-    if (!isMobile && (type < 4)) {
+    if (!check && (type < 4)) {
       CallDialog(2);
       return;
     }
