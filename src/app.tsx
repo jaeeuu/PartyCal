@@ -21,9 +21,11 @@ const Root = (props: RouteSectionProps) => {
 
 export default function App() {
   onMount(() => {
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    if (isSafari) {
-      const link = document.querySelector('link[rel="alternate icon"]');
+    const user = navigator.userAgent;
+    const devices = ["iPhone", "iPad", "Android", "Macintosh", "Mac OS X"];
+    const check = devices.some(d => user.includes(d));
+    if (check) {
+      const link = document.getElementById('alter-icon');
       if (link) {
         link.setAttribute("rel", "icon");
       }
