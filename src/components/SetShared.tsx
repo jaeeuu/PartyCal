@@ -156,6 +156,7 @@ const inputStyles = stylex.create({
       default: "#E5E8EB",
       ':focus': "#b1c9e0",
     },
+    fontFamily: 'Arial',
   },
 });
 

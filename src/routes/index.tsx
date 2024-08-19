@@ -43,6 +43,7 @@ const ixStyles = stylex.create({
     //top: '25px',
     // color: "#6b7784",
     //lineHeight: "1.75",
+    fontFamily: "'Basic Fonts'",
     paddingBottom: '20px',
     paddingTop: '5px',
     backgroundClip: 'text',
@@ -69,7 +70,7 @@ const ixStyles = stylex.create({
     fontSize: "16px",
     alignSelf: "flex-start",
     fontWeight: 700,
-    margin: "0px 0px 12px 7px",
+    margin: "0px 0px 5px 7px",
   },
   box2_2Group: {
     ...stylex.include(inStyles.flex),
@@ -79,14 +80,15 @@ const ixStyles = stylex.create({
   box2_2In: {//#425468, #333e4b light, hard
     borderColor: "#f2f3f5",
     borderStyle: "solid",
-    borderWidth: "1.5px",
+    borderWidth: "2px",
     // borderRadius: "15px",
     backgroundColor: "#f8f9fa",
     color: "#4e5a68",
     padding: "20px",
-    flexGrow: 1,
+    // flexGrow: 1,
+    width: "100%",
     fontWeight: 500,
-    lineHeight: "1.5",
+    // lineHeight: "1.5",
     position: "relative",
   },//#6b7784 below text color
   box2_2Image: {
@@ -186,9 +188,9 @@ export default function HomePage() {
         </SetA>
       </SetBox>
       <SetBox>
-        <div {...stylex.attrs(ixStyles.box2_1title)}>
-          메뉴 더보기
-        </div>
+        {/* <div {...stylex.attrs(ixStyles.box2_1title)}>
+          더보기
+        </div> */}
         <div {...stylex.attrs(ixStyles.box2_2Group)}>
           <SetA mode='none' sx={[ixStyles.box2_2In]} href='/search?m=vote' title="vote">
             <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />

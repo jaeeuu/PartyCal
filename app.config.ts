@@ -5,6 +5,7 @@ import { resolve } from 'path';
 import styleX from 'vite-plugin-stylex';
 // import type { StylexPluginOptions } from 'vite-plugin-stylex-dev';
 // import { stylex } from "vite-plugin-stylex-dev";
+// import { FontaineTransform } from 'fontaine'
 
 export default defineConfig({
   vite: {
@@ -24,6 +25,20 @@ export default defineConfig({
       //   genConditionalClasses: true,
       //   treeshakeCompensation: false,
       // } as StylexPluginOptions)
+      // FontaineTransform.vite({
+      //   fallbacks: ['Arial'],
+      //   resolvePath: id => {
+      //     if (id.includes('400')) {
+      //       return new URL(`./public/fonts/400${id}`, import.meta.url).href;
+      //     } else if (id.includes('500')) {
+      //       return new URL(`./public/fonts/500${id}`, import.meta.url).href;
+      //     } else if (id.includes('600')) {
+      //       return new URL(`./public/fonts/600${id}`, import.meta.url).href;
+      //     } else if (id.includes('700')) {
+      //       return new URL(`./public/fonts/700${id}`, import.meta.url).href;
+      //     }
+      //   }
+      // }),
     ],
     resolve: {
       alias: {
