@@ -72,35 +72,53 @@ const ixStyles = stylex.create({
     fontWeight: 700,
     margin: "0px 0px 5px 7px",
   },
-  box2_2Group: {
+  box2Group: {
     ...stylex.include(inStyles.flex),
     width: "100%",
     gap: "20px",
   },
-  box2_2In: {//#425468, #333e4b light, hard
-    borderColor: "#f2f3f5",
+  box2new: {
+    fontWeight: 700,
+    fontSize: "20px",
+    // color: "#4e5168",
+    paddingBottom: '10px',
+    // paddingTop: '5px',
+    paddingLeft: '5px',
+    letterSpacing: '-1px',
+    alignSelf: "flex-start",
+    fontFamily: "'Basic Fonts'",
+    backgroundClip: 'text',
+    WebkitBackgroundClip: 'text',
+    color: 'transparent',
+    backgroundImage: 'linear-gradient(170deg, hsl(198.1, 40%, 46.1%) 0%, hsl(231.9, 40%, 72.5%) 55%)',
+  },
+  box2: {
+    //borderColor: "#f2f3f5",
+    borderColor: '#e8ebff',
     borderStyle: "solid",
-    borderWidth: "2px",
-    // borderRadius: "15px",
-    backgroundColor: "#f8f9fa",
-    color: "#4e5a68",
+    borderWidth: "1px",
+    backgroundColor: "#f8faff",
+    color: "#6b6e84",
+    borderRadius: "17px",
+    fontSize: "16px",
+    // backgroundColor: '#e8ebff',
+    // color: '#8b97ea',
     padding: "20px",
-    // flexGrow: 1,
     width: "100%",
     fontWeight: 500,
-    // lineHeight: "1.5",
     position: "relative",
   },//#6b7784 below text color
   box2_2Image: {
     right: "20px",
     top: "15px",
     position: "absolute",
+    color: '#8b97ea',
   },
-  box2_3Group: {
+  box3Group: {
     ...stylex.include(inStyles.flex),
     flexDirection: 'column',
     width: "100%",
-    marginTop: "7px",
+    //marginTop: "7px",
   },
   box2_3In: {
     ...stylex.include(inStyles.flex),
@@ -188,20 +206,25 @@ export default function HomePage() {
         </SetA>
       </SetBox>
       <SetBox>
-        {/* <div {...stylex.attrs(ixStyles.box2_1title)}>
-          더보기
-        </div> */}
-        <div {...stylex.attrs(ixStyles.box2_2Group)}>
-          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/search?m=vote' title="vote">
+        <div {...stylex.attrs(ixStyles.box2new)}>
+          이미 생성된 코드가 있나요?
+        </div>
+        <div {...stylex.attrs(ixStyles.box2Group)}>
+          <SetA mode='none' sx={[ixStyles.box2]} href='/search?m=vote' title="vote">
             <CalendarEditSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
-            일정<br/>투표하기
+            투표<br/>참여하기
           </SetA>
-          <SetA mode='none' sx={[ixStyles.box2_2In]} href='/search?m=result' title="result">
+          <SetA mode='none' sx={[ixStyles.box2]} href='/search?m=result' title="result">
             <StatSvg {...stylex.attrs(ixStyles.box2_2Image)} width="24px" height="24px" />
             투표<br/>결과보기
           </SetA>
         </div>
-        <div {...stylex.attrs(ixStyles.box2_3Group)}>
+      </SetBox>
+      <SetBox>
+        <div {...stylex.attrs(ixStyles.box2_1title)}>
+          더보기
+        </div>
+        <div {...stylex.attrs(ixStyles.box3Group)}>
           <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(1)}>
             <div {...stylex.attrs(ixStyles.box2_3text)}>
               <LinkSvg width="24px" height="24px" />
