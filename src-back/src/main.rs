@@ -3,9 +3,11 @@ use axum::{
   Router,
 };
 use tokio::signal;
+use sea_orm::{Database, DatabaseConnection};
 
 #[tokio::main]
 async fn main() {
+  let conn: DatabaseConnection = Database::connect("postgres://jreset@localhost:5433/database").await.unwrap();
   // build our application with a single route
   let app = Router::new().route("/", get(|| async { "Hello, World!" }));
 
@@ -38,6 +40,4 @@ async fn shutdown_signal() {
       _ = ctrl_c => {},
       _ = terminate => {},
   }
-
-  println!("signal received, starting graceful shutdown");
 }
