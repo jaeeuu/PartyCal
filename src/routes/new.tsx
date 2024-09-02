@@ -67,7 +67,7 @@ const ixStyles = stylex.create({
     width: '100%',
     ...stylex.include(inStyles.border),
     backgroundColor: "#f8f9fa",
-    color: "#3190f7",
+    color: "#004996",
     padding: "16.5px",
     marginBottom: '20px',
     marginTop: '5px',
@@ -133,8 +133,8 @@ const ixStyles = stylex.create({
     ...stylex.include(inStyles.border),
     backgroundColor: "#fff",
     color: {
-      default: "#4e5a68",
-      ":nth-child(7n+1)": "#803232",
+      default: "#6b7784",
+      ":nth-child(7n+1)": "#ac4343",
     },
     transition: {
       default: "transform 1s var(--spring-easing), filter 0.2s linear, background-color 0.2s linear, color 0.2s linear",
@@ -167,8 +167,8 @@ const ixStyles = stylex.create({
     fontWeight: 500,
     paddingBottom: '5px',
     color: {
-      default: "#6b7784",
-      ":nth-child(7n+1)": "#ac4343",
+      default: "#4e5a68",
+      ":nth-child(7n+1)": "#803232",
     },
   },
   subCalOut: {
@@ -183,7 +183,7 @@ const ixStyles = stylex.create({
     // opacity: 0.75,
   },
   subCalActive: {
-    backgroundColor: '#67aaf5',
+    backgroundColor: "#8b97ea",
     color: "#fff",
     borderStyle: "none",
     transform: {
@@ -219,7 +219,7 @@ export default function NewPage() {
   const [limitCell, setLimitCell] = createSignal<DateCell>(null);
 
   const [subPage, setSubPage] = createSignal<number>(0);
-  const [anonVote, setAnonVote] = createSignal<boolean>(true);
+  const [onlyKakao, setOnlyKakao] = createSignal<boolean>(true);
   const [agree, setAgree] = createSignal<boolean>(false);
   const [name, setName] = createSignal<string>('');
 
@@ -348,7 +348,7 @@ export default function NewPage() {
   //       start: startCell(),
   //       end: endCell(),
   //       name: name(),
-  //       anon: anonVote(),
+  //       anon: onlyKakao(),
   //     }
   //   });
   // };
@@ -381,7 +381,7 @@ export default function NewPage() {
             <Show when={endCell()}>{`${endCell().year}년 ${endCell().month}월 ${endCell().day}일`}</Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>옵션</div>
-          <SetSwitch value={anonVote} setValue={setAnonVote}>익명 투표</SetSwitch>
+          <SetSwitch value={onlyKakao} setValue={setOnlyKakao}>카카오톡에서만 투표 허용하기</SetSwitch>
         </div>
       </SetBox>
       <SetBox sx={[inStyles.showup]}>
@@ -392,7 +392,7 @@ export default function NewPage() {
           mode="main"
           disabled={!startCell() || !endCell() || !agree() || !name()}
           href="/create"
-          state={{ start: convertCellToNum(startCell()), end: convertCellToNum(endCell()), name: name(), anon: anonVote() }}
+          state={{ start: convertCellToNum(startCell()), end: convertCellToNum(endCell()), name: name(), kakao: onlyKakao() }}
         >
           투표 생성하기
         </SetA>

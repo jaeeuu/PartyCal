@@ -3,19 +3,34 @@ use axum::{
   Router,
 };
 use tokio::signal;
-use sea_orm::{Database, DatabaseConnection};
+use yb_tokio_postgres::{Client, NoTls, Error};
+use fred::prelude::*;
+use tracing::{info, error};
+use tracing_subscriber;
+// use anyhow::{Result as AnyResult, Context};
 
 #[tokio::main]
 async fn main() {
-  let conn: DatabaseConnection = Database::connect("postgres://jreset@localhost:5433/database").await.unwrap();
-  // build our application with a single route
+  tracing_subscriber::fmt::init();
+  std::panic::set_hook(Box::new(|panic_info| {
+    error!("Panic occurred: {:?}", panic_info);
+  }));
+  let connection_url: String = String::from("postgresql://127.0.0.1:5433/yugabyte?user=yugabyte&password=yugabyte&load_balance=true");
+  let (client, connection) =
+    yb_tokio_postgres::connect(&connection_url, NoTls).await.expect("Failed to connect to YugabyteDB");
+  let client = RedisClient::default();
+  client.init().await.expect("Failed to connect to Redis");
+  
   let app = Router::new().route("/", get(|| async { "Hello, World!" }));
 
   let listener = tokio::net::TcpListener::bind("0.0.0.0:3600").await.unwrap();
+
   axum::serve(listener, app)
     .with_graceful_shutdown(shutdown_signal())
     .await
-    .unwrap();
+    .expect("axum start failed");
+
+  client.quit().await.expect("Failed to quit Redis");
 }
 
 async fn shutdown_signal() {
