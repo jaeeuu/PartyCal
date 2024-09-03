@@ -2,6 +2,7 @@ use axum::{
   routing::get,
   Router,
 };
+#[allow(unused_imports, unused_variables)]
 use tokio::signal;
 use yb_tokio_postgres::{Client, NoTls, Error};
 use fred::prelude::*;
