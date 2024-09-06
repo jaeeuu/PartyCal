@@ -11,11 +11,7 @@ export default defineConfig({
   vite: {
     plugins: [
       // tsconfigPaths(),
-      solidSvg({
-        svgo: {
-          enabled: true,
-        }
-      }),
+      solidSvg(),
       styleX(),
       // stylex({
       //   // dev: process.env.NODE_ENV === 'development',
@@ -65,9 +61,10 @@ export default defineConfig({
     }
   },
   server: {
+    static: true,
     prerender: {
-      routes: ["/", "/new", "/err"]
-      // crawlLinks: true
+      // routes: ["/", "/new", "/err"]
+      crawlLinks: true
     },
     // future: {
     //   nativeSWR: true,
