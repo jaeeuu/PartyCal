@@ -60,6 +60,7 @@ export default defineConfig({
       }
     }
   },
+  ssr: false,
   server: {
     static: true,
     prerender: {
