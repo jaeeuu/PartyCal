@@ -67,10 +67,10 @@ jobs:
         SCRIPT_BEFORE: |
           rm -rf /opt/ramdisk/*
           rm -rf /opt/partycal/*
-          rm -f /usr/bin/partyback
+          rm -f /opt/partyback
         SCRIPT_AFTER: |
           tar -zxvf /opt/partycal.tar.gz -C /opt
-          mv /opt/partycal/partyback /usr/bin/partyback
+          mv /opt/partycal/partyback /opt/partyback
           rm -f /opt/partycal.tar.gz
           nginx -s reload
-          # systemctl restart partyback
+          systemctl restart partyback

@@ -8,3 +8,330 @@ kakaolink://send?appkey=47709efeaae6b8a5a3a04ba9966d08c0&appver=1.0&linkver=4.0&
 https://accounts.kakao.com/login/?continue=https://sharer.kakao.com/picker/link?app_key=47709efeaae6b8a5a3a04ba9966d08c0&short_key=e7466a2f-bdf6-4ca9-9ca3-1aadd0cc0783#login
 
 https://velog.io/@firsthouse/RUST-AXUM-TODOLIST
+
+/*
+웹에서 터치 드래그를 인식하는 가장 현대적인 표준 방법은 Pointer Events API를 사용하는 것입니다. Pointer Events는 터치, 마우스, 스타일러스 등 다양한 입력 장치를 통합적으로 처리할 수 있는 표준화된 API로, 터치 스크린과 마우스 입력을 동일한 방식으로 처리할 수 있어 매우 유연합니다.
+
+이 API는 터치 이벤트(touchstart, touchmove, touchend)와 마우스 이벤트(mousedown, mousemove, mouseup)를 대체하며, Web Animations API와 함께 사용할 때도 적합합니다.
+
+Pointer Events API의 장점
+입력 방식 통일: 마우스, 터치, 스타일러스를 동일한 방식으로 처리 가능.
+다중 입력 지원: 멀티 터치와 같은 복잡한 입력 처리에 유리.
+성능: 브라우저에서 최적화된 이벤트 처리로 성능이 우수.
+Web Animations API와 함께 Pointer Events를 사용하는 예시
+1. Pointer Events와 Web Animations API 활용한 드래그 예제
+이 예제에서는 Pointer Events를 사용하여 터치 또는 마우스를 통해 드래그를 감지하고, Web Animations API로 드래그된 요소에 애니메이션을 적용하는 방식으로 구현됩니다.
+
+HTML
+html
+코드 복사
+<div id="draggable"></div>
+CSS
+css
+코드 복사
+#draggable {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  touch-action: none;
+  border-radius: 10px;
+}
+JavaScript (Pointer Events + Web Animations API)
+javascript
+코드 복사
+const draggable = document.getElementById('draggable');
+
+let startX, startY, currentX, currentY, offsetX = 0, offsetY = 0;
+let isDragging = false;
+
+draggable.addEventListener('pointerdown', (e) => {
+  // 드래그 시작 시점 설정
+  startX = e.clientX;
+  startY = e.clientY;
+  offsetX = currentX || 0;
+  offsetY = currentY || 0;
+  
+  // 드래그 활성화
+  isDragging = true;
+  
+  // CSS에서 터치 스크롤 방지
+  draggable.setPointerCapture(e.pointerId);
+});
+
+draggable.addEventListener('pointermove', (e) => {
+  if (!isDragging) return;
+  
+  // 현재 위치 계산
+  const dx = e.clientX - startX;
+  const dy = e.clientY - startY;
+  
+  currentX = offsetX + dx;
+  currentY = offsetY + dy;
+  
+  // Web Animations API로 애니메이션 적용
+  draggable.animate(
+    [{ transform: `translate(${currentX}px, ${currentY}px)` }],
+    { duration: 0, fill: 'forwards' } // 실시간으로 위치 반영
+  );
+});
+
+draggable.addEventListener('pointerup', () => {
+  // 드래그 종료
+  isDragging = false;
+});
+
+draggable.addEventListener('pointercancel', () => {
+  // 드래그 취소 시 처리
+  isDragging = false;
+});
+주요 포인트
+Pointer Events 사용: pointerdown, pointermove, pointerup 이벤트를 사용하여 터치 및 마우스 드래그를 모두 처리합니다. 이를 통해 여러 입력 장치를 통일된 방식으로 관리할 수 있습니다.
+
+pointerdown: 드래그 시작을 감지하고 초기 좌표를 기록.
+pointermove: 사용자의 입력을 받아 드래그 중일 때 위치를 업데이트.
+pointerup: 드래그가 종료될 때 호출.
+setPointerCapture() 사용: 특정 pointerId에 대해 입력 이벤트가 해당 요소에서만 발생하도록 보장하며, 이는 드래그 중에 사용자가 터치하거나 마우스를 요소 밖으로 이동해도 이벤트가 계속 발생하도록 만듭니다.
+
+Web Animations API: 드래그 중에 요소의 transform 속성을 실시간으로 업데이트하여 부드럽게 이동하도록 합니다. animate() 메서드를 사용하여, 실시간으로 드래그된 요소의 좌표를 업데이트합니다. duration: 0을 사용하면 즉각적인 반영이 가능합니다.
+
+CSS touch-action: none: 터치 스크린에서 기본적으로 터치로 인해 발생하는 스크롤, 줌 등의 동작을 방지하기 위해 touch-action: none을 설정합니다. 이 설정은 iOS Safari와 같은 브라우저에서도 터치와 드래그 이벤트가 충돌하지 않도록 도와줍니다.
+
+2. 멀티터치 지원 (선택 사항)
+Pointer Events는 멀티터치를 지원하므로, 다중 입력에 대한 처리를 쉽게 추가할 수 있습니다. 이를 위해서는 pointerId를 기반으로 개별 입력을 추적해야 합니다.
+
+멀티터치 처리 예시
+javascript
+코드 복사
+const activeTouches = new Map();
+
+draggable.addEventListener('pointerdown', (e) => {
+  activeTouches.set(e.pointerId, { startX: e.clientX, startY: e.clientY, offsetX: currentX || 0, offsetY: currentY || 0 });
+  draggable.setPointerCapture(e.pointerId);
+});
+
+draggable.addEventListener('pointermove', (e) => {
+  if (!activeTouches.has(e.pointerId)) return;
+  
+  const touchData = activeTouches.get(e.pointerId);
+  const dx = e.clientX - touchData.startX;
+  const dy = e.clientY - touchData.startY;
+  
+  currentX = touchData.offsetX + dx;
+  currentY = touchData.offsetY + dy;
+
+  draggable.animate(
+    [{ transform: `translate(${currentX}px, ${currentY}px)` }],
+    { duration: 0, fill: 'forwards' }
+  );
+});
+
+draggable.addEventListener('pointerup', (e) => {
+  activeTouches.delete(e.pointerId);
+});
+
+draggable.addEventListener('pointercancel', (e) => {
+  activeTouches.delete(e.pointerId);
+});
+요약
+Pointer Events API는 현대적인 표준 방법으로, 마우스와 터치 이벤트를 통합적으로 처리할 수 있습니다. 이는 다양한 입력 장치를 동일한 방식으로 다룰 수 있어 편리합니다.
+Web Animations API를 사용하여 드래그 이벤트가 발생할 때 요소의 위치를 실시간으로 업데이트하고, 부드러운 애니메이션을 적용할 수 있습니다.
+**touch-action: none**으로 기본 터치 스크롤 동작을 방지하여 터치와 드래그 이벤트가 충돌하지 않도록 하는 것이 중요합니다.
+멀티터치와 같은 고급 입력도 쉽게 관리할 수 있으며, Pointer Events는 다양한 입력 방식에 유연하게 대응합니다.
+이러한 방법을 통해, 모바일과 데스크톱에서 모두 잘 작동하는 현대적인 드래그 인터페이스를 구현할 수 있습니다.
+
+
+**Web Animations API (WAAPI)**는 JavaScript를 통해 DOM 요소에 애니메이션을 적용하고, 제어할 수 있는 강력한 도구입니다. CSS 애니메이션보다 세밀한 제어가 가능하며, 애니메이션의 시작, 중지, 속성 변경 등 다양한 기능을 제공합니다. 기본적인 사용법부터 고급 활용까지 순차적으로 설명하겠습니다.
+
+1. 기본 사용법
+WAAPI의 기본 사용법은 Element.animate() 메서드를 호출하여 애니메이션을 적용하는 것입니다. animate()는 애니메이션에 대한 키프레임과 옵션을 받아 실행됩니다.
+
+기본 구조
+javascript
+코드 복사
+element.animate(keyframes, options);
+keyframes: 애니메이션의 각 단계에서 요소의 스타일 변화를 지정하는 객체 배열.
+options: 애니메이션의 지속 시간, 타이밍 함수, 반복 횟수 등을 설정하는 옵션 객체.
+간단한 예시
+html
+코드 복사
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Animation API Example</title>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+
+<div id="box"></div>
+
+<script>
+  const box = document.getElementById('box');
+
+  // 애니메이션 실행
+  box.animate(
+    [
+      { transform: 'translateX(0)' },    // 시작
+      { transform: 'translateX(300px)' } // 끝
+    ],
+    {
+      duration: 1000,    // 애니메이션 지속 시간 (밀리초)
+      iterations: Infinity, // 무한 반복
+      direction: 'alternate', // 역방향 반복
+      easing: 'ease-in-out'  // 타이밍 함수
+    }
+  );
+</script>
+
+</body>
+</html>
+설명
+keyframes: 요소가 translateX(0)에서 translateX(300px)까지 움직이도록 설정.
+options: 1초 동안 애니메이션이 실행되고, 무한 반복하며, 방향을 번갈아가며 실행.
+2. 애니메이션 제어
+animate() 메서드는 Animation 객체를 반환합니다. 이 객체를 사용하면 애니메이션의 상태를 조작할 수 있습니다. 예를 들어, 일시 정지, 재개, 속도 변경 등이 가능합니다.
+
+예시: 애니메이션 제어
+javascript
+코드 복사
+const animation = box.animate(
+  [
+    { transform: 'translateX(0)' },
+    { transform: 'translateX(300px)' }
+  ],
+  {
+    duration: 1000,
+    iterations: Infinity,
+    direction: 'alternate',
+    easing: 'ease-in-out'
+  }
+);
+
+// 2초 후에 애니메이션 일시 정지
+setTimeout(() => {
+  animation.pause();
+}, 2000);
+
+// 4초 후에 애니메이션 재개
+setTimeout(() => {
+  animation.play();
+}, 4000);
+
+// 애니메이션 속도 2배로 설정
+animation.playbackRate = 2;
+pause(): 애니메이션을 일시 정지.
+play(): 애니메이션을 재개.
+playbackRate: 애니메이션 속도를 조정.
+3. Keyframes 세부 설정
+키프레임에서는 스타일 속성뿐만 아니라 offset, composite 같은 고급 옵션도 설정할 수 있습니다.
+
+예시: 여러 속성과 세부 옵션 적용
+javascript
+코드 복사
+box.animate(
+  [
+    { transform: 'scale(1)', opacity: 1, offset: 0 },
+    { transform: 'scale(1.5)', opacity: 0.5, offset: 0.5 },
+    { transform: 'scale(1)', opacity: 1, offset: 1 }
+  ],
+  {
+    duration: 2000,
+    easing: 'ease-in-out',
+    iterations: Infinity
+  }
+);
+offset: 0에서 1 사이의 값을 지정하여 애니메이션 진행 시점을 설정합니다. 예를 들어, offset: 0.5는 애니메이션의 중간 지점을 의미합니다.
+composite: 여러 애니메이션이 충돌할 때 어떻게 처리할지 결정합니다. (기본적으로 replace 동작)
+4. 고급 활용: KeyframeEffect와 Animation 객체
+KeyframeEffect와 Animation 객체를 사용하면 애니메이션을 더 정교하게 구성하고, 다양한 효과를 결합할 수 있습니다.
+
+예시: KeyframeEffect와 Animation 객체 사용
+javascript
+코드 복사
+const keyframes = new KeyframeEffect(
+  box,
+  [
+    { transform: 'rotate(0deg)', background: 'red' },
+    { transform: 'rotate(360deg)', background: 'blue' }
+  ],
+  { duration: 2000, fill: 'forwards' }
+);
+
+const animation = new Animation(keyframes, document.timeline);
+
+// 애니메이션 시작
+animation.play();
+KeyframeEffect: 애니메이션 효과를 정의하는 객체로, 요소와 애니메이션 키프레임을 결합합니다.
+Animation: 애니메이션을 관리하는 객체로, KeyframeEffect와 함께 사용하여 세밀한 애니메이션 제어가 가능합니다.
+5. 타임라인과 애니메이션 그룹
+여러 애니메이션을 조합하여 동시에 실행하거나, 순차적으로 실행하는 애니메이션을 만들 수 있습니다. 이를 통해 애니메이션 그룹을 관리할 수 있습니다.
+
+예시: 여러 애니메이션을 순차적으로 실행
+javascript
+코드 복사
+const box1 = document.querySelector('#box1');
+const box2 = document.querySelector('#box2');
+
+// 첫 번째 박스 애니메이션
+const anim1 = box1.animate(
+  [
+    { transform: 'translateY(0)' },
+    { transform: 'translateY(300px)' }
+  ],
+  { duration: 1000 }
+);
+
+// 첫 번째 애니메이션이 끝난 후 두 번째 애니메이션 실행
+anim1.onfinish = () => {
+  box2.animate(
+    [
+      { transform: 'translateX(0)' },
+      { transform: 'translateX(300px)' }
+    ],
+    { duration: 1000 }
+  );
+};
+6. 고급 활용: animation.cancel()과 animation.finish()
+애니메이션을 특정 시점에 취소하거나 즉시 끝낼 수 있습니다.
+
+예시: 애니메이션 취소와 종료
+javascript
+코드 복사
+const anim = box.animate(
+  [
+    { transform: 'scale(1)' },
+    { transform: 'scale(1.5)' }
+  ],
+  { duration: 1000 }
+);
+
+// 500ms 후에 애니메이션을 취소
+setTimeout(() => {
+  anim.cancel();
+}, 500);
+
+// 2초 후에 애니메이션을 강제 종료
+setTimeout(() => {
+  anim.finish();
+}, 2000);
+cancel(): 애니메이션을 중단하고 초기 상태로 돌아갑니다.
+finish(): 애니메이션을 끝까지 실행한 것처럼 처리합니다.
+7. 성능 최적화
+Web Animations API는 성능 최적화가 뛰어나지만, 대규모 애니메이션을 처리할 때는 다음과 같은 성능 최적화 기법을 적용할 수 있습니다.
+
+하드웨어 가속이 가능한 속성 사용: transform과 opacity와 같은 속성은 레이아웃을 다시 계산하지 않아 성능이 좋습니다.
+fill 모드 사용: fill: 'forwards'는 애니메이션이 끝난 후에도 마지막 상태를 유지하게 합니다.
+애니메이션 일시 정지: 숨겨진 요소에 애니메이션을 적용할 경우, 메모리와 성능을 아끼기 위해 일시 정지해두는 것이 좋습니다.
+Web Animations API는 다양한 애니메이션을 만들고, 세밀한 제어와 최적화를 할 수 있는 강력한 도구입니다.
+
+*/

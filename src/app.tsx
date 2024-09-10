@@ -2,7 +2,7 @@ import { MetaProvider, Link } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import type { RouteSectionProps } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
-import { Suspense } from "solid-js";
+import { Suspense, onMount } from "solid-js";
 import "./app.css";
 import { SetRootBox } from "./components/SetShared";
 //import 'virtual:stylex.css';
@@ -39,6 +39,14 @@ export default function App() {
   //   //   document.head.appendChild(link);
   //   // }
   // });
+  onMount(() => {
+    const cookie = document.cookie;
+    if (!cookie || !cookie.includes('session')) {
+      fetch("https://partycal.site/api/session", {
+        method: 'HEAD',
+      });
+    }
+  });
 
   return (
     <Router

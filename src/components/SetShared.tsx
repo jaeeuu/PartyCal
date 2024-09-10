@@ -522,14 +522,14 @@ const switchStyles = stylex.create({
     paddingLeft: "1.5px",
   },
   switchOutChecked: {
-    backgroundColor: "#9AC5F4",
+    backgroundColor: "#8b97ea",
     paddingTop: "1.5px",
     paddingBottom: "1.5px",
     paddingRight: "1.5px",
     paddingLeft: "24px",
   },
   switchOutCheckedActive: {
-    backgroundColor: "#7faee0",
+    backgroundColor: "#7782cb",
     paddingTop: "1.5px",
     paddingBottom: "1.5px",
     paddingRight: "1.5px",

@@ -1,11 +1,10 @@
 use axum::{
-  routing::get,
-  Router,
+  http::{header, HeaderMap, StatusCode}, response::IntoResponse, routing::{get, head}, Router
 };
 use tokio::signal;
-// use fred::prelude::*;
 use tracing::{info, error};
 use tracing_subscriber;
+use nuid;
 // use anyhow::{Result as AnyResult, Context};
 
 #[tokio::main]
@@ -14,13 +13,11 @@ async fn main() {
   std::panic::set_hook(Box::new(|panic_info| {
     error!("Panic occurred: {:?}", panic_info);
   }));
-  // let connection_url: String = String::from("postgresql://127.0.0.1:5433/yugabyte?user=yugabyte&password=yugabyte&load_balance=true");
-  // let (client, connection) =
-  //   yb_tokio_postgres::connect(&connection_url, NoTls).await.expect("Failed to connect to YugabyteDB");
-  // let client = RedisClient::default();
-  //client.init().await.expect("Failed to connect to Redis");
+  //database의 session 21에서 22로 변경 필요
   
-  let app = Router::new().route("/", get(|| async { "Hello, World!" }));
+  let app = Router::new()
+    .route("/hello", get(|| async { "Hello, World!" }))
+    .route("/api/session", head(new_session));
 
   let listener = tokio::net::TcpListener::bind("0.0.0.0:3600").await.unwrap();
   info!("Server listening on 3600");
@@ -30,7 +27,14 @@ async fn main() {
     .await
     .expect("axum start failed");
 
-  //client.quit().await.expect("Failed to quit Redis");
+}
+
+async fn new_session() -> impl IntoResponse {
+  let uid = nuid::next();
+  let cookie_value = format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid);
+  let mut headers = HeaderMap::new();
+  headers.insert(header::SET_COOKIE, cookie_value.parse().unwrap());
+  (StatusCode::OK, headers)
 }
 
 async fn shutdown_signal() {
