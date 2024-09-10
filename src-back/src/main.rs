@@ -17,10 +17,10 @@ async fn main() {
   
   let app = Router::new()
     .route("/hello", get(|| async { "Hello, World!" }))
-    .route("/api/session", head(new_session));
+    .route("/session", head(new_session));
 
-  let listener = tokio::net::TcpListener::bind("0.0.0.0:3600").await.unwrap();
-  info!("Server listening on 3600");
+  let listener = tokio::net::TcpListener::bind("0.0.0.0:3610").await.unwrap();
+  info!("Server listening on 3610");
 
   axum::serve(listener, app)
     .with_graceful_shutdown(shutdown_signal())
