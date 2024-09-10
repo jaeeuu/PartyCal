@@ -41,7 +41,7 @@ export default function App() {
   // });
   onMount(() => {
     const cookie = document.cookie;
-    if (!cookie || !cookie.includes('session')) {
+    if (!cookie.includes('session')) {
       fetch("https://partycal.site/apix/session", {
         method: 'HEAD',
       });

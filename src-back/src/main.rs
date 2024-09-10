@@ -31,7 +31,7 @@ async fn main() {
 
 async fn new_session() -> impl IntoResponse {
   let uid = nuid::next();
-  let cookie_value = format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid);
+  let cookie_value = format!("session={}; Max-Age=7884000; Path=/; Secure", uid);
   let mut headers = HeaderMap::new();
   headers.insert(header::SET_COOKIE, cookie_value.parse().unwrap());
   (StatusCode::OK, headers)
