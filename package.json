@@ -35,7 +35,7 @@
     "eslint": "^9.10.0",
     "eslint-plugin-solid": "^0.14.3",
     "globals": "^15.9.0",
-    "msw": "^2.4.4",
+    "msw": "^2.4.5",
     "path": "^0.12.7",
     "typescript-eslint": "^8.5.0",
     "vite-plugin-solid-svg": "^0.8.1",
@@ -45,7 +45,8 @@
   "pnpm": {
     "peerDependencyRules": {
       "allowAny": [
-        "eslint", "@typescript-eslint"
+        "eslint",
+        "@typescript-eslint"
       ]
     }
   },
