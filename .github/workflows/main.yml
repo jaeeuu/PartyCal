@@ -72,5 +72,5 @@ jobs:
           tar -zxvf /opt/partycal.tar.gz -C /opt
           mv /opt/partycal/partyback /opt/partyback
           rm -f /opt/partycal.tar.gz
-          nginx -s reload
+          # nginx -s reload
           systemctl restart partyback

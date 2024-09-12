@@ -1,62 +1,56 @@
-use axum::{
-  http::{header, HeaderMap, StatusCode}, response::IntoResponse, routing::{get, head}, Router
-};
-use tokio::signal;
+use ntex::{web, http};
 use tracing::{info, error};
 use tracing_subscriber;
 use nuid;
 // use anyhow::{Result as AnyResult, Context};
 
-#[tokio::main]
-async fn main() {
+const FAVICON_BINARY: &[u8] = include_bytes!("../static/favicon.ico");
+
+#[ntex::main]
+async fn main() -> std::io::Result<()> {
   tracing_subscriber::fmt::init();
   std::panic::set_hook(Box::new(|panic_info| {
     error!("Panic occurred: {:?}", panic_info);
   }));
-  //database의 session 21에서 22로 변경 필요
-  
-  let app = Router::new()
-    .route("/hello", get(|| async { "Hello, World!" }))
-    .route("/session", head(new_session));
 
-  let listener = tokio::net::TcpListener::bind("0.0.0.0:3610").await.unwrap();
   info!("Server listening on 3610");
 
-  axum::serve(listener, app)
-    .with_graceful_shutdown(shutdown_signal())
-    .await
-    .expect("axum start failed");
+  web::HttpServer::new(|| {
+    web::App::new()
+      .wrap(web::middleware::Compress::default())
+      .service(favicon)
+  })
+  .bind(("127.0.0.1", 3610))?
+  .run()
+  .await
 
 }
 
-async fn new_session() -> impl IntoResponse {
-  let uid = nuid::next();
-  let cookie_value = format!("session={}; Max-Age=7884000; Path=/; Secure", uid);
-  let mut headers = HeaderMap::new();
-  headers.insert(header::SET_COOKIE, cookie_value.parse().unwrap());
-  (StatusCode::OK, headers)
-}
+#[web::get("/favicon.ico")]
+async fn favicon(req: web::HttpRequest) -> impl web::Responder {
+  let mut uid = nuid::NUID::new();
+  let cookie = req.headers().get("Cookie");
 
-async fn shutdown_signal() {
-  let ctrl_c = async {
-      signal::ctrl_c()
-          .await
-          .expect("failed to install CTRL+C signal handler");
-  };
-
-  #[cfg(unix)]
-  let terminate = async {
-      signal::unix::signal(signal::unix::SignalKind::terminate())
-          .expect("failed to install signal handler")
-          .recv()
-          .await;
-  };
-
-  #[cfg(not(unix))]
-  let terminate = std::future::pending::<()>();
-
-  tokio::select! {
-      _ = ctrl_c => {},
-      _ = terminate => {},
+  if let Some(coo) = cookie {
+    if coo.to_str().unwrap().contains("session") {
+      let uuid = uid.next();
+      return web::HttpResponse::Ok()
+        .header(http::header::SET_COOKIE, format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uuid))
+        .header(http::header::CONTENT_TYPE, "image/x-icon")
+        .header(http::header::CACHE_CONTROL, "public, max-age=604800")
+        .body(FAVICON_BINARY);
+    }
   }
+  web::HttpResponse::Ok()
+    .header(http::header::CONTENT_TYPE, "image/x-icon")
+    .header(http::header::CACHE_CONTROL, "public, max-age=604800")
+    .body(FAVICON_BINARY)
 }
+
+// async fn new_session() -> impl IntoResponse {
+//   let uid = nuid::next();
+//   let cookie_value = format!("session={}; Max-Age=7884000; Path=/; Secure", uid);
+//   let mut headers = HeaderMap::new();
+//   headers.insert(header::SET_COOKIE, cookie_value.parse().unwrap());
+//   (StatusCode::OK, headers)
+// }
