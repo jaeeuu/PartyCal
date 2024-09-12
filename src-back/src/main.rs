@@ -34,16 +34,18 @@ async fn favicon(req: web::HttpRequest) -> impl web::Responder {
   if let Some(coo) = cookie {
     if coo.to_str().unwrap().contains("session") {
       return web::HttpResponse::Ok()
-        .header(http::header::CONTENT_TYPE, "image/x-icon")
-        .header(http::header::CACHE_CONTROL, "public, max-age=604800")
+        .set_header("content-encoding", "identity")
+        .set_header(http::header::CONTENT_TYPE, "image/x-icon")
+        .set_header(http::header::CACHE_CONTROL, "public, max-age=604800")
         .body(FAVICON_BINARY.as_ref());
     }
   }
 
   web::HttpResponse::Ok()
-    .header(http::header::SET_COOKIE, format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid.next()))
-    .header(http::header::CONTENT_TYPE, "image/x-icon")
-    .header(http::header::CACHE_CONTROL, "public, max-age=604800")
+    .set_header("content-encoding", "identity")
+    .set_header(http::header::SET_COOKIE, format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid.next()))
+    .set_header(http::header::CONTENT_TYPE, "image/x-icon")
+    .set_header(http::header::CACHE_CONTROL, "public, max-age=604800")
     .body(FAVICON_BINARY.as_ref())
 }
 
