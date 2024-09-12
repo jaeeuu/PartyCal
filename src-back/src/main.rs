@@ -36,7 +36,7 @@ async fn favicon(req: web::HttpRequest) -> impl web::Responder {
       return web::HttpResponse::Ok()
         .header(http::header::CONTENT_TYPE, "image/x-icon")
         .header(http::header::CACHE_CONTROL, "public, max-age=604800")
-        .body(FAVICON_BINARY);
+        .body(FAVICON_BINARY.as_ref());
     }
   }
 
@@ -44,7 +44,7 @@ async fn favicon(req: web::HttpRequest) -> impl web::Responder {
     .header(http::header::SET_COOKIE, format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid.next()))
     .header(http::header::CONTENT_TYPE, "image/x-icon")
     .header(http::header::CACHE_CONTROL, "public, max-age=604800")
-    .body(FAVICON_BINARY)
+    .body(FAVICON_BINARY.as_ref())
 }
 
 // async fn new_session() -> impl IntoResponse {
