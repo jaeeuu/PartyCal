@@ -33,15 +33,15 @@ async fn favicon(req: web::HttpRequest) -> impl web::Responder {
 
   if let Some(coo) = cookie {
     if coo.to_str().unwrap().contains("session") {
-      let uuid = uid.next();
       return web::HttpResponse::Ok()
-        .header(http::header::SET_COOKIE, format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uuid))
         .header(http::header::CONTENT_TYPE, "image/x-icon")
         .header(http::header::CACHE_CONTROL, "public, max-age=604800")
         .body(FAVICON_BINARY);
     }
   }
+
   web::HttpResponse::Ok()
+    .header(http::header::SET_COOKIE, format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid.next()))
     .header(http::header::CONTENT_TYPE, "image/x-icon")
     .header(http::header::CACHE_CONTROL, "public, max-age=604800")
     .body(FAVICON_BINARY)
