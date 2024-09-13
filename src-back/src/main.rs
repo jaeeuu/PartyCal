@@ -4,8 +4,6 @@ use tracing_subscriber;
 use nuid;
 // use anyhow::{Result as AnyResult, Context};
 
-const FAVICON_BINARY: &[u8] = include_bytes!("../static/favicon.ico");
-
 #[ntex::main]
 async fn main() -> std::io::Result<()> {
   tracing_subscriber::fmt::init();
@@ -28,22 +26,23 @@ async fn main() -> std::io::Result<()> {
 
 #[web::get("/favicon.ico")]
 async fn favicon(req: web::HttpRequest) -> impl web::Responder {
-  let mut uid = nuid::NUID::new();
+  let uid = nuid::next();
   let cookie = req.headers().get("Cookie");
+  const FAVICON_BINARY: &[u8] = include_bytes!("../static/favicon.ico");
 
   if let Some(coo) = cookie {
     if coo.to_str().unwrap().contains("session") {
       return web::HttpResponse::Ok()
         // .set_header("content-encoding", "identity")
         .set_header(http::header::CONTENT_TYPE, "image/x-icon")
-        .set_header(http::header::CACHE_CONTROL, "public, max-age=604800")
+        // .set_header(http::header::CACHE_CONTROL, "public, max-age=604800")
         .body(FAVICON_BINARY.as_ref());
     }
   }
 
   web::HttpResponse::Ok()
     // .set_header("content-encoding", "identity")
-    .set_header(http::header::SET_COOKIE, format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid.next()))
+    .set_header(http::header::SET_COOKIE, format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid))
     .set_header(http::header::CONTENT_TYPE, "image/x-icon")
     .set_header(http::header::CACHE_CONTROL, "public, max-age=604800")
     .body(FAVICON_BINARY.as_ref())

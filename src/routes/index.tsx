@@ -10,7 +10,7 @@ import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
 import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
 import SetSend from '~/components/SetSend';
-import AxumLogoSVg from '~/assets/icons/logo/axum_logo.svg';
+import NtexLogoSVg from '~/assets/icons/logo/ntex_logo.svg';
 import SingleStoreSvg from '~/assets/icons/logo/singlestore_logo.svg';
 import TauriLogoSvg from '~/assets/icons/logo/tauri_logo.svg';
 import StylexLogoSvg from '~/assets/icons/logo/stylex_logo.svg';
@@ -249,7 +249,7 @@ export default function HomePage() {
               <div {...stylex.attrs(ixStyles.subBox_0_1)}>This app is licensed under the terms of the MIT license.</div>
               <div {...stylex.attrs(ixStyles.subBox_1)}>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><SolidSvg height="13px" />SOLID START</div>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><AxumLogoSVg height="13px" />AXUM</div>
+                <div {...stylex.attrs(ixStyles.subBox_2)}><NtexLogoSVg height="13px" />NTEX</div>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><TauriLogoSvg height="13px" />TAURI</div>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><SingleStoreSvg height="13px" />SINGLE STORE</div>
                 <div {...stylex.attrs(ixStyles.subBox_2)}><StylexLogoSvg height="13px" />STYLEX</div>
