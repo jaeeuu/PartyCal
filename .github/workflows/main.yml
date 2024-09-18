@@ -36,6 +36,7 @@ jobs:
       with:
         target: 'x86_64-unknown-linux-gnu'
         cache-workspaces: 'src-back -> target'
+        rustflag: ''
 
     - name: Build Front-end
       run: |
@@ -58,13 +59,14 @@ jobs:
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v5.1.0
       with:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
         REMOTE_HOST: ${{ secrets.SSH_IP }}
-        REMOTE_USER: ${{ secrets.SSH_USER_NAME }}
+        REMOTE_USER: ${{ secrets.SSH_USER }}
         REMOTE_PORT: ${{ secrets.SSH_PORT }}
         SOURCE: "release/partycal.tar.gz"
         TARGET: "/opt/partycal.tar.gz"
         SCRIPT_BEFORE: |
+          systemctl stop partyback
           rm -rf /opt/ramdisk/*
           rm -rf /opt/partycal/*
           rm -f /opt/partyback
@@ -72,5 +74,10 @@ jobs:
           tar -zxvf /opt/partycal.tar.gz -C /opt
           mv /opt/partycal/partyback /opt/partyback
           rm -f /opt/partycal.tar.gz
-          # nginx -s reload
-          systemctl restart partyback
+          chown -R jreset:jreset /opt/partycal
+          chmod -R 755 /opt/partycal
+          chown jreset:jreset /opt/partyback
+          chmod 755 /opt/partyback
+          systemctl restart h2o
+          systemctl start partyback
+          
