@@ -89,28 +89,18 @@ async fn favicon(req: web::HttpRequest) -> impl web::Responder {
   if let Some(accept) = accept_encoding {
     let acc = accept.to_str().ok();
     if acc.filter(|s| s.contains("br")).is_some() {
-      resp.encoding(http::header::ContentEncoding::Br);
+      resp.set_header(http::header::CONTENT_ENCODING, "br");
       resp.body(FAVICON_BINARY_BR.as_ref())
     } else if acc.filter(|s| s.contains("gzip")).is_some() {
-      resp.encoding(http::header::ContentEncoding::Gzip);
+      resp.set_header(http::header::CONTENT_ENCODING, "gzip");
       resp.body(FAVICON_BINARY_GZ.as_ref())
     } else {
-      resp.encoding(http::header::ContentEncoding::Identity);
+      resp.set_header(http::header::CONTENT_ENCODING, "identity");
       resp.body(FAVICON_BINARY.as_ref())
     }
   } else {
-    resp.encoding(http::header::ContentEncoding::Identity);
+    resp.set_header(http::header::CONTENT_ENCODING, "identity");
     resp.body(FAVICON_BINARY.as_ref())
   }
 
-  // if let Some(coo) = cookie {
-  //   if coo.to_str().unwrap().contains("ss") {
-  //     return resp.set_header(http::header::CONTENT_TYPE, "image/x-icon")
-  //   }
-  // }
-
-  // let uid = lid::easy::generate_distributed(); //this is 20bytes, change db size to 20bytes
-  // resp
-  //   .set_header(http::header::SET_COOKIE, format!("ss={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid))
-  //   .set_header(http::header::CONTENT_TYPE, "image/x-icon")
 }
