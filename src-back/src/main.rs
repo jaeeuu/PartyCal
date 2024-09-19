@@ -1,4 +1,4 @@
-use ntex::{web, http};
+use ntex::{http, web::{self, BodyEncoding}};
 use tracing::{info, error};
 use tracing_subscriber;
 // use anyhow::{Result as AnyResult, Context};
@@ -78,27 +78,29 @@ async fn favicon(req: web::HttpRequest) -> impl web::Responder {
 
   let cookie = req.headers().get("Cookie");
   let accept_encoding = req.headers().get("Accept-Encoding");
-  let mut resp = web::HttpResponse::Ok();
-  resp.set_header(http::header::CONTENT_TYPE, "image/x-icon");
+  let mut resp = web::HttpResponseBuilder::new(http::StatusCode::OK);
+  resp.content_type("image/x-icon");
+
+  if cookie.and_then(|coo| coo.to_str().ok()).map_or(true, |s| !s.contains("ss")) {
+    let uid = lid::easy::generate_distributed(); //this is 20bytes, change db size to 20bytes
+    resp.set_header(http::header::SET_COOKIE, format!("ss={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid));
+  }
 
   if let Some(accept) = accept_encoding {
     let acc = accept.to_str().ok();
     if acc.filter(|s| s.contains("br")).is_some() {
-      resp.set_header(http::header::CONTENT_ENCODING, "br");
-      resp.body(FAVICON_BINARY_BR.as_ref());
+      resp.encoding(http::header::ContentEncoding::Br);
+      resp.body(FAVICON_BINARY_BR.as_ref())
     } else if acc.filter(|s| s.contains("gzip")).is_some() {
-      resp.set_header(http::header::CONTENT_ENCODING, "gzip");
-      resp.body(FAVICON_BINARY_GZ.as_ref());
+      resp.encoding(http::header::ContentEncoding::Gzip);
+      resp.body(FAVICON_BINARY_GZ.as_ref())
     } else {
-      resp.body(FAVICON_BINARY.as_ref());
+      resp.encoding(http::header::ContentEncoding::Identity);
+      resp.body(FAVICON_BINARY.as_ref())
     }
-  }
-
-  if cookie.and_then(|coo| coo.to_str().ok()).filter(|s| s.contains("ss")).is_some() {
-    resp.finish()
   } else {
-    let uid = lid::easy::generate_distributed(); //this is 20bytes, change db size to 20bytes
-    resp.set_header(http::header::SET_COOKIE, format!("ss={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid)).finish()
+    resp.encoding(http::header::ContentEncoding::Identity);
+    resp.body(FAVICON_BINARY.as_ref())
   }
 
   // if let Some(coo) = cookie {
