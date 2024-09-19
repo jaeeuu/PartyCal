@@ -72,31 +72,43 @@ async fn main() -> std::io::Result<()> {
 
 #[web::get("/favicon.ico")]
 async fn favicon(req: web::HttpRequest) -> impl web::Responder {
-  let cookie = req.headers().get("Cookie");
   const FAVICON_BINARY: &[u8] = include_bytes!("../static/favicon.ico");
+  const FAVICON_BINARY_BR: &[u8] = include_bytes!("../static/favicon.ico.br");
+  const FAVICON_BINARY_GZ: &[u8] = include_bytes!("../static/favicon.ico.gz");
 
-  if let Some(coo) = cookie {
-    if coo.to_str().unwrap().contains("session") {
-      return web::HttpResponse::Ok()
-        // .set_header("content-encoding", "identity")
-        .set_header(http::header::CONTENT_TYPE, "image/x-icon")
-        // .set_header(http::header::CACHE_CONTROL, "public, max-age=604800")
-        .body(FAVICON_BINARY.as_ref());
+  let cookie = req.headers().get("Cookie");
+  let accept_encoding = req.headers().get("Accept-Encoding");
+  let mut resp = web::HttpResponse::Ok();
+  resp.set_header(http::header::CONTENT_TYPE, "image/x-icon");
+
+  if let Some(accept) = accept_encoding {
+    let acc = accept.to_str().ok();
+    if acc.filter(|s| s.contains("br")).is_some() {
+      resp.set_header(http::header::CONTENT_ENCODING, "br");
+      resp.body(FAVICON_BINARY_BR.as_ref());
+    } else if acc.filter(|s| s.contains("gzip")).is_some() {
+      resp.set_header(http::header::CONTENT_ENCODING, "gzip");
+      resp.body(FAVICON_BINARY_GZ.as_ref());
+    } else {
+      resp.body(FAVICON_BINARY.as_ref());
     }
   }
-  let uid = lid::easy::generate_distributed(); //this is 20bytes, change db size to 20bytes
-  web::HttpResponse::Ok()
-    // .set_header("content-encoding", "identity")
-    .set_header(http::header::SET_COOKIE, format!("session={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid))
-    .set_header(http::header::CONTENT_TYPE, "image/x-icon")
-    // .set_header(http::header::CACHE_CONTROL, "public, max-age=604800")
-    .body(FAVICON_BINARY.as_ref())
-}
 
-// async fn new_session() -> impl IntoResponse {
-//   let uid = nuid::next();
-//   let cookie_value = format!("session={}; Max-Age=7884000; Path=/; Secure", uid);
-//   let mut headers = HeaderMap::new();
-//   headers.insert(header::SET_COOKIE, cookie_value.parse().unwrap());
-//   (StatusCode::OK, headers)
-// }
+  if cookie.and_then(|coo| coo.to_str().ok()).filter(|s| s.contains("ss")).is_some() {
+    resp.finish()
+  } else {
+    let uid = lid::easy::generate_distributed(); //this is 20bytes, change db size to 20bytes
+    resp.set_header(http::header::SET_COOKIE, format!("ss={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid)).finish()
+  }
+
+  // if let Some(coo) = cookie {
+  //   if coo.to_str().unwrap().contains("ss") {
+  //     return resp.set_header(http::header::CONTENT_TYPE, "image/x-icon")
+  //   }
+  // }
+
+  // let uid = lid::easy::generate_distributed(); //this is 20bytes, change db size to 20bytes
+  // resp
+  //   .set_header(http::header::SET_COOKIE, format!("ss={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid))
+  //   .set_header(http::header::CONTENT_TYPE, "image/x-icon")
+}
