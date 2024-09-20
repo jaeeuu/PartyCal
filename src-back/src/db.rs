@@ -9,7 +9,7 @@ pub struct Db(pub(crate) Arc<Pool<MySql>>);
 impl Db {
     pub async fn new() -> Db {
         let pool = MySqlPoolOptions::new()
-            // .max_connections(8)
+            .max_connections(100)
             .connect(
                 "mysql://root:sdb@localhost:3306/public",
             )
