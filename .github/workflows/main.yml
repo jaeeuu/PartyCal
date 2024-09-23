@@ -26,7 +26,7 @@ jobs:
         run_install: false
 
     - name: DB compile check
-    - uses: selfagency/ssh-port-forward-action@v1.0.6
+      uses: selfagency/ssh-port-forward-action@v1.0.6
       with:
         ssh-key: ${{ secrets.SSH_KEY }}
         ssh-host: ${{ secrets.SSH_IP }}
