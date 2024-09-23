@@ -21,9 +21,9 @@ tracing-subscriber = "0.3.18"
 
 # Optimize for smaller binary size
 [profile.release]
-panic = "abort"   # Strip expensive panic clean-up logic
+# panic = "abort"
 lto = true        # Enables link to optimizations
 strip = true      # Remove debug symbols
 
-[profile.dev.package.sqlx-macros]
-opt-level = 3
+# [profile.dev.package.sqlx-macros]
+# opt-level = 3
