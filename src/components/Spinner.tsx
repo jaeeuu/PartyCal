@@ -14,8 +14,8 @@ const spinnerDash = stylex.keyframes({
 
 const ixStyles = stylex.create({
   main: {
-    width: '100%',
-    height: '100%',
+    width: '100px',
+    height: '100px',
     mask: 'url(#spinnerMask)',
     maskRepeat: "no-repeat",
     transformOrigin: 'center',

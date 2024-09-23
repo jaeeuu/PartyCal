@@ -69,7 +69,7 @@ async fn insert(db: &Pool<MySql>, data: MainData) -> AnyResult<u64> {
 }
 
 async fn validate(req: CreateRequest) -> AnyResult<MainData> {
-  let title_base64 = BASE64_STANDARD_NO_PAD.decode(req.t.as_bytes()).unwrap();
+  let title_base64 = BASE64_STANDARD_NO_PAD.encode(req.t.as_bytes()).into_bytes();
   let count_add = req.c + 1;
   if title_base64.len() > 100 {
     Err(anyhow::anyhow!("1"))
