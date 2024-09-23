@@ -25,6 +25,17 @@ jobs:
       with:
         run_install: false
 
+    - name: DB compile check
+    - uses: selfagency/ssh-port-forward-action@v1.0.6
+      with:
+        ssh-key: ${{ secrets.SSH_KEY }}
+        ssh-host: ${{ secrets.SSH_IP }}
+        ssh-port: ${{ secrets.SSH_PORT }}
+        ssh-user: ${{ secrets.SSH_USER_DEFAULT }}
+        local-port: ${{ secrets.DB_PORT }}
+        remote-host: localhost
+        remote-port: ${{ secrets.DB_PORT }}
+
     - name: Setup Node.js
       uses: actions/setup-node@v4.0.3
       with:
@@ -74,9 +85,9 @@ jobs:
           tar -zxvf /opt/partycal.tar.gz -C /opt
           mv /opt/partycal/partyback /opt/partyback
           rm -f /opt/partycal.tar.gz
-          chown -R jreset:jreset /opt/partycal
+          chown -R ${{ secrets.SSH_USER_DEFAULT }}:${{ secrets.SSH_USER_DEFAULT }} /opt/partycal
           chmod -R 755 /opt/partycal
-          chown jreset:jreset /opt/partyback
+          chown ${{ secrets.SSH_USER_DEFAULT }}:${{ secrets.SSH_USER_DEFAULT }} /opt/partyback
           chmod 755 /opt/partyback
           systemctl restart h2o
           systemctl start partyback
