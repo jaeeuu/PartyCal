@@ -342,8 +342,7 @@ export default function NewPage() {
   };
 
   const handleDiffCount = () => {
-    if (!startCell() || !endCell()) return 0;
-    return convertCellToDj(startCell()).diff(convertCellToDj(endCell()), 'd')+1;
+    convertCellToDj(endCell()).diff(convertCellToDj(startCell()), 'd')+1;
   };
   
   // const handleMakeNew = () => {
