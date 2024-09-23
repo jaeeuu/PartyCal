@@ -4,10 +4,8 @@ pub mod create;
 
 #[derive(Deserialize, Serialize)]
 pub struct MainData {
-  main_id: u32,
-  title: String,
+  title: Vec<u8>,
   kakao: bool,
-  password: String,
   result: Vec<u8>,
   start: u32,
   count: u8,
