@@ -6,7 +6,6 @@ use crate::services::favicon::favicon_ser;
 use crate::services::create::create_ser;
 use ntex::web;
 use tracing::{info, error};
-use tracing_subscriber;
 // use anyhow::{Result as AnyResult, Context};
 
 #[ntex::main]

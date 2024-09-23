@@ -71,7 +71,7 @@ async fn insert(db: &Pool<MySql>, data: MainData) -> AnyResult<u64> {
 async fn validate(req: CreateRequest) -> AnyResult<MainData> {
   let title_base64 = BASE64_STANDARD_NO_PAD.decode(req.t.as_bytes()).unwrap();
   if title_base64.len() > 100 {
-    return Err(anyhow::anyhow!("1"));
+    Err(anyhow::anyhow!("1"))
   } 
   else if req.c < 1 || req.c > 100 {
     return Err(anyhow::anyhow!("2"));
@@ -92,8 +92,8 @@ async fn validate(req: CreateRequest) -> AnyResult<MainData> {
 
 fn is_valid_date(date_num: u32) -> bool {
   let year = (date_num / 10000) as i32;
-  let month = ((date_num / 100) % 100) as u32;
-  let day = (date_num % 100) as u32;
+  let month = (date_num / 100) % 100;
+  let day = date_num % 100;
 
   chrono::NaiveDate::from_ymd_opt(year, month, day).is_some()
 }
