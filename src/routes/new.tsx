@@ -340,10 +340,6 @@ export default function NewPage() {
     }
     setSubPage(2);
   };
-
-  const handleDiffCount = () => {
-    convertCellToDj(endCell()).diff(convertCellToDj(startCell()), 'd')+1;
-  };
   
   // const handleMakeNew = () => {
   //   const navigate = useNavigate();
@@ -396,7 +392,7 @@ export default function NewPage() {
           mode="main"
           disabled={!startCell() || !endCell() || !agree() || !name()}
           href="/create"
-          state={{ s: convertCellToNum(startCell()), c: handleDiffCount(), t: name(), k: onlyKakao() }}
+          state={{ s: convertCellToNum(startCell()), c: convertCellToDj(endCell()).diff(convertCellToDj(startCell()), 'd'), t: name(), k: onlyKakao() }}
         >
           투표 생성하기
         </SetA>

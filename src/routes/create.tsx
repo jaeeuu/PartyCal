@@ -12,9 +12,6 @@ import Spinner from "~/components/Spinner";
 // };
 
 export default function CreatePage() {
-  
-
-  
   const [uid] = createResource(async () => {
     const location = useLocation();
     const res = await fetch("https://partycal.site/apix/create", {

@@ -13,16 +13,9 @@ const spinnerDash = stylex.keyframes({
 });
 
 const ixStyles = stylex.create({
-  root: {
+  main: {
     width: '100%',
     height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  main: {
-    maxWidth: '50px',
-    width: '100%',
     mask: 'url(#spinnerMask)',
     maskRepeat: "no-repeat",
     transformOrigin: 'center',
@@ -30,7 +23,7 @@ const ixStyles = stylex.create({
     animationDuration: '2s',
     animationTimingFunction: 'linear',
     animationIterationCount: 'infinite',
-    background: "linear-gradient(146deg, #FF9292, #F6A7BA, #FFC5C5, #F7A4A4)",
+    background: "linear-gradient(146deg, #0dc1f2, #b10df2)",
   },
   circle: {
     animationName: spinnerDash,
@@ -44,16 +37,14 @@ const ixStyles = stylex.create({
 export default function Spinner(): JSX.Element {
 
   return (
-    <div {...stylex.attrs(ixStyles.root)}>
-      <div {...stylex.attrs(ixStyles.main)}>
-        <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <mask id="spinnerMask" maskContentUnits="objectBoundingBox">
-              <circle {...stylex.attrs(ixStyles.circle)} cx="12" cy="12" r="9.5" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" transform="scale(0.0417, 0.0417)"/>
-            </mask>
-          </defs>
-        </svg>
-      </div>
+    <div {...stylex.attrs(ixStyles.main)}>
+      <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <mask id="spinnerMask" maskContentUnits="objectBoundingBox">
+            <circle {...stylex.attrs(ixStyles.circle)} cx="12" cy="12" r="9.5" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" transform="scale(0.0417, 0.0417)"/>
+          </mask>
+        </defs>
+      </svg>
     </div>
   );
 }

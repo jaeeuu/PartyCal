@@ -70,10 +70,11 @@ async fn insert(db: &Pool<MySql>, data: MainData) -> AnyResult<u64> {
 
 async fn validate(req: CreateRequest) -> AnyResult<MainData> {
   let title_base64 = BASE64_STANDARD_NO_PAD.decode(req.t.as_bytes()).unwrap();
+  let count_add = req.c + 1;
   if title_base64.len() > 100 {
     Err(anyhow::anyhow!("1"))
-  } 
-  else if req.c < 1 || req.c > 100 {
+  }
+  else if count_add < 1 || count_add > 100 {
     return Err(anyhow::anyhow!("2"));
   }
   else if !is_valid_date(req.s) {
@@ -83,9 +84,9 @@ async fn validate(req: CreateRequest) -> AnyResult<MainData> {
     return Ok(MainData {
       title: title_base64,
       kakao: req.k,
-      result: vec![0; req.c as usize],
+      result: vec![0; count_add as usize],
       start: req.s,
-      count: req.c as u8,
+      count: count_add as u8,
     });
   }
 }
