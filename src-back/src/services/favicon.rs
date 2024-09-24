@@ -1,4 +1,5 @@
 use ntex::{http, web};
+use anyhow::{Result as AnyResult, Context};
 
 const FAVICON_BINARY: &[u8] = include_bytes!("../assets/favicon.ico");
 const FAVICON_BINARY_BR: &[u8] = include_bytes!("../assets/favicon.ico.br");
@@ -12,7 +13,7 @@ pub async fn favicon_ser(req: web::HttpRequest) -> impl web::Responder {
   resp.content_type("image/x-icon");
 
   if cookie.and_then(|coo| coo.to_str().ok()).map_or(true, |s| !s.contains("ss")) {
-    let uid = lid::easy::generate_distributed(); //this is 20bytes, change db size to 20bytes
+    let uid = lid::easy::generate_distributed();
     resp.set_header(http::header::SET_COOKIE, format!("ss={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid));
   }
 

@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "\n    INSERT INTO main (title, kakao, result, start, count) VALUES (?, ?, ?, ?, ?);\n    ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "9f112218698b3d20b6b3c85e4c4ce37e96e8cea8593fc361d2028831bf83cc7d"
+}

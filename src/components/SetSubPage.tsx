@@ -3,7 +3,7 @@ import { Portal } from "solid-js/web";
 import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
 import { Show } from 'solid-js';
-import { materialEasing } from "~/common/store";
+import { materialEasing } from "~/common/stores";
 import SetDialog from "./SetDialog";
 
 // "linear-gradient(120deg, rgba(254,247,243,1) 0%, rgba(249,241,250,1) 15%, rgba(237,245,254,1) 50%, rgba(238,251,243,1) 100%)"

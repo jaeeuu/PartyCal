@@ -6,6 +6,7 @@ use crate::services::favicon::favicon_ser;
 use crate::services::create::create_ser;
 use ntex::web;
 use tracing::{info, error};
+use ntex_cors::Cors;
 
 #[ntex::main]
 async fn main() -> std::io::Result<()> {
@@ -22,6 +23,13 @@ async fn main() -> std::io::Result<()> {
     web::App::new()
       .state(db.clone())
       .wrap(web::middleware::Compress::default())
+      .wrap(
+        Cors::new()
+          .allowed_origin("https://partycal.site")
+          .allowed_methods(vec!["GET", "POST"])
+          .max_age(3600)
+          .finish()
+        )
       // .wrap(web::middleware::DefaultHeaders::new())
       // .route(web::get().to(|| async {web::HttpResponse::Ok().body("Hello world!")})) == .service(some) #[web::get("/assets/{name}.{ext}")] 이거랑 같음
       .service(favicon_ser)

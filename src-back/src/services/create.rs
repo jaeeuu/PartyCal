@@ -18,41 +18,32 @@ struct CreateRequest {
 
 #[derive(Serialize)]
 struct CreateResponse {
-  status: u16,
   id: String,
 }
 
+
 #[web::post("/create")]
 pub async fn create_ser(db: web::types::State<Db>, req: web::types::Json<CreateRequest>) -> impl web::Responder {
-  let val_data = match validate(req.0).await {
-    Ok(data) => data,
+  match create_core(&db.0, req.0).await {
+    Ok(resp) => web::HttpResponse::Ok().json(&resp),
     Err(e) => {
-      error!("Failed to validate: {:?}", e);
-      let resp = CreateResponse{
-        status: 100,
-        id: e.to_string(),
-      };
-      return web::HttpResponse::Ok().json(&resp);
-    }
-  };
-  match insert(&db.0, val_data).await {
-    Ok(index) => {
-      let sqids = Sqids::default();
-      let uid = sqids.encode(&[0, 0, index]).unwrap();
-      let resp = CreateResponse{
-        status: 200,
-        id: uid,
-      };
-      web::HttpResponse::Ok().json(&resp)
-    }
-    Err(e) => {
-      error!("Failed to create: {:?}", e);
+      error!("Failed on create_ser: {:?}", e);
       web::HttpResponse::InternalServerError().into()
     }
   }
 }
 
-async fn insert(db: &Pool<MySql>, data: MainData) -> AnyResult<u64> {
+async fn create_core(db: &Pool<MySql>, req: CreateRequest) -> AnyResult<CreateResponse> {
+  let data = verify_data(req).await?;
+  let index = sync_db(db, data).await?;
+  let sqids = Sqids::default();
+  let nid = sqids.encode(&[1, 1, index])?;
+  Ok(CreateResponse{
+    id: nid,
+  })
+}
+
+async fn sync_db(db: &Pool<MySql>, data: MainData) -> AnyResult<u64> {
   let sql = sqlx::query!(
     r#"
     INSERT INTO main (title, kakao, result, start, count) VALUES (?, ?, ?, ?, ?);
@@ -68,26 +59,19 @@ async fn insert(db: &Pool<MySql>, data: MainData) -> AnyResult<u64> {
   Ok(sql.last_insert_id())
 }
 
-async fn validate(req: CreateRequest) -> AnyResult<MainData> {
+async fn verify_data(req: CreateRequest) -> AnyResult<MainData> {
   let title_base64 = BASE64_STANDARD_NO_PAD.encode(req.t.as_bytes()).into_bytes();
   let count_add = req.c + 1;
-  if title_base64.len() > 100 {
-    Err(anyhow::anyhow!("1"))
-  }
-  else if count_add < 1 || count_add > 100 {
-    return Err(anyhow::anyhow!("2"));
-  }
-  else if !is_valid_date(req.s) {
-    return Err(anyhow::anyhow!("3"));
-  }
-  else {
-    return Ok(MainData {
+  if title_base64.len() > 100 || count_add < 1 || count_add > 100 || !is_valid_date(req.s) {
+    Err(anyhow::Error::msg("Invalid input"))
+  } else {
+    Ok(MainData {
       title: title_base64,
       kakao: req.k,
       result: vec![0; count_add as usize],
       start: req.s,
       count: count_add as u8,
-    });
+    })
   }
 }
 
@@ -95,6 +79,5 @@ fn is_valid_date(date_num: u32) -> bool {
   let year = (date_num / 10000) as i32;
   let month = (date_num / 100) % 100;
   let day = date_num % 100;
-
   chrono::NaiveDate::from_ymd_opt(year, month, day).is_some()
 }

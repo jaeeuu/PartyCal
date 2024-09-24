@@ -1061,6 +1061,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "ntex-cors"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5240350681b4dab9bcbdbafdb7b25c526c069a9e298f06de00331cd3442311bf"
+dependencies = [
+ "derive_more",
+ "futures",
+ "ntex",
+]
+
+[[package]]
 name = "ntex-files"
 version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1390,6 +1401,7 @@ dependencies = [
  "chrono",
  "lid",
  "ntex",
+ "ntex-cors",
  "ntex-files",
  "serde",
  "serde_json",
@@ -1455,9 +1467,9 @@ dependencies = [
 
 [[package]]
 name = "pkg-config"
-version = "0.3.30"
+version = "0.3.31"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d231b230927b5e4ad203db57bbcbee2802f6bce620b1e4a9024a07d94e2907ec"
+checksum = "953ec861398dccce10c670dfeaf3ec4911ca479e9c02154b3a215178c5f566f2"
 
 [[package]]
 name = "polling"

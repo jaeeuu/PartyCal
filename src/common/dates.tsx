@@ -1,4 +1,4 @@
-import { oneDj } from "../common/store";
+import { oneDj } from "./stores";
 import type { Dayjs } from "dayjs";
 
 export type DateCell = null | {

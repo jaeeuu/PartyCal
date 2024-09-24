@@ -4,7 +4,7 @@ import type { JSX } from "solid-js";
 import { Transition } from "solid-transition-group";
 import CheckCircleSvg from "../assets/icons/circle/check_circle.svg";
 import ErrorCircleSvg from "../assets/icons/circle/error_circle.svg";
-import { materialEasing } from "~/common/store";
+import { materialEasing } from "~/common/stores";
 
 const ixStyles = stylex.create({
   base: {
