@@ -30,13 +30,25 @@ export default function CreatePage() {
     <SetBox>
       <Show
         fallback={
-          //@ts-expect-error
-          <video autoplay loop muted playsinline disablepictureinpicture disableremoteplayback>
+          <video
+            autoplay loop muted playsinline
+            //@ts-expect-error
+            disablepictureinpicture disableremoteplayback
+            width="300px"
+          >
             <source src={load_vid} type="video/webm" />
           </video>
         }
         when={uid()}>
           {JSON.stringify(uid())}
+          <video
+            autoplay loop muted playsinline
+            //@ts-expect-error
+            disablepictureinpicture disableremoteplayback
+            width="300px"
+          >
+            <source src={load_vid} type="video/webm" />
+          </video>
       </Show>
     </SetBox>
   );
