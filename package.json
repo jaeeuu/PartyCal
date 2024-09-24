@@ -21,7 +21,7 @@
     "@solidjs/start": "^1.0.6",
     "dayjs": "^1.11.13",
     "solid-js": "^1.8.23",
-    "solid-swr": "^4.1.0",
+    "solid-swr": "^5.0.0",
     "solid-transition-group": "^0.2.3",
     "vinxi": "^0.4.3"
   },

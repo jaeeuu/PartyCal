@@ -1,11 +1,12 @@
 import type { JSX, Setter } from 'solid-js';
 import * as stylex from "@stylexjs/stylex";
 import InstagramLogoSvg from '../assets/icons/logo/instagram_logo.svg';
-import WhatsappLogoSvg from '../assets/icons/logo/whatsapp_logo.svg';
 import KakaotalkLogoSvg from '../assets/icons/logo/kakaotalk_logo.svg';
-import FacebookLogoSvg from '../assets/icons/logo/facebook_logo.svg';
 import { SetButton, SetButtonBox } from './SetShared';
 import { CallDialog } from './SetDialog';
+import { copyToClipboard } from "@solid-primitives/clipboard";
+
+copyToClipboard;
 
 type SetSendProps<P = {}> = P & {
   link: string;
@@ -76,7 +77,8 @@ const ixStyles = stylex.create({
   },
   box2: {
     ...stylex.include(inStyles.flex),
-    gap: '25px',
+    flexDirection: 'column',
+    gap: '10px',
     borderColor: "#f2f3f5",
     borderStyle: "solid",
     borderWidth: "1.5px",
@@ -89,11 +91,6 @@ const ixStyles = stylex.create({
     padding: '14px',
     backgroundColor: '#f2f4f6',
     borderRadius: '15px',
-  },
-  logos: {
-    width: '100%',
-    borderRadius: '10px',
-    //padding: '10px',
   },
   buttonBox: {
     ...stylex.include(inStyles.flex),
@@ -187,6 +184,7 @@ export default function SetSend(props: SetSendProps): JSX.Element {
     <div {...stylex.attrs(ixStyles.base)}>
       <div {...stylex.attrs(ixStyles.box0)}>
         <div {...stylex.attrs(ixStyles.boxtext)}>URL 링크</div>
+        <input type="text" value={getUrl(props.link)} use:copyToClipboard />
         <SetButtonBox sx={[ixStyles.box1]} onClick={()=>handleCopyClick(props.link)}>
           <div {...stylex.attrs(ixStyles.linkBox)}>{getUrl(props.link)}</div>
           {/* <SetButtonBox sx={[ixStyles.copyBox]} onClick={()=>handleCopyClick(props.link)}><CopySvg {...stylex.attrs(ixStyles.copyIcon)} /></SetButtonBox> */}
@@ -196,10 +194,8 @@ export default function SetSend(props: SetSendProps): JSX.Element {
       <div {...stylex.attrs(ixStyles.box0)}>
         <div {...stylex.attrs(ixStyles.boxtext)}>SNS로 보내기</div>
         <div {...stylex.attrs(ixStyles.box2)}>
-          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 1)}><KakaotalkLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
-          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 2)}><InstagramLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
-          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 3)}><FacebookLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
-          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 4)}><WhatsappLogoSvg {...stylex.attrs(ixStyles.logos)} /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 1)}><KakaotalkLogoSvg width="20px" /></SetButtonBox>
+          <SetButtonBox sx={[ixStyles.logoBox]} onClick={()=>handleSnsClick(props.link, 2)}><InstagramLogoSvg width="20px" /></SetButtonBox>
         </div>
       </div>
       <div {...stylex.attrs(ixStyles.buttonBox)}>

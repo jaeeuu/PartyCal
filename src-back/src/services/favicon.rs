@@ -1,5 +1,4 @@
 use ntex::{http, web};
-use anyhow::{Result as AnyResult, Context};
 
 const FAVICON_BINARY: &[u8] = include_bytes!("../assets/favicon.ico");
 const FAVICON_BINARY_BR: &[u8] = include_bytes!("../assets/favicon.ico.br");
