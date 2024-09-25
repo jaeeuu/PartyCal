@@ -9,7 +9,7 @@ import { SetButtonBox, SetA, SetButton, SetBox } from '~/components/SetBase';
 import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
 import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
-import SetShare, { showShareMore } from '~/components/SetShare';
+import SetShare from '~/components/SetShare';
 import NtexLogoSVg from '~/assets/icons/logo/ntex_logo.svg';
 import SingleStoreSvg from '~/assets/icons/logo/singlestore_logo.svg';
 import TauriLogoSvg from '~/assets/icons/logo/tauri_logo.svg';
@@ -136,26 +136,26 @@ const ixStyles = stylex.create({
   },
   subBox_1: {
     color: "#4e5a68",
-    fontSize: '15px',
+    fontSize: '18px',
     fontWeight: 700,
   },
   subBox_2: {
     color: "#B0B8C1",
-    fontSize: '13px',
+    fontSize: '14px',
     fontWeight: 400,
   },
   subBox_3: {
     ...stylex.include(inStyles.flex),
     flexWrap: 'wrap',
     gap: '10px',
-    marginTop: '15px',
-    marginBottom: '25px',
+    marginTop: '25px',
+    //marginBottom: '25px',
     color: "#6b7784",
     borderColor: "#f2f3f5",
     borderStyle: "solid",
     borderWidth: "1.5px",
     borderRadius: "15px",
-    padding: '10px',
+    padding: '12px',
   },
   subBox_31: {
     ...stylex.include(inStyles.flex),
@@ -249,16 +249,9 @@ export default function HomePage() {
             <div {...stylex.attrs(ixStyles.apps)}><SingleStoreSvg height="15px" />SINGLE STORE</div>
             <div {...stylex.attrs(ixStyles.apps)}><StylexLogoSvg height="15px" />STYLEX</div>
           </div>
-          <SetButton onClick={()=>setShowSub(0)}>
-            확인
-          </SetButton>
         </Show>
         <Show when={showSub()===1}>
           <SetShare link={link} setShow={setShowSub} />
-          <div {...stylex.attrs(ixStyles.buttonBox)}>
-            <SetButton mode="sub" onClick={()=>setShowSub(0)}>닫기</SetButton>
-            <SetButton mode="main" onClick={()=>{setShowSub(0), showShareMore(link);}}>더보기</SetButton>
-          </div>
         </Show>
       </SetSubPage>
     </>

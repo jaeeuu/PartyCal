@@ -3,7 +3,7 @@ import * as stylex from "@stylexjs/stylex";
 import InstagramLogoSvg from '../assets/icons/logo/instagram_logo.svg';
 import KakaotalkLogoSvg from '../assets/icons/logo/kakaotalk_logo.svg';
 import CopySvg from '../assets/icons/copy.svg';
-import { SetButtonBox } from './SetBase';
+import { SetButton, SetButtonBox } from './SetBase';
 import { CallDialog } from './SetAlert';
 // import { copyToClipboard } from "@solid-primitives/clipboard";
 
@@ -20,12 +20,13 @@ const inStyles = stylex.create({
     alignItems: 'center',
   },
   inner: {
-    padding: '14px',
-    borderRadius: '15px',
-    fontSize: '14px',
+    paddingTop: '16px',
+    paddingBottom: '16px',
+    paddingRight: '1px',
+    borderRadius: '17px',
+    fontSize: '15px',
     fontWeight: 700,
     gap: '5px',
-    paddingLeft: '2px',
     width: '100%',
     justifyContent: 'center',
   },
@@ -44,33 +45,44 @@ const ixStyles = stylex.create({
   },
   box02: {
     ...stylex.include(inStyles.box0),
-    marginBottom: '10px',
+    //marginBottom: '10px',
   },
   boxtext: {
     color: "#6b7784",
     fontWeight: 700,
-    fontSize: '16px',
+    fontSize: '18px',
+    marginBottom: '5px',
+    marginLeft: '5px',
   },
   linkBox: {
     ...stylex.include(inStyles.flex),
-    fontSize: '16px',
+    fontSize: '15px',
     fontWeight: 500,
     color: "#246ab6",
     backgroundColor: '#f2f4f6',
-    gap: '10px',
+    gap: '15px',
     padding: '16px 20px 16px 20px',
-    borderRadius: '15px',
+    borderRadius: '20px',
     userSelect: 'text',
   },
   box2: {
     ...stylex.include(inStyles.flex),
-    gap: '10px',
+    width: '100%',
+    flexDirection: 'column',
     borderColor: "#f2f3f5",
     borderStyle: "solid",
     borderWidth: "1.5px",
-    borderRadius: "15px",
+    borderRadius: "27px",
     padding: '10px',
-    marginBottom: '15px',
+    gap: '10px',
+  },
+  box21: {
+    ...stylex.include(inStyles.flex),
+    width: '100%',
+    gap: '10px',
+  },
+  box22: {
+    ...stylex.include(inStyles.flex),
   },
   kakaoBox: {
     ...stylex.include(inStyles.flex),
@@ -84,37 +96,13 @@ const ixStyles = stylex.create({
     background: "linear-gradient(160deg, #833ab4,#fd1d1d,#fcb045)",
     color: "#f2f4f6",
   },
-  buttonBox: {
-    ...stylex.include(inStyles.flex),
-    gap: '20px',
+  moreBox: {
+    padding: '16px',
+    fontSize: '15px',
+    fontWeight: 700,
+    borderRadius: '17px',
   },
 });
-
-export const showShareMore = async (link: string) => {
-  const shareUrl = async(data: ShareData): Promise<boolean> => {
-    try {
-      await navigator.share(data);
-      return true;
-    } catch {
-      return false;
-    }
-  };
-  if(link === 'mainpage'){
-    const shareData: ShareData = {
-      title: 'PARTYCAL: 일정 투표 플랫폼',
-      text: '친구들과 함께 일정 투표를 시작해보세요',
-      url: link,
-    };
-    await shareUrl(shareData);
-  } else {
-    const shareData: ShareData = {
-      title: '우리 언제 만날까?',
-      text: '지금 바로 투표에 참여해보세요!',
-      url: link,
-    };
-    await shareUrl(shareData);
-  }
-};
 
 export default function SetShare(props: SetShareProps): JSX.Element {
   
@@ -125,6 +113,32 @@ export default function SetShare(props: SetShareProps): JSX.Element {
       return true;
     } catch {
       return false;
+    }
+  };
+
+  const showShareMore = async (link: string) => {
+    const shareUrl = async(data: ShareData): Promise<boolean> => {
+      try {
+        await navigator.share(data);
+        return true;
+      } catch {
+        return false;
+      }
+    };
+    if(link === 'mainpage'){
+      const shareData: ShareData = {
+        title: 'PARTYCAL: 일정 투표 플랫폼',
+        text: '친구들과 함께 일정 투표를 시작해보세요',
+        url: link,
+      };
+      await shareUrl(shareData);
+    } else {
+      const shareData: ShareData = {
+        title: '우리 언제 만날까?',
+        text: '지금 바로 투표에 참여해보세요!',
+        url: link,
+      };
+      await shareUrl(shareData);
     }
   };
 
@@ -165,16 +179,21 @@ export default function SetShare(props: SetShareProps): JSX.Element {
         {/* <div {...stylex.attrs(ixStyles.box1text)}>복사하려면 누르세요</div> */}
       </div>
       <div {...stylex.attrs(ixStyles.box02)}>
-        <div {...stylex.attrs(ixStyles.boxtext)}>채팅방에 공유하기</div>
+        <div {...stylex.attrs(ixStyles.boxtext)}>공유하기</div>
         <div {...stylex.attrs(ixStyles.box2)}>
-          <SetButtonBox sx={[ixStyles.kakaoBox]} onClick={()=>handleSnsClick(1)}>
-            <KakaotalkLogoSvg width="20px" />
-            카카오톡
-          </SetButtonBox>
-          <SetButtonBox sx={[ixStyles.instaBox]} onClick={()=>handleSnsClick(2)}>
-            <InstagramLogoSvg width="20px" />
-            인스타그램
-          </SetButtonBox>
+          <div {...stylex.attrs(ixStyles.box21)}>
+            <SetButtonBox sx={[ixStyles.kakaoBox]} onClick={()=>handleSnsClick(1)}>
+              <KakaotalkLogoSvg width="20px" />
+              카카오톡
+            </SetButtonBox>
+            <SetButtonBox sx={[ixStyles.instaBox]} onClick={()=>handleSnsClick(2)}>
+              <InstagramLogoSvg width="20px" />
+              인스타그램
+            </SetButtonBox>
+          </div>
+          <SetButton sx={[ixStyles.moreBox]} mode='sub' onClick={()=>showShareMore(props.link)}>
+            더보기
+          </SetButton>
         </div>
       </div>
     </>

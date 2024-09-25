@@ -2,8 +2,7 @@ import { SetBox } from "~/components/SetBase";
 import { useLocation } from "@solidjs/router";
 import { createResource, Show } from "solid-js";
 // import * as stylex from "@stylexjs/stylex";
-//import Spinner from "~/components/Spinner";
-import load_vid from "~/assets/images/load_vid.webm";
+import Spinner from "~/components/Spinner";
 
 // type CreateStateProps = null | {
 //   s?: number;
@@ -30,25 +29,10 @@ export default function CreatePage() {
     <SetBox>
       <Show
         fallback={
-          <video
-            autoplay loop muted playsinline
-            //@ts-expect-error
-            disablepictureinpicture disableremoteplayback
-            width="300px"
-          >
-            <source src={load_vid} type="video/webm" />
-          </video>
+          <Spinner />
         }
         when={uid()}>
           {JSON.stringify(uid())}
-          <video
-            autoplay loop muted playsinline
-            //@ts-expect-error
-            disablepictureinpicture disableremoteplayback
-            width="300px"
-          >
-            <source src={load_vid} type="video/webm" />
-          </video>
       </Show>
     </SetBox>
   );
