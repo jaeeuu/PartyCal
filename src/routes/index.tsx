@@ -5,11 +5,11 @@ import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
 import calenderImage from '../assets/images/cal_re.avif';
-import { SetButtonBox, SetA, SetButton, SetBox } from '~/components/SetShared';
+import { SetButtonBox, SetA, SetButton, SetBox } from '~/components/SetBase';
 import { createSignal, Show } from 'solid-js';
 import SetSubPage from '~/components/SetSubPage';
 import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
-import SetSend from '~/components/SetSend';
+import SetShare, { showShareMore } from '~/components/SetShare';
 import NtexLogoSVg from '~/assets/icons/logo/ntex_logo.svg';
 import SingleStoreSvg from '~/assets/icons/logo/singlestore_logo.svg';
 import TauriLogoSvg from '~/assets/icons/logo/tauri_logo.svg';
@@ -134,56 +134,53 @@ const ixStyles = stylex.create({
     color: "#6b7784",
     gap: "15px",
   },
-  subText: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '15px',
-    paddingTop: '20px',
-    paddingBottom: '35px',
-    gap: '5px',
-  },
-  subBox_0: {
-    //marginBottom: '30px',
+  subBox_1: {
     color: "#4e5a68",
     fontSize: '15px',
     fontWeight: 700,
   },
-  subBox_0_1: {
-    //marginBottom: '30px',
+  subBox_2: {
     color: "#B0B8C1",
     fontSize: '13px',
-    fontWeight: 500,
+    fontWeight: 400,
   },
-  subBox_1: {
+  subBox_3: {
+    ...stylex.include(inStyles.flex),
+    flexWrap: 'wrap',
+    gap: '10px',
+    marginTop: '15px',
+    marginBottom: '25px',
+    color: "#6b7784",
+    borderColor: "#f2f3f5",
+    borderStyle: "solid",
+    borderWidth: "1.5px",
+    borderRadius: "15px",
+    padding: '10px',
+  },
+  subBox_31: {
     ...stylex.include(inStyles.flex),
     gap: '10px',
-    fontWeight: 500,
-    fontSize: '14px',
-    marginTop: '20px',
-    //marginLeft: '5px',
-    color: "#6b7784",
-    flexWrap: 'wrap',
+    width: '100%',
   },
-  subBox_2: {
-    fontFamily: "Verdana,Geneva",
-    fontSize: "10px",
-    display: "flex",
-    gap: "5px",
-    padding: "5px 7px 5px 7px",
-    fontWeight: 'bold',
-    alignItems: 'center',
-    borderRadius: '7px',
+  apps: {
+    ...stylex.include(inStyles.flex),
+    fontSize: "12px",
+    fontWeight: 700,
+    gap: "7px",
+    padding: "7px 12px 7px 12px",
+    borderRadius: '10px',
     color: "#4e5a68",
     backgroundColor: "#F2F4F6",
   },
-  subButton: {
-    fontWeight: 500,
-    // width: '100%',
+  buttonBox: {
+    ...stylex.include(inStyles.flex),
+    gap: '20px',
   },
 });
 
 export default function HomePage() {
   const [showSub, setShowSub] = createSignal<number>(0);
+  const link = "https://partycal.site/";
   return (
     <>
       <MetaProvider>
@@ -243,25 +240,25 @@ export default function HomePage() {
       </SetBox>
       <SetSubPage show={showSub} setShow={setShowSub}>
         <Show when={showSub()===2}>
-          <div>
-            <div {...stylex.attrs(ixStyles.subText)}>
-              <div {...stylex.attrs(ixStyles.subBox_0)}>COPYRIGHT 2024 JAEU</div>
-              <div {...stylex.attrs(ixStyles.subBox_0_1)}>This app is licensed under the terms of the MIT license.</div>
-              <div {...stylex.attrs(ixStyles.subBox_1)}>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><SolidSvg height="13px" />SOLID START</div>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><NtexLogoSVg height="13px" />NTEX</div>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><TauriLogoSvg height="13px" />TAURI</div>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><SingleStoreSvg height="13px" />SINGLE STORE</div>
-                <div {...stylex.attrs(ixStyles.subBox_2)}><StylexLogoSvg height="13px" />STYLEX</div>
-              </div>
-            </div>
-            <SetButton sx={[ixStyles.subButton]} onClick={()=>setShowSub(0)}>
-              확인
-            </SetButton>
+          <div {...stylex.attrs(ixStyles.subBox_1)}>COPYRIGHT 2024 JAEU</div>
+          <div {...stylex.attrs(ixStyles.subBox_2)}>This app is licensed under the terms of the MIT license.</div>
+          <div {...stylex.attrs(ixStyles.subBox_3)}>
+            <div {...stylex.attrs(ixStyles.apps)}><SolidSvg height="15px" />SOLID START</div>
+            <div {...stylex.attrs(ixStyles.apps)}><NtexLogoSVg height="15px" />NTEX</div>
+            <div {...stylex.attrs(ixStyles.apps)}><TauriLogoSvg height="15px" />TAURI</div>
+            <div {...stylex.attrs(ixStyles.apps)}><SingleStoreSvg height="15px" />SINGLE STORE</div>
+            <div {...stylex.attrs(ixStyles.apps)}><StylexLogoSvg height="15px" />STYLEX</div>
           </div>
+          <SetButton onClick={()=>setShowSub(0)}>
+            확인
+          </SetButton>
         </Show>
         <Show when={showSub()===1}>
-          <SetSend link="mainpage" setShow={setShowSub} />
+          <SetShare link={link} setShow={setShowSub} />
+          <div {...stylex.attrs(ixStyles.buttonBox)}>
+            <SetButton mode="sub" onClick={()=>setShowSub(0)}>닫기</SetButton>
+            <SetButton mode="main" onClick={()=>{setShowSub(0), showShareMore(link);}}>더보기</SetButton>
+          </div>
         </Show>
       </SetSubPage>
     </>

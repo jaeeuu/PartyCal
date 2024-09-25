@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox, SetA } from "~/components/SetShared";
+import { SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox, SetA } from "~/components/SetBase";
 import { createMemo, createSignal, Index, Show } from "solid-js";
 import { oneDj } from '~/common/stores';
 import type { Dayjs } from "dayjs";
@@ -392,7 +392,7 @@ export default function NewPage() {
           mode="main"
           disabled={!startCell() || !endCell() || !agree() || !name()}
           href="/create"
-          state={{ s: convertCellToNum(startCell()), c: convertCellToDj(endCell()).diff(convertCellToDj(startCell()), 'd'), t: name(), k: onlyKakao() }}
+          state={{ s: convertCellToNum(startCell()), c: convertCellToDj(endCell()).diff(convertCellToDj(startCell()), 'd'), t: JSON.stringify(name()), k: onlyKakao() }}
         >
           투표 생성하기
         </SetA>

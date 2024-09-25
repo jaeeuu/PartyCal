@@ -32,23 +32,23 @@ const ixStyles = stylex.create({
   }
 });
 
-const [dialog, setDialog] = createSignal<[string, number]>(['',0]);
+const [alertText, setAlertText] = createSignal<[string, number]>(['',0]);
 let dialogTimer = null;
 
 export const CallDialog = (type: number) => {
 
   if (type === 1) {
-    setDialog(['복사되었습니다.', 1]);
+    setAlertText(['복사되었습니다.', 1]);
   } else if (type === 2) {
-    setDialog(['모바일 환경만 지원합니다.', 2]);
+    setAlertText(['모바일 환경만 지원합니다.', 2]);
   }
   clearTimeout(dialogTimer);
   dialogTimer = setTimeout(() => {
-    setDialog(['',0]);
+    setAlertText(['',0]);
   }, 1500);
 };
 
-export default function SetDialog(): JSX.Element {
+export default function SetAlert(): JSX.Element {
 
   const pageOnEnter = (el: Element, done: () => void) => {
     const a = el.animate([{ transform: "translateY(-100px) scale(0)", overflowY: "hidden", transformOrigin: "top center" }, { transform: 'translateY(0px) scale(1)', overflowY: "hidden", transformOrigin: "top center" }], { duration: 300, easing: materialEasing });
@@ -72,11 +72,11 @@ export default function SetDialog(): JSX.Element {
     onEnter={(el, done) => pageOnEnter(el, done)}
     onExit={(el, done) => pageOnExit(el, done)}
     >
-      <Show when={dialog()[1] !== 0}>
+      <Show when={alertText()[1] !== 0}>
         <div {...stylex.attrs(ixStyles.base)}>
           <div {...stylex.attrs(ixStyles.box)}>
-            {getIcon(dialog()[1])}
-            <div {...stylex.attrs(ixStyles.text)}>{dialog()[0]}</div>
+            {getIcon(alertText()[1])}
+            <div {...stylex.attrs(ixStyles.text)}>{alertText()[0]}</div>
           </div>
         </div>
       </Show>

@@ -4,7 +4,7 @@ import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
 import { Show } from 'solid-js';
 import { materialEasing } from "~/common/stores";
-import SetDialog from "./SetDialog";
+import SetAlert from "./SetAlert";
 
 // "linear-gradient(120deg, rgba(254,247,243,1) 0%, rgba(249,241,250,1) 15%, rgba(237,245,254,1) 50%, rgba(238,251,243,1) 100%)"
 const inStyles = stylex.create({
@@ -47,7 +47,13 @@ const ixStyles = stylex.create({
     borderRadius: '2px',
     backgroundColor: '#E5E8EB',
     alignSelf: 'center',
-    marginBottom: '7px',
+    marginBottom: '15px',
+  },
+  child: {
+    width: '100%',
+    padding: '7px',
+    display: 'flex',
+    flexDirection: 'column',
   }
 });
 
@@ -94,12 +100,12 @@ export default function SetSubPage(props: SetSubPageProps): JSX.Element{
           <div {...stylex.attrs(ixStyles.box)}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
               <div {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>
-              {props.children}
+              <div {...stylex.attrs(ixStyles.child)}>{props.children}</div>
             </div>
           </div>
         </Show>
       </Transition>
-      <SetDialog />
+      <SetAlert />
     </Portal>
   );
 }

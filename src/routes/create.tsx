@@ -1,4 +1,4 @@
-import { SetBox } from "~/components/SetShared";
+import { SetBox } from "~/components/SetBase";
 import { useLocation } from "@solidjs/router";
 import { createResource, Show } from "solid-js";
 // import * as stylex from "@stylexjs/stylex";
