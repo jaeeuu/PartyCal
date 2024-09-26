@@ -25,7 +25,7 @@ const inStyles = stylex.create({
     paddingRight: '1px',
     borderRadius: '17px',
     fontSize: '15px',
-    fontWeight: 700,
+    fontWeight: 600,
     gap: '5px',
     width: '100%',
     justifyContent: 'center',
@@ -34,25 +34,46 @@ const inStyles = stylex.create({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    gap: '7px',
+    //gap: '7px',
+  },
+  showup: {
+    transform: {
+      default: "translateY(0px)",
+      '@starting-style': "translateY(50px)",
+    },
+    opacity: {
+      default: 1,
+      '@starting-style': 0,
+    },
+    transition: 'transform 0.5s cubic-bezier(0.08,0.82,0.17,1), opacity 0.5s cubic-bezier(0.08,0.82,0.17,1)',
   }
 });
 
 const ixStyles = stylex.create({
   box01: {
     ...stylex.include(inStyles.box0),
-    marginBottom: '25px',
+    marginBottom: '5px',
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.1s',
+
   },
   box02: {
     ...stylex.include(inStyles.box0),
-    //marginBottom: '10px',
+    marginBottom: '20px',
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.2s',
   },
   boxtext: {
     color: "#6b7784",
     fontWeight: 700,
     fontSize: '18px',
-    marginBottom: '5px',
-    marginLeft: '5px',
+    // marginBottom: '5px',
+    // marginLeft: '5px',
+    // paddingBottom: '10px',
+    // paddingLeft: '10px',
+    padding: '10px',
+    paddingTop: '15px',
+    paddingBottom: '15px',
   },
   linkBox: {
     ...stylex.include(inStyles.flex),
@@ -99,7 +120,7 @@ const ixStyles = stylex.create({
   moreBox: {
     padding: '16px',
     fontSize: '15px',
-    fontWeight: 700,
+    fontWeight: 600,
     borderRadius: '17px',
   },
 });
@@ -191,11 +212,12 @@ export default function SetShare(props: SetShareProps): JSX.Element {
               인스타그램
             </SetButtonBox>
           </div>
-          <SetButton sx={[ixStyles.moreBox]} mode='sub' onClick={()=>showShareMore(props.link)}>
+          <SetButton sx={[ixStyles.moreBox]} mode='main' onClick={()=>showShareMore(props.link)}>
             더보기
           </SetButton>
         </div>
       </div>
+      <SetButton mode='sub' onClick={()=>props.setShow(0)}>닫기</SetButton>
     </>
   );
 }

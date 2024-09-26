@@ -5,8 +5,7 @@ import { Transition } from "solid-transition-group";
 import { Show } from 'solid-js';
 import { materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
-import { SetButtonBox } from "./SetBase";
-import CloseSvg from "~/assets/icons/close.svg";
+// import CloseSvg from "~/assets/icons/close.svg";
 
 // "linear-gradient(120deg, rgba(254,247,243,1) 0%, rgba(249,241,250,1) 15%, rgba(237,245,254,1) 50%, rgba(238,251,243,1) 100%)"
 const inStyles = stylex.create({
@@ -30,13 +29,14 @@ const ixStyles = stylex.create({
     bottom: 0,
     padding: '10px',
     paddingBottom: '20px',
+    touchAction: 'none',
   },
   boxIn: {
     maxWidth: '430px',
     width: '100%',
-    padding: '20px',
+    padding: '22px',
     paddingTop: '0px',
-    borderRadius: "20px",
+    borderRadius: "24px",
     backgroundColor: '#fff',
     display: 'flex',
     flexDirection: 'column',
@@ -48,11 +48,14 @@ const ixStyles = stylex.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: '20px',
-    paddingBottom: '10px',
-    paddingLeft: '12px',
-    paddingRight: '10px',
+    // paddingTop: '20px',
+    // paddingBottom: '10px',
+    // paddingLeft: '12px',
+    // paddingRight: '10px',
     //position: 'relative',
+    padding: '10px',
+    paddingTop: '15px',
+    paddingBottom: '5px',
   },
   hint: {
     width: '30px',
@@ -73,7 +76,7 @@ const ixStyles = stylex.create({
   },
   child: {
     width: '100%',
-    padding: '7px',
+    //padding: '7px',
     display: 'flex',
     flexDirection: 'column',
   }
@@ -123,9 +126,9 @@ export default function SetSubPage(props: SetSubPageProps): JSX.Element{
             <div {...stylex.attrs(ixStyles.boxIn)}>
               <div {...stylex.attrs(ixStyles.hintBox)}>
                 <span {...stylex.attrs(ixStyles.hint)}>&nbsp;</span>
-                <SetButtonBox sx={[ixStyles.close]} onClick={()=>props.setShow(0)}>
+                {/* <SetButtonBox sx={[ixStyles.close]} onClick={()=>props.setShow(0)}>
                   <CloseSvg width="15px" color="#B5B5B5" />
-                </SetButtonBox>
+                </SetButtonBox> */}
               </div>
               <div {...stylex.attrs(ixStyles.child)}>{props.children}</div>
             </div>

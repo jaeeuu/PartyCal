@@ -138,18 +138,24 @@ const ixStyles = stylex.create({
     color: "#4e5a68",
     fontSize: '18px',
     fontWeight: 700,
+    padding: '10px',
+    paddingTop: '15px',
+    paddingBottom: '0px',
   },
   subBox_2: {
     color: "#B0B8C1",
     fontSize: '14px',
     fontWeight: 400,
+    padding: '10px',
+    paddingTop: '0px',
+    paddingBottom: '15px',
   },
   subBox_3: {
     ...stylex.include(inStyles.flex),
     flexWrap: 'wrap',
     gap: '10px',
-    marginTop: '25px',
-    //marginBottom: '25px',
+    //marginTop: '25px',
+    marginBottom: '25px',
     color: "#6b7784",
     borderColor: "#f2f3f5",
     borderStyle: "solid",
@@ -249,6 +255,7 @@ export default function HomePage() {
             <div {...stylex.attrs(ixStyles.apps)}><SingleStoreSvg height="15px" />SINGLE STORE</div>
             <div {...stylex.attrs(ixStyles.apps)}><StylexLogoSvg height="15px" />STYLEX</div>
           </div>
+          <SetButton mode='main' onClick={()=>setShowSub(0)}>닫기</SetButton>
         </Show>
         <Show when={showSub()===1}>
           <SetShare link={link} setShow={setShowSub} />

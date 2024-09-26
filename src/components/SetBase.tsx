@@ -62,7 +62,7 @@ const baseStyles = stylex.create({
     fontFamily: "'Basic Fonts'",
     fontSize: '16px',
     willChange: 'transform',
-    borderRadius: '15px',
+    borderRadius: '17px',
   },
   main: {
     padding: '16.5px',
