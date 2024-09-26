@@ -139,6 +139,7 @@ const inputStyles = stylex.create({
     ...stylex.include(baseStyles.reset),
     ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.input),
+    padding: '18.5px',
     '::placeholder': {
       fontFamily: "'Basic Fonts'",
       color: '#8B95A1',

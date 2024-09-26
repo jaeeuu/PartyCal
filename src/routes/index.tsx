@@ -5,15 +5,15 @@ import RocketSvg from '../assets/icons/rocket.svg';
 import StatSvg from '../assets/icons/data_2.svg';
 import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
 import calenderImage from '../assets/images/cal_re.avif';
-import { SetButtonBox, SetA, SetButton, SetBox } from '~/components/SetBase';
+import { SetButtonBox, SetA, SetButton, SetBox } from '../components/SetBase';
 import { createSignal, Show } from 'solid-js';
-import SetSubPage from '~/components/SetSubPage';
-import SolidSvg from '~/assets/icons/logo/solidstart_logo.svg';
-import SetShare from '~/components/SetShare';
-import NtexLogoSVg from '~/assets/icons/logo/ntex_logo.svg';
-import SingleStoreSvg from '~/assets/icons/logo/singlestore_logo.svg';
-import TauriLogoSvg from '~/assets/icons/logo/tauri_logo.svg';
-import StylexLogoSvg from '~/assets/icons/logo/stylex_logo.svg';
+import SetPopUp from '../components/SetPopUp';
+import SolidSvg from '../assets/icons/logo/solidstart_logo.svg';
+import SetShare from '../components/SetShare';
+import NtexLogoSVg from '../assets/icons/logo/ntex_logo.svg';
+import SingleStoreSvg from '../assets/icons/logo/singlestore_logo.svg';
+import TauriLogoSvg from '../assets/icons/logo/tauri_logo.svg';
+import StylexLogoSvg from '../assets/icons/logo/stylex_logo.svg';
 import { Meta, MetaProvider } from "@solidjs/meta";
 
 
@@ -21,6 +21,17 @@ const inStyles = stylex.create({
   flex: {
     display: 'flex',
     alignItems: 'center',
+  },
+  showup: {
+    transform: {
+      default: "translateY(0px)",
+      '@starting-style': "translateY(50px)",
+    },
+    opacity: {
+      default: 1,
+      '@starting-style': 0,
+    },
+    transition: 'transform 0.75s cubic-bezier(0.08,0.82,0.17,1), opacity 0.75s cubic-bezier(0.08,0.82,0.17,1)',
   },
 });
 
@@ -141,6 +152,8 @@ const ixStyles = stylex.create({
     padding: '10px',
     paddingTop: '15px',
     paddingBottom: '0px',
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.05s',
   },
   subBox_2: {
     color: "#B0B8C1",
@@ -149,6 +162,8 @@ const ixStyles = stylex.create({
     padding: '10px',
     paddingTop: '0px',
     paddingBottom: '15px',
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.1s',
   },
   subBox_3: {
     ...stylex.include(inStyles.flex),
@@ -162,6 +177,8 @@ const ixStyles = stylex.create({
     borderWidth: "1.5px",
     borderRadius: "15px",
     padding: '12px',
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.15s',
   },
   subBox_31: {
     ...stylex.include(inStyles.flex),
@@ -178,15 +195,14 @@ const ixStyles = stylex.create({
     color: "#4e5a68",
     backgroundColor: "#F2F4F6",
   },
-  buttonBox: {
-    ...stylex.include(inStyles.flex),
-    gap: '20px',
+  closeButton: {
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.2s',
   },
 });
 
 export default function HomePage() {
   const [showSub, setShowSub] = createSignal<number>(0);
-  const link = "https://partycal.site/";
   return (
     <>
       <MetaProvider>
@@ -244,7 +260,7 @@ export default function HomePage() {
           </SetButtonBox>
         </div>
       </SetBox>
-      <SetSubPage show={showSub} setShow={setShowSub}>
+      <SetPopUp show={showSub} setShow={setShowSub}>
         <Show when={showSub()===2}>
           <div {...stylex.attrs(ixStyles.subBox_1)}>COPYRIGHT 2024 JAEU</div>
           <div {...stylex.attrs(ixStyles.subBox_2)}>This app is licensed under the terms of the MIT license.</div>
@@ -255,12 +271,12 @@ export default function HomePage() {
             <div {...stylex.attrs(ixStyles.apps)}><SingleStoreSvg height="15px" />SINGLE STORE</div>
             <div {...stylex.attrs(ixStyles.apps)}><StylexLogoSvg height="15px" />STYLEX</div>
           </div>
-          <SetButton mode='main' onClick={()=>setShowSub(0)}>닫기</SetButton>
+          <SetButton sx={[ixStyles.closeButton]} mode='main' onClick={()=>setShowSub(0)}>닫기</SetButton>
         </Show>
         <Show when={showSub()===1}>
-          <SetShare link={link} setShow={setShowSub} />
+          <SetShare setShow={setShowSub} />
         </Show>
-      </SetSubPage>
+      </SetPopUp>
     </>
   );
 }

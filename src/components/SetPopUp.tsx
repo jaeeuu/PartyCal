@@ -2,10 +2,9 @@ import type { Accessor, JSX, Setter } from "solid-js";
 import { Portal } from "solid-js/web";
 import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
-import { Show } from 'solid-js';
+import { createEffect, Show } from 'solid-js';
 import { materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
-// import CloseSvg from "~/assets/icons/close.svg";
 
 // "linear-gradient(120deg, rgba(254,247,243,1) 0%, rgba(249,241,250,1) 15%, rgba(237,245,254,1) 50%, rgba(238,251,243,1) 100%)"
 const inStyles = stylex.create({
@@ -30,18 +29,19 @@ const ixStyles = stylex.create({
     padding: '10px',
     paddingBottom: '20px',
     touchAction: 'none',
+    overflow: 'hidden',
   },
   boxIn: {
     maxWidth: '430px',
     width: '100%',
     padding: '22px',
-    paddingTop: '0px',
+    // paddingTop: '0px',
     borderRadius: "24px",
     backgroundColor: '#fff',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    overflowX: 'hidden',
+    overflow: 'hidden',
   },
   hintBox: {
     width: '100%',
@@ -54,8 +54,8 @@ const ixStyles = stylex.create({
     // paddingRight: '10px',
     //position: 'relative',
     padding: '10px',
-    paddingTop: '15px',
-    paddingBottom: '5px',
+    paddingTop: '0px',
+    paddingBottom: '0px',
   },
   hint: {
     width: '30px',
@@ -63,6 +63,12 @@ const ixStyles = stylex.create({
     borderRadius: '2.5px',
     //marginLeft: '12px',
     backgroundColor: '#E5E8EB',
+    transition: 'color 0.5s ease',
+  },
+  active: {
+    marginTop: '5px',
+    marginBottom: '5px',
+    backgroundColor: '#B0B8C1',
   },
   close: {
     //marginRight: '6px',
@@ -79,16 +85,18 @@ const ixStyles = stylex.create({
     //padding: '7px',
     display: 'flex',
     flexDirection: 'column',
+    position: 'relative',
   }
 });
 
-type SetSubPageProps<P = {}> = P & {
+type SetPopUpProps<P = {}> = P & {
   children: JSX.Element;
   show: Accessor<number>,
-  setShow: Setter<number>
+  setShow: Setter<number>,
+  loading?: boolean,
 };
 
-export default function SetSubPage(props: SetSubPageProps): JSX.Element{
+export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   const backOnEnter = (el: Element, done: () => void) => {
     const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease' });
     a.finished.then(done);
@@ -105,6 +113,34 @@ export default function SetSubPage(props: SetSubPageProps): JSX.Element{
     const a = el.animate([{ transform: 'translateY(0px)', overflowY: "hidden" }, { transform: "translateY(80vh)", overflowY: "hidden" }], { duration: 350, easing: "ease" });
     a.finished.then(done);
   };
+
+  //const isLoading = () => props.loading || false;
+  let hintRef: HTMLElement | null = null;
+  let hintAni: Animation | null = null;
+  
+  const handleLoading = () => {
+    if (!hintRef || hintAni) return;
+    const keyframes = new KeyframeEffect(
+      hintRef,
+      [
+        { transform: 'rotate(0deg) scaleX(1)' },
+        { transform: 'rotate(180deg) scaleX(0.5)'},
+        { transform: 'rotate(360deg) scaleX(1)'},
+      ],
+      { duration: 1500, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: Infinity },
+    );
+    hintAni = new Animation(keyframes, document.timeline);
+    hintAni.play();
+  };
+
+  createEffect(() => {
+    if (props.loading) handleLoading();
+    else {
+      if (hintAni) hintAni.cancel();
+      else return;
+    }
+  });
+
   return (
     <Portal>
       <Transition
@@ -112,7 +148,7 @@ export default function SetSubPage(props: SetSubPageProps): JSX.Element{
         onExit={(el, done) => backOnExit(el, done)}
       >
         <Show when={props.show()!==0}>
-          <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => props.setShow(0)}>
+          <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => !props.loading && props.setShow(0)}>
             &nbsp;
           </div>
         </Show>
@@ -125,7 +161,7 @@ export default function SetSubPage(props: SetSubPageProps): JSX.Element{
           <div {...stylex.attrs(ixStyles.box)}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
               <div {...stylex.attrs(ixStyles.hintBox)}>
-                <span {...stylex.attrs(ixStyles.hint)}>&nbsp;</span>
+                <span ref={hintRef} {...stylex.attrs(ixStyles.hint, props.loading && ixStyles.active)}>&nbsp;</span>
                 {/* <SetButtonBox sx={[ixStyles.close]} onClick={()=>props.setShow(0)}>
                   <CloseSvg width="15px" color="#B5B5B5" />
                 </SetButtonBox> */}

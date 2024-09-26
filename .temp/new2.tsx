@@ -2,8 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 import { Index, createMemo, createSignal } from 'solid-js';
 import handleTiles from '../components/tileDrag';
 import getDateList from '../common/getDateList';
-import { SetButton, SetRootBox } from '~/components/SetBase';
-import { oneDate } from '~/common/store';
+import { SetButton, SetRootBox } from '../components/SetBase';
+import { oneDate } from '../common/store';
 import type { Dayjs } from 'dayjs';
 
 const ixStyles = stylex.create({
