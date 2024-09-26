@@ -90,7 +90,7 @@ const ixStyles = stylex.create({
     borderRadius: '20px',
     userSelect: 'text',
     ...stylex.include(inStyles.showup),
-    transitionDelay: '0.1s',
+    transitionDelay: '0.15s',
   },
   box2: {
     ...stylex.include(inStyles.flex),
@@ -103,7 +103,7 @@ const ixStyles = stylex.create({
     padding: '10px',
     gap: '10px',
     ...stylex.include(inStyles.showup),
-    transitionDelay: '0.1s',
+    transitionDelay: '0.15s',
   },
   box21: {
     ...stylex.include(inStyles.flex),
@@ -133,7 +133,7 @@ const ixStyles = stylex.create({
   },
   closeButton: {
     ...stylex.include(inStyles.showup),
-    transitionDelay: '0.2s',
+    transitionDelay: '0.22s',
   }
 });
 
