@@ -38,8 +38,8 @@ const inStyles = stylex.create({
   },
   showup: {
     transform: {
-      default: "translateY(0px)",
-      '@starting-style': "translateY(50px)",
+      default: "translateY(0px) scaleY(1)",
+      '@starting-style': "translateY(50px) scaleY(1.2)",
     },
     opacity: {
       default: 1,
@@ -53,27 +53,31 @@ const ixStyles = stylex.create({
   box01: {
     ...stylex.include(inStyles.box0),
     marginBottom: '5px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.05s',
-
   },
   box02: {
     ...stylex.include(inStyles.box0),
     marginBottom: '20px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.1s',
   },
-  boxtext: {
+  title: {
     color: "#6b7784",
     fontWeight: 700,
     fontSize: '18px',
-    // marginBottom: '5px',
-    // marginLeft: '5px',
-    // paddingBottom: '10px',
-    // paddingLeft: '10px',
     padding: '10px',
     paddingTop: '15px',
+    paddingBottom: '0px',
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.1s',
+  },
+  title2: {
+    color: "#B0B8C1",
+    // color: '#8B95A1',
+    fontSize: '14px',
+    fontWeight: 400,
+    padding: '10px',
+    paddingTop: '0px',
     paddingBottom: '15px',
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.1s',
   },
   linkBox: {
     ...stylex.include(inStyles.flex),
@@ -85,6 +89,8 @@ const ixStyles = stylex.create({
     padding: '16px 20px 16px 20px',
     borderRadius: '20px',
     userSelect: 'text',
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.1s',
   },
   box2: {
     ...stylex.include(inStyles.flex),
@@ -96,6 +102,8 @@ const ixStyles = stylex.create({
     borderRadius: "27px",
     padding: '10px',
     gap: '10px',
+    ...stylex.include(inStyles.showup),
+    transitionDelay: '0.1s',
   },
   box21: {
     ...stylex.include(inStyles.flex),
@@ -125,7 +133,7 @@ const ixStyles = stylex.create({
   },
   closeButton: {
     ...stylex.include(inStyles.showup),
-    transitionDelay: '0.15s',
+    transitionDelay: '0.2s',
   }
 });
 
@@ -185,8 +193,8 @@ export default function SetShare(props: SetShareProps): JSX.Element {
       else openUrl(`instagram://sharesheet?text=${getFullLink()}`);
     } else {
       if (type === 1) {
-        if (getId()) openUrl('');
-        else openUrl('');
+        if (getId()) openUrl('about:blank');
+        else openUrl('about:blank');
       }
       else CallDialog(2);
     }
@@ -196,14 +204,16 @@ export default function SetShare(props: SetShareProps): JSX.Element {
   return (
     <>
       <div {...stylex.attrs(ixStyles.box01)}>
-        <div {...stylex.attrs(ixStyles.boxtext)}>링크 복사하기</div>
+        <div {...stylex.attrs(ixStyles.title)}>링크 복사하기</div>
+        <div {...stylex.attrs(ixStyles.title2)}>누르면 링크가 클립보드에 복사돼요</div>
         <SetButtonBox sx={[ixStyles.linkBox]} onClick={copyUrl}>
           <CopySvg width="17px" color="#246ab6" />
           {getFullLink()}
         </SetButtonBox>
       </div>
       <div {...stylex.attrs(ixStyles.box02)}>
-        <div {...stylex.attrs(ixStyles.boxtext)}>공유하기</div>
+        <div {...stylex.attrs(ixStyles.title)}>공유하기</div>
+        <div {...stylex.attrs(ixStyles.title2)}>채팅방에 링크를 보낼 수 있어요</div>
         <div {...stylex.attrs(ixStyles.box2)}>
           <div {...stylex.attrs(ixStyles.box21)}>
             <SetButtonBox sx={[ixStyles.kakaoBox]} onClick={()=>handleSnsClick(1)}>

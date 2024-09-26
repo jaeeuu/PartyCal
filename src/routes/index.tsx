@@ -2,8 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 import LinkSvg from '../assets/icons/link.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
-import StatSvg from '../assets/icons/data_2.svg';
-import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
+// import StatSvg from '../assets/icons/data_2.svg';
+// import CalendarEditSvg from '../assets/icons/calendar_edit.svg';
 import calenderImage from '../assets/images/cal_re.avif';
 import { SetButtonBox, SetA, SetButton, SetBox } from '../components/SetBase';
 import { createSignal, Show } from 'solid-js';
@@ -24,8 +24,8 @@ const inStyles = stylex.create({
   },
   showup: {
     transform: {
-      default: "translateY(0px)",
-      '@starting-style': "translateY(50px)",
+      default: "translateY(0px) scaleY(1)",
+      '@starting-style': "translateY(50px) scaleY(1.2)",
     },
     opacity: {
       default: 1,
@@ -224,7 +224,7 @@ export default function HomePage() {
           일정 투표 만들기
         </SetA>
       </SetBox>
-      <SetBox>
+      {/* <SetBox>
         <div {...stylex.attrs(ixStyles.box2new)}>
           이미 생성된 코드가 있나요?
         </div>
@@ -238,7 +238,7 @@ export default function HomePage() {
             투표<br/>결과보기
           </SetA>
         </div>
-      </SetBox>
+      </SetBox> */}
       <SetBox>
         <div {...stylex.attrs(ixStyles.box2_1title)}>
           더보기

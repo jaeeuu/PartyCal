@@ -1256,9 +1256,9 @@ dependencies = [
 
 [[package]]
 name = "ntex-util"
-version = "2.3.0"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cb89227b7c7b6850e17be71b1abe711e2b6e96d8e386b76ea259c155c4ab65d4"
+checksum = "b95f0cf57859407e61c61a7e131cd339b05537046580b65abbf0a817f46917be"
 dependencies = [
  "bitflags",
  "futures-core",
@@ -1551,9 +1551,9 @@ dependencies = [
 
 [[package]]
 name = "redox_syscall"
-version = "0.5.5"
+version = "0.5.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "62871f2d65009c0256aed1b9cfeeb8ac272833c404e13d53d400cd0dad7a2ac0"
+checksum = "355ae415ccd3a04315d3f8246e86d67689ea74d88d915576e1589a351062a13b"
 dependencies = [
  "bitflags",
 ]

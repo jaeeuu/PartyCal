@@ -2,11 +2,16 @@ import type { Accessor, JSX, Setter } from "solid-js";
 import { Portal } from "solid-js/web";
 import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
-import { createEffect, Show } from 'solid-js';
+import { createEffect, onMount, Show } from 'solid-js';
 import { materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
 
-// "linear-gradient(120deg, rgba(254,247,243,1) 0%, rgba(249,241,250,1) 15%, rgba(237,245,254,1) 50%, rgba(238,251,243,1) 100%)"
+// const spin = stylex.keyframes({
+//   '0%': { transform: 'rotate(0deg) scaleX(1) translateY(0px)' },
+//   '50%': { transform: 'rotate(180deg) scaleX(0.5) translateY(5px)' },
+//   '100%': { transform: 'rotate(360deg) scaleX(1) translateY(0px)'},
+// });
+
 const inStyles = stylex.create({
   root: {
     width: '100dvw',
@@ -63,7 +68,16 @@ const ixStyles = stylex.create({
     borderRadius: '2.5px',
     //marginLeft: '12px',
     backgroundColor: '#E5E8EB',
-    transition: 'color 0.5s ease',
+    // backgroundColor: '#CBD0D6',
+    // transition: 'color 0.5s ease',
+    // animationName: spin,
+    // animationDuration: '1.5s',
+    //animationTimeline: 'cubic-bezier(0.08,0.82,0.17,1)',
+    // animationTimingFunction: 'ease',
+    // animationTimingFunction: 'cubic-bezier(0.08,0.82,0.17,1)',
+    // animationIterationCount: 1,
+    // animationFillMode: 'forwards',
+    // animationDirection: 'normal',
   },
   active: {
     marginTop: '5px',
@@ -93,7 +107,7 @@ type SetPopUpProps<P = {}> = P & {
   children: JSX.Element;
   show: Accessor<number>,
   setShow: Setter<number>,
-  loading?: boolean,
+  hasLoad?: boolean,
 };
 
 export default function SetPopUp(props: SetPopUpProps): JSX.Element{
@@ -114,31 +128,30 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     a.finished.then(done);
   };
 
-  //const isLoading = () => props.loading || false;
-  let hintRef: HTMLElement | null = null;
+  // const hasLoad = () => props.hasLoad || false;
+  let hintRef: HTMLDivElement | null = null;
   let hintAni: Animation | null = null;
   
-  const handleLoading = () => {
-    if (!hintRef || hintAni) return;
+  // const animations = element.getAnimations();
+  const startAnimation = (dur, iter) => {
+    if (!hintRef) return;
+    if (hintAni) hintAni.cancel();
     const keyframes = new KeyframeEffect(
       hintRef,
       [
-        { transform: 'rotate(0deg) scaleX(1)' },
-        { transform: 'rotate(180deg) scaleX(0.5)'},
-        { transform: 'rotate(360deg) scaleX(1)'},
+        { transform: 'rotate(0deg) scaleX(1) translateY(0px)' },
+        { transform: 'rotate(180deg) scaleX(0.5) translateY(5px)'},
+        { transform: 'rotate(360deg) scaleX(1) translateY(0px)'},
       ],
-      { duration: 1500, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: Infinity },
+      { duration: dur, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: iter },
     );
     hintAni = new Animation(keyframes, document.timeline);
     hintAni.play();
   };
 
   createEffect(() => {
-    if (props.loading) handleLoading();
-    else {
-      if (hintAni) hintAni.cancel();
-      else return;
-    }
+    if(props.show() > 0 && props.show() < 3) startAnimation(1000, 1);
+    else startAnimation(1500, Infinity);
   });
 
   return (
@@ -148,7 +161,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         onExit={(el, done) => backOnExit(el, done)}
       >
         <Show when={props.show()!==0}>
-          <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => !props.loading && props.setShow(0)}>
+          <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => props.setShow(0)}>
             &nbsp;
           </div>
         </Show>
@@ -161,7 +174,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
           <div {...stylex.attrs(ixStyles.box)}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
               <div {...stylex.attrs(ixStyles.hintBox)}>
-                <span ref={hintRef} {...stylex.attrs(ixStyles.hint, props.loading && ixStyles.active)}>&nbsp;</span>
+                <div ref={hintRef} {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>
                 {/* <SetButtonBox sx={[ixStyles.close]} onClick={()=>props.setShow(0)}>
                   <CloseSvg width="15px" color="#B5B5B5" />
                 </SetButtonBox> */}

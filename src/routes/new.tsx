@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
-import { SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox, SetA } from "~/components/SetBase";
-import { createMemo, createSignal, Index, Show, createResource } from "solid-js";
+import { SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox  } from "~/components/SetBase";
+import { createMemo, createSignal, Index, Show } from "solid-js";
 import { oneDj } from '../common/stores';
 import type { Dayjs } from "dayjs";
 import SetPopUp from '../components/SetPopUp';
@@ -23,8 +23,8 @@ const inStyles = stylex.create({
   },
   showup: {
     transform: {
-      default: "translateY(0px)",
-      '@starting-style': "translateY(50px)",
+      default: "translateY(0px) scaleY(1)",
+      '@starting-style': "translateY(50px) scaleY(1.2)",
     },
     opacity: {
       default: 1,
@@ -94,7 +94,7 @@ const ixStyles = stylex.create({
     position: 'relative',
     // paddingTop: '10px',
     ...stylex.include(inStyles.showup),
-    transitionDelay: '0.05s',
+    transitionDelay: '0.1s',
   },
   subDateTextBox: {
     ...stylex.include(inStyles.flex),
@@ -136,7 +136,7 @@ const ixStyles = stylex.create({
     placeItems: "stretch",
     gap: "3px",
     ...stylex.include(inStyles.showup),
-    transitionDelay: '0.1s',
+    transitionDelay: '0.15s',
   },
   subCalTile: {
     ...stylex.include(inStyles.flex),
@@ -217,7 +217,7 @@ const ixStyles = stylex.create({
     gap: '20px',
     marginTop: '25px',
     ...stylex.include(inStyles.showup),
-    transitionDelay: '0.15s',
+    transitionDelay: '0.25s',
   },
   agree: {
     width: "100%",
@@ -242,7 +242,7 @@ export default function NewPage() {
 
   const [memCell, setMemCell] = createSignal<DateCell>(null);
 
-  const [loading, setLoading] = createSignal<boolean>(false);
+  // const [loading, setLoading] = createSignal<boolean>(false);
 
   let calRef: HTMLDivElement | null = null;
   let calAni: Animation | null = null;
@@ -377,7 +377,7 @@ export default function NewPage() {
     //   res.json().then((data) => data.id).catch(() => "error");
     // });
     // sessionStorage.setItem('recent', JSON.stringify(uid()));
-    setLoading(true);
+    // setLoading(true);
     setSubPage(3);
   };
 
@@ -431,7 +431,7 @@ export default function NewPage() {
           투표 생성하기
         </SetButton>
       </SetBox>
-      <SetPopUp show={subPage} setShow={setSubPage} loading={loading()}>
+      <SetPopUp show={subPage} setShow={setSubPage}>
         <Show when={subPage()===1||subPage()===2}>
           <div {...stylex.attrs(ixStyles.subDateBox)}>
             <div {...stylex.attrs(ixStyles.subDateTextBox)}>
@@ -498,7 +498,7 @@ export default function NewPage() {
           </div>
         </Show>
         <Show when={subPage()===3||subPage()===4}>
-          <div></div>
+          <div>ABC</div>
         </Show>
       </SetPopUp>
     </>
