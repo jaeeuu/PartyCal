@@ -9,6 +9,7 @@ import type { DateCell } from '../common/dates';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import ArrowLeftSvg from '../assets/icons/arrow_left.svg';
 import SelectDateSvg from '../assets/icons/select_date.svg';
+import { showUpAni } from '~/common/animations';
 
 const inStyles = stylex.create({
   flex: {
@@ -21,17 +22,6 @@ const inStyles = stylex.create({
     borderStyle: "solid",
     borderWidth: "2px",
   },
-  showup: {
-    transform: {
-      default: "translateY(0px) scaleY(1)",
-      '@starting-style': "translateY(50px) scaleY(1.2)",
-    },
-    opacity: {
-      default: 1,
-      '@starting-style': 0,
-    },
-    transition: 'transform 0.75s cubic-bezier(0.08,0.82,0.17,1), opacity 0.75s cubic-bezier(0.08,0.82,0.17,1)',
-  }
 });
 
 const ixStyles = stylex.create({
@@ -93,8 +83,6 @@ const ixStyles = stylex.create({
     paddingLeft: '10px',
     position: 'relative',
     // paddingTop: '10px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.1s',
   },
   subDateTextBox: {
     ...stylex.include(inStyles.flex),
@@ -135,8 +123,6 @@ const ixStyles = stylex.create({
     placeContent: "stretch",
     placeItems: "stretch",
     gap: "3px",
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.15s',
   },
   subCalTile: {
     ...stylex.include(inStyles.flex),
@@ -216,8 +202,6 @@ const ixStyles = stylex.create({
     width: "100%",
     gap: '20px',
     marginTop: '25px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.25s',
   },
   agree: {
     width: "100%",
@@ -249,69 +233,48 @@ export default function NewPage() {
 
   const weekList = ['일', '월', '화', '수', '목', '금', '토'];
 
-  const handleNextMonth = () => {
-    setMainDj((prev) => prev.add(1,'month'));
-    if (!calRef) return;
-    if (calAni) calAni.cancel();
-    const keyframes = new KeyframeEffect(
-      calRef,
-      [
-        { transform: 'translateX(75px)', opacity: 0 },
-        { transform: 'translateX(0px)', opacity: 1 },
-      ],
-      { duration: 350, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: 1 },
-    );
-    calAni = new Animation(keyframes, document.timeline);
-    calAni.play();
-  };
-
-  const handlePrevMonth = () => {
-    setMainDj((prev) => prev.subtract(1,'month'));
-    if (!calRef) return;
-    if (calAni) calAni.cancel();
-    const keyframes = new KeyframeEffect(
-      calRef,
-      [
-        { transform: 'translateX(-75px)', opacity: 0 },
-        { transform: 'translateX(0px)', opacity: 1 },
-      ],
-      { duration: 350, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: 1 },
-    );
-    calAni = new Animation(keyframes, document.timeline);
-    calAni.play();
-  };
-
-  const handleStartSelect = (it: DateCell) => {
-    if (!it || !mainCell()) return;
-    if (it.month !== mainCell().month) {
-      if (convertCellToNum(it) > convertCellToNum(mainCell())) {
-        handleNextMonth();
-      } else {
-        handlePrevMonth();
-      }
-      return;
-    } else {
-      setStartCell((prev) => {
-        if (isSameCell(prev, it)) return memCell();
-        else return it;
-      });
+  const handleMonthMove = (type: number) => {
+    let pixel = 75;
+    if (type === 1) setMainDj((prev) => prev.add(1,'month'));
+    else {
+      setMainDj((prev) => prev.subtract(1,'month'));
+      pixel = -75;
     }
-    
+    if (!calRef) return;
+    if (calAni) calAni.cancel();
+    const keyframes = new KeyframeEffect(
+      calRef,
+      [
+        { transform: `translateX(${pixel})`, opacity: 0 },
+        { transform: 'translateX(0px)', opacity: 1 },
+      ],
+      { duration: 350, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: 1, fill: 'both' },
+    );
+    calAni = new Animation(keyframes);
+    calAni.play();
+    calAni.finished.then(() => calAni.cancel());
   };
 
-  const handleEndSelect = (it: DateCell) => {
+  const handleSelect = (it: DateCell, type: number) => {
     if (!it || !mainCell()) return;
     if (it.month !== mainCell().month) {
       if (convertCellToNum(it) > convertCellToNum(mainCell())) {
-        handleNextMonth();
+        handleMonthMove(1);
       } else {
-        handlePrevMonth();
+        handleMonthMove(-1);
       }
     } else {
-      setEndCell((prev) => {
-        if (isSameCell(prev, it)) return memCell();
-        else return it;
-      });
+      if (type === 1) {
+        setStartCell((prev) => {
+          if (isSameCell(prev, it)) return memCell();
+          else return it;
+        });
+      } else {
+        setEndCell((prev) => {
+          if (isSameCell(prev, it)) return memCell();
+          else return it;
+        });
+      }
     }
   };
 
@@ -327,11 +290,8 @@ export default function NewPage() {
 
   const handleCancel = () => {
     setSubPage((prev) => {
-      if (prev === 1) {
-        setStartCell(memCell());
-      } else {
-        setEndCell(memCell());
-      }
+      if (prev === 1) setStartCell(memCell());
+      else setEndCell(memCell());
       return 0;
     });
   };
@@ -433,16 +393,16 @@ export default function NewPage() {
       </SetBox>
       <SetPopUp show={subPage} setShow={setSubPage}>
         <Show when={subPage()===1||subPage()===2}>
-          <div {...stylex.attrs(ixStyles.subDateBox)}>
+          <div {...stylex.attrs(ixStyles.subDateBox)} ref={(e)=>showUpAni(e,1)}>
             <div {...stylex.attrs(ixStyles.subDateTextBox)}>
               <div {...stylex.attrs(ixStyles.subDateYear)}>{`${mainCell().year}년`}</div>
               <div {...stylex.attrs(ixStyles.subDateMonth)}>{`${mainCell().month}월`}</div>
             </div>
             <div {...stylex.attrs(ixStyles.subDateButtonWrap)}>
-              <SetButtonBox onClick={() => handlePrevMonth()} sx={[ixStyles.subDateButtonBox]}>
+              <SetButtonBox onClick={() => handleMonthMove(-1)} sx={[ixStyles.subDateButtonBox]}>
                 <ArrowLeftSvg width="22px" />
               </SetButtonBox>
-              <SetButtonBox onClick={() => handleNextMonth()} sx={[ixStyles.subDateButtonBox]}>
+              <SetButtonBox onClick={() => handleMonthMove(1)} sx={[ixStyles.subDateButtonBox]}>
                 <ArrowRightSvg width="22px" />
               </SetButtonBox>
             </div>
@@ -451,7 +411,7 @@ export default function NewPage() {
               <Show when={subPage()===2}>구간의 마지막 날짜를 선택해주세요</Show>
             </div>
           </div>
-          <div {...stylex.attrs(ixStyles.subCalBox)} ref={calRef}>
+          <div {...stylex.attrs(ixStyles.subCalBox)} ref={(e)=>(calRef=e,showUpAni(e,2))}>
             <Index each={weekList}>
               {(item) => (<div {...stylex.attrs(ixStyles.subCalTop)}>{item()}</div>)}
             </Index>
@@ -465,7 +425,7 @@ export default function NewPage() {
                       isBeforeCell(item(), todayCell) && ixStyles.subCalDisabled,
                       isSameCell(item(), startCell()) && ixStyles.subCalActive,
                     )}
-                    onClick={()=> handleStartSelect(item())}
+                    onClick={()=> handleSelect(item(), 1)}
                   >
                     {item().day}
                   </div>
@@ -484,7 +444,7 @@ export default function NewPage() {
                       isBeforeCell(item(), startCell()) && ixStyles.subCalDisabled,
                       isAfterCell(item(), limitCell()) && ixStyles.subCalDisabled,
                     )}
-                    onClick={()=> handleEndSelect(item())}
+                    onClick={()=> handleSelect(item(), 2)}
                   >
                     {item().day}
                   </div>
@@ -492,7 +452,7 @@ export default function NewPage() {
               </Index>
             </Show>
           </div>
-          <div {...stylex.attrs(ixStyles.calButtonBox)}>
+          <div {...stylex.attrs(ixStyles.calButtonBox)} ref={(e)=>showUpAni(e,3.5)}>
             <SetButton mode="sub" onClick={()=>handleCancel()}>취소</SetButton>
             <SetButton mode="main" onClick={()=>handleOk()} disabled={subPage()===1 ? !startCell() : !endCell()}>확인</SetButton>
           </div>

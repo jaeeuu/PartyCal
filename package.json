@@ -17,8 +17,8 @@
   "dependencies": {
     "@solid-primitives/clipboard": "^1.5.10",
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.14.5",
-    "@solidjs/start": "^1.0.6",
+    "@solidjs/router": "^0.14.7",
+    "@solidjs/start": "^1.0.7",
     "dayjs": "^1.11.13",
     "solid-js": "^1.9.1",
     "solid-swr": "^5.0.0",

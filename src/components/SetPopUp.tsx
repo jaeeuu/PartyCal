@@ -6,10 +6,9 @@ import { createEffect, onMount, Show } from 'solid-js';
 import { materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
 
-// const spin = stylex.keyframes({
-//   '0%': { transform: 'rotate(0deg) scaleX(1) translateY(0px)' },
-//   '50%': { transform: 'rotate(180deg) scaleX(0.5) translateY(5px)' },
-//   '100%': { transform: 'rotate(360deg) scaleX(1) translateY(0px)'},
+// const spinOnce = stylex.keyframes({
+//   '0%': { transform: 'rotate(0deg) scaleX(0.5)' },
+//   '100%': { transform: 'rotate(360deg) scaleX(1)'},
 // });
 
 const inStyles = stylex.create({
@@ -70,10 +69,8 @@ const ixStyles = stylex.create({
     backgroundColor: '#E5E8EB',
     // backgroundColor: '#CBD0D6',
     // transition: 'color 0.5s ease',
-    // animationName: spin,
-    // animationDuration: '1.5s',
-    //animationTimeline: 'cubic-bezier(0.08,0.82,0.17,1)',
-    // animationTimingFunction: 'ease',
+    // animationName: spinOnce,
+    // animationDuration: '1.25s',
     // animationTimingFunction: 'cubic-bezier(0.08,0.82,0.17,1)',
     // animationIterationCount: 1,
     // animationFillMode: 'forwards',
@@ -133,26 +130,26 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   let hintAni: Animation | null = null;
   
   // const animations = element.getAnimations();
-  const startAnimation = (dur, iter) => {
-    if (!hintRef) return;
-    if (hintAni) hintAni.cancel();
-    const keyframes = new KeyframeEffect(
-      hintRef,
-      [
-        { transform: 'rotate(0deg) scaleX(1) translateY(0px)' },
-        { transform: 'rotate(180deg) scaleX(0.5) translateY(5px)'},
-        { transform: 'rotate(360deg) scaleX(1) translateY(0px)'},
-      ],
-      { duration: dur, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: iter },
-    );
-    hintAni = new Animation(keyframes, document.timeline);
-    hintAni.play();
-  };
+  // const startAnimation = (dur, iter) => {
+  //   if (!hintRef) return;
+  //   if (hintAni) hintAni.cancel();
+  //   const keyframes = new KeyframeEffect(
+  //     hintRef,
+  //     [
+  //       { transform: 'rotate(0deg) scaleX(1) translateY(0px)' },
+  //       { transform: 'rotate(180deg) scaleX(0.5) translateY(5px)'},
+  //       { transform: 'rotate(360deg) scaleX(1) translateY(0px)'},
+  //     ],
+  //     { duration: dur, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: iter },
+  //   );
+  //   hintAni = new Animation(keyframes, document.timeline);
+  //   hintAni.play();
+  // };
 
-  createEffect(() => {
-    if(props.show() > 0 && props.show() < 3) startAnimation(1000, 1);
-    else startAnimation(1500, Infinity);
-  });
+  // createEffect(() => {
+  //   if(props.show() > 0 && props.show() < 3) startAnimation(1000, 1);
+  //   else startAnimation(1500, Infinity);
+  // });
 
   return (
     <Portal>

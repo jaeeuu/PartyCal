@@ -15,23 +15,12 @@ import SingleStoreSvg from '../assets/icons/logo/singlestore_logo.svg';
 import TauriLogoSvg from '../assets/icons/logo/tauri_logo.svg';
 import StylexLogoSvg from '../assets/icons/logo/stylex_logo.svg';
 import { Meta, MetaProvider } from "@solidjs/meta";
-
+import { showUpAni } from '~/common/animations';
 
 const inStyles = stylex.create({
   flex: {
     display: 'flex',
     alignItems: 'center',
-  },
-  showup: {
-    transform: {
-      default: "translateY(0px) scaleY(1)",
-      '@starting-style': "translateY(50px) scaleY(1.2)",
-    },
-    opacity: {
-      default: 1,
-      '@starting-style': 0,
-    },
-    transition: 'transform 0.75s cubic-bezier(0.08,0.82,0.17,1), opacity 0.75s cubic-bezier(0.08,0.82,0.17,1)',
   },
 });
 
@@ -152,8 +141,6 @@ const ixStyles = stylex.create({
     padding: '10px',
     paddingTop: '15px',
     paddingBottom: '0px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.05s',
   },
   subBox_2: {
     color: "#B0B8C1",
@@ -162,8 +149,6 @@ const ixStyles = stylex.create({
     padding: '10px',
     paddingTop: '0px',
     paddingBottom: '15px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.1s',
   },
   subBox_3: {
     ...stylex.include(inStyles.flex),
@@ -177,8 +162,6 @@ const ixStyles = stylex.create({
     borderWidth: "1.5px",
     borderRadius: "15px",
     padding: '12px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.15s',
   },
   subBox_31: {
     ...stylex.include(inStyles.flex),
@@ -194,10 +177,6 @@ const ixStyles = stylex.create({
     borderRadius: '10px',
     color: "#4e5a68",
     backgroundColor: "#F2F4F6",
-  },
-  closeButton: {
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.2s',
   },
 });
 
@@ -262,16 +241,16 @@ export default function HomePage() {
       </SetBox>
       <SetPopUp show={showSub} setShow={setShowSub}>
         <Show when={showSub()===2}>
-          <div {...stylex.attrs(ixStyles.subBox_1)}>COPYRIGHT 2024 JAEU</div>
-          <div {...stylex.attrs(ixStyles.subBox_2)}>This app is licensed under the terms of the MIT license.</div>
-          <div {...stylex.attrs(ixStyles.subBox_3)}>
+          <div {...stylex.attrs(ixStyles.subBox_1)} ref={(e)=>showUpAni(e,1)}>COPYRIGHT 2024 JAEU</div>
+          <div {...stylex.attrs(ixStyles.subBox_2)} ref={(e)=>showUpAni(e,2)}>This app is licensed under the terms of the MIT license.</div>
+          <div {...stylex.attrs(ixStyles.subBox_3)} ref={(e)=>showUpAni(e,3)}>
             <div {...stylex.attrs(ixStyles.apps)}><SolidSvg height="15px" />SOLID START</div>
             <div {...stylex.attrs(ixStyles.apps)}><NtexLogoSVg height="15px" />NTEX</div>
             <div {...stylex.attrs(ixStyles.apps)}><TauriLogoSvg height="15px" />TAURI</div>
             <div {...stylex.attrs(ixStyles.apps)}><SingleStoreSvg height="15px" />SINGLE STORE</div>
             <div {...stylex.attrs(ixStyles.apps)}><StylexLogoSvg height="15px" />STYLEX</div>
           </div>
-          <SetButton sx={[ixStyles.closeButton]} mode='main' onClick={()=>setShowSub(0)}>닫기</SetButton>
+          <SetButton sx={[]} mode='main' onClick={()=>setShowSub(0)} ref={(e)=>showUpAni(e,4)}>닫기</SetButton>
         </Show>
         <Show when={showSub()===1}>
           <SetShare setShow={setShowSub} />

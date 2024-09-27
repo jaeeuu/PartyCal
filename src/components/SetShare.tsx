@@ -5,6 +5,7 @@ import KakaotalkLogoSvg from '../assets/icons/logo/kakaotalk_logo.svg';
 import CopySvg from '../assets/icons/copy.svg';
 import { SetButton, SetButtonBox } from './SetBase';
 import { CallDialog } from './SetAlert';
+import { showUpAni } from '~/common/animations';
 // import { copyToClipboard } from "@solid-primitives/clipboard";
 
 // copyToClipboard;
@@ -36,17 +37,6 @@ const inStyles = stylex.create({
     flexDirection: 'column',
     //gap: '7px',
   },
-  showup: {
-    transform: {
-      default: "translateY(0px) scaleY(1)",
-      '@starting-style': "translateY(50px) scaleY(1.2)",
-    },
-    opacity: {
-      default: 1,
-      '@starting-style': 0,
-    },
-    transition: 'transform 0.75s cubic-bezier(0.08,0.82,0.17,1), opacity 0.75s cubic-bezier(0.08,0.82,0.17,1)',
-  }
 });
 
 const ixStyles = stylex.create({
@@ -65,8 +55,6 @@ const ixStyles = stylex.create({
     padding: '10px',
     paddingTop: '15px',
     paddingBottom: '0px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.1s',
   },
   title2: {
     color: "#B0B8C1",
@@ -76,8 +64,6 @@ const ixStyles = stylex.create({
     padding: '10px',
     paddingTop: '0px',
     paddingBottom: '15px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.1s',
   },
   linkBox: {
     ...stylex.include(inStyles.flex),
@@ -89,8 +75,6 @@ const ixStyles = stylex.create({
     padding: '16px 20px 16px 20px',
     borderRadius: '20px',
     userSelect: 'text',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.15s',
   },
   box2: {
     ...stylex.include(inStyles.flex),
@@ -102,8 +86,6 @@ const ixStyles = stylex.create({
     borderRadius: "27px",
     padding: '10px',
     gap: '10px',
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.15s',
   },
   box21: {
     ...stylex.include(inStyles.flex),
@@ -131,10 +113,6 @@ const ixStyles = stylex.create({
     fontWeight: 600,
     borderRadius: '17px',
   },
-  closeButton: {
-    ...stylex.include(inStyles.showup),
-    transitionDelay: '0.22s',
-  }
 });
 
 export default function SetShare(props: SetShareProps): JSX.Element {
@@ -145,19 +123,21 @@ export default function SetShare(props: SetShareProps): JSX.Element {
     else return 'https://partycal.site/';
   };
 
-  const copyUrl = async(event): Promise<void> => {
+  const copyUrl = (event: Event) => {
     const element = event.target;
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(element);
-    selection.removeAllRanges();
-    selection.addRange(range);
-    await navigator.clipboard.writeText(getFullLink());
-    CallDialog(1);
+    if (element instanceof Node) {
+      const selection = window.getSelection();
+      if (selection) {
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        selection.addRange(range);
+      }
+    }
+    navigator.clipboard.writeText(getFullLink()).then(() => CallDialog(1));
   };
 
-  const handleShowMore = async () => {
-    const shareUrl = async(data: ShareData): Promise<void> => await navigator.share(data);
+  const handleShowMore = () => {
+    const shareUrl = (data: ShareData) => navigator.share(data);
     props.setShow(0);
 
     if(getId()){
@@ -166,14 +146,14 @@ export default function SetShare(props: SetShareProps): JSX.Element {
         text: '지금 바로 투표에 참여해보세요!',
         url: getFullLink(),
       };
-      await shareUrl(shareData);
+      shareUrl(shareData);
     } else {
       const shareData: ShareData = {
         title: 'PARTYCAL: 일정 투표 플랫폼',
         text: '친구들과 함께 일정 투표를 시작해보세요',
         url: getFullLink(),
       };
-      await shareUrl(shareData);
+      shareUrl(shareData);
     }
   };
 
@@ -204,17 +184,17 @@ export default function SetShare(props: SetShareProps): JSX.Element {
   return (
     <>
       <div {...stylex.attrs(ixStyles.box01)}>
-        <div {...stylex.attrs(ixStyles.title)}>링크 복사하기</div>
-        <div {...stylex.attrs(ixStyles.title2)}>누르면 링크가 클립보드에 복사돼요</div>
-        <SetButtonBox sx={[ixStyles.linkBox]} onClick={copyUrl}>
+        <div {...stylex.attrs(ixStyles.title)} ref={(e)=>showUpAni(e,1)}>링크 복사하기</div>
+        <div {...stylex.attrs(ixStyles.title2)} ref={(e)=>showUpAni(e,1.5)}>누르면 링크가 클립보드에 복사돼요</div>
+        <SetButtonBox sx={[ixStyles.linkBox]} onClick={copyUrl} ref={(e)=>showUpAni(e,2)}>
           <CopySvg width="17px" color="#246ab6" />
           {getFullLink()}
         </SetButtonBox>
       </div>
       <div {...stylex.attrs(ixStyles.box02)}>
-        <div {...stylex.attrs(ixStyles.title)}>공유하기</div>
-        <div {...stylex.attrs(ixStyles.title2)}>채팅방에 링크를 보낼 수 있어요</div>
-        <div {...stylex.attrs(ixStyles.box2)}>
+        <div {...stylex.attrs(ixStyles.title)} ref={(e)=>showUpAni(e,2.5)}>공유하기</div>
+        <div {...stylex.attrs(ixStyles.title2)} ref={(e)=>showUpAni(e,3)}>채팅방에 링크를 보낼 수 있어요</div>
+        <div {...stylex.attrs(ixStyles.box2)} ref={(e)=>showUpAni(e,3.5)}>
           <div {...stylex.attrs(ixStyles.box21)}>
             <SetButtonBox sx={[ixStyles.kakaoBox]} onClick={()=>handleSnsClick(1)}>
               <KakaotalkLogoSvg width="20px" />
@@ -230,7 +210,7 @@ export default function SetShare(props: SetShareProps): JSX.Element {
           </SetButton>
         </div>
       </div>
-      <SetButton sx={[ixStyles.closeButton]} mode='sub' onClick={()=>props.setShow(0)}>닫기</SetButton>
+      <SetButton sx={[]} mode='sub' onClick={()=>props.setShow(0)} ref={(e)=>showUpAni(e,4)}>닫기</SetButton>
     </>
   );
 }
