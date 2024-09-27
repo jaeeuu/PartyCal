@@ -1,12 +1,12 @@
 import { onMount } from 'solid-js';
 
-declare module "solid-js" {
-  namespace JSX {
-    interface Directives {
-      showUpAni: number;
-    }
-  }
-}
+// declare module "solid-js" {
+//   namespace JSX {
+//     interface Directives {
+//       showUpAni: number;
+//     }
+//   }
+// }
 
 export function showUpAni(el: Element, value: number) {
   onMount(() => {
@@ -18,7 +18,7 @@ export function showUpAni(el: Element, value: number) {
         { transform: 'translateY(0px) scaleY(1)', opacity: 1, transformOrigin: 'center center' },
       ],
       {
-        duration: 750,
+        duration: 700,
         easing: "cubic-bezier(0.08,0.82,0.17,1)",
         iterations: 1,
         delay: value*100,

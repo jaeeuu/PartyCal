@@ -107,7 +107,7 @@ type SetPopUpProps<P = {}> = P & {
   isDynamic?: boolean,
 };
 
-export default function SetPopUp(props: SetPopUpProps): JSX.Element{
+export default function SetCreate(props: SetPopUpProps): JSX.Element{
   const backOnEnter = (el: Element, done: () => void) => {
     const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease' });
     a.finished.then(done);

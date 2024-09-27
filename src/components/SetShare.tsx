@@ -185,16 +185,16 @@ export default function SetShare(props: SetShareProps): JSX.Element {
     <>
       <div {...stylex.attrs(ixStyles.box01)}>
         <div {...stylex.attrs(ixStyles.title)} ref={(e)=>showUpAni(e,1)}>링크 복사하기</div>
-        <div {...stylex.attrs(ixStyles.title2)} ref={(e)=>showUpAni(e,1.5)}>누르면 링크가 클립보드에 복사돼요</div>
-        <SetButtonBox sx={[ixStyles.linkBox]} onClick={copyUrl} ref={(e)=>showUpAni(e,2)}>
+        <div {...stylex.attrs(ixStyles.title2)} ref={(e)=>showUpAni(e,1.25)}>누르면 링크가 클립보드에 복사돼요</div>
+        <SetButtonBox sx={[ixStyles.linkBox]} onClick={copyUrl} ref={(e)=>showUpAni(e,1.5)}>
           <CopySvg width="17px" color="#246ab6" />
           {getFullLink()}
         </SetButtonBox>
       </div>
       <div {...stylex.attrs(ixStyles.box02)}>
-        <div {...stylex.attrs(ixStyles.title)} ref={(e)=>showUpAni(e,2.5)}>공유하기</div>
-        <div {...stylex.attrs(ixStyles.title2)} ref={(e)=>showUpAni(e,3)}>채팅방에 링크를 보낼 수 있어요</div>
-        <div {...stylex.attrs(ixStyles.box2)} ref={(e)=>showUpAni(e,3.5)}>
+        <div {...stylex.attrs(ixStyles.title)} ref={(e)=>showUpAni(e,2)}>공유하기</div>
+        <div {...stylex.attrs(ixStyles.title2)} ref={(e)=>showUpAni(e,2.25)}>채팅방에 링크를 보낼 수 있어요</div>
+        <div {...stylex.attrs(ixStyles.box2)} ref={(e)=>showUpAni(e,3)}>
           <div {...stylex.attrs(ixStyles.box21)}>
             <SetButtonBox sx={[ixStyles.kakaoBox]} onClick={()=>handleSnsClick(1)}>
               <KakaotalkLogoSvg width="20px" />
@@ -210,7 +210,7 @@ export default function SetShare(props: SetShareProps): JSX.Element {
           </SetButton>
         </div>
       </div>
-      <SetButton sx={[]} mode='sub' onClick={()=>props.setShow(0)} ref={(e)=>showUpAni(e,4)}>닫기</SetButton>
+      <SetButton sx={[]} mode='sub' onClick={()=>props.setShow(0)} ref={(e)=>showUpAni(e,3.5)}>닫기</SetButton>
     </>
   );
 }

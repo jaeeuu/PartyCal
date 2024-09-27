@@ -77,7 +77,7 @@ const baseStyles = stylex.create({
     userSelect: 'none',
     cursor: 'pointer',
     transition: {
-      default: 'transform 0.8s var(--spring-easing), filter 0.4s linear',
+      default: 'transform 0.8s var(--spring-easing), filter 0.4s linear, background-color 0.3s linear',
       '@media (hover: none)': {
         default: null,
         ':not(:active)': 'transform 0.8s var(--spring-mobile), filter 0.4s linear',
