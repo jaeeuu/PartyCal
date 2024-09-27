@@ -318,7 +318,7 @@ export default function NewPage() {
   
   const handleMakeNew = () => {
     setCreate(1);
-    const [uid] = createResource(async () => {
+    createResource(async () => {
       const res = await fetch("/apix/create", {
         method: "POST",
         headers: {
@@ -331,24 +331,23 @@ export default function NewPage() {
           k: onlyKakao(),
         }),
       });
-      res.json().then((data) => data.id).catch(() => "error");
+      res.json().then((data) => setCreatedUid(data.id)).catch(() => setCreatedUid("error"));
     });
-    setTimeout(() => {
-      if (uid.loading) {
-        const repeat = setInterval(() => {
-          if (!uid.loading) {
-            sessionStorage.setItem('recent', JSON.stringify(uid()));
-            //@ts-expect-error
-            setCreatedUid(uid() ?? null);
-            clearInterval(repeat);
-          }
-        }, 900);
-      } else {
-        sessionStorage.setItem('recent', JSON.stringify(uid()));
-        //@ts-expect-error
-        setCreatedUid(uid() ?? null);
-      }
-    }, 200);
+    // setTimeout(() => {
+    //   if (uid.loading) {
+    //     const repeat = setInterval(() => {
+    //       if (!uid.loading) {
+    //         sessionStorage.setItem('recent', JSON.stringify(uid()));
+    //         setCreatedUid(uid() ?? null);
+    //         clearInterval(repeat);
+    //       }
+    //     }, 900);
+    //   } else {
+    //     sessionStorage.setItem('recent', JSON.stringify(uid()));
+    //     //@ts-expect-error
+    //     setCreatedUid(uid() ?? null);
+    //   }
+    // }, 200);
   };
 
   return (

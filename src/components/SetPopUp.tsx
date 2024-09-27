@@ -141,7 +141,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
           { transform: 'rotate(360deg) scaleX(1)'},
         ],
         {
-          duration: isDynamic() ? 900 : 700,
+          duration: isDynamic() ? 800 : 700,
           easing: "cubic-bezier(0.08,0.82,0.17,1)",
           iterations: 1,
         },
