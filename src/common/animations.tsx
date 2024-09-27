@@ -15,7 +15,7 @@ export function showUpAni(el: Element, value: number) {
       el,
       [
         { transform: 'translateY(50px) scaleY(1.3)', opacity: 0, transformOrigin: 'center top' },
-        { transform: 'translateY(0px) scaleY(1)', opacity: 1, transformOrigin: 'center top' },
+        { transform: 'translateY(0px) scaleY(1)', opacity: 1, transformOrigin: 'center center' },
       ],
       {
         duration: 750,

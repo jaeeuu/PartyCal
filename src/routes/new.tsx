@@ -229,28 +229,26 @@ export default function NewPage() {
   // const [loading, setLoading] = createSignal<boolean>(false);
 
   let calRef: HTMLDivElement | null = null;
-  let calAni: Animation | null = null;
+  //let calAni: Animation | null = null;
 
   const weekList = ['일', '월', '화', '수', '목', '금', '토'];
 
   const handleMonthMove = (type: number) => {
-    let pixel = 75;
-    if (type === 1) setMainDj((prev) => prev.add(1,'month'));
-    else {
-      setMainDj((prev) => prev.subtract(1,'month'));
-      pixel = -75;
-    }
     if (!calRef) return;
-    if (calAni) calAni.cancel();
+    calRef.getAnimations().forEach((ani) => ani.cancel());
+
+    if (type === 1) setMainDj((prev) => prev.add(1,'month'));
+    else setMainDj((prev) => prev.subtract(1,'month'));
+    
     const keyframes = new KeyframeEffect(
       calRef,
       [
-        { transform: `translateX(${pixel})`, opacity: 0 },
+        { transform: type===1 ? 'translateX(75px)' : 'translateX(-75px)', opacity: 0 },
         { transform: 'translateX(0px)', opacity: 1 },
       ],
       { duration: 350, easing: "cubic-bezier(0.08,0.82,0.17,1)", iterations: 1, fill: 'both' },
     );
-    calAni = new Animation(keyframes);
+    const calAni = new Animation(keyframes);
     calAni.play();
     calAni.finished.then(() => calAni.cancel());
   };
