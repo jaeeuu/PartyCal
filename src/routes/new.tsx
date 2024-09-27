@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox  } from "~/components/SetBase";
 import { createMemo, createSignal, Index, Show, createResource } from "solid-js";
-import { oneDj } from '../common/stores';
+import { createdUid, oneDj, setCreatedUid } from '../common/stores';
 import type { Dayjs } from "dayjs";
 import SetPopUp from '../components/SetPopUp';
 import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell, convertCellToDj, isAfterCell, convertCellToNum } from '../common/dates';
@@ -316,7 +316,7 @@ export default function NewPage() {
     setSubPage(2);
   };
   
-  const handleMakeNew = async () => {
+  const handleMakeNew = () => {
     setCreate(1);
     const [uid] = createResource(async () => {
       const res = await fetch("/apix/create", {
@@ -333,15 +333,22 @@ export default function NewPage() {
       });
       res.json().then((data) => data.id).catch(() => "error");
     });
-    const repeat = setInterval(() => {
-      if (!uid.loading) {
+    setTimeout(() => {
+      if (uid.loading) {
+        const repeat = setInterval(() => {
+          if (!uid.loading) {
+            sessionStorage.setItem('recent', JSON.stringify(uid()));
+            //@ts-expect-error
+            setCreatedUid(uid() ?? null);
+            clearInterval(repeat);
+          }
+        }, 900);
+      } else {
         sessionStorage.setItem('recent', JSON.stringify(uid()));
-        setCreate(2);
-        clearInterval(repeat);
+        //@ts-expect-error
+        setCreatedUid(uid() ?? null);
       }
-    }, 400);
-    // sessionStorage.setItem('recent', JSON.stringify(uid()));
-
+    }, 200);
   };
 
   return (
@@ -394,7 +401,7 @@ export default function NewPage() {
           투표 생성하기
         </SetButton>
       </SetBox>
-      <SetPopUp show={subPage} setShow={setSubPage}>
+      <SetPopUp show={subPage} setShow={setSubPage} isLong={true}>
         <div {...stylex.attrs(ixStyles.subDateBox)} ref={(e)=>showUpAni(e,1)}>
           <div {...stylex.attrs(ixStyles.subDateTextBox)}>
             <div {...stylex.attrs(ixStyles.subDateYear)}>{`${mainCell().year}년`}</div>
@@ -459,9 +466,9 @@ export default function NewPage() {
           <SetButton mode="main" onClick={()=>handleOk()} disabled={subPage()===1 ? !startCell() : !endCell()}>확인</SetButton>
         </div>
       </SetPopUp>
-      <SetPopUp show={create} setShow={setCreate}>
-        <Show when={create()===2}>
-          <SetShare setShow={setCreate} />
+      <SetPopUp show={create} setShow={setCreate} isLong={true} isDynamic={true}>
+        <Show when={createdUid()}>
+          <SetShare setShow={setCreate} id={createdUid()}/>
         </Show>
       </SetPopUp>
     </>

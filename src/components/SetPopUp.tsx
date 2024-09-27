@@ -3,7 +3,7 @@ import { Portal } from "solid-js/web";
 import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
 import { onMount, Show } from 'solid-js';
-import { materialEasing } from "~/common/stores";
+import { createdUid, materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
 
 // const spinOnce = stylex.keyframes({
@@ -34,6 +34,7 @@ const ixStyles = stylex.create({
     paddingBottom: '20px',
     touchAction: 'none',
     overflow: 'hidden',
+    transition: 'height 0.4s ease',
   },
   boxIn: {
     maxWidth: '430px',
@@ -105,15 +106,16 @@ type SetPopUpProps<P = {}> = P & {
   show: Accessor<number>,
   setShow: Setter<number>,
   isDynamic?: boolean,
+  isLong?: boolean,
 };
 
 export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   const backOnEnter = (el: Element, done: () => void) => {
-    const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease' });
+    const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: props.isLong ? 500 : 400, easing: 'ease' });
     a.finished.then(done);
   };
   const backOnExit = (el: Element, done: () => void) => {
-    const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, easing: "ease" });
+    const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: props.isLong ? 400 : 300, easing: "ease" });
     a.finished.then(done);
   };
   const pageOnEnter = (el: Element, done: () => void) => {
@@ -126,6 +128,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   };
 
   const isDynamic = () => props.isDynamic ?? false;
+  let hintAni: Animation | null = null;
 
   const animateHint = (el: Element) => {
     onMount(() => {
@@ -140,12 +143,18 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         {
           duration: isDynamic() ? 900 : 700,
           easing: "cubic-bezier(0.08,0.82,0.17,1)",
-          iterations: isDynamic() ? Infinity : 1,
+          iterations: 1,
         },
       );
-      const hintAni = new Animation(keyframes);
+      hintAni = new Animation(keyframes);
       hintAni.play();
-      hintAni.finished.then(() => hintAni.cancel());
+      // hintAni.finished.then(() => {
+      //   if (!isDynamic()) hintAni.cancel();
+      // });
+      hintAni.onfinish = () => {
+        if (!isDynamic() || (isDynamic() && createdUid())) hintAni?.cancel();
+        else hintAni?.play();
+      };
     });
   };
   

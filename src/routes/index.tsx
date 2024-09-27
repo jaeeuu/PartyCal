@@ -239,7 +239,7 @@ export default function HomePage() {
           </SetButtonBox>
         </div>
       </SetBox>
-      <SetPopUp show={showSub} setShow={setShowSub}>
+      <SetPopUp show={showSub} setShow={setShowSub} isLong={showSub()===1}>
         <Show when={showSub()===2}>
           <div {...stylex.attrs(ixStyles.subBox_1)} ref={(e)=>showUpAni(e,1)}>COPYRIGHT 2024 JAEU</div>
           <div {...stylex.attrs(ixStyles.subBox_2)} ref={(e)=>showUpAni(e,2)}>This app is licensed under the terms of the MIT license.</div>
