@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox  } from "~/components/SetBase";
 import { createMemo, createSignal, Index, Show, createResource } from "solid-js";
-import { createdUid, oneDj, setCreatedUid } from '../common/stores';
+import { oneDj } from '../common/stores';
 import type { Dayjs } from "dayjs";
 import SetPopUp from '../components/SetPopUp';
 import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell, convertCellToDj, isAfterCell, convertCellToNum } from '../common/dates';
@@ -123,7 +123,7 @@ const ixStyles = stylex.create({
     gridTemplateColumns: "repeat(7, 1fr)",
     placeContent: "stretch",
     placeItems: "stretch",
-    gap: "3px",
+    gap: "1.5px",
   },
   subCalTile: {
     ...stylex.include(inStyles.flex),
@@ -159,6 +159,7 @@ const ixStyles = stylex.create({
         "@media (hover: hover)": "brightness(0.95)",
       },
     },
+    fontWeight: 500,
   },
   subCalTop: {
     display: 'flex',
@@ -176,6 +177,7 @@ const ixStyles = stylex.create({
   subCalOut: {
     // borderStyle: "none",
     opacity: 0.5,
+    fontWeight: 400,
   },
   subCalDisabled: {
     cursor: "default",
@@ -183,20 +185,22 @@ const ixStyles = stylex.create({
     borderStyle: "none",
     // color: "#e6adad"
     // opacity: 0.75,
+    fontWeight: 400,
   },
   subCalActive: {
     backgroundColor: "#8b97ea",
     color: "#fff",
     borderStyle: "none",
     transform: {
-      default: "scale(0.9)",
-      ":is(:active)": "scale(0.85)",
+      default: "scale(0.95)",
+      ":is(:active)": "scale(0.9)",
       //eslint-disable-next-line
       ":not(:active):is(:hover)": {
         default: null,
         "@media (hover: hover)": "scale(1)",
       },
     },
+    fontWeight: 600,
   },
   calButtonBox: {
     ...stylex.include(inStyles.flex),
@@ -206,6 +210,15 @@ const ixStyles = stylex.create({
   },
   agree: {
     width: "100%",
+  },
+  genError: {
+    // width: "100%",
+    // color: "#333e4b",
+    // fontSize: "16px",
+    paddingTop: '20px',
+    paddingBottom: '30px',
+    // fontWeight: 500,
+    // textAlign: 'center',
   },
 });
 
@@ -227,7 +240,7 @@ export default function NewPage() {
 
   const [memCell, setMemCell] = createSignal<DateCell>(null);
 
-  const [create, setCreate] = createSignal<number>(0);
+  const [genUid, setGenUid] = createSignal<string|null>(null);
 
   let calRef: HTMLDivElement | null = null;
 
@@ -317,7 +330,7 @@ export default function NewPage() {
   };
   
   const handleMakeNew = () => {
-    setCreate(1);
+    setSubPage(3);
     createResource(async () => {
       const res = await fetch("/apix/create", {
         method: "POST",
@@ -331,7 +344,7 @@ export default function NewPage() {
           k: onlyKakao(),
         }),
       });
-      res.json().then((data) => setCreatedUid(data.id)).catch(() => setCreatedUid("error"));
+      res.json().then((data) => setGenUid(data.id)).catch(() => setGenUid("error"));
     });
     // setTimeout(() => {
     //   if (uid.loading) {
@@ -375,14 +388,18 @@ export default function NewPage() {
         <div {...stylex.attrs(ixStyles.selectBox)}>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>첫째 날</div>
           <SetButtonBox sx={[ixStyles.selectButton, !startCell() && ixStyles.selectButtonOk]} onClick={()=>handleClickStart()}>
-            <Show when={!startCell()}><SelectDateSvg width="20px" />구간의 첫 날짜를 선택하세요</Show>
-            <Show when={startCell()}><SelectDateSvg width="20px" />{`${startCell().year}년 ${startCell().month}월 ${startCell().day}일`}</Show>
+            <SelectDateSvg width="20px" />
+            <Show when={startCell()} fallback={<>구간의 첫 날짜를 선택하세요</>}>
+              {`${startCell().year}년 ${startCell().month}월 ${startCell().day}일`}
+            </Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>마지막 날</div>
           <div {...stylex.attrs(ixStyles.selectButtonHelp)}>최대 100일 간격만 선택할 수 있어요</div>
           <SetButtonBox sx={[ixStyles.selectButton, !endCell() && ixStyles.selectButtonOk]} onClick={()=>handleClickEnd()} disabled={!startCell()}>
-            <Show when={!endCell()}><SelectDateSvg width="20px" />마지막 날짜를 선택하세요</Show>
-            <Show when={endCell()}><SelectDateSvg width="20px" />{`${endCell().year}년 ${endCell().month}월 ${endCell().day}일`}</Show>
+            <SelectDateSvg width="20px" />
+            <Show when={endCell()} fallback={<>마지막 날짜를 선택하세요</>}>
+              {`${endCell().year}년 ${endCell().month}월 ${endCell().day}일`}
+            </Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>옵션</div>
           <SetSwitch value={onlyKakao} setValue={setOnlyKakao}>카카오톡에서만 투표 허용하기</SetSwitch>
@@ -400,74 +417,85 @@ export default function NewPage() {
           투표 생성하기
         </SetButton>
       </SetBox>
-      <SetPopUp show={subPage} setShow={setSubPage} isLong={true}>
-        <div {...stylex.attrs(ixStyles.subDateBox)} ref={(e)=>showUpAni(e,1)}>
-          <div {...stylex.attrs(ixStyles.subDateTextBox)}>
-            <div {...stylex.attrs(ixStyles.subDateYear)}>{`${mainCell().year}년`}</div>
-            <div {...stylex.attrs(ixStyles.subDateMonth)}>{`${mainCell().month}월`}</div>
-          </div>
-          <div {...stylex.attrs(ixStyles.subDateButtonWrap)}>
-            <SetButtonBox onClick={() => handleMonthMove(-1)} sx={[ixStyles.subDateButtonBox]}>
-              <ArrowLeftSvg width="22px" />
-            </SetButtonBox>
-            <SetButtonBox onClick={() => handleMonthMove(1)} sx={[ixStyles.subDateButtonBox]}>
-              <ArrowRightSvg width="22px" />
-            </SetButtonBox>
-          </div>
-          <div {...stylex.attrs(ixStyles.subDateHelp)}>
-            <Show when={subPage()===1}>구간의 시작 날짜를 선택해주세요</Show>
-            <Show when={subPage()===2}>구간의 마지막 날짜를 선택해주세요</Show>
-          </div>
-        </div>
-        <div {...stylex.attrs(ixStyles.subCalBox)} ref={(e)=>(calRef=e,showUpAni(e,2))}>
-          <Index each={weekList}>
-            {(item) => (<div {...stylex.attrs(ixStyles.subCalTop)}>{item()}</div>)}
-          </Index>
-          <Show when={subPage() === 1}>
-            <Index each={mainCellList()}>
-              {(item) => (
-                <div
-                  {...stylex.attrs(
-                    ixStyles.subCalTile,
-                    (item().month !== mainCell().month) && ixStyles.subCalOut,
-                    isBeforeCell(item(), todayCell) && ixStyles.subCalDisabled,
-                    isSameCell(item(), startCell()) && ixStyles.subCalActive,
-                  )}
-                  onClick={()=> handleSelect(item(), 1)}
-                >
-                  {item().day}
+      <SetPopUp show={subPage} setShow={setSubPage} isLong={true} isOnce={subPage()===1||subPage()===2||!!genUid()}>
+        <Show when={subPage()===1||subPage()===2} fallback={
+          <Show when={!!genUid()} fallback={<>&nbsp;</>}>
+            <Show when={genUid() !== "error"} fallback={
+              <>
+                <div {...stylex.attrs(ixStyles.genError)}>
+                  <div {...stylex.attrs(ixStyles.titleText1)}>알 수 없는 오류가 발생했습니다.</div>
+                  <div {...stylex.attrs(ixStyles.titleText2)}>잠시 후 다시 시도해주세요.</div>
                 </div>
-              )}
-            </Index>
+                <SetButton mode="main" onClick={()=>setSubPage(0)}>닫기</SetButton>
+              </>
+            }>
+              <SetShare setShow={setSubPage} id={genUid()}/>
+            </Show>
           </Show>
-          <Show when={subPage() === 2}>
-            <Index each={mainCellList()}>
-              {(item) => (
-                <div
-                  {...stylex.attrs(
-                    ixStyles.subCalTile,
-                    isBetweenCell(item(), startCell(), endCell()) && ixStyles.subCalActive,
-                    isSameCell(item(), startCell()) && ixStyles.subCalActive,
-                    (item().month !== mainCell().month) && ixStyles.subCalOut,
-                    isBeforeCell(item(), startCell()) && ixStyles.subCalDisabled,
-                    isAfterCell(item(), limitCell()) && ixStyles.subCalDisabled,
-                  )}
-                  onClick={()=> handleSelect(item(), 2)}
-                >
-                  {item().day}
-                </div>
-              )}
+        }>
+          <div {...stylex.attrs(ixStyles.subDateBox)} ref={(e)=>showUpAni(e,1)}>
+            <div {...stylex.attrs(ixStyles.subDateTextBox)}>
+              <div {...stylex.attrs(ixStyles.subDateYear)}>{`${mainCell().year}년`}</div>
+              <div {...stylex.attrs(ixStyles.subDateMonth)}>{`${mainCell().month}월`}</div>
+            </div>
+            <div {...stylex.attrs(ixStyles.subDateButtonWrap)}>
+              <SetButtonBox onClick={() => handleMonthMove(-1)} sx={[ixStyles.subDateButtonBox]}>
+                <ArrowLeftSvg width="22px" />
+              </SetButtonBox>
+              <SetButtonBox onClick={() => handleMonthMove(1)} sx={[ixStyles.subDateButtonBox]}>
+                <ArrowRightSvg width="22px" />
+              </SetButtonBox>
+            </div>
+            <div {...stylex.attrs(ixStyles.subDateHelp)}>
+              <Show when={subPage()===1} fallback={<>구간의 마지막 날짜를 선택해주세요</>}>
+                구간의 시작 날짜를 선택해주세요
+              </Show>
+            </div>
+          </div>
+          <div {...stylex.attrs(ixStyles.subCalBox)} ref={(e)=>(calRef=e,showUpAni(e,2))}>
+            <Index each={weekList}>
+              {(item) => (<div {...stylex.attrs(ixStyles.subCalTop)}>{item()}</div>)}
             </Index>
-          </Show>
-        </div>
-        <div {...stylex.attrs(ixStyles.calButtonBox)} ref={(e)=>showUpAni(e,3.5)}>
-          <SetButton mode="sub" onClick={()=>handleCancel()}>취소</SetButton>
-          <SetButton mode="main" onClick={()=>handleOk()} disabled={subPage()===1 ? !startCell() : !endCell()}>확인</SetButton>
-        </div>
-      </SetPopUp>
-      <SetPopUp show={create} setShow={setCreate} isLong={true} isDynamic={true}>
-        <Show when={createdUid()}>
-          <SetShare setShow={setCreate} id={createdUid()}/>
+            <Show when={subPage() === 1} fallback={
+              <Index each={mainCellList()}>
+                {(item) => (
+                  <div
+                    {...stylex.attrs(
+                      ixStyles.subCalTile,
+                      isBetweenCell(item(), startCell(), endCell()) && ixStyles.subCalActive,
+                      isSameCell(item(), startCell()) && ixStyles.subCalActive,
+                      (item().month !== mainCell().month) && ixStyles.subCalOut,
+                      isBeforeCell(item(), startCell()) && ixStyles.subCalDisabled,
+                      isAfterCell(item(), limitCell()) && ixStyles.subCalDisabled,
+                    )}
+                    onClick={()=> handleSelect(item(), 2)}
+                  >
+                    {item().day}
+                  </div>
+                )}
+              </Index>
+            }>
+              <Index each={mainCellList()}>
+                {(item) => (
+                  <div
+                    {...stylex.attrs(
+                      ixStyles.subCalTile,
+                      (item().month !== mainCell().month) && ixStyles.subCalOut,
+                      isBeforeCell(item(), todayCell) && ixStyles.subCalDisabled,
+                      isSameCell(item(), startCell()) && ixStyles.subCalActive,
+                    )}
+                    onClick={()=> handleSelect(item(), 1)}
+                  >
+                    {item().day}
+                  </div>
+                )}
+              </Index>
+            </Show>
+          </div>
+          <div {...stylex.attrs(ixStyles.calButtonBox)} ref={(e)=>showUpAni(e,3.5)}>
+            <SetButton mode="sub" onClick={()=>handleCancel()}>취소</SetButton>
+            <SetButton mode="main" onClick={()=>handleOk()} disabled={subPage()===1 ? !startCell() : !endCell()}>확인</SetButton>
+          </div>
         </Show>
       </SetPopUp>
     </>

@@ -3,7 +3,7 @@ import { Portal } from "solid-js/web";
 import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
 import { onMount, Show } from 'solid-js';
-import { createdUid, materialEasing } from "~/common/stores";
+import { materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
 
 // const spinOnce = stylex.keyframes({
@@ -105,7 +105,7 @@ type SetPopUpProps<P = {}> = P & {
   children: JSX.Element;
   show: Accessor<number>,
   setShow: Setter<number>,
-  isDynamic?: boolean,
+  isOnce?: boolean,
   isLong?: boolean,
 };
 
@@ -127,7 +127,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     a.finished.then(done);
   };
 
-  const isDynamic = () => props.isDynamic ?? false;
+  const isOnce = () => props.isOnce ?? true;
   let hintAni: Animation | null = null;
 
   const animateHint = (el: Element) => {
@@ -141,7 +141,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
           { transform: 'rotate(360deg) scaleX(1)'},
         ],
         {
-          duration: isDynamic() ? 800 : 700,
+          duration: 750,
           easing: "cubic-bezier(0.08,0.82,0.17,1)",
           iterations: 1,
         },
@@ -152,7 +152,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       //   if (!isDynamic()) hintAni.cancel();
       // });
       hintAni.onfinish = () => {
-        if (!isDynamic() || (isDynamic() && createdUid())) hintAni?.cancel();
+        if (isOnce()) hintAni?.cancel();
         else hintAni?.play();
       };
     });
@@ -165,7 +165,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         onEnter={(el, done) => backOnEnter(el, done)}
         onExit={(el, done) => backOnExit(el, done)}
       >
-        <Show when={props.show()!==0}>
+        <Show when={props.show()!==0} keyed={true}>
           <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => props.setShow(0)}>
             &nbsp;
           </div>
@@ -175,7 +175,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         onEnter={(el, done) => pageOnEnter(el, done)}
         onExit={(el, done) => pageOnExit(el, done)}
       >
-        <Show when={props.show()!==0}>
+        <Show when={props.show()!==0} keyed={true}>
           <div {...stylex.attrs(ixStyles.box)}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
               <div {...stylex.attrs(ixStyles.hintBox)}>

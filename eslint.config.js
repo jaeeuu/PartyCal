@@ -7,7 +7,7 @@ import globals from "globals";
 export default [
   {
     files: ["src/**/*.tsx", "src/**/*.ts", "src/**/*.jsx"],
-    ignores: [".git/**", "dist/**", "node_modules/**", ".vinxi/**", ".vercel/**"],
+    ignores: [".git/**", "dist/**", "node_modules/**", ".vinxi/**"],
   },
   js.configs.recommended,
   plugin.configs['flat/typescript'],

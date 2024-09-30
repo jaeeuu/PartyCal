@@ -210,7 +210,7 @@ export default function SetShare(props: SetShareProps): JSX.Element {
           </SetButton>
         </div>
       </div>
-      <SetButton sx={[]} mode='sub' onClick={()=>props.setShow(0)} ref={(e)=>showUpAni(e,3.5)}>닫기</SetButton>
+      <SetButton mode='sub' onClick={()=>props.setShow(0)} ref={(e)=>showUpAni(e,3.5)}>닫기</SetButton>
     </>
   );
 }

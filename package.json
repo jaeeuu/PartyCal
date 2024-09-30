@@ -18,10 +18,10 @@
     "@solid-primitives/clipboard": "^1.5.10",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.14.7",
-    "@solidjs/start": "^1.0.7",
+    "@solidjs/start": "^1.0.8",
     "dayjs": "^1.11.13",
     "solid-js": "^1.9.1",
-    "solid-swr": "^5.0.0",
+    "solid-swr": "^5.0.1",
     "solid-transition-group": "^0.2.3",
     "vinxi": "^0.4.3"
   },
@@ -37,7 +37,7 @@
     "path": "^0.12.7",
     "typescript-eslint": "^8.7.0",
     "vite-plugin-solid-svg": "^0.8.1",
-    "vite-plugin-stylex": "^0.10.1",
+    "vite-plugin-stylex": "^0.11.0",
     "vite-plugin-stylex-dev": "0.8.0"
   },
   "pnpm": {

@@ -250,7 +250,7 @@ export default function HomePage() {
             <div {...stylex.attrs(ixStyles.apps)}><SingleStoreSvg height="15px" />SINGLE STORE</div>
             <div {...stylex.attrs(ixStyles.apps)}><StylexLogoSvg height="15px" />STYLEX</div>
           </div>
-          <SetButton sx={[]} mode='main' onClick={()=>setShowSub(0)} ref={(e)=>showUpAni(e,4)}>닫기</SetButton>
+          <SetButton mode='main' onClick={()=>setShowSub(0)} ref={(e)=>showUpAni(e,4)}>닫기</SetButton>
         </Show>
         <Show when={showSub()===1}>
           <SetShare setShow={setShowSub} />
