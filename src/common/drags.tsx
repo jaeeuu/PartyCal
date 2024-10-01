@@ -4,7 +4,6 @@
 type drageEventHandlerReturn = {
   dir: 'up' | 'down' | 'left' | 'right';
   length: number;
-  trigger: boolean;
 };
 
 // const [pointerId, setPointerId] = createSignal<string | null>(null);
@@ -29,15 +28,13 @@ const dragEventPointerMove = ( e: Event ): drageEventHandlerReturn|null => {
     const [startX, startY] = startXY;
     const deltaX = startX - e.clientX;
     const deltaY = startY - e.clientY;
-    const triggerOffset = 50;
+    // const triggerOffset = 50;
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      if (deltaX > 0) {
-        return { dir: 'left', length: deltaX, trigger: deltaX > triggerOffset };
-      }
-      else return { dir: 'right', length: -deltaX, trigger: deltaX < -triggerOffset };
+      if (deltaX > 0) return { dir: 'left', length: deltaX };
+      else return { dir: 'right', length: -deltaX };
     } else {
-      if (deltaY > 0) return { dir: 'up', length: deltaY, trigger: deltaY > triggerOffset };
-      else return { dir: 'down', length: -deltaY, trigger: deltaY < -triggerOffset };
+      if (deltaY > 0) return { dir: 'up', length: deltaY };
+      else return { dir: 'down', length: -deltaY };
     }
   } else return null;
 };
@@ -45,10 +42,14 @@ const dragEventPointerMove = ( e: Event ): drageEventHandlerReturn|null => {
 const dragEventPointerUp = ( e: Event ): void => {
   const element = e.target as Element;
   if (e instanceof PointerEvent && e.isPrimary && e.pointerId.toString() === pointerId) {
+    // const [startX, startY] = startXY;
+    // const deltaX = Math.abs(startX - e.clientX);
+    // const deltaY = Math.abs(startY - e.clientY);
     e.preventDefault();
     startXY = [-1, -1];
     element.releasePointerCapture(e.pointerId);
     pointerId = null;
+    // return Math.max(deltaX, deltaY);
   }
 };
 

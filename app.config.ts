@@ -64,8 +64,8 @@ export default defineConfig({
   server: {
     static: true,
     prerender: {
-      // routes: ["/", "/new", "/err"]
-      crawlLinks: true
+      routes: ["/", "/new", "/s", "/s/[...id]"],
+      // crawlLinks: true
     },
     // future: {
     //   nativeSWR: true,

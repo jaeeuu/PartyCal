@@ -121,7 +121,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     a.finished.then(done);
   };
   const pageOnEnter = (el: Element, done: () => void) => {
-    const a = el.animate([{ transform: "translateY(80vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: "cubic-bezier(0.08,0.82,0.17,1)" });
+    const a = el.animate([{ transform: "translateY(80vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
     a.finished.then(done);
   };
   const pageOnExit = (el: Element, done: () => void) => {
@@ -165,19 +165,26 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     const drag = dragEventPointerMove(e);
     if (drag) {
       if (drag.dir === 'down') {
-        if (drag.trigger) {
+        if (drag.length > 150) {
           props.setShow(0);
           dragEventPointerUp(e);
         }
         else {
           dragRef.animate(
             { transform: `translateY(${drag.length}px)` },
-            { duration: 50, easing: 'ease', fill: 'both' },
+            { duration: 0, easing: 'ease', fill: 'both' },
           );
         }
-        
       }
     }
+  };
+
+  const pointerUp = (e: Event) => {
+    dragEventPointerUp(e);
+    dragRef.animate(
+      { transform: `translateY(0px)` },
+      { duration: 200, easing: 'ease', fill: 'both' },
+    );
   };
   
 
@@ -200,7 +207,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         <Show when={props.show()!==0} keyed={true}>
           <div {...stylex.attrs(ixStyles.box)} ref={dragRef}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
-              <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={dragEventPointerDown} onPointerMove={pointerMove} onPointerUp={dragEventPointerUp} onPointerCancel={dragEventPointerUp}>
+              <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={dragEventPointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
                 <div ref={(e)=>animateHint(e)} {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>
                 {/* <SetButtonBox sx={[ixStyles.close]} onClick={()=>props.setShow(0)}>
                   <CloseSvg width="15px" color="#B5B5B5" />
