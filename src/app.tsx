@@ -22,32 +22,6 @@ const Root = (props: RouteSectionProps) => {
 };
 
 export default function App() {
-  // onMount(() => {
-  //   const user = navigator.userAgent;
-  //   const devices = ["iPhone", "iPad", "Android", "Macintosh", "Mac OS X"];
-  //   const check = devices.some(d => user.includes(d));
-  //   if (check) {
-  //     const link = document.getElementById('alter-icon') as HTMLLinkElement;
-  //     if (link) {
-  //       link.setAttribute('rel', 'icon');
-  //     }
-  //   }
-  //   // if (check) {
-  //   //   const link = document.createElement('link');
-  //   //   link.rel = 'icon';
-  //   //   link.href = '/pub/favicon.ico';
-  //   //   document.head.appendChild(link);
-  //   // }
-  // });
-  // onMount(() => {
-  //   const cookie = document.cookie;
-  //   if (!cookie.includes('session')) {
-  //     fetch("https://partycal.site/apix/session", {
-  //       method: 'HEAD',
-  //     });
-  //   }
-  // });
-
   return (
     <Router
       root={(props) => Root(props)}

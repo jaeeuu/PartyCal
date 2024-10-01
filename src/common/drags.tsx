@@ -1,76 +1,55 @@
-import type { Setter } from "solid-js";
+// import type { Accessor, Setter } from "solid-js";
+// import { createSignal } from "solid-js";
 
-const isMouseEvent = (event: Event): event is MouseEvent => {
-  return event instanceof MouseEvent;
+type drageEventHandlerReturn = {
+  dir: 'up' | 'down' | 'left' | 'right';
+  length: number;
+  trigger: boolean;
 };
 
-const isTouchEvent = (event: Event): event is TouchEvent => {
-  return 'ontouchstart' in window && event.type.startsWith('touch');
-};
+// const [pointerId, setPointerId] = createSignal<string | null>(null);
+//const [startXY, setStartXY] = createSignal<[number, number]>([0, 0]);
+let startXY: [number, number] = [-1, -1];
+let pointerId: string | null = null;
+// let isDragging = false;
 
-const getTileIndex = (e: Event): number => {
-  if (isTouchEvent(e) && e.cancelable) e.preventDefault();
-  let target = null;
-  if (isTouchEvent(e) && e.touches) {
-    const { clientX, clientY } = e.touches[0];
-    target = document.elementFromPoint(clientX, clientY);
-  } else if (isMouseEvent(e)) {
-    target = e.target;
-  } else {
-    return -1;
+const dragEventPointerDown = ( e: Event ): void => {
+  const element = e.target as Element;
+  if (e instanceof PointerEvent && e.isPrimary) {
+    startXY = [e.clientX, e.clientY];
+    pointerId = e.pointerId.toString();
+    e.preventDefault();
+    element.setPointerCapture(e.pointerId);
   }
-  const itemIndex = parseInt(target.dataset.index, 10);
-  if (isNaN(itemIndex)) return -1;
-  return itemIndex;
 };
 
-export const handlePointerStart = (e: Event, tileState: {currentTile: [number, boolean, number], memTile: boolean[]}, setTile: Setter<boolean[]>) => {
-  const itemIndex = getTileIndex(e);
-  if (itemIndex === -1) return;
-  if (isMouseEvent(e) && e.buttons !== 1) return;
-  setTile((prev) => {
-    tileState.currentTile[0] = itemIndex;
-    tileState.currentTile[1] =  !prev[itemIndex];
-    tileState.memTile = [...prev];
-    tileState.memTile[itemIndex] = tileState.currentTile[1];
-    return tileState.memTile;
-  });
-};
-
-export const handlePointerMove = (e: Event, tileState: {currentTile: [number, boolean, number], memTile: boolean[]}, setTile: Setter<boolean[]>) => {
-  const itemIndex = getTileIndex(e);
-  if (tileState.currentTile[0] === -1 || itemIndex === -1) return;
-  if (itemIndex === tileState.currentTile[2]) {
-    return;
-  } else {
-    tileState.currentTile[2] = itemIndex;
-  }
-  if (isMouseEvent(e) && e.buttons !== 1) return;
-  if (tileState.currentTile[0] === itemIndex) {
-    setTile([...tileState.memTile]);
-    return;
-  }
-
-  setTile((prev) => {
-    const newTableValues = [...prev];
-    newTableValues.forEach((_: boolean, ind: number) => {
-      if (ind < Math.min(tileState.currentTile[0], itemIndex) || ind > Math.max(tileState.currentTile[0], itemIndex)) {
-        newTableValues[ind] = tileState.memTile[ind];
-      } else {
-        newTableValues[ind] = tileState.currentTile[1];
+const dragEventPointerMove = ( e: Event ): drageEventHandlerReturn|null => {
+  if (e instanceof PointerEvent && e.isPrimary && e.pointerId.toString() === pointerId && startXY[0] !== -1) {
+    e.preventDefault();
+    const [startX, startY] = startXY;
+    const deltaX = startX - e.clientX;
+    const deltaY = startY - e.clientY;
+    const triggerOffset = 50;
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX > 0) {
+        return { dir: 'left', length: deltaX, trigger: deltaX > triggerOffset };
       }
-    });
-    return newTableValues;
-  });
+      else return { dir: 'right', length: -deltaX, trigger: deltaX < -triggerOffset };
+    } else {
+      if (deltaY > 0) return { dir: 'up', length: deltaY, trigger: deltaY > triggerOffset };
+      else return { dir: 'down', length: -deltaY, trigger: deltaY < -triggerOffset };
+    }
+  } else return null;
 };
 
-export const handlePointerEnd = (e: Event, tileState: {currentTile: [number, boolean, number], memTile: boolean[]}) => {
-  if (e.cancelable) e.preventDefault();
-  tileState.currentTile = [-1, false, -1];
+const dragEventPointerUp = ( e: Event ): void => {
+  const element = e.target as Element;
+  if (e instanceof PointerEvent && e.isPrimary && e.pointerId.toString() === pointerId) {
+    e.preventDefault();
+    startXY = [-1, -1];
+    element.releasePointerCapture(e.pointerId);
+    pointerId = null;
+  }
 };
 
-export default {
-  handlePointerStart,
-  handlePointerMove,
-  handlePointerEnd,
-};
+export { dragEventPointerDown, dragEventPointerMove, dragEventPointerUp };

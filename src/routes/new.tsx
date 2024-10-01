@@ -84,6 +84,7 @@ const ixStyles = stylex.create({
     paddingLeft: '10px',
     position: 'relative',
     // paddingTop: '10px',
+    paddingBottom: '5px',
   },
   subDateTextBox: {
     ...stylex.include(inStyles.flex),
@@ -104,10 +105,12 @@ const ixStyles = stylex.create({
     color: '#8B95A1',
     //paddingLeft: '10px',
     position: 'absolute',
-    top: '40px',
+    top: '30px',
   },
   subDateButtonWrap: {
     ...stylex.include(inStyles.flex),
+    position: 'absolute',
+    right: '0px',
     // gap: '10px',
   },
   subDateButtonBox: {
@@ -123,7 +126,9 @@ const ixStyles = stylex.create({
     gridTemplateColumns: "repeat(7, 1fr)",
     placeContent: "stretch",
     placeItems: "stretch",
-    gap: "1.5px",
+    gap: "1px",
+    //eslint-disable-next-line
+    viewTransitionName: "slide",
   },
   subCalTile: {
     ...stylex.include(inStyles.flex),
@@ -262,6 +267,35 @@ export default function NewPage() {
     const calAni = new Animation(keyframes);
     calAni.play();
     calAni.finished.then(() => calAni.cancel());
+    // //@ts-expect-error
+    // const trans = document.startViewTransition(()=>{
+    //   if (type === 1) setMainDj((prev) => prev.add(1,'month'));
+    //   else setMainDj((prev) => prev.subtract(1,'month'));
+    // });
+    // trans.ready.then(() => {
+    //   document.documentElement.animate(
+    //     {
+    //       transform: ['scale(0.75)', 'scale(1)'],
+    //       opacity: [0, 1],
+    //     },
+    //     {
+    //       duration: 200,
+    //       easing: "cubic-bezier(0.08,0.82,0.17,1)",
+    //       pseudoElement: "::view-transition-new(slide)",
+    //     }
+    //   );
+    //   document.documentElement.animate(
+    //     {
+    //       transform: ['translateX(0px)', `translateX(${type === 1 ? '-50px' : '50px'})`],
+    //       opacity: [1, 0],
+    //     },
+    //     {
+    //       duration: 200,
+    //       easing: "cubic-bezier(0.08,0.82,0.17,1)",
+    //       pseudoElement: "::view-transition-old(slide)",
+    //     }
+    //   );
+    // });
   };
 
   const handleSelect = (it: DateCell, type: number) => {
@@ -344,7 +378,10 @@ export default function NewPage() {
           k: onlyKakao(),
         }),
       });
-      res.json().then((data) => setGenUid(data.id)).catch(() => setGenUid("error"));
+      res.json().then((data) => {
+        setGenUid(data.id);
+        sessionStorage.setItem('recent', data.id);
+      }).catch(() => setGenUid("error"));
     });
     // setTimeout(() => {
     //   if (uid.loading) {

@@ -53,7 +53,7 @@ const ixStyles = stylex.create({
     fontWeight: 700,
     fontSize: '18px',
     padding: '10px',
-    paddingTop: '15px',
+    paddingTop: '0px', //this was 15px
     paddingBottom: '0px',
   },
   title2: {
@@ -130,6 +130,7 @@ export default function SetShare(props: SetShareProps): JSX.Element {
       if (selection) {
         const range = document.createRange();
         range.selectNodeContents(element);
+        selection.removeAllRanges();
         selection.addRange(range);
       }
     }

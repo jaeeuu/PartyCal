@@ -139,7 +139,7 @@ const ixStyles = stylex.create({
     fontSize: '18px',
     fontWeight: 700,
     padding: '10px',
-    paddingTop: '15px',
+    paddingTop: '0px', //this was 15px
     paddingBottom: '0px',
   },
   subBox_2: {

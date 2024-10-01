@@ -24,6 +24,33 @@
   size-adjust: 119.8248%;
 }
 
+/* @keyframes slideOut {
+  to { transform: translateX(75px); }
+}
+@keyframes slideIn {
+  from { transform: translateX(-75px); }
+}
+::view-transition-old(view-slide) {
+  animation-name: slideOut;
+}
+::view-transition-new(view-slide) {
+  animation-name: slideIn;
+}
+@view-transition {
+  navigation: auto;
+} */
+
+::view-transition-image-pair(slide) {
+  isolation: auto;
+}
+
+::view-transition-old(slide),
+::view-transition-new(slide) {
+  animation: none;
+  /* mix-blend-mode: normal;
+  display: block; */
+}
+
 html, body{
   margin: 0;
   padding: 0;

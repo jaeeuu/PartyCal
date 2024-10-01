@@ -5,6 +5,7 @@ import { Transition } from "solid-transition-group";
 import { onMount, Show } from 'solid-js';
 import { materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
+import { dragEventPointerDown, dragEventPointerMove, dragEventPointerUp } from "~/common/drags";
 
 // const spinOnce = stylex.keyframes({
 //   '0%': { transform: 'rotate(0deg) scaleX(0.5)' },
@@ -40,7 +41,7 @@ const ixStyles = stylex.create({
     maxWidth: '430px',
     width: '100%',
     padding: '22px',
-    // paddingTop: '0px',
+    paddingTop: '0px', //was 22px
     borderRadius: "24px",
     backgroundColor: '#fff',
     display: 'flex',
@@ -59,8 +60,9 @@ const ixStyles = stylex.create({
     // paddingRight: '10px',
     //position: 'relative',
     padding: '10px',
-    paddingTop: '0px',
-    paddingBottom: '0px',
+    paddingTop: '22px', //was 0px
+    paddingBottom: '15px', //was 0px and child had 15px
+    //backgroundColor: 'yellow',
   },
   hint: {
     width: '30px',
@@ -115,15 +117,15 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     a.finished.then(done);
   };
   const backOnExit = (el: Element, done: () => void) => {
-    const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: props.isLong ? 400 : 300, easing: "ease" });
+    const a = el.animate({ opacity: 0 }, { duration: props.isLong ? 400 : 300, easing: "ease" });
     a.finished.then(done);
   };
   const pageOnEnter = (el: Element, done: () => void) => {
-    const a = el.animate([{ transform: "translateY(80vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
+    const a = el.animate([{ transform: "translateY(80vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: "cubic-bezier(0.08,0.82,0.17,1)" });
     a.finished.then(done);
   };
   const pageOnExit = (el: Element, done: () => void) => {
-    const a = el.animate([{ transform: 'translateY(0px)', overflowY: "hidden" }, { transform: "translateY(80vh)", overflowY: "hidden" }], { duration: 350, easing: "ease" });
+    const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease", fill: 'both' });
     a.finished.then(done);
   };
 
@@ -157,6 +159,26 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       };
     });
   };
+
+  let dragRef = null;
+  const pointerMove = (e: Event) => {
+    const drag = dragEventPointerMove(e);
+    if (drag) {
+      if (drag.dir === 'down') {
+        if (drag.trigger) {
+          props.setShow(0);
+          dragEventPointerUp(e);
+        }
+        else {
+          dragRef.animate(
+            { transform: `translateY(${drag.length}px)` },
+            { duration: 50, easing: 'ease', fill: 'both' },
+          );
+        }
+        
+      }
+    }
+  };
   
 
   return (
@@ -176,9 +198,9 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         onExit={(el, done) => pageOnExit(el, done)}
       >
         <Show when={props.show()!==0} keyed={true}>
-          <div {...stylex.attrs(ixStyles.box)}>
+          <div {...stylex.attrs(ixStyles.box)} ref={dragRef}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
-              <div {...stylex.attrs(ixStyles.hintBox)}>
+              <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={dragEventPointerDown} onPointerMove={pointerMove} onPointerUp={dragEventPointerUp} onPointerCancel={dragEventPointerUp}>
                 <div ref={(e)=>animateHint(e)} {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>
                 {/* <SetButtonBox sx={[ixStyles.close]} onClick={()=>props.setShow(0)}>
                   <CloseSvg width="15px" color="#B5B5B5" />
