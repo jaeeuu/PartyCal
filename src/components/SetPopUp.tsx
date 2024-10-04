@@ -128,7 +128,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     a.finished.then(done);
   };
   const pageOnExit = (el: Element, done: () => void) => {
-    const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease", fill: "both"});
+    const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease" });
     a.finished.then(done);
   };
 
@@ -168,7 +168,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   let requestFrame = null;
 
   const pointerDown = (e: Event) => {
-    // e.stopPropagation();
+    setDragPos(0);
     dragStartHandler(e);
   };
 
@@ -197,9 +197,11 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     if (requestFrame) cancelAnimationFrame(requestFrame);
     const drag = dragEndHandler(e);
     const wHeight = window.innerHeight;
-    setDragPos(0);
     if ((drag.last.y??0 / wHeight) > 150 || (drag.delta.y??0 / wHeight) > 20) {
       props.setShow(0);
+      //setDragPos(0) 충돌발생
+    } else {
+      setDragPos(0);
     }
   };
   
