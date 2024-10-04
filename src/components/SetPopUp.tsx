@@ -128,7 +128,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     a.finished.then(done);
   };
   const pageOnExit = (el: Element, done: () => void) => {
-    const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease" });
+    const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease", fill: "both"});
     a.finished.then(done);
   };
 
