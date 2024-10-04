@@ -37,6 +37,9 @@ const ixStyles = stylex.create({
     overflow: 'hidden',
     transition: 'height 0.4s ease',
   },
+  boxDrag: {
+    transition: 'height 0.4s ease, transform 0.8s var(--spring-easing)',
+  },
   boxIn: {
     maxWidth: '430px',
     width: '100%',
@@ -160,8 +163,13 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     });
   };
 
-  const [dragPos, setDragPos] = createSignal('');
+  const [dragPos, setDragPos] = createSignal(null);
   let throttleTimer = false;
+
+  const pointerDown = (e: Event) => {
+    // e.stopPropagation();
+    dragStartHandler(e);
+  };
 
   const pointerMove = (e: Event) => {
     if (throttleTimer) return;
@@ -170,11 +178,11 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       requestAnimationFrame(() => {
         const drag = dragMoveHandler(e);
         if (drag) {
-          if (drag.y < 0) {
-            setDragPos(`translateY(${-drag.y}px)`);
-          } else if (drag.y > 0) {
-            const movement = (30*drag.y) / (drag.y + 100);
-            setDragPos(`translateY(${-movement}px)`);
+          if (drag.y > 0) {
+            setDragPos(drag.y);
+          } else if (drag.y < 0) {
+            const movement = (-drag.y) / (-0.01*drag.y + 1);
+            setDragPos(-movement);
           }
         }
         throttleTimer = false;
@@ -186,7 +194,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     // if (!dragRef) return;
     throttleTimer = false;
     const drag = dragEndHandler(e);
-    if (drag.y < -75) {
+    if ((drag.y / window.innerHeight) > 0.25) {
       props.setShow(0);
     } else {
       // const ani = dragRef.animate(
@@ -197,11 +205,9 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       //   dragRef.style.transform = 'translateY(0px)';
       //   hintAni?.cancel();
       // };
-      // dragRef.style.transition = `transform 0.8s ${springEasing}`;
-      // dragRef.style.transform = 'translateY(0px)';
-      setDragPos('translateY(0px)');
+      setDragPos(0);
       setTimeout(() => {
-        setDragPos('');
+        setDragPos(null);
       }, 800);
     }
   };
@@ -224,9 +230,9 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         onExit={(el, done) => pageOnExit(el, done)}
       >
         <Show when={props.show()!==0} keyed={true}>
-          <div {...stylex.attrs(ixStyles.box)} style={{transform: dragPos(), transition: dragPos()==='translateY(0px)' ? 'transform 0.8s var(--spring-easing)':''}}>
+          <div {...stylex.attrs(ixStyles.box, dragPos()===0 && ixStyles.boxDrag)} style={{transform: `translateY(${dragPos()??0}px)`}}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
-              <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={dragStartHandler} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
+              <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
                 <div ref={(e)=>animateHint(e)} {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>
                 {/* <SetButtonBox sx={[ixStyles.close]} onClick={()=>props.setShow(0)}>
                   <CloseSvg width="15px" color="#B5B5B5" />
