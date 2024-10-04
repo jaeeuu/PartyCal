@@ -132,9 +132,12 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     const a = el.animate([{ transform: "translateY(80vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
     a.finished.then(done);
   };
-  const pageOnExit = (el: Element, done: () => (setDragPos(0))) => {
+  const pageOnExit = (el: Element, done: () => void) => {
     const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease" });
-    a.finished.then(done);
+    a.finished.then(()=>{
+      setDragPos(0);
+      done();
+    });
   };
 
   const isOnce = () => props.isOnce ?? true;
