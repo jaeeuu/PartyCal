@@ -198,7 +198,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       setDragPos(null);
     }, 800);
     const wHeight = window.innerHeight;
-    if ((drag.last.y??0 / wHeight) > 0.25 || (drag.delta.y??0 / wHeight) > 50) {
+    if ((drag.last.y??0 / wHeight) > 1 || (drag.delta.y??0 / wHeight) > 17) {
       props.setShow(0);
     } else {
       setDragPos(0);

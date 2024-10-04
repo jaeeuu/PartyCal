@@ -5,15 +5,17 @@ import * as stylex from "@stylexjs/stylex";
 
 const ixStyles = stylex.create({
   box: {
-    height: '500px',
+    height: '900px',
     textAlign: 'center',
     touchAction: 'none',
+    backgroundColor: 'yellow',
   },
 });
 
 export default function Test(): JSX.Element {
 
   const [length, setLength] = createSignal<number>(0);
+  const [test, setTest] = createSignal<number>(0);
   let throttleTimer = false;
 
   const pointerDown = (e: Event) => {
@@ -36,14 +38,16 @@ export default function Test(): JSX.Element {
     throttleTimer = false;
     const drag = dragEndHandler(e);
     const wHeight = window.innerHeight;
-    setLength((drag.delta.y??0 / wHeight));
+    setLength((drag.last.y??0 / wHeight));
+    setTest((drag.delta.y??0 / wHeight));
   };
 
   return (
     <div>
       <h1>Test</h1>
       <div {...stylex.attrs(ixStyles.box)} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
-        {length()}
+        Acc: {length()}
+        Leng: {test()}
       </div>
     </div>
   );
