@@ -19,7 +19,7 @@ const getTileIndex = (e: Event): number => {
   } else {
     return -1;
   }
-  const itemIndex = parseInt(target.dataset.index, 10);
+  const itemIndex = parseInt(target?.dataset.index, 10);
   if (isNaN(itemIndex)) return -1;
   return itemIndex;
 };

@@ -3,7 +3,7 @@ import { Portal } from "solid-js/web";
 import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
 import { createSignal, onMount, Show } from 'solid-js';
-import { materialEasing, springEasing } from "~/common/stores";
+import { materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
 import { dragStartHandler, dragMoveHandler, dragEndHandler } from "~/common/drags";
 
@@ -163,7 +163,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     });
   };
 
-  const [dragPos, setDragPos] = createSignal(null);
+  const [dragPos, setDragPos] = createSignal<number|null>(null);
   let throttleTimer = false;
 
   const pointerDown = (e: Event) => {
@@ -177,11 +177,11 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       throttleTimer = true;
       requestAnimationFrame(() => {
         const drag = dragMoveHandler(e);
-        if (drag) {
+        if (drag.x !== null && drag.y !== null) {
           if (drag.y > 0) {
             setDragPos(drag.y);
           } else if (drag.y < 0) {
-            const movement = (drag.y) / (-0.01*drag.y + 1);
+            const movement = (drag.y) / (-0.03*drag.y + 1);
             setDragPos(movement);
           }
         }
@@ -194,22 +194,15 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     // if (!dragRef) return;
     throttleTimer = false;
     const drag = dragEndHandler(e);
-    if ((drag.y / window.innerHeight) > 0.25) {
-      props.setShow(0);
-    } else {
-      // const ani = dragRef.animate(
-      //   { transform: `translateY(0px)` },
-      //   { duration: 800, easing: springEasing },
-      // );
-      // ani.onfinish = () => {
-      //   dragRef.style.transform = 'translateY(0px)';
-      //   hintAni?.cancel();
-      // };
-      setDragPos(0);
-    }
     setTimeout(() => {
       setDragPos(null);
     }, 800);
+    console.log(drag.delta.y??0 / window.innerHeight);
+    if ((drag.last.y??0 / window.innerHeight) > 0.25 || (drag.delta.y??0 / window.innerHeight) > 20) {
+      props.setShow(0);
+    } else {
+      setDragPos(0);
+    }
   };
   
 

@@ -11,7 +11,7 @@ type posXY = {
 let startPos: posXY = { x: null, y: null };
 let lastPos: posXY = { x: null, y: null };
 let deltaPos: posXY = { x: null, y: null };
-let pointerId = null;
+let pointerId: number|null = null;
 // let isDragging = false;
 
 const dragStartHandler = ( e: Event ): void => {
@@ -27,21 +27,21 @@ const dragStartHandler = ( e: Event ): void => {
 const dragMoveHandler = ( e: Event ): posXY => {
   e.preventDefault();
   if (e instanceof PointerEvent && e.pointerId === pointerId && startPos.x !== null) {
-    const diffPos = { x: e.clientX - startPos.x, y: e.clientY - startPos.y };
+    const diffPos = { x: e.clientX - (startPos.x??0), y: e.clientY - (startPos.y??0) };
     deltaPos = {x: diffPos.x - (lastPos.x??0), y: diffPos.y - (lastPos.y??0)};
     lastPos = { x: diffPos.x, y: diffPos.y };
     return diffPos;
   } else return {x: null, y: null};
 };
 
-const dragEndHandler = ( e: Event ): posXY => {
+const dragEndHandler = ( e: Event ): {last: posXY, delta: posXY} => {
   e.preventDefault();
   const element = e.target as Element;
   if (e instanceof PointerEvent && e.pointerId === pointerId) {
     element.releasePointerCapture(pointerId);
     pointerId = null;
-    return lastPos;
-  } else return {x: null, y: null};
+    return {last: lastPos, delta: deltaPos};
+  } else return {last: {x: null, y: null}, delta: {x: null, y: null}};
 };
 
 export { dragStartHandler, dragMoveHandler, dragEndHandler };
