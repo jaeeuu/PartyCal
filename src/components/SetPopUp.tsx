@@ -115,6 +115,11 @@ type SetPopUpProps<P = {}> = P & {
 };
 
 export default function SetPopUp(props: SetPopUpProps): JSX.Element{
+
+  const [dragPos, setDragPos] = createSignal<number>(0);
+  let throttleTimer = false;
+  let requestFrame = null;
+
   const backOnEnter = (el: Element, done: () => void) => {
     const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: props.isLong ? 500 : 400, easing: 'ease' });
     a.finished.then(done);
@@ -127,7 +132,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     const a = el.animate([{ transform: "translateY(80vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
     a.finished.then(done);
   };
-  const pageOnExit = (el: Element, done: () => void) => {
+  const pageOnExit = (el: Element, done: () => (setDragPos(0))) => {
     const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease" });
     a.finished.then(done);
   };
@@ -163,12 +168,9 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     });
   };
 
-  const [dragPos, setDragPos] = createSignal<number>(0);
-  let throttleTimer = false;
-  let requestFrame = null;
+  
 
   const pointerDown = (e: Event) => {
-    setDragPos(0);
     dragStartHandler(e);
   };
 
