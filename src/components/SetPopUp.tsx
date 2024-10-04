@@ -163,8 +163,9 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     });
   };
 
-  const [dragPos, setDragPos] = createSignal<number|null>(null);
+  const [dragPos, setDragPos] = createSignal<number>(0);
   let throttleTimer = false;
+  let requestFrame = null;
 
   const pointerDown = (e: Event) => {
     // e.stopPropagation();
@@ -175,13 +176,13 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     if (throttleTimer) return;
     else {
       throttleTimer = true;
-      requestAnimationFrame(() => {
+      requestFrame = requestAnimationFrame(() => {
         const drag = dragMoveHandler(e);
         if (drag.x !== null && drag.y !== null) {
           if (drag.y > 0) {
             setDragPos(drag.y);
           } else if (drag.y < 0) {
-            const movement = (drag.y) / (-0.03*drag.y + 1);
+            const movement = (drag.y) / (-0.025*drag.y + 1);
             setDragPos(movement);
           }
         }
@@ -193,15 +194,12 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   const pointerUp = (e: Event) => {
     // if (!dragRef) return;
     throttleTimer = false;
+    if (requestFrame) cancelAnimationFrame(requestFrame);
     const drag = dragEndHandler(e);
-    setTimeout(() => {
-      setDragPos(null);
-    }, 800);
     const wHeight = window.innerHeight;
+    setDragPos(0);
     if ((drag.last.y??0 / wHeight) > 150 || (drag.delta.y??0 / wHeight) > 20) {
       props.setShow(0);
-    } else {
-      setDragPos(0);
     }
   };
   
