@@ -7,6 +7,7 @@ const ixStyles = stylex.create({
   box: {
     height: '500px',
     textAlign: 'center',
+    touchAction: 'none',
   },
 });
 
