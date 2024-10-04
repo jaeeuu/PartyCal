@@ -64,7 +64,7 @@ export default defineConfig({
   server: {
     static: true,
     prerender: {
-      routes: ["/", "/new", "/s", "/s/[...id]"],
+      routes: ["/", "/new", "/s", "/test"],
       // crawlLinks: true
     },
     // future: {
