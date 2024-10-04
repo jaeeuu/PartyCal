@@ -125,7 +125,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     a.finished.then(done);
   };
   const pageOnExit = (el: Element, done: () => void) => {
-    const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease", fill: 'both' });
+    const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease" });
     a.finished.then(done);
   };
 
@@ -160,21 +160,21 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     });
   };
 
-  let dragRef = null;
+  const [dragPos, setDragPos] = createSignal('');
   let throttleTimer = false;
 
   const pointerMove = (e: Event) => {
-    if (throttleTimer || !dragRef) return;
+    if (throttleTimer) return;
     else {
       throttleTimer = true;
       requestAnimationFrame(() => {
         const drag = dragMoveHandler(e);
         if (drag) {
           if (drag.y < 0) {
-            dragRef.style.transform = `translateY(${-drag.y}px)`;
+            setDragPos(`translateY(${-drag.y}px)`);
           } else if (drag.y > 0) {
-            const movement = (30*drag.y) / (drag.y + 50);
-            dragRef.style.transform = `translateY(${-movement}px)`;
+            const movement = (30*drag.y) / (drag.y + 100);
+            setDragPos(`translateY(${-movement}px)`);
           }
         }
         throttleTimer = false;
@@ -183,22 +183,26 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   };
 
   const pointerUp = (e: Event) => {
-    if (!dragRef) return;
+    // if (!dragRef) return;
     throttleTimer = false;
     const drag = dragEndHandler(e);
-    if (drag.y < -150) {
+    if (drag.y < -75) {
       props.setShow(0);
     } else {
-      const ani = dragRef.animate(
-        { transform: `translateY(0px)` },
-        { duration: 800, easing: springEasing },
-      );
-      ani.onfinish = () => {
-        dragRef.style.transform = 'translateY(0px)';
-        hintAni?.cancel();
-      };
+      // const ani = dragRef.animate(
+      //   { transform: `translateY(0px)` },
+      //   { duration: 800, easing: springEasing },
+      // );
+      // ani.onfinish = () => {
+      //   dragRef.style.transform = 'translateY(0px)';
+      //   hintAni?.cancel();
+      // };
       // dragRef.style.transition = `transform 0.8s ${springEasing}`;
       // dragRef.style.transform = 'translateY(0px)';
+      setDragPos('translateY(0px)');
+      setTimeout(() => {
+        setDragPos('');
+      }, 800);
     }
   };
   
@@ -220,7 +224,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         onExit={(el, done) => pageOnExit(el, done)}
       >
         <Show when={props.show()!==0} keyed={true}>
-          <div {...stylex.attrs(ixStyles.box)} ref={dragRef}>
+          <div {...stylex.attrs(ixStyles.box)} style={{transform: dragPos(), transition: dragPos()==='translateY(0px)' ? 'transform 0.8s var(--spring-easing)':''}}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
               <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={dragStartHandler} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
                 <div ref={(e)=>animateHint(e)} {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>
