@@ -181,8 +181,8 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
           if (drag.y > 0) {
             setDragPos(drag.y);
           } else if (drag.y < 0) {
-            const movement = (-drag.y) / (-0.01*drag.y + 1);
-            setDragPos(-movement);
+            const movement = (drag.y) / (-0.01*drag.y + 1);
+            setDragPos(movement);
           }
         }
         throttleTimer = false;
@@ -206,10 +206,10 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       //   hintAni?.cancel();
       // };
       setDragPos(0);
-      setTimeout(() => {
-        setDragPos(null);
-      }, 800);
     }
+    setTimeout(() => {
+      setDragPos(null);
+    }, 800);
   };
   
 
