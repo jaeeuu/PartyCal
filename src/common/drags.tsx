@@ -1,56 +1,47 @@
 // import type { Accessor, Setter } from "solid-js";
 // import { createSignal } from "solid-js";
 
-type drageEventHandlerReturn = {
-  dir: 'up' | 'down' | 'left' | 'right';
-  length: number;
+type dragEventReturn = {
+  x: number,
+  y: number,
 };
 
 // const [pointerId, setPointerId] = createSignal<string | null>(null);
 //const [startXY, setStartXY] = createSignal<[number, number]>([0, 0]);
 let startXY: [number, number] = [-1, -1];
-let pointerId: string | null = null;
+let lastXY: [number, number] = [-1, -1];
+let pointerId = null;
 // let isDragging = false;
 
-const dragEventPointerDown = ( e: Event ): void => {
+const dragStartHandler = ( e: Event ): void => {
+  e.preventDefault();
   const element = e.target as Element;
-  if (e instanceof PointerEvent && e.isPrimary) {
+  if (e instanceof PointerEvent && !pointerId) {
     startXY = [e.clientX, e.clientY];
-    pointerId = e.pointerId.toString();
-    e.preventDefault();
-    element.setPointerCapture(e.pointerId);
+    pointerId = e.pointerId;
+    element.setPointerCapture(pointerId);
   }
 };
 
-const dragEventPointerMove = ( e: Event ): drageEventHandlerReturn|null => {
-  if (e instanceof PointerEvent && e.isPrimary && e.pointerId.toString() === pointerId && startXY[0] !== -1) {
-    e.preventDefault();
-    const [startX, startY] = startXY;
-    const deltaX = startX - e.clientX;
-    const deltaY = startY - e.clientY;
-    // const triggerOffset = 50;
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      if (deltaX > 0) return { dir: 'left', length: deltaX };
-      else return { dir: 'right', length: -deltaX };
-    } else {
-      if (deltaY > 0) return { dir: 'up', length: deltaY };
-      else return { dir: 'down', length: -deltaY };
-    }
+const dragMoveHandler = ( e: Event ): dragEventReturn|null => {
+  e.preventDefault();
+  if (e instanceof PointerEvent && e.pointerId === pointerId) {
+    lastXY = [e.clientX, e.clientY];
+    const deltaX = startXY[0] - lastXY[0];
+    const deltaY = startXY[1] - lastXY[1];
+    return { x: deltaX, y: deltaY };
   } else return null;
 };
 
-const dragEventPointerUp = ( e: Event ): void => {
+const dragEndHandler = ( e: Event ): dragEventReturn|null => {
+  e.preventDefault();
   const element = e.target as Element;
-  if (e instanceof PointerEvent && e.isPrimary && e.pointerId.toString() === pointerId) {
-    // const [startX, startY] = startXY;
-    // const deltaX = Math.abs(startX - e.clientX);
-    // const deltaY = Math.abs(startY - e.clientY);
-    e.preventDefault();
+  if (e instanceof PointerEvent && e.pointerId === pointerId) {
     startXY = [-1, -1];
-    element.releasePointerCapture(e.pointerId);
+    element.releasePointerCapture(pointerId);
     pointerId = null;
-    // return Math.max(deltaX, deltaY);
-  }
+    return { x: lastXY[0], y: lastXY[1] };
+  } else return null;
 };
 
-export { dragEventPointerDown, dragEventPointerMove, dragEventPointerUp };
+export { dragStartHandler, dragMoveHandler, dragEndHandler };

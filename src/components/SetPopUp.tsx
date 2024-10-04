@@ -2,10 +2,10 @@ import type { Accessor, JSX, Setter } from "solid-js";
 import { Portal } from "solid-js/web";
 import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
-import { onMount, Show } from 'solid-js';
-import { materialEasing } from "~/common/stores";
+import { createSignal, onMount, Show } from 'solid-js';
+import { materialEasing, springEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
-import { dragEventPointerDown, dragEventPointerMove, dragEventPointerUp } from "~/common/drags";
+import { dragStartHandler, dragMoveHandler, dragEndHandler } from "~/common/drags";
 
 // const spinOnce = stylex.keyframes({
 //   '0%': { transform: 'rotate(0deg) scaleX(0.5)' },
@@ -161,30 +161,45 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   };
 
   let dragRef = null;
+  let throttleTimer = false;
+
   const pointerMove = (e: Event) => {
-    const drag = dragEventPointerMove(e);
-    if (drag) {
-      if (drag.dir === 'down') {
-        if (drag.length > 150) {
-          props.setShow(0);
-          dragEventPointerUp(e);
+    if (throttleTimer || !dragRef) return;
+    else {
+      throttleTimer = true;
+      requestAnimationFrame(() => {
+        const drag = dragMoveHandler(e);
+        if (drag) {
+          if (drag.y < 0) {
+            dragRef.style.transform = `translateY(${-drag.y}px)`;
+          } else if (drag.y > 0) {
+            const movement = (30*drag.y) / (drag.y + 50);
+            dragRef.style.transform = `translateY(${-movement}px)`;
+          }
         }
-        else {
-          dragRef.animate(
-            { transform: `translateY(${drag.length}px)` },
-            { duration: 0, easing: 'ease', fill: 'both' },
-          );
-        }
-      }
+        throttleTimer = false;
+      });
     }
   };
 
   const pointerUp = (e: Event) => {
-    dragEventPointerUp(e);
-    dragRef.animate(
-      { transform: `translateY(0px)` },
-      { duration: 200, easing: 'ease', fill: 'both' },
-    );
+    if (!dragRef) return;
+    throttleTimer = false;
+    const drag = dragEndHandler(e);
+    if (drag.y < -150) {
+      props.setShow(0);
+    } else {
+      const ani = dragRef.animate(
+        { transform: `translateY(0px)` },
+        { duration: 800, easing: springEasing },
+      );
+      ani.onfinish = () => {
+        dragRef.style.transform = 'translateY(0px)';
+        hintAni?.cancel();
+      };
+      // dragRef.style.transition = `transform 0.8s ${springEasing}`;
+      // dragRef.style.transform = 'translateY(0px)';
+    }
   };
   
 
@@ -207,7 +222,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         <Show when={props.show()!==0} keyed={true}>
           <div {...stylex.attrs(ixStyles.box)} ref={dragRef}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
-              <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={dragEventPointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
+              <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={dragStartHandler} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
                 <div ref={(e)=>animateHint(e)} {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>
                 {/* <SetButtonBox sx={[ixStyles.close]} onClick={()=>props.setShow(0)}>
                   <CloseSvg width="15px" color="#B5B5B5" />
