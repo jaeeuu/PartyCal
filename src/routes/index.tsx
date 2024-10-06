@@ -16,6 +16,8 @@ import TauriLogoSvg from '../assets/icons/logo/tauri_logo.svg';
 import StylexLogoSvg from '../assets/icons/logo/stylex_logo.svg';
 import { Meta, MetaProvider } from "@solidjs/meta";
 import { showUpAni } from '~/common/animations';
+import { materialEasing, store } from '~/common/stores';
+import { Transition } from 'solid-transition-group';
 
 const inStyles = stylex.create({
   flex: {
@@ -178,10 +180,34 @@ const ixStyles = stylex.create({
     color: "#4e5a68",
     backgroundColor: "#F2F4F6",
   },
+  recentBox: {
+    background: 'linear-gradient(145deg, #e9defa, #fbfcdb)',
+    padding: '30px',
+    color: '#fff',
+  },
+  recentText1: {
+    fontWeight: 700,
+    fontSize: '20px',
+    textShadow: '0px 0px 15px #CCC'
+  },
+  recentText2: {
+    fontWeight: 500,
+    fontSize: '14px',
+    textShadow: '0px 0px 15px #CCC'
+  },
 });
 
 export default function HomePage() {
   const [showSub, setShowSub] = createSignal<number>(0);
+  const boxOnEnter = (el: Element, done: () => void) => {
+    const a = el.animate([{ opacity: 0, transform: 'scale(0)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 750,  easing: materialEasing });
+    a.finished.then(done);
+  };
+  const boxOnExit = (el: Element, done: () => void) => {
+    const a = el.animate({ opacity: 0, transform: 'scale(0)' }, { duration: 400, easing: "ease" });
+    a.finished.then(done);
+  };
+
   return (
     <>
       <MetaProvider>
@@ -190,6 +216,21 @@ export default function HomePage() {
         <Meta property="og:description" content="친구들과 함께 일정 투표를 시작해보세요" />
         <Meta property="og:image" content="https://jjreset.github.io/act_cdn/shareurl.png" />
       </MetaProvider>
+      <Transition
+        onEnter={(el, done) => boxOnEnter(el, done)}
+        onExit={(el, done) => boxOnExit(el, done)}
+        mode='outin'
+      >
+        <Show when={store()!==""}>
+          <SetButtonBox sx={[ixStyles.recentBox]}>
+            <div>
+              <div {...stylex.attrs(ixStyles.recentText1)}>최근 생성된 투표</div>
+              <div {...stylex.attrs(ixStyles.recentText2)}>공유 링크 다시 가져오기</div>
+            </div>
+            <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
+          </SetButtonBox>
+        </Show>
+      </Transition>
       <SetBox>
         <div {...stylex.attrs(ixStyles.box1box)}>
           <div {...stylex.attrs(ixStyles.box1text)}>
@@ -239,7 +280,7 @@ export default function HomePage() {
           </SetButtonBox>
         </div>
       </SetBox>
-      <SetPopUp show={showSub} setShow={setShowSub} isLong={showSub()===1}>
+      <SetPopUp show={showSub()>0} close={()=>setShowSub(0)} isLong={showSub()===1}>
         <Show when={showSub()===2}>
           <div {...stylex.attrs(ixStyles.subBox_1)} ref={(e)=>showUpAni(e,1)}>COPYRIGHT 2024 JAEU</div>
           <div {...stylex.attrs(ixStyles.subBox_2)} ref={(e)=>showUpAni(e,2)}>This app is licensed under the terms of the MIT license.</div>
@@ -253,7 +294,7 @@ export default function HomePage() {
           <SetButton mode='main' onClick={()=>setShowSub(0)} ref={(e)=>showUpAni(e,4)}>닫기</SetButton>
         </Show>
         <Show when={showSub()===1}>
-          <SetShare setShow={setShowSub} />
+          <SetShare close={()=>setShowSub(0)} />
         </Show>
       </SetPopUp>
     </>

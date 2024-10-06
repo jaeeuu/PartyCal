@@ -1,4 +1,4 @@
-import type { Accessor, JSX, Setter } from "solid-js";
+import type { JSX } from "solid-js";
 import { Portal } from "solid-js/web";
 import * as stylex from "@stylexjs/stylex";
 import { Transition } from "solid-transition-group";
@@ -108,15 +108,16 @@ const ixStyles = stylex.create({
 
 type SetPopUpProps<P = {}> = P & {
   children: JSX.Element;
-  show: Accessor<number>,
-  setShow: Setter<number>,
+  show: boolean,
+  close: () => void,
   isOnce?: boolean,
   isLong?: boolean,
 };
 
 export default function SetPopUp(props: SetPopUpProps): JSX.Element{
 
-  const [dragPos, setDragPos] = createSignal<number>(0);
+  const isShow = () => props.show;
+  const [dragPos, setDragPos] = createSignal<number|null>(null);
   let throttleTimer = false;
   let requestFrame = null;
 
@@ -135,7 +136,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   const pageOnExit = (el: Element, done: () => void) => {
     const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease" });
     a.finished.then(()=>{
-      setDragPos(0);
+      setDragPos(null);
       done();
     });
   };
@@ -187,7 +188,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
           if (drag.y > 0) {
             setDragPos(drag.y);
           } else if (drag.y < 0) {
-            const movement = (drag.y) / (-0.025*drag.y + 1);
+            const movement = (drag.y) / (-0.05*drag.y + 1);
             setDragPos(movement);
           }
         }
@@ -203,7 +204,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
     const drag = dragEndHandler(e);
     const wHeight = window.innerHeight;
     if ((drag.last.y??0 / wHeight) > 150 || (drag.delta.y??0 / wHeight) > 20) {
-      props.setShow(0);
+      props.close();
       //setDragPos(0) 충돌발생
     } else {
       setDragPos(0);
@@ -217,8 +218,8 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         onEnter={(el, done) => backOnEnter(el, done)}
         onExit={(el, done) => backOnExit(el, done)}
       >
-        <Show when={props.show()!==0} keyed={true}>
-          <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => props.setShow(0)}>
+        <Show when={isShow()} keyed={true}>
+          <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => props.close()}>
             &nbsp;
           </div>
         </Show>
@@ -227,8 +228,8 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
         onEnter={(el, done) => pageOnEnter(el, done)}
         onExit={(el, done) => pageOnExit(el, done)}
       >
-        <Show when={props.show()!==0} keyed={true}>
-          <div {...stylex.attrs(ixStyles.box, dragPos()===0 && ixStyles.boxDrag)} style={{transform: `translateY(${dragPos()??0}px)`}}>
+        <Show when={isShow()} keyed={true}>
+          <div {...stylex.attrs(ixStyles.box, dragPos()===0 && ixStyles.boxDrag)} style={{transform: `translateY(${dragPos()??0}px`}}>
             <div {...stylex.attrs(ixStyles.boxIn)}>
               <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
                 <div ref={(e)=>animateHint(e)} {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>

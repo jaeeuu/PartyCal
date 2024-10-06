@@ -5,7 +5,7 @@ import * as stylex from "@stylexjs/stylex";
 
 const ixStyles = stylex.create({
   box: {
-    height: '900px',
+    height: '500px',
     textAlign: 'center',
     touchAction: 'none',
     backgroundColor: 'yellow',
@@ -46,8 +46,7 @@ export default function Test(): JSX.Element {
     <div>
       <h1>Test</h1>
       <div {...stylex.attrs(ixStyles.box)} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
-        Acc: {length()}
-        Leng: {test()}
+        {length()},{test()}
       </div>
     </div>
   );

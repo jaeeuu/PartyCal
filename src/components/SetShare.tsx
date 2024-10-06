@@ -1,4 +1,4 @@
-import type { JSX, Setter } from 'solid-js';
+import type { JSX } from 'solid-js';
 import * as stylex from "@stylexjs/stylex";
 import InstagramLogoSvg from '../assets/icons/logo/instagram_logo.svg';
 import KakaotalkLogoSvg from '../assets/icons/logo/kakaotalk_logo.svg';
@@ -6,14 +6,6 @@ import CopySvg from '../assets/icons/copy.svg';
 import { SetButton, SetButtonBox } from './SetBase';
 import { CallDialog } from './SetAlert';
 import { showUpAni } from '~/common/animations';
-// import { copyToClipboard } from "@solid-primitives/clipboard";
-
-// copyToClipboard;
-
-type SetShareProps<P = {}> = P & {
-  id?: string | null;
-  setShow: Setter<number>;
-};
 
 const inStyles = stylex.create({
   flex: {
@@ -115,6 +107,11 @@ const ixStyles = stylex.create({
   },
 });
 
+type SetShareProps<P = {}> = P & {
+  id?: string | null;
+  close: () => void;
+};
+
 export default function SetShare(props: SetShareProps): JSX.Element {
 
   const getId = () => props.id || '';
@@ -139,7 +136,7 @@ export default function SetShare(props: SetShareProps): JSX.Element {
 
   const handleShowMore = () => {
     const shareUrl = (data: ShareData) => navigator.share(data);
-    props.setShow(0);
+    props.close();
 
     if(getId()){
       const shareData: ShareData = {
@@ -164,7 +161,7 @@ export default function SetShare(props: SetShareProps): JSX.Element {
     const isMobile = () => devices.some(d => user.includes(d));
     const openUrl = (url: string | URL) => window.open(url, '_blank', 'popup=true, noopener, noreferrer');
 
-    props.setShow(0);
+    props.close();
 
     if (isMobile()) {
       if (type === 1) {
@@ -211,7 +208,7 @@ export default function SetShare(props: SetShareProps): JSX.Element {
           </SetButton>
         </div>
       </div>
-      <SetButton mode='sub' onClick={()=>props.setShow(0)} ref={(e)=>showUpAni(e,3.5)}>닫기</SetButton>
+      <SetButton mode='sub' onClick={()=>props.close()} ref={(e)=>showUpAni(e,3.5)}>닫기</SetButton>
     </>
   );
 }

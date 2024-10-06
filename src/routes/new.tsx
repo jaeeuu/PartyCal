@@ -1,7 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { SetButtonBox, SetSwitch, SetButton, SetBox, SetCheckbox, SetInputBox  } from "~/components/SetBase";
 import { createMemo, createSignal, Index, Show, createResource } from "solid-js";
-import { oneDj } from '../common/stores';
+import { oneDj, setStore } from '../common/stores';
 import type { Dayjs } from "dayjs";
 import SetPopUp from '../components/SetPopUp';
 import { getDateList, convertDjToCell, isSameCell, isBeforeCell, isBetweenCell, convertCellToDj, isAfterCell, convertCellToNum } from '../common/dates';
@@ -380,24 +380,17 @@ export default function NewPage() {
       });
       res.json().then((data) => {
         setGenUid(data.id);
-        sessionStorage.setItem('recent', data.id);
+        setStore(data.id);
       }).catch(() => setGenUid("error"));
     });
-    // setTimeout(() => {
-    //   if (uid.loading) {
-    //     const repeat = setInterval(() => {
-    //       if (!uid.loading) {
-    //         sessionStorage.setItem('recent', JSON.stringify(uid()));
-    //         setCreatedUid(uid() ?? null);
-    //         clearInterval(repeat);
-    //       }
-    //     }, 900);
-    //   } else {
-    //     sessionStorage.setItem('recent', JSON.stringify(uid()));
-    //     //@ts-expect-error
-    //     setCreatedUid(uid() ?? null);
-    //   }
-    // }, 200);
+  };
+
+  const handleClose = (type: number) => {
+    if (type === 1 || type === 2) {
+      handleCancel();
+    } else {
+      setSubPage(0);
+    }
   };
 
   return (
@@ -454,7 +447,7 @@ export default function NewPage() {
           투표 생성하기
         </SetButton>
       </SetBox>
-      <SetPopUp show={subPage} setShow={setSubPage} isLong={true} isOnce={subPage()===1||subPage()===2||!!genUid()}>
+      <SetPopUp show={subPage()>0} close={()=>handleClose(subPage())} isLong={true} isOnce={subPage()===1||subPage()===2||!!genUid()}>
         <Show when={subPage()===1||subPage()===2} fallback={
           <Show when={!!genUid()} fallback={<>&nbsp;</>}>
             <Show when={genUid() !== "error"} fallback={
@@ -463,10 +456,10 @@ export default function NewPage() {
                   <div {...stylex.attrs(ixStyles.titleText1)}>알 수 없는 오류가 발생했습니다.</div>
                   <div {...stylex.attrs(ixStyles.titleText2)}>잠시 후 다시 시도해주세요.</div>
                 </div>
-                <SetButton mode="main" onClick={()=>setSubPage(0)}>닫기</SetButton>
+                <SetButton mode="main" onClick={()=>handleClose(3)}>닫기</SetButton>
               </>
             }>
-              <SetShare setShow={setSubPage} id={genUid()}/>
+              <SetShare close={()=>handleClose(3)} id={genUid()}/>
             </Show>
           </Show>
         }>
