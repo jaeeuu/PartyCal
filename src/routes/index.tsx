@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import LinkSvg from '../assets/icons/link.svg';
+import LinkSvg from '../assets/icons/confetti.svg';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import RocketSvg from '../assets/icons/rocket.svg';
 // import StatSvg from '../assets/icons/data_2.svg';
@@ -14,6 +14,7 @@ import NtexLogoSVg from '../assets/icons/logo/ntex_logo.svg';
 import SingleStoreSvg from '../assets/icons/logo/singlestore_logo.svg';
 import TauriLogoSvg from '../assets/icons/logo/tauri_logo.svg';
 import StylexLogoSvg from '../assets/icons/logo/stylex_logo.svg';
+import CubeSvg from '../assets/icons/cube.svg';
 import { Meta, MetaProvider } from "@solidjs/meta";
 import { showUpAni } from '~/common/animations';
 import { materialEasing, store } from '~/common/stores';
@@ -31,7 +32,7 @@ const ixStyles = stylex.create({
     display: 'flex',
     width: "100%",
     justifyContent: "space-between",
-    paddingLeft: '5px',
+    padding: '7px',
     alignItems: 'center',
     //paddingBottom: '10px',
     // backgroundColor: 'yellow',
@@ -40,14 +41,15 @@ const ixStyles = stylex.create({
   box1text: {
     //position: 'absolute',
     fontWeight: 700,
-    fontSize: "20px",
+    fontSize: "23px",
     //left: '25px',
     //top: '25px',
     // color: "#6b7784",
     //lineHeight: "1.75",
     fontFamily: "'Basic Fonts'",
+    //padding: '5px',
     paddingBottom: '20px',
-    paddingTop: '5px',
+    //paddingTop: '5px',
     backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     color: 'transparent',
@@ -64,7 +66,8 @@ const ixStyles = stylex.create({
   },
   box1button: {
     // width: "100%",
-    padding: "16px",
+    padding: "20px",
+    borderRadius: "20px",
     fontWeight: 500,
   },
   box2_1title: {
@@ -126,15 +129,15 @@ const ixStyles = stylex.create({
     ...stylex.include(inStyles.flex),
     width: "100%",
     backgroundColor: "#fff",
-    padding: "10px",
+    padding: "15px",
+    paddingTop: "20px",
+    paddingBottom: "20px",
     justifyContent: "space-between",
   },
   box2_3text: {
     ...stylex.include(inStyles.flex),
-    fontWeight: 400,
-    fontSize: "16px",
     color: "#6b7784",
-    gap: "15px",
+    gap: "20px",
   },
   subBox_1: {
     color: "#4e5a68",
@@ -170,6 +173,14 @@ const ixStyles = stylex.create({
     gap: '10px',
     width: '100%',
   },
+  moreText1: {
+    fontWeight: 700,
+    fontSize: '18px',
+  },
+  moreText2: {
+    fontWeight: 500,
+    fontSize: '14px',
+  },
   apps: {
     ...stylex.include(inStyles.flex),
     fontSize: "12px",
@@ -181,19 +192,33 @@ const ixStyles = stylex.create({
     backgroundColor: "#F2F4F6",
   },
   recentBox: {
-    background: 'linear-gradient(145deg, #e9defa, #fbfcdb)',
-    padding: '30px',
+    background: 'linear-gradient(145deg, #5ea3db, #8cbeed)',
+    padding: '25px',
+    paddingTop: '30px',
+    paddingBottom: '30px',
+    borderRadius: '25px',
     color: '#fff',
+    boxShadow: "0 0 10px 1px #E7E7E7",
+    ...stylex.include(inStyles.flex),
+    justifyContent: 'space-between',
+  },
+  recentBoxIn: {
+    ...stylex.include(inStyles.flex),
+    gap: '20px',
+  },
+  sero: {
+    display: 'flex',
+    flexDirection: 'column',
   },
   recentText1: {
     fontWeight: 700,
     fontSize: '20px',
-    textShadow: '0px 0px 15px #CCC'
+    //textShadow: '0px 0px 15px #CCC'
   },
   recentText2: {
     fontWeight: 500,
     fontSize: '14px',
-    textShadow: '0px 0px 15px #CCC'
+    //textShadow: '0px 0px 15px #CCC'
   },
 });
 
@@ -221,13 +246,16 @@ export default function HomePage() {
         onExit={(el, done) => boxOnExit(el, done)}
         mode='outin'
       >
-        <Show when={store()!==""}>
-          <SetButtonBox sx={[ixStyles.recentBox]}>
-            <div>
-              <div {...stylex.attrs(ixStyles.recentText1)}>최근 생성된 투표</div>
-              <div {...stylex.attrs(ixStyles.recentText2)}>공유 링크 다시 가져오기</div>
+        <Show when={!!store()}>
+          <SetButtonBox sx={[ixStyles.recentBox]} onClick={()=>setShowSub(3)}>
+            <div {...stylex.attrs(ixStyles.recentBoxIn)}>
+              <CubeSvg width="50px" height="50px" />
+              <div {...stylex.attrs(ixStyles.sero)}>
+                <div {...stylex.attrs(ixStyles.recentText2)}>최근에 생성된 투표의</div>
+                <div {...stylex.attrs(ixStyles.recentText1)}>링크 다시보기</div>
+              </div>
             </div>
-            <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
+            <ArrowRightSvg width="20px" height="20px" color="#FFF" />
           </SetButtonBox>
         </Show>
       </Transition>
@@ -238,7 +266,7 @@ export default function HomePage() {
             <br/>친구들과 함께
             <br/>일정을 정해보세요
           </div>
-          <img {...stylex.attrs(ixStyles.box1image)} height="100px" width="100px" src={calenderImage} decoding='sync' alt="" />
+          <img {...stylex.attrs(ixStyles.box1image)} height="110px" width="110px" src={calenderImage} decoding='sync' alt="" />
         </div>
         <SetA sx={[ixStyles.box1button]} href='/new' title="new">
           일정 투표 만들기
@@ -260,23 +288,29 @@ export default function HomePage() {
         </div>
       </SetBox> */}
       <SetBox>
-        <div {...stylex.attrs(ixStyles.box2_1title)}>
+        {/* <div {...stylex.attrs(ixStyles.box2_1title)}>
           더보기
-        </div>
+        </div> */}
         <div {...stylex.attrs(ixStyles.box3Group)}>
           <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(1)}>
             <div {...stylex.attrs(ixStyles.box2_3text)}>
-              <LinkSvg width="24px" height="24px" />
-              사이트 공유하기
+              <LinkSvg width="32px" height="32px" color="#FF5733" />
+              <div {...stylex.attrs(ixStyles.sero)}>
+                <div {...stylex.attrs(ixStyles.moreText2)}>친구들에게</div>
+                <div {...stylex.attrs(ixStyles.moreText1)}>사이트 공유하기</div>
+              </div>
             </div>
-            <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
+            <ArrowRightSvg width="18px" height="18px" color="#B0B8C1" />
           </SetButtonBox>
           <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(2)}>
             <div {...stylex.attrs(ixStyles.box2_3text)}>
-              <RocketSvg width="24px" height="24px" />
-              정보
+              <RocketSvg width="32px" height="32px" />
+              <div {...stylex.attrs(ixStyles.sero)}>
+                <div {...stylex.attrs(ixStyles.moreText2)}>라이선스와</div>
+                <div {...stylex.attrs(ixStyles.moreText1)}>자세한 정보</div>
+              </div>
             </div>
-            <ArrowRightSvg width="16px" height="16px" color="#B0B8C1" />
+            <ArrowRightSvg width="18px" height="18px" color="#B0B8C1" />
           </SetButtonBox>
         </div>
       </SetBox>
@@ -293,8 +327,8 @@ export default function HomePage() {
           </div>
           <SetButton mode='main' onClick={()=>setShowSub(0)} ref={(e)=>showUpAni(e,4)}>닫기</SetButton>
         </Show>
-        <Show when={showSub()===1}>
-          <SetShare close={()=>setShowSub(0)} />
+        <Show when={showSub()===1||showSub()===3}>
+          <SetShare close={()=>setShowSub(0)} id={showSub()===1 ? '' : store()??''} />
         </Show>
       </SetPopUp>
     </>

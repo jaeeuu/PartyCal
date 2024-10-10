@@ -241,9 +241,10 @@ const thisStyles = stylex.create({
     backgroundColor: "#fff",
     padding: "25px",
     marginTop: "25px",
-    borderRadius: "20px",
+    borderRadius: "25px",
     position: "relative",
     gap: '10px',
+    boxShadow: "0 0 10px 1px #E7E7E7",
   },
 });
 

@@ -39,6 +39,7 @@ const ixStyles = stylex.create({
   box02: {
     ...stylex.include(inStyles.box0),
     marginBottom: '20px',
+    marginTop : '10px',
   },
   title: {
     color: "#6b7784",
@@ -63,7 +64,8 @@ const ixStyles = stylex.create({
     fontWeight: 500,
     color: "#246ab6",
     backgroundColor: '#f2f4f6',
-    gap: '15px',
+    gap: '10px',
+    textAlign: 'center',
     padding: '16px 20px 16px 20px',
     borderRadius: '20px',
     userSelect: 'text',
