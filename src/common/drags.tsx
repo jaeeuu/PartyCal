@@ -2,8 +2,8 @@
 // import { createSignal } from "solid-js";
 
 type posXY = {
-  x: number|null,
-  y: number|null,
+  x: number|null;
+  y: number|null;
 };
 
 // const [pointerId, setPointerId] = createSignal<string | null>(null);

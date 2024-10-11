@@ -11,6 +11,8 @@ import ArrowLeftSvg from '../assets/icons/arrow_left.svg';
 import SelectDateSvg from '../assets/icons/select_date.svg';
 import { showUpAni } from '~/common/animations';
 import SetShare from '~/components/SetShare';
+import calenderImage from '../assets/images/cal_re.avif';
+import { useNavigate } from '@solidjs/router';
 
 const inStyles = stylex.create({
   flex: {
@@ -26,21 +28,40 @@ const inStyles = stylex.create({
 });
 
 const ixStyles = stylex.create({
-  titleTextBox: {
-    ...stylex.include(inStyles.flex),
-    flexDirection: 'column',
-    gap: '3px',
-    marginBottom: '20px',
-    marginTop: '5px',
+  box1box: {
+    display: 'flex',
+    width: "100%",
+    justifyContent: "space-between",
+    padding: '7px',
+    alignItems: 'center',
+  },
+  box1text: {
+    fontWeight: 700,
+    fontSize: "21px",
+    fontFamily: "'Basic Fonts'",
+    paddingBottom: '20px',
+    backgroundClip: 'text',
+    WebkitBackgroundClip: 'text',
+    color: 'transparent',
+    backgroundImage: 'linear-gradient(145deg, hsl(198.1, 100%, 46.1%) 0%, hsl(231.9, 68.6%, 72.5%) 55%)',
+    letterSpacing: '-1px',
+  },
+  box1image: {
+    position: 'relative',
+    top: "-5px",
+    right: "-10px",
+    objectFit: 'contain',
+    pointerEvents: 'none',
   },
   titleText1: {
     color: "#333e4b",
-    fontSize: "24px",
+    fontSize: "23px",
     fontWeight: 700,
   },
   titleText2: {
     color: "#6b7784",
-    fontSize: "14px",
+    fontSize: "16px",
+    fontWeight: 500,
   },
   selectBox: {
     display: 'flex',
@@ -51,9 +72,10 @@ const ixStyles = stylex.create({
   },
   selectButtonText: {
     fontSize: '14px',
-    fontWeight: 400,
+    fontWeight: 500,
     marginLeft: '5px',
     color: '#6b7784',
+    lineHeight: '1.35',
   },
   selectButton: {
     width: '100%',
@@ -61,9 +83,9 @@ const ixStyles = stylex.create({
     backgroundColor: "#f8f9fa",
     // color: "#004996",
     color: "#333e4b",
-    padding: "16.5px",
+    padding: "20px",
     marginBottom: '20px',
-    marginTop: '5px',
+    marginTop: '7px',
     fontWeight: 500,
     ...stylex.include(inStyles.flex),
     gap: '5px',
@@ -72,10 +94,11 @@ const ixStyles = stylex.create({
     color: '#8B95A1',
   },
   selectButtonHelp: {
-    marginBottom: '5px',
+    //marginBottom: '5px',
     marginLeft: '5px',
-    fontSize: '11px',
+    fontSize: '12px',
     color: '#8B95A1',
+    lineHeight: '1.35',
   },
   subDateBox: {
     ...stylex.include(inStyles.flex),
@@ -126,9 +149,7 @@ const ixStyles = stylex.create({
     gridTemplateColumns: "repeat(7, 1fr)",
     placeContent: "stretch",
     placeItems: "stretch",
-    gap: "1px",
-    //eslint-disable-next-line
-    viewTransitionName: "slide",
+    // gap: "1px",
   },
   subCalTile: {
     ...stylex.include(inStyles.flex),
@@ -136,7 +157,7 @@ const ixStyles = stylex.create({
     aspectRatio: "1 / 1",
     cursor: "pointer",
     borderRadius: "16.5px",
-    ...stylex.include(inStyles.border),
+    //...stylex.include(inStyles.border),
     backgroundColor: "#fff",
     color: {
       default: "#6b7784",
@@ -164,7 +185,7 @@ const ixStyles = stylex.create({
         "@media (hover: hover)": "brightness(0.95)",
       },
     },
-    fontWeight: 500,
+    fontWeight: 600,
   },
   subCalTop: {
     display: 'flex',
@@ -181,10 +202,11 @@ const ixStyles = stylex.create({
   },
   subCalOut: {
     // borderStyle: "none",
-    opacity: 0.5,
+    opacity: 0.4,
     fontWeight: 400,
   },
   subCalDisabled: {
+    // opacity: 0.1,
     cursor: "default",
     pointerEvents: "none",
     borderStyle: "none",
@@ -205,7 +227,7 @@ const ixStyles = stylex.create({
         "@media (hover: hover)": "scale(1)",
       },
     },
-    fontWeight: 600,
+    // fontWeight: 600,
   },
   calButtonBox: {
     ...stylex.include(inStyles.flex),
@@ -217,13 +239,8 @@ const ixStyles = stylex.create({
     width: "100%",
   },
   genError: {
-    // width: "100%",
-    // color: "#333e4b",
-    // fontSize: "16px",
-    paddingTop: '20px',
     paddingBottom: '30px',
-    // fontWeight: 500,
-    // textAlign: 'center',
+    paddingLeft: '10px',
   },
 });
 
@@ -385,11 +402,13 @@ export default function NewPage() {
     });
   };
 
+  const navigate = useNavigate();
   const handleClose = (type: number) => {
     if (type === 1 || type === 2) {
       handleCancel();
     } else {
       setSubPage(0);
+      navigate('/');
     }
   };
 
@@ -401,9 +420,13 @@ export default function NewPage() {
         <SetButton mode='sub'>공유하기</SetButton>
       </SetBox> */}
       <SetBox>
-        <div {...stylex.attrs(ixStyles.titleTextBox)}>
-          <div {...stylex.attrs(ixStyles.titleText1)}>새로운 투표 만들기</div>
-          <div {...stylex.attrs(ixStyles.titleText2)}>친구들과 일정을 간단하게 투표해보세요</div>
+        <div {...stylex.attrs(ixStyles.box1box)}>
+          <div {...stylex.attrs(ixStyles.box1text)}>
+            새로운 투표를 생성하고
+            <br/>친구들과 함께
+            <br/>일정을 정해보세요
+          </div>
+          <img {...stylex.attrs(ixStyles.box1image)} height="110px" width="110px" src={calenderImage} decoding='sync' alt="" />
         </div>
         <SetInputBox
           mode="text"
@@ -432,11 +455,12 @@ export default function NewPage() {
             </Show>
           </SetButtonBox>
           <div {...stylex.attrs(ixStyles.selectButtonText)}>옵션</div>
-          <SetSwitch value={onlyKakao} setValue={setOnlyKakao}>카카오톡에서만 투표 허용하기</SetSwitch>
+          <SetSwitch value={onlyKakao()} setValue={()=>setOnlyKakao((prev)=>!prev)}>카카오톡에서만 투표 허용</SetSwitch>
+          <SetSwitch value={false} setValue={()=>true} disabled={true}>비밀번호 설정</SetSwitch>
         </div>
       </SetBox>
       <SetBox>
-        <SetCheckbox value={agree} setValue={setAgree} sx={[ixStyles.agree]}>
+        <SetCheckbox value={agree()} setValue={()=>setAgree((prev)=>!prev)} sx={[ixStyles.agree]}>
           서비스 제공을 위한 개인식별 정보 활용 동의
         </SetCheckbox>
         <SetButton

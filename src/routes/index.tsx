@@ -19,6 +19,7 @@ import { Meta, MetaProvider } from "@solidjs/meta";
 import { showUpAni } from '~/common/animations';
 import { materialEasing, store } from '~/common/stores';
 import { Transition } from 'solid-transition-group';
+// import { useNavigate, usePreloadRoute } from '@solidjs/router';
 
 const inStyles = stylex.create({
   flex: {
@@ -61,6 +62,7 @@ const ixStyles = stylex.create({
     //marginBottom: "35px",
     position: 'relative',
     top: "-5px",
+    right: "-10px",
     objectFit: 'contain',
     pointerEvents: 'none',
   },
@@ -75,47 +77,6 @@ const ixStyles = stylex.create({
     alignSelf: "flex-start",
     fontWeight: 700,
     margin: "0px 0px 5px 7px",
-  },
-  box2Group: {
-    ...stylex.include(inStyles.flex),
-    width: "100%",
-    gap: "20px",
-  },
-  box2new: {
-    fontWeight: 700,
-    fontSize: "20px",
-    // color: "#4e5168",
-    paddingBottom: '10px',
-    // paddingTop: '5px',
-    paddingLeft: '5px',
-    letterSpacing: '-1px',
-    alignSelf: "flex-start",
-    fontFamily: "'Basic Fonts'",
-    backgroundClip: 'text',
-    WebkitBackgroundClip: 'text',
-    color: 'transparent',
-    backgroundImage: 'linear-gradient(170deg, hsl(198.1, 40%, 46.1%) 0%, hsl(231.9, 40%, 72.5%) 55%)',
-  },
-  box2: {
-    //borderColor: "#f2f3f5",
-    borderColor: '#e8ebff',
-    borderStyle: "solid",
-    borderWidth: "1px",
-    backgroundColor: "#f8faff",
-    color: "#6b6e84",
-    fontSize: "16px",
-    // backgroundColor: '#e8ebff',
-    // color: '#8b97ea',
-    padding: "20px",
-    width: "100%",
-    fontWeight: 500,
-    position: "relative",
-  },//#6b7784 below text color
-  box2_2Image: {
-    right: "20px",
-    top: "15px",
-    position: "absolute",
-    color: '#8b97ea',
   },
   box3Group: {
     ...stylex.include(inStyles.flex),
@@ -234,6 +195,32 @@ export default function HomePage() {
     a.finished.then(done);
   };
 
+  // let aniRef = null;
+  // const preload = usePreloadRoute();
+  // const naviagte = useNavigate();
+
+  // const handleMakeNew = () => {
+  //   preload(new URL('/new'), { preloadData: true});
+  //   const keyframes = new KeyframeEffect(
+  //     aniRef,
+  //     [
+  //       { marginBottom: '0px' },
+  //       { marginBottom: '100px' },
+  //     ],
+  //     {
+  //       duration: 500,
+  //       easing: "cubic-bezier(0.08,0.82,0.17,1)",
+  //       iterations: 1,
+  //     },
+  //   );
+  //   const ani = new Animation(keyframes);
+  //   ani.play();
+  //   ani.onfinish = () => {
+  //     ani?.cancel();
+  //     naviagte('/new');
+  //   };
+  // };
+
   return (
     <>
       <MetaProvider>
@@ -267,7 +254,7 @@ export default function HomePage() {
             <br/>친구들과 함께
             <br/>일정을 정해보세요
           </div>
-          <img {...stylex.attrs(ixStyles.box1image)} height="105px" width="105px" src={calenderImage} decoding='sync' alt="" />
+          <img {...stylex.attrs(ixStyles.box1image)} height="110px" width="110px" src={calenderImage} decoding='sync' alt="" />
         </div>
         <SetA sx={[ixStyles.box1button]} href='/new' title="new">
           일정 투표 만들기

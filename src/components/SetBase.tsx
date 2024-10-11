@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import type { Accessor, JSX, Setter } from 'solid-js';
+import type { JSX } from 'solid-js';
 import { createSignal, splitProps } from 'solid-js';
 import type { StyleXStyles } from '@stylexjs/stylex';
 import { A } from '@solidjs/router';
@@ -48,8 +48,8 @@ type SetButtonBoxProps = JSX.HTMLAttributes<HTMLDivElement> & {
 type SetCheckboxProps = JSX.HTMLAttributes<HTMLDivElement> & {
   sx?: StyleXStyles[];
   disabled?: boolean;
-  value: Accessor<boolean>;
-  setValue: Setter<boolean>;
+  value: boolean;
+  setValue: () => void;
   children: JSX.Element;
 };
 
@@ -65,7 +65,7 @@ const baseStyles = stylex.create({
     borderRadius: '20px',
   },
   main: {
-    padding: '16.5px',
+    padding: '20px',
     width: '100%',
     fontWeight: 500,
   },
@@ -74,6 +74,7 @@ const baseStyles = stylex.create({
     alignItems: 'center',
   },
   button: {
+    lineHeight: '1.35',
     userSelect: 'none',
     cursor: 'pointer',
     transition: {
@@ -139,7 +140,7 @@ const inputStyles = stylex.create({
     ...stylex.include(baseStyles.reset),
     ...stylex.include(baseStyles.main),
     ...stylex.include(baseStyles.input),
-    padding: '18.5px',
+    padding: '20px',
     '::placeholder': {
       fontFamily: "'Basic Fonts'",
       color: '#8B95A1',
@@ -452,10 +453,11 @@ export function SetCheckbox(props: SetCheckboxProps){
     'setValue',
     'children',
   ]);
+  const value = () => local.value;
   return (
     <div
       {...stylex.attrs(checkboxStyles.box, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
-      onClick={()=> local.setValue((prev) => !prev)}
+      onClick={() => local.setValue()}
       {...others}
     >
       <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -470,7 +472,7 @@ export function SetCheckbox(props: SetCheckboxProps){
         <path
           {...stylex.attrs(
             checkboxStyles.path2,
-            local.value() && checkboxStyles.path2Checked
+            value() && checkboxStyles.path2Checked
           )}
           d="M4.02 13.47 8.52 17.956 19.45 6.99"
           fill="none"
@@ -558,6 +560,10 @@ const switchStyles = stylex.create({
     color: '#4e5968',
     fontSize: "15px",
   },
+  disabled: {
+    ...stylex.include(thisStyles.disabled),
+    backgroundColor: null,
+  }
 });
   
 export function SetSwitch(props: SetSwitchProps){
@@ -569,11 +575,12 @@ export function SetSwitch(props: SetSwitchProps){
     'setValue',
     'children',
   ]);
+  const value = () => local.value;
 
   return(
     <div
-      {...stylex.attrs(switchStyles.box, ...(local.sx??[]), !!local.disabled && thisStyles.disabled)}
-      onClick={()=> local.setValue((prev) => !prev)}
+      {...stylex.attrs(switchStyles.box, ...(local.sx??[]), !!local.disabled && switchStyles.disabled)}
+      onClick={()=> local.setValue()}
       onPointerDown={()=> setActive(true)}
       onPointerUp={()=> setActive(false)}
       onPointerCancel={()=> setActive(false)}
@@ -582,12 +589,12 @@ export function SetSwitch(props: SetSwitchProps){
     >
       <div 
         {...stylex.attrs(switchStyles.switch, switchStyles.switchOut,
-          (active() && !local.value()) && switchStyles.switchOutActive,
-          (!active() && local.value()) && switchStyles.switchOutChecked,
-          (active() && local.value()) && switchStyles.switchOutCheckedActive,
+          (active() && !value()) && switchStyles.switchOutActive,
+          (!active() && value()) && switchStyles.switchOutChecked,
+          (active() && value()) && switchStyles.switchOutCheckedActive,
         )}
       >
-        <div {...stylex.attrs(switchStyles.switch, switchStyles.switchIn, local.value() && switchStyles.switchInChecked)}>
+        <div {...stylex.attrs(switchStyles.switch, switchStyles.switchIn, value() && switchStyles.switchInChecked)}>
           &nbsp;
         </div>
       </div>
