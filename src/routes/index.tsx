@@ -41,7 +41,7 @@ const ixStyles = stylex.create({
   box1text: {
     //position: 'absolute',
     fontWeight: 700,
-    fontSize: "23px",
+    fontSize: "21px",
     //left: '25px',
     //top: '25px',
     // color: "#6b7784",
@@ -67,7 +67,6 @@ const ixStyles = stylex.create({
   box1button: {
     // width: "100%",
     padding: "20px",
-    borderRadius: "20px",
     fontWeight: 500,
   },
   box2_1title: {
@@ -104,7 +103,6 @@ const ixStyles = stylex.create({
     borderWidth: "1px",
     backgroundColor: "#f8faff",
     color: "#6b6e84",
-    borderRadius: "17px",
     fontSize: "16px",
     // backgroundColor: '#e8ebff',
     // color: '#8b97ea',
@@ -175,11 +173,11 @@ const ixStyles = stylex.create({
   },
   moreText1: {
     fontWeight: 700,
-    fontSize: '18px',
+    fontSize: '17px',
   },
   moreText2: {
     fontWeight: 500,
-    fontSize: '14px',
+    fontSize: '13px',
   },
   apps: {
     ...stylex.include(inStyles.flex),
@@ -212,13 +210,16 @@ const ixStyles = stylex.create({
   },
   recentText1: {
     fontWeight: 700,
-    fontSize: '20px',
+    fontSize: '18px',
     //textShadow: '0px 0px 15px #CCC'
   },
   recentText2: {
     fontWeight: 500,
     fontSize: '14px',
     //textShadow: '0px 0px 15px #CCC'
+  },
+  moreBox: {
+    padding: '15px',
   },
 });
 
@@ -251,7 +252,7 @@ export default function HomePage() {
             <div {...stylex.attrs(ixStyles.recentBoxIn)}>
               <CubeSvg width="50px" height="50px" />
               <div {...stylex.attrs(ixStyles.sero)}>
-                <div {...stylex.attrs(ixStyles.recentText2)}>최근에 생성된 투표의</div>
+                <div {...stylex.attrs(ixStyles.recentText2)}>최근에 생성된 투표</div>
                 <div {...stylex.attrs(ixStyles.recentText1)}>링크 다시보기</div>
               </div>
             </div>
@@ -266,7 +267,7 @@ export default function HomePage() {
             <br/>친구들과 함께
             <br/>일정을 정해보세요
           </div>
-          <img {...stylex.attrs(ixStyles.box1image)} height="110px" width="110px" src={calenderImage} decoding='sync' alt="" />
+          <img {...stylex.attrs(ixStyles.box1image)} height="105px" width="105px" src={calenderImage} decoding='sync' alt="" />
         </div>
         <SetA sx={[ixStyles.box1button]} href='/new' title="new">
           일정 투표 만들기
@@ -287,14 +288,14 @@ export default function HomePage() {
           </SetA>
         </div>
       </SetBox> */}
-      <SetBox>
+      <SetBox sx={[ixStyles.moreBox]}>
         {/* <div {...stylex.attrs(ixStyles.box2_1title)}>
           더보기
         </div> */}
         <div {...stylex.attrs(ixStyles.box3Group)}>
           <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(1)}>
             <div {...stylex.attrs(ixStyles.box2_3text)}>
-              <LinkSvg width="32px" height="32px" color="#FF5733" />
+              <LinkSvg width="30px" height="32px" color="#FF5733" />
               <div {...stylex.attrs(ixStyles.sero)}>
                 <div {...stylex.attrs(ixStyles.moreText2)}>친구들에게</div>
                 <div {...stylex.attrs(ixStyles.moreText1)}>사이트 공유하기</div>
@@ -304,7 +305,7 @@ export default function HomePage() {
           </SetButtonBox>
           <SetButtonBox sx={[ixStyles.box2_3In]} onClick={()=>setShowSub(2)}>
             <div {...stylex.attrs(ixStyles.box2_3text)}>
-              <RocketSvg width="32px" height="32px" />
+              <RocketSvg width="30px" height="32px" />
               <div {...stylex.attrs(ixStyles.sero)}>
                 <div {...stylex.attrs(ixStyles.moreText2)}>라이선스와</div>
                 <div {...stylex.attrs(ixStyles.moreText1)}>자세한 정보</div>
