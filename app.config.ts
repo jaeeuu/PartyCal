@@ -1,26 +1,14 @@
 import { defineConfig } from "@solidjs/start/config";
 import solidSvg from 'vite-plugin-solid-svg';
 import { resolve } from 'path';
-// import tsconfigPaths from 'vite-tsconfig-paths';
 import styleX from 'vite-plugin-stylex';
-// import type { StylexPluginOptions } from 'vite-plugin-stylex-dev';
-// import { stylex } from "vite-plugin-stylex-dev";
 // import { FontaineTransform } from 'fontaine'
 
 export default defineConfig({
   vite: {
     plugins: [
-      // tsconfigPaths(),
       solidSvg(),
       styleX(),
-      // stylex({
-      //   // dev: process.env.NODE_ENV === 'development',
-      //   // runtimeInjection: false,
-      //   unstable_moduleResolution: undefined,
-      //   useCSSLayers: true,
-      //   genConditionalClasses: true,
-      //   treeshakeCompensation: false,
-      // } as StylexPluginOptions)
       // FontaineTransform.vite({
       //   fallbacks: ['Arial'],
       //   resolvePath: id => {
@@ -43,14 +31,12 @@ export default defineConfig({
     },
     build: {
       sourcemap: false,
-      // cssCodeSplit: true,
-      // cssMinify: "lightningcss",
-      // minify: true,
-      // target: 'modules'
+      rollupOptions: {
+        output: {
+          experimentalMinChunkSize: 100_000,
+        }
+      }
     },
-    // ssr: {
-    //   external: true,
-    // },
     css: {
       transformer: "lightningcss",
     },
@@ -58,29 +44,25 @@ export default defineConfig({
       watch: {
         ignored: ["**/src-back/**"],
       }
-    }
+    },
+    
   },
 
   server: {
     static: true,
+    compressPublicAssets: {gzip: true, brotli: true},
+    serveStatic: true,
+    preset: "github-pages",
     prerender: {
       routes: ["/", "/new", "/s", "/test"],
       // crawlLinks: true
     },
-    // future: {
-    //   nativeSWR: true,
-    // },
-    // minify: true,
+    rollupConfig: {
+      output: {
+        experimentalMinChunkSize: 100_000,
+      },
+    },
+    minify: true,
     sourceMap: false,
-    // inlineDynamicImports: true,
-    // rollupConfig: {
-    //   output: {
-    //     manualChunks: {}
-    //   }
-    // }
   },
-  // extensions: ["tsx"],
-  // experimental: {
-  //   islands: true,
-  // }
 });

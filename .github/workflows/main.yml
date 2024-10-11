@@ -16,10 +16,13 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     if: github.event.head_commit.message != '[skip]'
+    environment:
+      name: Production
+      url: 'https://partycal.site/'
 
     steps:
     - uses: actions/checkout@v4.1.7
-
+    - run: corepack enable
     - name: DB compile check
       uses: selfagency/ssh-port-forward-action@v1.0.6
       with:
@@ -90,4 +93,5 @@ jobs:
           chmod 755 /opt/partyback
           systemctl restart h2o
           systemctl start partyback
+    
           
