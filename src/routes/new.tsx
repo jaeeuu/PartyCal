@@ -9,10 +9,12 @@ import type { DateCell } from '../common/dates';
 import ArrowRightSvg from '../assets/icons/arrow_right.svg';
 import ArrowLeftSvg from '../assets/icons/arrow_left.svg';
 import SelectDateSvg from '../assets/icons/select_date.svg';
-import { showUpAni } from '~/common/animations';
+import { showUpAni } from '~/common/useUtils';
 import SetShare from '~/components/SetShare';
 import calenderImage from '../assets/images/cal_re.avif';
 import { useNavigate } from '@solidjs/router';
+
+showUpAni;
 
 const inStyles = stylex.create({
   flex: {
@@ -149,7 +151,7 @@ const ixStyles = stylex.create({
     gridTemplateColumns: "repeat(7, 1fr)",
     placeContent: "stretch",
     placeItems: "stretch",
-    // gap: "1px",
+    gap: "1.5px",
   },
   subCalTile: {
     ...stylex.include(inStyles.flex),
@@ -487,7 +489,7 @@ export default function NewPage() {
             </Show>
           </Show>
         }>
-          <div {...stylex.attrs(ixStyles.subDateBox)} ref={(e)=>showUpAni(e,1)}>
+          <div {...stylex.attrs(ixStyles.subDateBox)} use:showUpAni={1}>
             <div {...stylex.attrs(ixStyles.subDateTextBox)}>
               <div {...stylex.attrs(ixStyles.subDateYear)}>{`${mainCell().year}년`}</div>
               <div {...stylex.attrs(ixStyles.subDateMonth)}>{`${mainCell().month}월`}</div>
@@ -506,7 +508,7 @@ export default function NewPage() {
               </Show>
             </div>
           </div>
-          <div {...stylex.attrs(ixStyles.subCalBox)} ref={(e)=>(calRef=e,showUpAni(e,2))}>
+          <div {...stylex.attrs(ixStyles.subCalBox)} use:showUpAni={2} ref={(e)=>(calRef=e)}>
             <Index each={weekList}>
               {(item) => (<div {...stylex.attrs(ixStyles.subCalTop)}>{item()}</div>)}
             </Index>
@@ -546,7 +548,7 @@ export default function NewPage() {
               </Index>
             </Show>
           </div>
-          <div {...stylex.attrs(ixStyles.calButtonBox)} ref={(e)=>showUpAni(e,3.5)}>
+          <div {...stylex.attrs(ixStyles.calButtonBox)} use:showUpAni={3.5}>
             <SetButton mode="sub" onClick={()=>handleCancel()}>취소</SetButton>
             <SetButton mode="main" onClick={()=>handleOk()} disabled={subPage()===1 ? !startCell() : !endCell()}>확인</SetButton>
           </div>

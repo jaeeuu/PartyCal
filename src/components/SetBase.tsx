@@ -5,7 +5,10 @@ import type { StyleXStyles } from '@stylexjs/stylex';
 import { A } from '@solidjs/router';
 import type { AnchorProps } from '@solidjs/router';
 import LogoTextSvg from '../assets/logo_text.svg';
-//import LogoImgSvg from '../assets/logo_img.svg';
+import { smoothCorner, showUpAni } from '~/common/useUtils';
+
+smoothCorner;
+showUpAni;
 
 type ButtonMode = 'main' | 'sub' | 'none';
 
@@ -280,6 +283,7 @@ export function SetBox(props: SetRootProps): JSX.Element {
     'children',
     'sx'
   ]);
+
   return (
     <div
       {...stylex.attrs(
@@ -287,6 +291,7 @@ export function SetBox(props: SetRootProps): JSX.Element {
         ...(local.sx??[])
       )}
       {...others}
+      use:smoothCorner={{}}
     >
       {local.children}
     </div>
@@ -341,6 +346,7 @@ export function SetInputBox(props: SetInputBoxProps): JSX.Element {
         {local.children}
       </div>
       <input
+        use:smoothCorner={{}}
         {...stylex.attrs(
           inputStyles.main,
           ...(local.sx??[]),
@@ -353,9 +359,16 @@ export function SetInputBox(props: SetInputBoxProps): JSX.Element {
 }
 
 export function SetButton(props: SetButtonProps): JSX.Element {
-  const [local, others] = splitProps(props, ['children', 'mode', 'sx']);
+  const [local, others] = splitProps(props, [
+    'children',
+    'mode',
+    'sx',
+    'use:showUpAni',
+  ]);
   return (
     <button
+      use:showUpAni={local['use:showUpAni']}
+      use:smoothCorner={{}}
       {...stylex.attrs(
         buttonStyles[local.mode || 'main'],
         ...(local.sx??[]),
@@ -373,9 +386,12 @@ export function SetButtonBox(props: SetButtonBoxProps): JSX.Element {
     'children',
     'sx',
     'disabled',
+    'use:showUpAni',
   ]);
   return (
     <div
+      use:showUpAni={local['use:showUpAni']}
+      use:smoothCorner={{}}
       {...stylex.attrs(
         buttonStyles.none,
         ...(local.sx??[]),
@@ -508,7 +524,7 @@ const switchStyles = stylex.create({
   },
   switchOut: {
     width: "50px",
-    height: "25px",
+    height: "26px",
     borderRadius: "12.5px",
     transition: {
       default: "background-color 0.3s linear, padding 1s var(--spring-easing)",
@@ -587,14 +603,17 @@ export function SetSwitch(props: SetSwitchProps){
       onPointerLeave={()=> setActive(false)}
       {...others}
     >
-      <div 
+      <div
+        use:smoothCorner={{}}
         {...stylex.attrs(switchStyles.switch, switchStyles.switchOut,
           (active() && !value()) && switchStyles.switchOutActive,
           (!active() && value()) && switchStyles.switchOutChecked,
           (active() && value()) && switchStyles.switchOutCheckedActive,
         )}
       >
-        <div {...stylex.attrs(switchStyles.switch, switchStyles.switchIn, value() && switchStyles.switchInChecked)}>
+        <div
+          {...stylex.attrs(switchStyles.switch, switchStyles.switchIn, value() && switchStyles.switchInChecked)}
+        >
           &nbsp;
         </div>
       </div>

@@ -6,6 +6,9 @@ import { createSignal, onMount, Show } from 'solid-js';
 import { materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
 import { dragStartHandler, dragMoveHandler, dragEndHandler } from "~/common/drags";
+import { smoothCorner } from "~/common/useUtils";
+
+smoothCorner;
 
 // const spinOnce = stylex.keyframes({
 //   '0%': { transform: 'rotate(0deg) scaleX(0.5)' },
@@ -45,7 +48,7 @@ const ixStyles = stylex.create({
     width: '100%',
     padding: '22px',
     paddingTop: '0px', //was 22px
-    borderRadius: "24px",
+    borderRadius: "25px",
     backgroundColor: '#fff',
     display: 'flex',
     flexDirection: 'column',
@@ -230,7 +233,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       >
         <Show when={isShow()} keyed={true}>
           <div {...stylex.attrs(ixStyles.box, dragPos()===0 && ixStyles.boxDrag)} style={{transform: `translateY(${dragPos()??0}px`}}>
-            <div {...stylex.attrs(ixStyles.boxIn)}>
+            <div {...stylex.attrs(ixStyles.boxIn)} use:smoothCorner={{}}>
               <div {...stylex.attrs(ixStyles.hintBox)} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp}>
                 <div ref={(e)=>animateHint(e)} {...stylex.attrs(ixStyles.hint)}>&nbsp;</div>
                 {/* <SetButtonBox sx={[ixStyles.close]} onClick={()=>props.setShow(0)}>

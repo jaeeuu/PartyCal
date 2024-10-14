@@ -5,7 +5,9 @@ import KakaotalkLogoSvg from '../assets/icons/logo/kakaotalk_logo.svg';
 import CopySvg from '../assets/icons/copy.svg';
 import { SetButton, SetButtonBox } from './SetBase';
 import { CallDialog } from './SetAlert';
-import { showUpAni } from '~/common/animations';
+import { showUpAni } from '~/common/useUtils';
+
+showUpAni;
 
 const inStyles = stylex.create({
   flex: {
@@ -184,17 +186,17 @@ export default function SetShare(props: SetShareProps): JSX.Element {
   return (
     <>
       <div {...stylex.attrs(ixStyles.box01)}>
-        <div {...stylex.attrs(ixStyles.title)} ref={(e)=>showUpAni(e,1)}>링크 복사하기</div>
-        <div {...stylex.attrs(ixStyles.title2)} ref={(e)=>showUpAni(e,1.25)}>누르면 링크가 클립보드에 복사돼요</div>
-        <SetButtonBox sx={[ixStyles.linkBox]} onClick={copyUrl} ref={(e)=>showUpAni(e,1.5)}>
+        <div {...stylex.attrs(ixStyles.title)} use:showUpAni={1}>링크 복사하기</div>
+        <div {...stylex.attrs(ixStyles.title2)} use:showUpAni={1.25}>누르면 링크가 클립보드에 복사돼요</div>
+        <SetButtonBox sx={[ixStyles.linkBox]} onClick={copyUrl} use:showUpAni={1.5}>
           <CopySvg width="17px" color="#246ab6" />
           {getFullLink()}
         </SetButtonBox>
       </div>
       <div {...stylex.attrs(ixStyles.box02)}>
-        <div {...stylex.attrs(ixStyles.title)} ref={(e)=>showUpAni(e,2)}>공유하기</div>
-        <div {...stylex.attrs(ixStyles.title2)} ref={(e)=>showUpAni(e,2.25)}>채팅방에 링크를 보낼 수 있어요</div>
-        <div {...stylex.attrs(ixStyles.box2)} ref={(e)=>showUpAni(e,3)}>
+        <div {...stylex.attrs(ixStyles.title)} use:showUpAni={2}>공유하기</div>
+        <div {...stylex.attrs(ixStyles.title2)} use:showUpAni={2.25}>채팅방에 링크를 보낼 수 있어요</div>
+        <div {...stylex.attrs(ixStyles.box2)} use:showUpAni={3}>
           <div {...stylex.attrs(ixStyles.box21)}>
             <SetButtonBox sx={[ixStyles.kakaoBox]} onClick={()=>handleSnsClick(1)}>
               <KakaotalkLogoSvg width="20px" />
@@ -210,7 +212,7 @@ export default function SetShare(props: SetShareProps): JSX.Element {
           </SetButton>
         </div>
       </div>
-      <SetButton mode='sub' onClick={()=>props.close()} ref={(e)=>showUpAni(e,3.5)}>닫기</SetButton>
+      <SetButton mode='sub' onClick={()=>props.close()} use:showUpAni={3.5}>닫기</SetButton>
     </>
   );
 }

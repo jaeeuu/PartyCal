@@ -16,10 +16,12 @@ import TauriLogoSvg from '../assets/icons/logo/tauri_logo.svg';
 import StylexLogoSvg from '../assets/icons/logo/stylex_logo.svg';
 import CubeSvg from '../assets/icons/cube.svg';
 import { Meta, MetaProvider } from "@solidjs/meta";
-import { showUpAni } from '~/common/animations';
+import { showUpAni } from '~/common/useUtils';
 import { materialEasing, store } from '~/common/stores';
 import { Transition } from 'solid-transition-group';
 // import { useNavigate, usePreloadRoute } from '@solidjs/router';
+
+showUpAni;
 
 const inStyles = stylex.create({
   flex: {
@@ -304,16 +306,16 @@ export default function HomePage() {
       </SetBox>
       <SetPopUp show={showSub()>0} close={()=>setShowSub(0)} isLong={showSub()===1}>
         <Show when={showSub()===2}>
-          <div {...stylex.attrs(ixStyles.subBox_1)} ref={(e)=>showUpAni(e,1)}>COPYRIGHT 2024 JAEU</div>
-          <div {...stylex.attrs(ixStyles.subBox_2)} ref={(e)=>showUpAni(e,2)}>This app is licensed under the terms of the MIT license.</div>
-          <div {...stylex.attrs(ixStyles.subBox_3)} ref={(e)=>showUpAni(e,3)}>
+          <div {...stylex.attrs(ixStyles.subBox_1)} use:showUpAni={1}>COPYRIGHT 2024 JAEU</div>
+          <div {...stylex.attrs(ixStyles.subBox_2)} use:showUpAni={2}>This app is licensed under the terms of the MIT license.</div>
+          <div {...stylex.attrs(ixStyles.subBox_3)} use:showUpAni={3}>
             <div {...stylex.attrs(ixStyles.apps)}><SolidSvg height="15px" />SOLID START</div>
             <div {...stylex.attrs(ixStyles.apps)}><NtexLogoSVg height="15px" />NTEX</div>
             <div {...stylex.attrs(ixStyles.apps)}><TauriLogoSvg height="15px" />TAURI</div>
             <div {...stylex.attrs(ixStyles.apps)}><SingleStoreSvg height="15px" />SINGLE STORE</div>
             <div {...stylex.attrs(ixStyles.apps)}><StylexLogoSvg height="15px" />STYLEX</div>
           </div>
-          <SetButton mode='main' onClick={()=>setShowSub(0)} ref={(e)=>showUpAni(e,4)}>닫기</SetButton>
+          <SetButton mode='main' onClick={()=>setShowSub(0)} use:showUpAni={4}>닫기</SetButton>
         </Show>
         <Show when={showSub()===1||showSub()===3}>
           <SetShare close={()=>setShowSub(0)} id={showSub()===1 ? '' : store()??''} />
