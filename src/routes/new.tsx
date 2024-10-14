@@ -12,7 +12,6 @@ import SelectDateSvg from '../assets/icons/select_date.svg';
 import { showUpAni } from '~/common/useUtils';
 import SetShare from '~/components/SetShare';
 import calenderImage from '../assets/images/cal_re.avif';
-import { useNavigate } from '@solidjs/router';
 
 showUpAni;
 
@@ -38,20 +37,20 @@ const ixStyles = stylex.create({
     alignItems: 'center',
   },
   box1text: {
-    fontWeight: 700,
+    fontWeight: 600,
     fontSize: "21px",
     fontFamily: "'Basic Fonts'",
-    paddingBottom: '20px',
+    paddingBottom: '15px',
     backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     color: 'transparent',
-    backgroundImage: 'linear-gradient(145deg, hsl(198.1, 100%, 46.1%) 0%, hsl(231.9, 68.6%, 72.5%) 55%)',
+    backgroundImage: 'linear-gradient(160deg, hsl(198.1, 100%, 50%) -50%, hsl(231.9, 68.6%, 75%) 100%)',
     letterSpacing: '-1px',
   },
   box1image: {
     position: 'relative',
     top: "-5px",
-    right: "-10px",
+    right: "-15px",
     objectFit: 'contain',
     pointerEvents: 'none',
   },
@@ -136,7 +135,7 @@ const ixStyles = stylex.create({
     ...stylex.include(inStyles.flex),
     position: 'absolute',
     right: '0px',
-    // gap: '10px',
+    gap: '5px',
   },
   subDateButtonBox: {
     padding: '15px',
@@ -244,6 +243,17 @@ const ixStyles = stylex.create({
     paddingBottom: '30px',
     paddingLeft: '10px',
   },
+  starting: {
+    opacity: {
+      default: 1,
+      "@starting-style": 0,
+    },
+    transform: {
+      default: "translateY(0px)",
+      "@starting-style": "translateY(50px)",
+    },
+    transition: "opacity 0.2s ease, transform 0.2s ease",
+  }
 });
 
 export default function NewPage() {
@@ -404,13 +414,11 @@ export default function NewPage() {
     });
   };
 
-  const navigate = useNavigate();
   const handleClose = (type: number) => {
     if (type === 1 || type === 2) {
       handleCancel();
     } else {
       setSubPage(0);
-      navigate('/');
     }
   };
 
@@ -421,7 +429,7 @@ export default function NewPage() {
         <div>다시 공유 하시겠어요?</div>
         <SetButton mode='sub'>공유하기</SetButton>
       </SetBox> */}
-      <SetBox>
+      <SetBox sx={[ixStyles.starting]}>
         <div {...stylex.attrs(ixStyles.box1box)}>
           <div {...stylex.attrs(ixStyles.box1text)}>
             새로운 투표를 생성하고

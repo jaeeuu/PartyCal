@@ -1,5 +1,5 @@
 import { getSvgPath } from 'figma-squircle';
-import { createEffect, createMemo, onMount } from 'solid-js';
+import { createEffect, onMount } from 'solid-js';
 
 declare module "solid-js" {
   namespace JSX {
@@ -48,12 +48,11 @@ export function smoothCorner(el, value) {
           width: size.width+borderWidth,
           height: size.height+borderWidth,
           cornerRadius: borderRadius,
-          cornerSmoothing: 0.8,
+          cornerSmoothing: 1,
           preserveSmoothing: true,
         });
         el.style.clipPath = `path('${roundPath})`;
       }
-      
     }
   });
 }

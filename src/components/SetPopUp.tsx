@@ -7,6 +7,7 @@ import { materialEasing } from "~/common/stores";
 import SetAlert from "./SetAlert";
 import { dragStartHandler, dragMoveHandler, dragEndHandler } from "~/common/drags";
 import { smoothCorner } from "~/common/useUtils";
+import { useNavigate } from "@solidjs/router";
 
 smoothCorner;
 
@@ -213,6 +214,8 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       setDragPos(0);
     }
   };
+
+  const navigate = useNavigate();
   
 
   return (
@@ -220,6 +223,7 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       <Transition
         onEnter={(el, done) => backOnEnter(el, done)}
         onExit={(el, done) => backOnExit(el, done)}
+        onAfterExit={() => {if (!isOnce()) navigate('/');}}
       >
         <Show when={isShow()} keyed={true}>
           <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => props.close()}>

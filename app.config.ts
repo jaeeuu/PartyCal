@@ -24,11 +24,6 @@ export default defineConfig({
       //   }
       // }),
     ],
-    resolve: {
-      alias: {
-        "@fonts": resolve("src/fonts"),
-      }
-    },
     build: {
       sourcemap: false,
       rollupOptions: {

@@ -15,10 +15,10 @@ import SingleStoreSvg from '../assets/icons/logo/singlestore_logo.svg';
 import TauriLogoSvg from '../assets/icons/logo/tauri_logo.svg';
 import StylexLogoSvg from '../assets/icons/logo/stylex_logo.svg';
 import CubeSvg from '../assets/icons/cube.svg';
-import { Meta, MetaProvider } from "@solidjs/meta";
+import { Meta } from "@solidjs/meta";
 import { showUpAni } from '~/common/useUtils';
-import { materialEasing, store } from '~/common/stores';
-import { Transition } from 'solid-transition-group';
+import { store } from '~/common/stores';
+// import { Transition } from 'solid-transition-group';
 // import { useNavigate, usePreloadRoute } from '@solidjs/router';
 
 showUpAni;
@@ -37,41 +37,30 @@ const ixStyles = stylex.create({
     justifyContent: "space-between",
     padding: '7px',
     alignItems: 'center',
-    //paddingBottom: '10px',
-    // backgroundColor: 'yellow',
-    //paddingRight: '5px',
   },
   box1text: {
-    //position: 'absolute',
-    fontWeight: 700,
+    fontWeight: 600,
     fontSize: "21px",
-    //left: '25px',
-    //top: '25px',
-    // color: "#6b7784",
-    //lineHeight: "1.75",
     fontFamily: "'Basic Fonts'",
-    //padding: '5px',
-    paddingBottom: '20px',
-    //paddingTop: '5px',
+    paddingBottom: '15px',
     backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     color: 'transparent',
-    backgroundImage: 'linear-gradient(145deg, hsl(198.1, 100%, 46.1%) 0%, hsl(231.9, 68.6%, 72.5%) 55%)',
+    backgroundImage: 'linear-gradient(160deg, hsl(198.1, 100%, 50%) -50%, hsl(231.9, 68.6%, 75%) 100%)',
     letterSpacing: '-1px',
   },
   box1image: {
-    //marginTop: "90px",
-    //marginBottom: "35px",
     position: 'relative',
     top: "-5px",
-    right: "-10px",
+    right: "-15px",
     objectFit: 'contain',
     pointerEvents: 'none',
   },
   box1button: {
     // width: "100%",
-    padding: "20px",
-    fontWeight: 500,
+    backgroundImage: 'linear-gradient(160deg, hsl(198.1, 100%, 46.1%) -100%, hsl(231.9, 68.6%, 72.5%) 100%)',
+    padding: "22px",
+    fontWeight: 700,
   },
   box2_1title: {
     color: "#333e4b",
@@ -188,14 +177,14 @@ const ixStyles = stylex.create({
 
 export default function HomePage() {
   const [showSub, setShowSub] = createSignal<number>(0);
-  const boxOnEnter = (el: Element, done: () => void) => {
-    const a = el.animate([{ opacity: 0, transform: 'scale(0)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 750,  easing: materialEasing });
-    a.finished.then(done);
-  };
-  const boxOnExit = (el: Element, done: () => void) => {
-    const a = el.animate({ opacity: 0, transform: 'scale(0)' }, { duration: 400, easing: "ease" });
-    a.finished.then(done);
-  };
+  // const boxOnEnter = (el: Element, done: () => void) => {
+  //   const a = el.animate([{ opacity: 0, transform: 'scale(0)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 750,  easing: materialEasing });
+  //   a.finished.then(done);
+  // };
+  // const boxOnExit = (el: Element, done: () => void) => {
+  //   const a = el.animate({ opacity: 0, transform: 'scale(0)' }, { duration: 400, easing: "ease" });
+  //   a.finished.then(done);
+  // };
 
   // let aniRef = null;
   // const preload = usePreloadRoute();
@@ -222,33 +211,48 @@ export default function HomePage() {
   //     naviagte('/new');
   //   };
   // };
+  // let boxRef = null;
+  // useBeforeLeave((e) => {
+  //   if (e) {
+  //     e.preventDefault();
+  //     if (boxRef) {
+  //       const keyframes = new KeyframeEffect(
+  //         boxRef,
+  //         { transform: 'scale(2)', opacity: 0 },
+  //         {
+  //           duration: 100,
+  //           easing: "ease",
+  //         },
+  //       );
+  //       const ani = new Animation(keyframes);
+  //       ani.play();
+  //       ani.onfinish = () => {
+  //         ani?.cancel();
+  //         e.retry(true);
+  //       };
+  //     }
+  //     else e.retry(true);
+  //   }
+  // });
 
   return (
     <>
-      <MetaProvider>
-        <Meta property="og:url" content="https://partycal.site/" />
-        <Meta property="og:title" content="PARTYCAL: 일정 투표 플랫폼" />
-        <Meta property="og:description" content="친구들과 함께 일정 투표를 시작해보세요" />
-        <Meta property="og:image" content="https://jjreset.github.io/act_cdn/shareurl.png" />
-      </MetaProvider>
-      <Transition
-        onEnter={(el, done) => boxOnEnter(el, done)}
-        onExit={(el, done) => boxOnExit(el, done)}
-        mode='outin'
-      >
-        <Show when={!!store()}>
-          <SetButtonBox sx={[ixStyles.recentBox]} onClick={()=>setShowSub(3)}>
-            <div {...stylex.attrs(ixStyles.recentBoxIn)}>
-              <CubeSvg width="50px" height="50px" />
-              <div {...stylex.attrs(ixStyles.sero)}>
-                <div {...stylex.attrs(ixStyles.recentText2)}>최근에 생성된 투표</div>
-                <div {...stylex.attrs(ixStyles.recentText1)}>링크 다시보기</div>
-              </div>
+      <Meta property="og:url" content="https://partycal.site/" />
+      <Meta property="og:title" content="PARTYCAL: 일정 투표 플랫폼" />
+      <Meta property="og:description" content="친구들과 함께 일정 투표를 시작해보세요" />
+      <Meta property="og:image" content="https://jjreset.github.io/act_cdn/shareurl.png" />
+      <Show when={!!store()}>
+        <SetButtonBox sx={[ixStyles.recentBox]} onClick={()=>setShowSub(3)}>
+          <div {...stylex.attrs(ixStyles.recentBoxIn)}>
+            <CubeSvg width="50px" height="50px" />
+            <div {...stylex.attrs(ixStyles.sero)}>
+              <div {...stylex.attrs(ixStyles.recentText2)}>최근에 생성된 투표</div>
+              <div {...stylex.attrs(ixStyles.recentText1)}>링크 다시보기</div>
             </div>
-            <ArrowRightSvg width="20px" height="20px" color="#FFF" />
-          </SetButtonBox>
-        </Show>
-      </Transition>
+          </div>
+          <ArrowRightSvg width="20px" height="20px" color="#FFF" />
+        </SetButtonBox>
+      </Show>
       <SetBox>
         <div {...stylex.attrs(ixStyles.box1box)}>
           <div {...stylex.attrs(ixStyles.box1text)}>
