@@ -39,14 +39,14 @@ const ixStyles = stylex.create({
     alignItems: 'center',
   },
   box1text: {
-    fontWeight: 600,
+    fontWeight: 700,
     fontSize: "21px",
     fontFamily: "'Basic Fonts'",
     paddingBottom: '15px',
     backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     color: 'transparent',
-    backgroundImage: 'linear-gradient(160deg, hsl(198.1, 100%, 50%) -50%, hsl(231.9, 68.6%, 75%) 100%)',
+    backgroundImage: 'linear-gradient(155deg, hsl(198.1, 100%, 46.1%) -10%, hsl(231.9, 68.6%, 72.5%) 65%)',
     letterSpacing: '-1px',
   },
   box1image: {
@@ -60,7 +60,7 @@ const ixStyles = stylex.create({
     // width: "100%",
     backgroundImage: 'linear-gradient(160deg, hsl(198.1, 100%, 46.1%) -100%, hsl(231.9, 68.6%, 72.5%) 100%)',
     padding: "22px",
-    fontWeight: 700,
+    fontWeight: 600,
   },
   box2_1title: {
     color: "#333e4b",

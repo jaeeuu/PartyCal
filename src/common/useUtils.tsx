@@ -52,6 +52,7 @@ export function smoothCorner(el, value) {
           preserveSmoothing: true,
         });
         el.style.clipPath = `path('${roundPath})`;
+        el.style.borderRadius = '';
       }
     }
   });

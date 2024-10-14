@@ -125,26 +125,6 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
   let throttleTimer = false;
   let requestFrame = null;
 
-  const backOnEnter = (el: Element, done: () => void) => {
-    const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: props.isLong ? 500 : 400, easing: 'ease' });
-    a.finished.then(done);
-  };
-  const backOnExit = (el: Element, done: () => void) => {
-    const a = el.animate({ opacity: 0 }, { duration: props.isLong ? 400 : 300, easing: "ease" });
-    a.finished.then(done);
-  };
-  const pageOnEnter = (el: Element, done: () => void) => {
-    const a = el.animate([{ transform: "translateY(80vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
-    a.finished.then(done);
-  };
-  const pageOnExit = (el: Element, done: () => void) => {
-    const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease" });
-    a.finished.then(()=>{
-      setDragPos(null);
-      done();
-    });
-  };
-
   const isOnce = () => props.isOnce ?? true;
   let hintAni: Animation | null = null;
 
@@ -214,16 +194,41 @@ export default function SetPopUp(props: SetPopUpProps): JSX.Element{
       setDragPos(0);
     }
   };
-
   const navigate = useNavigate();
+
+  const afterExit = () => {
+    setDragPos(null);
+    if (hintAni) hintAni.cancel();
+    if (requestFrame) cancelAnimationFrame(requestFrame);
+    if (throttleTimer) throttleTimer = false;
+    if (!isOnce()) {
+      navigate('/');
+    }
+  };
   
+  const backOnEnter = (el: Element, done: () => void) => {
+    const a = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: props.isLong ? 500 : 400, easing: 'ease' });
+    a.finished.then(done);
+  };
+  const backOnExit = (el: Element, done: () => void) => {
+    const a = el.animate({ opacity: 0 }, { duration: props.isLong ? 400 : 300, easing: "ease" });
+    a.finished.then(done);
+  };
+  const pageOnEnter = (el: Element, done: () => void) => {
+    const a = el.animate([{ transform: "translateY(80vh)", overflowY: "hidden" }, { transform: 'translateY(0px)', overflowY: "hidden" }], { duration: 400, easing: materialEasing });
+    a.finished.then(done);
+  };
+  const pageOnExit = (el: Element, done: () => void) => {
+    const a = el.animate( { transform: "translateY(80vh)", overflowY: "hidden" }, { duration: 350, easing: "ease" });
+    a.finished.then(done);
+  };
 
   return (
     <Portal>
       <Transition
         onEnter={(el, done) => backOnEnter(el, done)}
         onExit={(el, done) => backOnExit(el, done)}
-        onAfterExit={() => {if (!isOnce()) navigate('/');}}
+        onAfterExit={()=>afterExit()}
       >
         <Show when={isShow()} keyed={true}>
           <div {...stylex.attrs(ixStyles.backdrop)} onClick={() => props.close()}>

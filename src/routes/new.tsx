@@ -37,14 +37,14 @@ const ixStyles = stylex.create({
     alignItems: 'center',
   },
   box1text: {
-    fontWeight: 600,
+    fontWeight: 700,
     fontSize: "21px",
     fontFamily: "'Basic Fonts'",
     paddingBottom: '15px',
     backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     color: 'transparent',
-    backgroundImage: 'linear-gradient(160deg, hsl(198.1, 100%, 50%) -50%, hsl(231.9, 68.6%, 75%) 100%)',
+    backgroundImage: 'linear-gradient(155deg, hsl(198.1, 100%, 46.1%) -10%, hsl(231.9, 68.6%, 72.5%) 60%)',
     letterSpacing: '-1px',
   },
   box1image: {
@@ -481,7 +481,7 @@ export default function NewPage() {
           투표 생성하기
         </SetButton>
       </SetBox>
-      <SetPopUp show={subPage()>0} close={()=>handleClose(subPage())} isLong={true} isOnce={subPage()===1||subPage()===2||!!genUid()}>
+      <SetPopUp show={subPage()>0} close={()=>handleClose(subPage())} isLong={true}>
         <Show when={subPage()===1||subPage()===2} fallback={
           <Show when={!!genUid()} fallback={<>&nbsp;</>}>
             <Show when={genUid() !== "error"} fallback={
