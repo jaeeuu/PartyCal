@@ -286,12 +286,12 @@ export function SetBox(props: SetRootProps): JSX.Element {
 
   return (
     <div
+      use:smoothCorner={{}}
       {...stylex.attrs(
         thisStyles.boxIn,
         ...(local.sx??[])
       )}
       {...others}
-      use:smoothCorner={{}}
     >
       {local.children}
     </div>
@@ -346,7 +346,6 @@ export function SetInputBox(props: SetInputBoxProps): JSX.Element {
         {local.children}
       </div>
       <input
-        use:smoothCorner={{}}
         {...stylex.attrs(
           inputStyles.main,
           ...(local.sx??[]),
@@ -604,7 +603,6 @@ export function SetSwitch(props: SetSwitchProps){
       {...others}
     >
       <div
-        use:smoothCorner={{}}
         {...stylex.attrs(switchStyles.switch, switchStyles.switchOut,
           (active() && !value()) && switchStyles.switchOutActive,
           (!active() && value()) && switchStyles.switchOutChecked,

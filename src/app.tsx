@@ -5,7 +5,6 @@ import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import "./app.css";
 import { SetRootBox } from "./components/SetBase";
-//import 'virtual:stylex.css';
 
 const Root = (props: RouteSectionProps) => {
   return(
