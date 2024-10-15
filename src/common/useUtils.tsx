@@ -40,8 +40,8 @@ export function showUpAni(el, value) {
 
 //eslint-disable-next-line
 export function smoothCorner(el, value) {
-  if (el) {
-    createEffect(() => {
+  createEffect(() => {
+    if (el) {
       const computedStyle = getComputedStyle(el);
       const borderRadius = parseFloat(computedStyle.getPropertyValue("border-radius")??'0')??0;
       if (borderRadius > 0) {
@@ -57,9 +57,42 @@ export function smoothCorner(el, value) {
           preserveSmoothing: true,
         });
         el.style.setProperty('clip-path', `path('${roundPath}')`, "important");
-        el.style.setProperty('border-radius', '');
-        el.style.setProperty('overflow', 'hidden');
+        // el.style.setProperty('border-radius', '');
+        //el.style.setProperty('overflow', 'hidden');
       }
-    });
-  }
+    }
+  });
+  // if (el) {
+    // let beforeSize = null;
+    // const resizeObserver = new ResizeObserver((entries) => {
+    //   requestAnimationFrame(() => {
+    //     for (const entry of entries) {
+    //       if (entry.borderBoxSize[0].inlineSize !== beforeSize) {
+    //         beforeSize = entry.borderBoxSize[0].inlineSize;
+    //         const e = entry.target as HTMLElement;
+    //         const computedStyle = getComputedStyle(e);
+    //         const borderRadius = parseFloat(computedStyle.getPropertyValue("border-radius")??'0')??0;
+    //         if (borderRadius > 0) {
+    //           const roundPath = getSvgPath({
+    //             width: entry.borderBoxSize[0].inlineSize,
+    //             height: entry.borderBoxSize[0].blockSize,
+    //             cornerRadius: borderRadius,
+    //             cornerSmoothing: 1,
+    //             preserveSmoothing: true,
+    //           });
+    //           e.style.setProperty('clip-path', `path('${roundPath}')`, "important");
+    //           e.style.setProperty('border-radius', '');
+    //           // e.style.setProperty('overflow', 'hidden');
+    //         }
+    //       }
+    //     }
+    //   });
+    // });
+    // onMount(() => {
+    //   resizeObserver.observe(el);
+    // });
+    // onCleanup(() => {
+    //   resizeObserver.disconnect();
+    // });
+  // }
 }
