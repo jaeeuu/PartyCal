@@ -160,6 +160,11 @@ const ixStyles = stylex.create({
     borderRadius: "16.5px",
     //...stylex.include(inStyles.border),
     backgroundColor: "#fff",
+    willChange: "transform, filter, background-color, color",
+    // zIndex: {
+    //   default: 1,
+    //   ":not(:active):is(:hover)": 10,
+    // },
     color: {
       default: "#6b7784",
       ":nth-child(7n+1)": "#ac4343",

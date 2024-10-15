@@ -406,6 +406,7 @@ export function SetButtonBox(props: SetButtonBoxProps): JSX.Element {
 const aStyles = stylex.create({
   base: {
     textDecoration: 'none',
+    display: "inline-block",
   },
 });
 export function SetA(props: SetAProps): JSX.Element {
@@ -418,6 +419,7 @@ export function SetA(props: SetAProps): JSX.Element {
   ]);
   return (
     <A
+      use:smoothCorner={{}}
       {...stylex.attrs(
         baseStyles.reset,
         aStyles.base,

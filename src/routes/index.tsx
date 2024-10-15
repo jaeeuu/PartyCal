@@ -58,7 +58,7 @@ const ixStyles = stylex.create({
   },
   box1button: {
     // width: "100%",
-    backgroundImage: 'linear-gradient(160deg, hsl(198.1, 100%, 46.1%) -100%, hsl(231.9, 68.6%, 72.5%) 100%)',
+    background: 'linear-gradient(160deg, hsl(198.1, 100%, 46.1%) -100%, hsl(231.9, 68.6%, 72.5%) 100%)',
     padding: "22px",
     fontWeight: 600,
   },
