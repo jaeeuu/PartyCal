@@ -18,6 +18,7 @@ import CubeSvg from '../assets/icons/cube.svg';
 import { Meta } from "@solidjs/meta";
 import { showUpAni } from '~/common/useUtils';
 import { store } from '~/common/stores';
+import { useNavigate, usePreloadRoute } from '@solidjs/router';
 // import { Transition } from 'solid-transition-group';
 // import { useNavigate, usePreloadRoute } from '@solidjs/router';
 
@@ -234,6 +235,8 @@ export default function HomePage() {
   //     else e.retry(true);
   //   }
   // });
+  const preload = usePreloadRoute();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -262,9 +265,9 @@ export default function HomePage() {
           </div>
           <img {...stylex.attrs(ixStyles.box1image)} height="110px" width="110px" src={calenderImage} decoding='sync' alt="" />
         </div>
-        <SetA sx={[ixStyles.box1button]} href='/new' title="new">
+        <SetButton sx={[ixStyles.box1button]} onClick={()=>navigate('/new')} onPointerEnter={()=>preload(new URL('/new','https://partycal.site/new'), {preloadData: true})}>
           일정 투표 만들기
-        </SetA>
+        </SetButton>
       </SetBox>
       {/* <SetBox>
         <div {...stylex.attrs(ixStyles.box2new)}>

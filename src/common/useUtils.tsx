@@ -48,6 +48,7 @@ export function smoothCorner(el, value) {
         // const borderWidth = parseFloat(computedStyle?.borderWidth??'0')??0;
         const size = el.getBoundingClientRect();
         // const size = { width: el.clientWidth, height: el.clientHight };
+        // const size = { width: parseFloat(computedStyle.width), height: parseFloat(computedStyle.height) };
         const roundPath = getSvgPath({
           width: size.width,
           height: size.height,
@@ -57,6 +58,7 @@ export function smoothCorner(el, value) {
         });
         el.style.setProperty('clip-path', `path('${roundPath}')`, "important");
         el.style.setProperty('border-radius', '');
+        el.style.setProperty('overflow', 'hidden');
       }
     });
   }
