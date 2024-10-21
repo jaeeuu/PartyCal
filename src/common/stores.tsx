@@ -9,4 +9,4 @@ export const springEasing2 = "linear(0, 0.027 2.4%, 0.108 5.3%, 0.579 16.2%, 0.7
 export const oneDj: Dayjs = dayjs();
 
 //eslint-disable-next-line
-export const [store, setStore] = makePersisted(createSignal("test"), {name: "recent", storage: globalThis.sessionStorage as Storage | undefined});
+export const [store, setStore] = makePersisted(createSignal(""), {name: "recent", storage: globalThis.sessionStorage as Storage | undefined});

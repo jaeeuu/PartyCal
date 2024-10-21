@@ -53,7 +53,7 @@ export function smoothCorner(el, value) {
           width: size.width,
           height: size.height,
           cornerRadius: borderRadius,
-          cornerSmoothing: 1,
+          cornerSmoothing: 0.8,
           preserveSmoothing: true,
         });
         el.style.setProperty('clip-path', `path('${roundPath}')`, "important");

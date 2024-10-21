@@ -47,7 +47,7 @@ const ixStyles = stylex.create({
     backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     color: 'transparent',
-    backgroundImage: 'linear-gradient(155deg, hsl(198.1, 100%, 46.1%) -10%, hsl(231.9, 68.6%, 72.5%) 65%)',
+    backgroundImage: 'linear-gradient(155deg, hsl(198.1, 100%, 50%) -10%, hsl(231.9, 68.6%, 77%) 65%)',
     letterSpacing: '-1px',
   },
   box1image: {
