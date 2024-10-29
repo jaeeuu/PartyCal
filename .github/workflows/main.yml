@@ -91,7 +91,7 @@ jobs:
           chmod -R 755 /opt/partycal
           chown ${{ secrets.SSH_USER_DEFAULT }}:${{ secrets.SSH_USER_DEFAULT }} /opt/partyback
           chmod 755 /opt/partyback
-          systemctl restart h2o
+          nginx -s reload
           systemctl start partyback
     
           
