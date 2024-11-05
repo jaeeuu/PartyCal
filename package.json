@@ -17,8 +17,8 @@
   "dependencies": {
     "@solid-primitives/storage": "^4.2.1",
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.14.10",
-    "@solidjs/start": "^1.0.9",
+    "@solidjs/router": "^0.15.0",
+    "@solidjs/start": "^1.0.10",
     "dayjs": "^1.11.13",
     "figma-squircle": "^1.1.0",
     "solid-js": "^1.9.3",
@@ -27,16 +27,16 @@
     "vinxi": "^0.4.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "@stylexjs/eslint-plugin": "^0.8.0",
-    "@stylexjs/stylex": "^0.8.0",
-    "@typescript-eslint/parser": "^8.12.1",
-    "eslint": "^9.13.0",
+    "@eslint/js": "^9.14.0",
+    "@stylexjs/eslint-plugin": "^0.9.3",
+    "@stylexjs/stylex": "^0.9.3",
+    "@typescript-eslint/parser": "^8.13.0",
+    "eslint": "^9.14.0",
     "eslint-plugin-solid": "^0.14.3",
-    "globals": "^15.11.0",
-    "lightningcss": "^1.27.0",
+    "globals": "^15.12.0",
+    "lightningcss": "^1.28.1",
     "path": "^0.12.7",
-    "typescript-eslint": "^8.12.1",
+    "typescript-eslint": "^8.13.0",
     "vite-plugin-solid-svg": "^0.8.1",
     "vite-plugin-stylex": "^0.12.0"
   },
@@ -44,7 +44,8 @@
     "peerDependencyRules": {
       "allowAny": [
         "eslint",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "@stylexjs/stylex"
       ]
     }
   },
