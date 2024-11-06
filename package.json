@@ -17,7 +17,7 @@
   "dependencies": {
     "@solid-primitives/storage": "^4.2.1",
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.15.0",
+    "@solidjs/router": "^0.15.1",
     "@solidjs/start": "^1.0.10",
     "dayjs": "^1.11.13",
     "figma-squircle": "^1.1.0",

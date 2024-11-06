@@ -15,7 +15,7 @@ impl Db {
             )
             .await
             .unwrap_or_else(|_| {
-                panic!("Cannot connect to the database. Please check your configuration.")
+                panic!("Cannot connect to the database.")
             });
 
         Db(Arc::new(pool))
