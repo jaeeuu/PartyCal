@@ -11,3 +11,9 @@ pub struct MainData {
   start: u32,
   count: u8,
 }
+
+#[derive(Deserialize, Serialize)]
+pub struct UserData {
+  name: Vec<u8>,
+  total: Vec<u8>,
+}

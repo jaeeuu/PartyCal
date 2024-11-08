@@ -16,21 +16,19 @@ pub async fn favicon_ser(req: web::HttpRequest) -> impl web::Responder {
     resp.set_header(http::header::SET_COOKIE, format!("ss={}; Max-Age=7884000; Path=/; Secure; HttpOnly", uid));
   }
 
-  if let Some(accept) = accept_encoding {
-    let acc = accept.to_str().ok();
-    if acc.filter(|s| s.contains("br")).is_some() {
-      resp.set_header(http::header::CONTENT_ENCODING, "br");
-      resp.body(FAVICON_BINARY_BR.as_ref())
-    } else if acc.filter(|s| s.contains("gzip")).is_some() {
-      resp.set_header(http::header::CONTENT_ENCODING, "gzip");
-      resp.body(FAVICON_BINARY_GZ.as_ref())
-    } else {
-      resp.set_header(http::header::CONTENT_ENCODING, "identity");
-      resp.body(FAVICON_BINARY.as_ref())
-    }
+  let accept_encoding = accept_encoding
+    .and_then(|hdr| hdr.to_str().ok())
+    .unwrap_or("");
+
+  let (encoding, binary) = if accept_encoding.contains("br") {
+    ("br", FAVICON_BINARY_BR.as_ref())
+  } else if accept_encoding.contains("gzip") {
+    ("gzip", FAVICON_BINARY_GZ.as_ref())
   } else {
-    resp.set_header(http::header::CONTENT_ENCODING, "identity");
-    resp.body(FAVICON_BINARY.as_ref())
-  }
+    ("identity", FAVICON_BINARY.as_ref())
+  };
+
+  resp.set_header(http::header::CONTENT_ENCODING, encoding);
+  resp.body(binary)
 
 }
