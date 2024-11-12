@@ -14,6 +14,6 @@ pub struct MainData {
 
 #[derive(Deserialize, Serialize)]
 pub struct UserData {
-  name: Vec<u8>,
-  total: Vec<u8>,
+  name: String,
+  total: String,
 }

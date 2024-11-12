@@ -21,11 +21,11 @@ pub async fn favicon_ser(req: web::HttpRequest) -> impl web::Responder {
     .unwrap_or("");
 
   let (encoding, binary) = if accept_encoding.contains("br") {
-    ("br", FAVICON_BINARY_BR.as_ref())
+    ("br", FAVICON_BINARY_BR)
   } else if accept_encoding.contains("gzip") {
-    ("gzip", FAVICON_BINARY_GZ.as_ref())
+    ("gzip", FAVICON_BINARY_GZ)
   } else {
-    ("identity", FAVICON_BINARY.as_ref())
+    ("identity", FAVICON_BINARY)
   };
 
   resp.set_header(http::header::CONTENT_ENCODING, encoding);

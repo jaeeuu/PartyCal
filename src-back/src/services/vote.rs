@@ -58,17 +58,17 @@ async fn vote_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) -> 
       })
     {
       if verify_session(session).await {
-        if let Ok(user) = get_user(db, id, session).await {
-          let name_str = String::from_utf8(user.name)?;
+        if let Some(user) = get_user(db, id, session).await {
           Ok(VoteResponse{
             t: title_str,
             s: cal.start as u64,
             c: cal.count,
             k: cal.kakao,
-            n: name_str,
-            v: "".to_string(),
+            n: user.name,
+            v: user.total,
           })
         } else {
+          // not voted
           Ok(VoteResponse{
             t: title_str,
             s: cal.start as u64,
@@ -82,6 +82,7 @@ async fn vote_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) -> 
         Err(anyhow::Error::msg("Invalid session"))
       }
     } else {
+      // no cookie
       Ok(VoteResponse{
         t: title_str,
         s: cal.start as u64,
@@ -95,19 +96,11 @@ async fn vote_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) -> 
 }
 
 async fn verify_path (path: &str) -> bool {
-  if path.is_empty() || !path.chars().all(|c| c.is_ascii_alphanumeric()) || path.len() > 10 {
-    return false;
-  } else {
-    return true;
-  }
+  !(path.is_empty() || !path.chars().all(|c| c.is_ascii_alphanumeric()) || path.len() > 10)
 }
 
 async fn verify_session (path: &str) -> bool {
-  if !path.chars().all(|c| c.is_ascii_alphanumeric()) || path.len() > 20 {
-    return false;
-  } else {
-    return true;
-  }
+  path.chars().all(|c| c.is_ascii_alphanumeric()) && path.len() <= 20
 }
 
 
@@ -130,7 +123,7 @@ async fn get_cal(db: &Pool<MySql>, id: &u64) -> AnyResult<MainData> {
   })
 }
 
-async fn get_user(db: &Pool<MySql>, main_id: &u64, session: &str) -> AnyResult<UserData> {
+async fn get_user(db: &Pool<MySql>, main_id: &u64, session: &str) -> Option<UserData> {
   let sql = sqlx::query!(
     r#"
     SELECT name, total FROM submit WHERE main_id = ? and session = ? LIMIT 1;
@@ -138,15 +131,28 @@ async fn get_user(db: &Pool<MySql>, main_id: &u64, session: &str) -> AnyResult<U
     main_id, session,
   )
   .fetch_optional(db)
-  .await?;
+  .await.ok()?;
 
   if let Some(row) = sql {
-    let name_bytes = BASE64_STANDARD_NO_PAD.decode(row.name.unwrap())?;
-    Ok(UserData{
-      name: name_bytes,
-      total: row.total,
+    let name_str = if let Some(name_before) = row.name {
+      let name_bytes = BASE64_STANDARD_NO_PAD.decode(name_before).ok()?;
+      String::from_utf8(name_bytes).ok()?
+    } else {
+      "".to_string()
+    };
+    let total_str = vec_u8_to_string(row.total);
+    Some(UserData{
+      name: name_str,
+      total: total_str,
     })
   } else {
-    Err(anyhow::Error::msg("No data"))
+    None
   }
+}
+
+fn vec_u8_to_string(nums: Vec<u8>) -> String {
+  nums.iter()
+    .filter(|&&x| x != 0)
+    .map(|&x| (b'0' + x) as char)
+    .collect()
 }

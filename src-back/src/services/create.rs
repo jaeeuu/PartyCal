@@ -62,7 +62,7 @@ async fn sync_db(db: &Pool<MySql>, data: MainData) -> AnyResult<u64> {
 async fn verify_data(req: CreateRequest) -> AnyResult<MainData> {
   let title_base64 = BASE64_STANDARD_NO_PAD.encode(req.t.as_bytes()).into_bytes();
   let count_add = req.c + 1;
-  if title_base64.len() > 100 || count_add < 1 || count_add > 100 || !is_valid_date(req.s) {
+  if title_base64.len() > 100 || !(1..=100).contains(&count_add) || !is_valid_date(req.s) {
     Err(anyhow::Error::msg("Invalid input"))
   } else {
     Ok(MainData {
