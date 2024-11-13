@@ -12,7 +12,7 @@ use serde::Serialize;
 
 
 #[derive(Serialize)]
-struct VoteResponse {
+struct GetdbResponse {
   t: String,
   s: u64,
   c: u8,
@@ -22,10 +22,10 @@ struct VoteResponse {
   v: String,
 }
 
-#[web::get("/vote/{vote_id}")]
-pub async fn vote_ser(path: web::types::Path<String>, req: web::HttpRequest, db: web::types::State<Db>) -> impl web::Responder {
-  let vote_id = path.into_inner();
-  match vote_core(vote_id, req, &db.0).await {
+#[web::get("/getdb/{getdb_id}")]
+pub async fn getdb_ser(path: web::types::Path<String>, req: web::HttpRequest, db: web::types::State<Db>) -> impl web::Responder {
+  let getdb_id = path.into_inner();
+  match getdb_core(getdb_id, req, &db.0).await {
     Ok(resp) => web::HttpResponse::Ok().json(&resp),
     Err(e) => {
       error!("Failed on create_ser: {:?}", e);
@@ -35,7 +35,7 @@ pub async fn vote_ser(path: web::types::Path<String>, req: web::HttpRequest, db:
 }
 
 
-async fn vote_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) -> AnyResult<VoteResponse> {
+async fn getdb_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) -> AnyResult<GetdbResponse> {
   if verify_path(&path_id).await {
     Err(anyhow::Error::msg("Invalid id"))
   } else {
@@ -59,7 +59,7 @@ async fn vote_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) -> 
     {
       if verify_session(session).await {
         if let Some(user) = get_user(db, id, session).await {
-          Ok(VoteResponse{
+          Ok(GetdbResponse{
             t: title_str,
             s: cal.start as u64,
             c: cal.count,
@@ -68,8 +68,8 @@ async fn vote_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) -> 
             v: user.total,
           })
         } else {
-          // not voted
-          Ok(VoteResponse{
+          // not getdbd
+          Ok(GetdbResponse{
             t: title_str,
             s: cal.start as u64,
             c: cal.count,
@@ -83,7 +83,7 @@ async fn vote_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) -> 
       }
     } else {
       // no cookie
-      Ok(VoteResponse{
+      Ok(GetdbResponse{
         t: title_str,
         s: cal.start as u64,
         c: cal.count,

@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 pub mod favicon;
 pub mod create;
-pub mod vote;
+pub mod getdb;
 
 #[derive(Deserialize, Serialize)]
 pub struct MainData {

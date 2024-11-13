@@ -4,7 +4,7 @@ mod services;
 use crate::db::Db;
 use crate::services::favicon::favicon_ser;
 use crate::services::create::create_ser;
-use crate::services::vote::vote_ser;
+use crate::services::getdb::getdb_ser;
 use ntex::web;
 use tracing::{info, error};
 use ntex_cors::Cors;
@@ -23,20 +23,22 @@ async fn main() -> std::io::Result<()> {
   web::HttpServer::new(move || {
     web::App::new()
       .state(db.clone())
-      .wrap(web::middleware::Compress::default())
-      .wrap(
-        Cors::new()
-          .allowed_origin("https://partycal.site")
-          .allowed_methods(vec!["GET", "POST"])
-          .max_age(3600)
-          .finish()
+        .service(
+          web::scope("/apix")
+            .wrap(web::middleware::Compress::default())
+            .wrap(
+              Cors::new()
+                .allowed_origin("https://partycal.site")
+                .allowed_methods(vec!["GET", "POST"])
+                .max_age(3600)
+                .finish()
+              )
+            .service(favicon_ser)
+            .service(create_ser)
+            .service(getdb_ser)
         )
       // .wrap(web::middleware::DefaultHeaders::new())
-      // .route(web::get().to(|| async {web::HttpResponse::Ok().body("Hello world!")})) == .service(some) #[web::get("/assets/{name}.{ext}")] 이거랑 같음
-      .service(favicon_ser)
-      .service(create_ser)
-      .service(vote_ser)
-
+      // .route(web::get().to(|| async {web::HttpResponse::Ok().body("Hello world!")})) == .service(some) #[web::get("/assets/{name}.{ext}")]
   }).keep_alive(ntex::http::KeepAlive::Os)
   .bind(("127.0.0.1", 3610))?
   .run()

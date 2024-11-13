@@ -1,0 +1,37 @@
+[package]
+name = "ntex-files"
+version = "2.0.0"
+authors = ["ntex contributors <team@ntex.rs>"]
+description = "Static files support for ntex web."
+readme = "README.md"
+keywords = ["ntex", "http", "async", "futures"]
+homepage = "https://ntex.rs"
+repository = "https://github.com/ntex-rs/ntex-extras.git"
+documentation = "https://docs.rs/ntex-files/"
+categories = ["asynchronous", "web-programming::http-server"]
+license = "MIT"
+edition = "2018"
+workspace = ".."
+
+[lib]
+name = "ntex_files"
+path = "src/lib.rs"
+
+[dependencies]
+ntex = "2"
+ntex-http = "0.1.12"
+bitflags = "2.1"
+futures = "0.3"
+derive_more = "0.99"
+http = "1.0"
+log = "0.4"
+mime = "0.3"
+mime_guess = "2.0"
+percent-encoding = "2.1"
+v_htmlescape = "0.15"
+unicase = "2.6"
+language-tags = "0.3"
+httpdate = "1.0"
+
+[dev-dependencies]
+ntex = { version = "2", features = ["tokio", "openssl", "compress"] }
