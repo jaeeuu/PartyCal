@@ -237,6 +237,12 @@ export default function HomePage() {
   // });
   const preload = usePreloadRoute();
   const navigate = useNavigate();
+  const handleNavigate = (url: string) => {
+    const t = document.startViewTransition(() => {
+      navigate(url);
+    });
+    if (!t) navigate(url);
+  };
 
   return (
     <>
@@ -265,7 +271,7 @@ export default function HomePage() {
           </div>
           <img {...stylex.attrs(ixStyles.box1image)} height="110px" width="110px" src={calenderImage} decoding='sync' alt="" />
         </div>
-        <SetButton sx={[ixStyles.box1button]} onClick={()=>navigate('/new')} onPointerEnter={()=>preload(new URL('/new','https://partycal.site/new'), {preloadData: true})}>
+        <SetButton sx={[ixStyles.box1button]} onClick={()=>handleNavigate('/new')} onPointerEnter={()=>preload(new URL('/new','https://partycal.site/new'), {preloadData: true})}>
           일정 투표 만들기
         </SetButton>
       </SetBox>
