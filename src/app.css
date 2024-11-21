@@ -24,6 +24,14 @@
   size-adjust: 119.8248%;
 }
 
+@view-transition {
+  navigation: auto;
+}
+::view-transition-group(*) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
+
 /* @keyframes slideOut {
   to { transform: translateX(75px); }
 }

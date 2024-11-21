@@ -43,7 +43,7 @@ async fn getdb_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) ->
     let ids = sqids.decode(&path_id);
     let id = ids.get(2).context("Failed to decode id")?;
 
-    let cal = get_cal(db, id).await?;
+    let cal = get_cal(db, id).await.context("Failed to get cal")?;
     let title_bytes = BASE64_STANDARD_NO_PAD.decode(cal.title)?;
     let title_str = String::from_utf8(title_bytes)?;
     let cookie = req.headers().get("Cookie");
@@ -95,16 +95,8 @@ async fn getdb_core(path_id: String, req: web::HttpRequest, db: &Pool<MySql>) ->
   }
 }
 
-async fn verify_path (path: &str) -> bool {
-  !(path.is_empty() || !path.chars().all(|c| c.is_ascii_alphanumeric()) || path.len() > 10)
-}
 
-async fn verify_session (path: &str) -> bool {
-  path.chars().all(|c| c.is_ascii_alphanumeric()) && path.len() <= 20
-}
-
-
-async fn get_cal(db: &Pool<MySql>, id: &u64) -> AnyResult<MainData> {
+async fn get_cal(db: &Pool<MySql>, id: &u64) -> Option<MainData> {
   let sql = sqlx::query!(
     r#"
     SELECT title,kakao,start,count,result FROM main WHERE main_id = ? LIMIT 1;
@@ -112,9 +104,9 @@ async fn get_cal(db: &Pool<MySql>, id: &u64) -> AnyResult<MainData> {
     id,
   )
   .fetch_one(db)
-  .await?;
+  .await.ok()?;
 
-  Ok(MainData{
+  Some(MainData{
     title: sql.title,
     kakao: sql.kakao != 0,
     result: sql.result,
@@ -148,6 +140,14 @@ async fn get_user(db: &Pool<MySql>, main_id: &u64, session: &str) -> Option<User
   } else {
     None
   }
+}
+
+async fn verify_path (path: &str) -> bool {
+  !(path.is_empty() || !path.chars().all(|c| c.is_ascii_alphanumeric()) || path.len() > 10)
+}
+
+async fn verify_session (path: &str) -> bool {
+  path.chars().all(|c| c.is_ascii_alphanumeric()) && path.len() <= 20
 }
 
 fn vec_u8_to_string(nums: Vec<u8>) -> String {

@@ -8,6 +8,7 @@ anyhow = "1.0.86"
 base64 = "0.22.1"
 blake2 = "0.10.6"
 chrono = "0.4.38"
+freqfs = "0.10.0"
 lid = { version = "0.3.0", features = ["base62", "easy"], default-features = false }
 ntex = { version = "2.4.0", features = ["compress", "cookie", "tokio"] }
 ntex-cors = "2.0.0"
