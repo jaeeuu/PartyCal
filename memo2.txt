@@ -1,0 +1,76 @@
+
+viewTransitionAPI를 이용한 MPA Navigation
+
+방법 0:
+@view-transition {
+  navigation: auto;
+  types: slide, forwards;
+}
+CSS 속성을 사용해서 자동으로 할당한다.
+Safari 미지원.
+
+방법 1:
+https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API/Using
+pagereveal event listener를 이용해서 style.viewTransitionName으로 transition name을 바꾼다. 애니메이팅은 CSS에서 한다.
+Safari 18.2부터 지원예정
+
+방법 2:
+https://developer.chrome.com/docs/web-platform/view-transitions/cross-document
+pagereveal event listener로 event.viewTransition.types.add|clear|delete()로 transition type을 바꾼다. 애니메이팅은 CSS에서 한다.
+Safari 18.2부터 지원예정
+
+방법 3:
+https://fe-developers.kakaoent.com/2023/230403-view-transitions-api/
+transition.ready|finished 를 이용해서 webAnimationAPI로 애니메이팅 한다. 애니메이팅을 JS에서 한다.
+Safari 지원됨
+
+궁금한 점:
+@view-transition css 속성만을 이용하면 앞으로 뒤로 이동이 자동으로 지정되나? 그럼 JS를 사용할 필요가 없는가, 그럼 굳이 pagereveal event를 사용할 필요가 없잖아
+viewTransition types와 name을 바꾸는 것에 어떤 차이가 있는가
+
+https://view-transitions.chrome.dev/pagination/mpa/index4.html
+
+etc:
+/* Determine what gets captured when the type is forwards or backwards */
+html:active-view-transition-type(forwards, backwards) {
+  :root {
+    view-transition-name: none;
+  }
+  article {
+    view-transition-name: content;
+  }
+  .pagination {
+    view-transition-name: pagination;
+  }
+}
+
+/* Animation styles for forwards type only */
+html:active-view-transition-type(forwards) {
+  &::view-transition-old(content) {
+    animation-name: slide-out-to-left;
+  }
+  &::view-transition-new(content) {
+    animation-name: slide-in-from-right;
+  }
+}
+
+/* Animation styles for backwards type only */
+html:active-view-transition-type(backwards) {
+  &::view-transition-old(content) {
+    animation-name: slide-out-to-right;
+  }
+  &::view-transition-new(content) {
+    animation-name: slide-in-from-left;
+  }
+}
+
+/* Animation styles for reload type only */
+html:active-view-transition-type(reload) {
+  &::view-transition-old(root) {
+    animation-name: fade-out, scale-down;
+  }
+  &::view-transition-new(root) {
+    animation-delay: 0.25s;
+    animation-name: fade-in, scale-up;
+  }
+}
