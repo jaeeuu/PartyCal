@@ -174,6 +174,9 @@ const ixStyles = stylex.create({
   moreBox: {
     padding: '15px',
   },
+  view: {
+    viewTransitionName: 'newpage',
+  }
 });
 
 export default function HomePage() {
@@ -262,7 +265,7 @@ export default function HomePage() {
           <ArrowRightSvg width="20px" height="20px" color="#FFF" />
         </SetButtonBox>
       </Show>
-      <SetBox>
+      <SetBox sx={[ixStyles.view]}>
         <div {...stylex.attrs(ixStyles.box1box)}>
           <div {...stylex.attrs(ixStyles.box1text)}>
             새로운 투표를 생성하고

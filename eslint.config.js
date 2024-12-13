@@ -41,6 +41,10 @@ export default [
               "limit": "string",
               "reason": ""
             },
+            "viewTransitionName": {
+              "limit": "string",
+              "reason": ""
+            },
           }
         }
       ]

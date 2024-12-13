@@ -249,15 +249,16 @@ const ixStyles = stylex.create({
     paddingLeft: '10px',
   },
   starting: {
-    opacity: {
-      default: 1,
-      "@starting-style": 0,
-    },
-    transform: {
-      default: "translateY(0px)",
-      "@starting-style": "translateY(50px)",
-    },
-    transition: "opacity 0.2s ease, transform 0.2s ease",
+    viewTransitionName: 'newpage',
+    // opacity: {
+    //   default: 1,
+    //   "@starting-style": 0,
+    // },
+    // transform: {
+    //   default: "translateY(0px)",
+    //   "@starting-style": "translateY(50px)",
+    // },
+    // transition: "opacity 0.2s ease, transform 0.2s ease",
   }
 });
 
